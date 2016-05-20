@@ -1,0 +1,44 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+
+  <!-- Sidebar Menu -->
+  <ul class="sidebar-menu">
+    <li class="header text-center">主菜单</li>
+
+    <li ui-sref-active="active" class="treeview">
+      <a href="#"><i class="fa fa-user-md"></i> <span>测试管理</span> <i class="fa fa-angle-left pull-right"></i></a>
+      <ul class="treeview-menu" style="padding-left: 1.8em;">
+        <li ui-sref-active="active"><a ui-sref="manage-product">产品管理</a></li>
+        <li ui-sref-active="active"><a ui-sref="manage-user">人员管理</a></li>
+        <li ui-sref-active="active"><a ui-sref="manage-requirement">需求管理</a></li>
+        <li ui-sref-active="active"><a ui-sref="manage-environment">环境管理</a></li>
+        <li ui-sref-active="active"><a ui-sref="manage-plan">计划管理</a></li>
+        <li ui-sref-active="active"><a ui-sref="manage-flaw">缺陷流程管理</a></li>
+        <li ui-sref-active="active"><a ui-sref="manage-result">测试结果分析</a></li>
+      </ul>
+    </li>
+    <li class="treeview">
+      <a href="#"><i class="glyphicon glyphicon-play"></i> <span>测试应用执行</span> <i class="fa fa-angle-left pull-right"></i></a>
+      <ul class="treeview-menu" style="padding-left: 1.8em;">
+        <li ui-sref-active="active"><a ui-sref="action-suite-edit">用例编写</a></li>
+        <li ui-sref-active="active"><a ui-sref="action-process-record">过程记录</a></li>
+        <li ui-sref-active="active"><a ui-sref="action-flaw-submit">缺陷检查提交</a></li>
+        <li ui-sref-active="active"><a ui-sref="action-product-register">产品备案验证</a></li>
+        <li ui-sref-active="active"><a ui-sref="action-registered-software-encrypt">备案软件加密</a></li>
+        <li ui-sref-active="active"><a ui-sref="action-registered-product-compare">供货产品比对</a></li>
+        <li ui-sref-active="active"><a ui-sref="action-generate-test-result">测试报告生成</a></li>
+      </ul>
+    </li>
+    <li class="treeview">
+      <a href="#"><i class="glyphicon glyphicon-cog"></i> <span>系统配置</span> <i class="fa fa-angle-left pull-right"></i></a>
+      <ul class="treeview-menu" style="padding-left: 1.8em;">
+        <li ui-sref-active="active"><a ui-sref="setting-role">角色权限分配</a></li>
+        <li ui-sref-active="active"><a ui-sref="setting-encrypt">备案加密算法配置</a></li>
+      </ul>
+    </li>
+  </ul>
+  <!-- /.sidebar-menu -->
+</section>
+<!-- /.sidebar -->
+
+
