@@ -53,6 +53,7 @@ angular
     .state("manage-user", {
       url: "/manage-user",
       templateUrl: "views/manage-user.html",
+      controller:'ManageUserCtrl as manageUser',
       authenticate: false,
     })
     .state("manage-requirement", {

@@ -1,64 +1,181 @@
-<h3>人员管理</h3>
-<hr>
 <div class="row">
     <div class="col-xs-12">
-      <div class="box">
+      <div class="box box-danger">
         <div class="box-header">
-          <h3 class="box-title">Responsive Hover Table</h3>
+        <div class="row">
+        <div class="col-xs-9">
+      <h3 class="text-center"><b>人员管理</b></h3>
+          
+        </div>
+        <div class="col-xs-3">
+      <div class="btn-group pull-right">
+        
+        <a class="btn btn-app bg-olive margin" data-toggle="modal" data-target="#newModal" ng-click="manageUser.setNewModal()" >
+          <i class="glyphicon glyphicon-plus"></i> 新增
+        </a>
 
-          <div class="box-tools">
-            <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+      </div>
+          
+        </div>
+          
+        </div>
 
-              <div class="input-group-btn">
-                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-              </div>
-            </div>
-          </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
           <table class="table table-hover">
             <tr>
-              <th>ID</th>
-              <th>User</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Reason</th>
+              <th style="width: 2em;">ID</th>
+              <th style="width: 5em;">姓名</th>
+              <th style="width: 5em;">年龄</th>
+              <th style="width: 10em;">测试经验</th>
+              <th style="width: 10em;">技能</th>
+              <th style="width: 10em;">权限</th>
+              <th style="width: 10em;">创建时间</th>
+              <th>操作</th>
             </tr>
-            <tr>
-              <td>183</td>
-              <td>John Doe</td>
-              <td>11-7-2014</td>
-              <td><span class="label label-success">Approved</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+            <tr ng-repeat="user in manageUser.users">
+              <td>{{user.id}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.age}}</td>
+              <td>{{user.exp}}</td>
+              <td>{{user.skill}}</td>
+              <td>{{user.perm}}</td>
+              <td>{{user.create_date}}</td>
+              <td>
+              <div class="btn-group">
+                <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#modifyModal" ng-click="manageUser.setModal(user)">
+                 <i class="fa fa-edit"></i> 修改
+              </a>
+              <a class="btn btn-app bg-maroon margin" ng-click="manageUser.removeUser(user.id)">
+                 <i class="glyphicon glyphicon-remove"></i> 删除
+              </a>
+                
+              </div>
+              </td>
             </tr>
-            <tr>
-              <td>219</td>
-              <td>Alexander Pierce</td>
-              <td>11-7-2014</td>
-              <td><span class="label label-warning">Pending</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-              <td>657</td>
-              <td>Bob Doe</td>
-              <td>11-7-2014</td>
-              <td><span class="label label-primary">Approved</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-              <td>175</td>
-              <td>Mike Doe</td>
-              <td>11-7-2014</td>
-              <td><span class="label label-danger">Denied</span></td>
-              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
+            
           </table>
         </div>
         <!-- /.box-body -->
       </div>
-      <!-- /.box -->
+  <!-- /.box -->
+  </div>
+</div>
+           
+            
+
+<!--New Modal -->
+<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">新增用户</h4>
+      </div>
+      <div class="modal-body">
+            <!-- form start -->
+            <form class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label">姓名</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="name" placeholder="姓名" ng-model="manageUser.newUser.name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="age" class="col-sm-2 control-label">年龄</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="age" placeholder="年龄" ng-model="manageUser.newUser.age">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exp" class="col-sm-2 control-label">测试经验</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="exp" placeholder="测试经验" ng-model="manageUser.newUser.exp">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="skill" class="col-sm-2 control-label">技能</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="skill" placeholder="技能" ng-model="manageUser.newUser.skill">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="perm" class="col-sm-2 control-label">权限</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="perm" placeholder="权限" ng-model="manageUser.newUser.perm">
+                  </div>
+                </div>
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="manageUser.createUser()">保存</button>
+      </div>
     </div>
   </div>
+</div>
+<!--Modify Modal -->
+<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">修改用户</h4>
+      </div>
+      <div class="modal-body">
+            <!-- form start -->
+            <form class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label">姓名</label>
 
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="name" placeholder="姓名" ng-model="manageUser.selectedUser.name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="age" class="col-sm-2 control-label">年龄</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="age" placeholder="年龄" ng-model="manageUser.selectedUser.age">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exp" class="col-sm-2 control-label">测试经验</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="exp" placeholder="测试经验" ng-model="manageUser.selectedUser.exp">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="skill" class="col-sm-2 control-label">技能</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="skill" placeholder="技能" ng-model="manageUser.selectedUser.skill">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="perm" class="col-sm-2 control-label">权限</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="perm" placeholder="perm" ng-model="manageUser.selectedUser.perm">
+                  </div>
+                </div>
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" ng-click="manageUser.updateUser()" data-dismiss="modal">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
