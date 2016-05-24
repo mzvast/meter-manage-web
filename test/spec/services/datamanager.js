@@ -24,7 +24,7 @@ describe('Service: dataManager', function () {
     dataManager.getProducts();
     $httpBackend
         .expect('GET', 
-          '/api/products?size=10&page=1')
+          '/api/products?items_per_page=10&current_page=1')
         .respond(200, 
           {
             "products":"content"
@@ -92,7 +92,7 @@ describe('Service: dataManager', function () {
     dataManager.getUsers();
     $httpBackend
         .expect('GET', 
-          '/api/users?size=10&page=1')
+          '/api/users?items_per_page=10&current_page=1')
         .respond(200, 
           {
             "users":"content"

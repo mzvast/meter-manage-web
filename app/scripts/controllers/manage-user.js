@@ -15,13 +15,31 @@ angular.module('manageApp')
 	'AngularJS',
 	'Karma'
 	];
-	
+	////////////////
+	//Pagination  //
+	////////////////
+	// self.totalItems = 100;
+	self.currentPage = 1;
+	self.itemsPerPage = 10;	
+	self.maxSize = 5;//显示的时候页码的最多个数，忽略该参数
+
+	// self.setPage = function (pageNo) {
+	// 	self.currentPage = pageNo;
+	// };
+
+	self.pageChanged = function() {
+		console.log('Page changed to: ' + self.currentPage);
+		self.getUsers();
+	};
 	self.getUsers = function() {
-		dataManager.getUsers().success(function(data, status, headers, config) {
+		dataManager
+			.getUsers(self.itemsPerPage,self.currentPage)
+			.success(function(data, status, headers, config) {
 		      		if (status===200) {
 		      			// console.log("getting SUCCESS!");
 		      			// console.log(data);
 		      			self.users = data.users;
+		      			self.totalItems = data.total_items;
 		      		} else {
 		      			console.log("can't get users data");
 		      		}
@@ -37,7 +55,9 @@ angular.module('manageApp')
 		self.newUser = null;
 	};
 	self.createUser = function() {
-	dataManager.createUser(self.newUser).success(function(data, status, headers, config) {
+	dataManager
+		.createUser(self.newUser)
+		.success(function(data, status, headers, config) {
       		if (status===200) {
       			console.log("新增用户 SUCCESS!");
       			// console.log(data);
@@ -49,7 +69,9 @@ angular.module('manageApp')
       	});
 	};
 	self.updateUser = function() {
-		dataManager.updateUser(self.selectedUser,self.selectedUser.id).success(function(data, status, headers, config) {
+		dataManager
+			.updateUser(self.selectedUser,self.selectedUser.id)
+			.success(function(data, status, headers, config) {
 	      		if (status===200) {
 	      			console.log("修改用户 SUCCESS!");
 	      			// console.log(data);
@@ -61,7 +83,9 @@ angular.module('manageApp')
 	      	});
 	};
 	self.removeUser = function(id) {
-		dataManager.removeUser(id).success(function(data, status, headers, config) {
+		dataManager
+			.removeUser(id)
+			.success(function(data, status, headers, config) {
 	      		if (status===200) {
 	      			console.log("删除用户 SUCCESS!");
 	      			// console.log(data);

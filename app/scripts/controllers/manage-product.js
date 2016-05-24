@@ -8,20 +8,39 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ManageProductCtrl', ['dataManager',function (dataManager) {
+  .controller('ManageProductCtrl', ['dataManager','$scope',function (dataManager,$scope) {
   	var self = this;
 	self.awesomeThings = [
 	'HTML5 Boilerplate',
 	'AngularJS',
 	'Karma'
 	];
+	////////////////
+	//Pagination  //
+	////////////////
+	// self.totalItems = 100;
+	self.currentPage = 1;
+	self.itemsPerPage = 10;	
+	self.maxSize = 5;//显示的时候页码的最多个数，忽略该参数
+
+	// self.setPage = function (pageNo) {
+	// 	self.currentPage = pageNo;
+	// };
+
+	self.pageChanged = function() {
+		console.log('Page changed to: ' + self.currentPage);
+		self.getProducts();
+	};
 	
 	self.getProducts = function() {
-		dataManager.getProducts().success(function(data, status, headers, config) {
+		dataManager
+			.getProducts(self.itemsPerPage,self.currentPage)
+			.success(function(data, status, headers, config) {
 		      		if (status===200) {
 		      			// console.log("getting SUCCESS!");
 		      			// console.log(data);
 		      			self.products = data.products;
+		      			self.totalItems = data.total_items;
 		      		} else {
 		      			console.log("can't get products data");
 		      		}
@@ -38,7 +57,9 @@ angular.module('manageApp')
 		self.newProduct = null;
 	};
 	self.createProduct = function() {
-	dataManager.createProduct(self.newProduct).success(function(data, status, headers, config) {
+	dataManager
+		.createProduct(self.newProduct)
+		.success(function(data, status, headers, config) {
       		if (status===200) {
       			console.log("新增产品 SUCCESS!");
       			// console.log(data);
@@ -50,7 +71,9 @@ angular.module('manageApp')
       	});
 	};
 	self.updateProduct = function() {
-		dataManager.updateProduct(self.selectedProduct,self.selectedProduct.id).success(function(data, status, headers, config) {
+		dataManager
+			.updateProduct(self.selectedProduct,self.selectedProduct.id)
+			.success(function(data, status, headers, config) {
 	      		if (status===200) {
 	      			console.log("修改产品 SUCCESS!");
 	      			// console.log(data);
@@ -62,7 +85,9 @@ angular.module('manageApp')
 	      	});
 	};
 	self.removeProduct = function(id) {
-		dataManager.removeProduct(id).success(function(data, status, headers, config) {
+		dataManager
+			.removeProduct(id)
+			.success(function(data, status, headers, config) {
 	      		if (status===200) {
 	      			console.log("删除产品 SUCCESS!");
 	      			// console.log(data);

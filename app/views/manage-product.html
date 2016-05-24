@@ -54,6 +54,7 @@
             </tr>
             
           </table>
+          <uib-pagination total-items="manageProduct.totalItems" ng-model="manageProduct.currentPage" max-size="manageProduct.maxSize" items-per-page="manageProduct.itemsPerPage" ng-change="manageProduct.pageChanged()" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
         </div>
         <!-- /.box-body -->
       </div>

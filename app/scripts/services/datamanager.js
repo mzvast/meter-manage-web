@@ -27,10 +27,10 @@ angular.module('manageApp')
       //////////////
       // products //
       //////////////
-      self.getProducts = function(size,page) {
-        if (!size) {size=10;} 
-        if (!page) {page=1;} 
-        return $http.get('/api/products?size='+size+'&page='+page);
+      self.getProducts = function(itemsPerPage,currentPage) {
+        if (!itemsPerPage) {itemsPerPage=10;} 
+        if (!currentPage) {currentPage=1;} 
+        return $http.get('/api/products?items_per_page='+itemsPerPage+'&current_page='+currentPage);
       };
       self.createProduct = function(data) {
         return $http.post('/api/products',data);
@@ -44,10 +44,10 @@ angular.module('manageApp')
       //////////
       //users //
       //////////
-      self.getUsers = function(size,page) {
-        if (!size) {size=10;} 
-        if (!page) {page=1;} 
-        return $http.get('/api/users?size='+size+'&page='+page);
+      self.getUsers = function(itemsPerPage,currentPage) {
+        if (!itemsPerPage) {itemsPerPage=10;} 
+        if (!currentPage) {currentPage=1;}
+        return $http.get('/api/users?items_per_page='+itemsPerPage+'&current_page='+currentPage);
       };
       self.createUser = function(data) {
         return $http.post('/api/users',data);
