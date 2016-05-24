@@ -16,10 +16,10 @@ angular.module('manageApp')
       	return $http.get('/api/products');
       };
       self.createProduct = function(data) {
-        return $http.post('/api/product',data);
+        return $http.post('/api/products',data);
       };
       self.updateProduct = function(data,id) {
-      	return $http.put('/api/product/'+id,data);
+      	return $http.put('/api/products/'+id,data);
       };
       self.addNotification = function(type,message) {
       	self.notifications.push({"type":type,"message":message});
@@ -31,6 +31,6 @@ angular.module('manageApp')
         self.notifications.splice(index,1);
       };
       self.removeProduct = function(id) {
-        return $http.delete('/api/product/'+id);
+        return $http.delete('/api/products/'+id);
       };
     }]);

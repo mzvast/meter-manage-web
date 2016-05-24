@@ -39,7 +39,7 @@ angular.module('manageApp')
 	};
 	self.createProduct = function() {
 	dataManager.createProduct(self.newProduct).success(function(data, status, headers, config) {
-      		if (status===200&&data.status==="success") {
+      		if (status===200) {
       			console.log("新增产品 SUCCESS!");
       			// console.log(data);
 	      		dataManager.addNotification("success","新产品创建成功");
@@ -51,7 +51,7 @@ angular.module('manageApp')
 	};
 	self.updateProduct = function() {
 		dataManager.updateProduct(self.selectedProduct,self.selectedProduct.id).success(function(data, status, headers, config) {
-	      		if (status===200&&data.status==="success") {
+	      		if (status===200) {
 	      			console.log("修改产品 SUCCESS!");
 	      			// console.log(data);
 	      			self.getProducts();
@@ -63,7 +63,7 @@ angular.module('manageApp')
 	};
 	self.removeProduct = function(id) {
 		dataManager.removeProduct(id).success(function(data, status, headers, config) {
-	      		if (status===200&&data.status==="success") {
+	      		if (status===200) {
 	      			console.log("删除产品 SUCCESS!");
 	      			// console.log(data);
 	      			dataManager.addNotification("success","产品"+id+"删除成功");

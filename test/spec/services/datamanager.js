@@ -34,7 +34,7 @@ describe('Service: dataManager', function () {
     dataManager.createProduct({"data":"data"});
     $httpBackend
         .expect('POST', 
-          '/api/product',{
+          '/api/products',{
             "data":"data"
           })
         .respond(200, 
@@ -48,7 +48,7 @@ describe('Service: dataManager', function () {
     dataManager.updateProduct({"data":"data"},15);
     $httpBackend
         .expect('PUT', 
-          '/api/product/15',{
+          '/api/products/15',{
             "data":"data"
           })
         .respond(200, 
@@ -76,7 +76,7 @@ describe('Service: dataManager', function () {
     dataManager.removeProduct(1234);
     $httpBackend
         .expect('DELETE', 
-          '/api/product/1234')
+          '/api/products/1234')
         .respond(200, 
           {
             "status":"success"
