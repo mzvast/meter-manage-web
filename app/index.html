@@ -51,8 +51,10 @@
         <!-- 内容标题和面包屑导航Content Header (Page header) -->
         <!-- <section class="content-header" ng-include="'views/content_header.html'" ></section> -->
         <!-- 内容正文Main content -->
-        <section class="content" ui-view>
+        <section class="content">
           <!-- Your Page Content Here -->
+          <div ng-include="'views/notification.html'" ng-controller="NotificationCtrl as notification"></div>
+          <div ui-view></div>
         </section>
         <!-- /.content -->
       </div>
@@ -88,6 +90,9 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/services/authservice.js"></script>
+        <script src="scripts/controllers/manage-product.js"></script>
+        <script src="scripts/services/datamanager.js"></script>
+        <script src="scripts/controllers/notification.js"></script>
         <!-- endbuild -->
 </body>
 </html>

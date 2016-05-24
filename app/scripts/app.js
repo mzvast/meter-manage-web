@@ -47,6 +47,7 @@ angular
     .state("manage-product", {
       url: "/manage-product",
       templateUrl: "views/manage-product.html",
+      controller:'ManageProductCtrl as manageProduct',
       authenticate: false,
     })
     .state("manage-user", {

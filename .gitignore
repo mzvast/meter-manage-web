@@ -3,3 +3,6 @@
 /.tmp
 /.sass-cache
 /bower_components
+*.sublime-workspace
+*.sublime-project
+sftp-config.json
