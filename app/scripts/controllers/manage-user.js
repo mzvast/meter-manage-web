@@ -34,12 +34,12 @@ angular.module('manageApp')
 	self.getUsers = function() {
 		dataManager
 			.getUsers(self.itemsPerPage,self.currentPage)
-			.success(function(data, status, headers, config) {
-		      		if (status===200) {
+			.then(function(response) {
+		      		if (response.status===200) {
 		      			// console.log("getting SUCCESS!");
 		      			// console.log(data);
-		      			self.users = data.users;
-		      			self.totalItems = data.total_items;
+		      			self.users = response.data.users;
+		      			self.totalItems = response.data.total_items;
 		      		} else {
 		      			console.log("can't get users data");
 		      		}
@@ -57,8 +57,8 @@ angular.module('manageApp')
 	self.createUser = function() {
 	dataManager
 		.createUser(self.newUser)
-		.success(function(data, status, headers, config) {
-      		if (status===200) {
+		.then(function(response) {
+      		if (response.status===200) {
       			console.log("新增用户 SUCCESS!");
       			// console.log(data);
 	      		dataManager.addNotification("success","新用户创建成功");
@@ -71,8 +71,8 @@ angular.module('manageApp')
 	self.updateUser = function() {
 		dataManager
 			.updateUser(self.selectedUser,self.selectedUser.id)
-			.success(function(data, status, headers, config) {
-	      		if (status===200) {
+			.then(function(response) {
+	      		if (response.status===200) {
 	      			console.log("修改用户 SUCCESS!");
 	      			// console.log(data);
 	      			self.getUsers();
@@ -85,8 +85,8 @@ angular.module('manageApp')
 	self.removeUser = function(id) {
 		dataManager
 			.removeUser(id)
-			.success(function(data, status, headers, config) {
-	      		if (status===200) {
+			.then(function(response) {
+	      		if (response.status===200) {
 	      			console.log("删除用户 SUCCESS!");
 	      			// console.log(data);
 	      			dataManager.addNotification("success","用户"+id+"删除成功");
