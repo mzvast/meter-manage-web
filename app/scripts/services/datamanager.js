@@ -31,6 +31,7 @@ angular.module('manageApp')
         if (!itemsPerPage) {itemsPerPage=10;} 
         if (!currentPage) {currentPage=1;} 
         if (!orderBy) {orderBy='id';}
+        if (reverse===undefined) {reverse=true;}
         var url = [];
             url.push('items_per_page='+itemsPerPage);
             url.push('current_page='+currentPage);
