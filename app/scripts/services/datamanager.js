@@ -8,7 +8,7 @@
  * Service in the manageApp.
  */
 angular.module('manageApp')
-  .service('dataManager', ['$http',function ($http) {
+  .service('dataManager', ['$http','$resource',function ($http,$resource) {
       // AngularJS will instantiate a singleton by calling "new" on this function
       var self = this;
       //////////////////
@@ -24,33 +24,21 @@ angular.module('manageApp')
       self.removeNotification = function(index) {
         self.notifications.splice(index,1);
       };
-      //////////////
-      // products //
-      //////////////
-      self.getProducts = function(itemsPerPage,currentPage,orderBy,reverse) {
-        if (!itemsPerPage) {itemsPerPage=10;} 
-        if (!currentPage) {currentPage=1;} 
-        if (!orderBy) {orderBy='id';}
-        if (reverse===undefined) {reverse=true;}
-        var url = [];
-            url.push('items_per_page='+itemsPerPage);
-            url.push('current_page='+currentPage);
-            url.push('order_by='+orderBy);
-            url.push('reverse='+reverse);
-            url = url.join('&');
-            url = '/api/products?'+url;
-        console.log(url);
-        return $http.get(url);
-      };
-      self.createProduct = function(data) {
-        return $http.post('/api/products',data);
-      };
-      self.updateProduct = function(data,id) {
-        return $http.put('/api/products/'+id,data);
-      };
-      self.removeProduct = function(id) {
-        return $http.delete('/api/products/'+id);
-      };
+      //////////////////////
+      // products resource//
+      //////////////////////
+      self.products = $resource('/api/products/:id',
+          {
+            id:'@id'         
+          },
+          {
+            update:
+            {
+              method:'PUT'
+            }
+          }
+      );
+      
       //////////
       //users //
       //////////

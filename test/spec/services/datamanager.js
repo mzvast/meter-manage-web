@@ -20,20 +20,8 @@ describe('Service: dataManager', function () {
   /////////////
   //products //
   /////////////
-  it('getProducts should get products ', inject(function($httpBackend) {
-    dataManager.getProducts();
-    $httpBackend
-        .expect('GET', 
-          '/api/products?items_per_page=10&current_page=1&order_by=id&reverse=true')
-        .respond(200, 
-          {
-            "products":"content"
-        });
-      $httpBackend.flush();
-  }));
-
-  it('createProduct should create product ', inject(function($httpBackend) {
-    dataManager.createProduct({"data":"data"});
+  it('C|createProduct should create product ', inject(function($httpBackend) {
+    dataManager.products.save({"data":"data"});
     $httpBackend
         .expect('POST', 
           '/api/products',{
@@ -45,14 +33,41 @@ describe('Service: dataManager', function () {
         });
       $httpBackend.flush();
   }));
+  it('R|getProducts should get products ', inject(function($httpBackend) {
+    dataManager.products.get({current_page:1,items_per_page:10,order_by:"id",reverse:true});
+    $httpBackend
+        .expect('GET', 
+          '/api/products?current_page=1&items_per_page=10&order_by=id&reverse=true')
+        .respond(200, 
+          {
+            "products":"content"
+        });
+      $httpBackend.flush();
+  }));
 
-  it('updateProduct should update product ', inject(function($httpBackend) {
-    dataManager.updateProduct({"data":"data"},15);
+  it('U|update Products should update products ', inject(function($httpBackend) {
+    dataManager.products.update({id:1},{"name":"Nick","email":"a@a.com"});
     $httpBackend
         .expect('PUT', 
-          '/api/products/15',{
-            "data":"data"
+          '/api/products/1',{
+            "name":"Nick",
+            "email":"a@a.com"
           })
+        .respond(200, 
+          {
+            "products":[
+              {
+                  "batch":99,"create_date":"1990-02-26","describe":"vxhcrt","id":1,"name":"Patricia Wilson","supplier":"Patricia Wilson"
+              }]
+        });
+      $httpBackend.flush();
+  }));
+
+  it('D|removeProduct should remove products ', inject(function($httpBackend) {
+    dataManager.products.delete({id:1234});
+    $httpBackend
+        .expect('DELETE', 
+          '/api/products/1234')
         .respond(200, 
           {
             "status":"success"
@@ -60,6 +75,12 @@ describe('Service: dataManager', function () {
       $httpBackend.flush();
   }));
 
+
+
+ 
+  /////////////////
+  //notification //
+  /////////////////
   it('addNotification should add Notification', function () {
     dataManager.addNotification("info","test message");
     expect(dataManager.getNotifications()[0]).toEqual({"type":"info","message":"test message"});
@@ -74,17 +95,7 @@ describe('Service: dataManager', function () {
     expect(dataManager.getNotifications()[0]).toEqual({"type":"success","message":"test message 2"});
   });
 
-  it('removeProduct should remove products ', inject(function($httpBackend) {
-    dataManager.removeProduct(1234);
-    $httpBackend
-        .expect('DELETE', 
-          '/api/products/1234')
-        .respond(200, 
-          {
-            "status":"success"
-        });
-      $httpBackend.flush();
-  }));
+ 
   //////////
   //users //
   //////////

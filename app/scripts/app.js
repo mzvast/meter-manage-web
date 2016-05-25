@@ -12,6 +12,7 @@ angular
   .module('manageApp', ['ui.router',
                               'angularCSS',
                               'ngCookies',
+                              'ngResource',
                               'ngRap',
                               'ui.bootstrap'])
   .config(["$locationProvider", function($locationProvider) {
