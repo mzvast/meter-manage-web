@@ -24,7 +24,7 @@ describe('Service: dataManager', function () {
     dataManager.getProducts();
     $httpBackend
         .expect('GET', 
-          '/api/products?items_per_page=10&current_page=1')
+          '/api/products?items_per_page=10&current_page=1&order_by=id&reverse=true')
         .respond(200, 
           {
             "products":"content"

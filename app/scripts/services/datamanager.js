@@ -27,10 +27,19 @@ angular.module('manageApp')
       //////////////
       // products //
       //////////////
-      self.getProducts = function(itemsPerPage,currentPage) {
+      self.getProducts = function(itemsPerPage,currentPage,orderBy,reverse) {
         if (!itemsPerPage) {itemsPerPage=10;} 
         if (!currentPage) {currentPage=1;} 
-        return $http.get('/api/products?items_per_page='+itemsPerPage+'&current_page='+currentPage);
+        if (!orderBy) {orderBy='id';}
+        var url = [];
+            url.push('items_per_page='+itemsPerPage);
+            url.push('current_page='+currentPage);
+            url.push('order_by='+orderBy);
+            url.push('reverse='+reverse);
+            url = url.join('&');
+            url = '/api/products?'+url;
+        console.log(url);
+        return $http.get(url);
       };
       self.createProduct = function(data) {
         return $http.post('/api/products',data);

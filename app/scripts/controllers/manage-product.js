@@ -16,6 +16,16 @@ angular.module('manageApp')
 	'Karma'
 	];	
 	////////////////
+	// sort //
+	////////////////
+	self.predicate = 'id';
+  	self.reverse = true;
+	self.order = function(predicate) {
+	    self.reverse = (self.predicate === predicate) ? !self.reverse : false;
+	    self.predicate = predicate;
+	    self.getProducts();
+	};
+	////////////////
 	//Pagination  //
 	////////////////
 	// self.totalItems = 100;
@@ -31,10 +41,15 @@ angular.module('manageApp')
 		console.log('Page changed to: ' + self.currentPage);
 		self.getProducts();
 	};
-	
+	/////////////
+	// Product //
+	/////////////
 	self.getProducts = function() {
 		dataManager
-			.getProducts(self.itemsPerPage,self.currentPage)
+			.getProducts(self.itemsPerPage,
+						self.currentPage,
+						self.predicate,
+						self.reverse)
 			.then(function(response) {
 		      		if (response.status===200) {
 		      			// console.log(response.data.products);

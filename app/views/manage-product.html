@@ -25,15 +25,27 @@
         <div class="box-body table-responsive no-padding">
           <table class="table table-hover">
             <tr>
-              <th style="width: 2em;">ID</th>
-              <th style="width: 5em;">产品名称</th>
-              <th style="width: 5em;">批次</th>
-              <th style="width: 10em;">供应商</th>
-              <th style="width: 20em;">描述</th>
-              <th style="width: 10em;">创建时间</th>
+              <th ng-click="manageProduct.order('id')" style="width: 4em;">ID
+              <span class="sortorder" ng-show="manageProduct.predicate === 'id'" ng-class="{reverse:manageProduct.reverse}"></span>
+              </th>
+              <th ng-click="manageProduct.order('name')" style="width: 10em;">产品名称
+              <span class="sortorder" ng-show="manageProduct.predicate === 'name'" ng-class="{reverse:manageProduct.reverse}"></span>
+              </th>
+              <th ng-click="manageProduct.order('batch')" style="width: 5em;">批次
+              <span class="sortorder" ng-show="manageProduct.predicate === 'batch'" ng-class="{reverse:manageProduct.reverse}"></span>
+              </th>
+              <th ng-click="manageProduct.order('supplier')" style="width: 10em;">供应商
+              <span class="sortorder" ng-show="manageProduct.predicate === 'supplier'" ng-class="{reverse:manageProduct.reverse}"></span>
+              </th>
+              <th ng-click="manageProduct.order('describe')" style="width: 10em;">描述
+              <span class="sortorder" ng-show="manageProduct.predicate === 'describe'" ng-class="{reverse:manageProduct.reverse}"></span>
+              </th>
+              <th ng-click="manageProduct.order('create_date')" style="width: 10em;">创建时间
+              <span class="sortorder" ng-show="manageProduct.predicate === 'create_date'" ng-class="{reverse:manageProduct.reverse}"></span>
+              </th>
               <th>操作</th>
             </tr>
-            <tr ng-repeat="product in manageProduct.products">
+            <tr ng-repeat="product in manageProduct.products| orderBy:manageProduct.predicate:manageProduct.reverse">
               <td>{{product.id}}</td>
               <td>{{product.name}}</td>
               <td>{{product.batch}}</td>
