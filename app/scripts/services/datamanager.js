@@ -27,7 +27,7 @@ angular.module('manageApp')
       //////////////////////
       // products resource//
       //////////////////////
-      self.products = $resource('/api/products/:id',
+      self.products = $resource('/api/v2/products/:id',
           {
             id:'@id'         
           },

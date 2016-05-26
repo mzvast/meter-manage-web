@@ -1,197 +1,189 @@
 <div class="row">
     <div class="col-xs-12">
-      <div class="box box-danger">
-        <div class="box-header">
-        <div class="row">
-        <div class="col-xs-9">
-			<h3 class="text-center"><b>产品管理</b></h3>
-        	
+        <div class="box box-danger">
+            <div class="box-header">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h3 class="text-center"><b>产品管理</b></h3>
+                    </div>
+                    <div class="col-xs-3">
+                        <form class="sidebar-form" style="margin-top: 1.6em;">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control" ng-model="manageProduct.q" placeholder="搜索">
+                                <span class="input-group-btn">
+                                  <button ng-click="manageProduct.searchProducts(manageProduct.q)" type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                                  </button>
+                                </span>
+                                <span class="input-group-btn">
+                                  <button ng-click="manageProduct.resetSearch()" type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
+                                  </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-xs-2 text-center">
+                        <a class="btn btn-app bg-olive margin " data-toggle="modal" data-target="#newModal" ng-click="manageProduct.setNewModal()">
+                            <i class="glyphicon glyphicon-plus"></i> 新增
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding" >
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th ng-click="manageProduct.order('id')" style="width: 5em;">ID
+                            <span class="sortorder" ng-show="manageProduct.predicate === 'id'" ng-class="{reverse:manageProduct.reverse}"></span>
+                        </th>
+                        <th ng-click="manageProduct.order('name')" style="width: 10em;">产品名称
+                            <span class="sortorder" ng-show="manageProduct.predicate === 'name'" ng-class="{reverse:manageProduct.reverse}"></span>
+                        </th>
+                        <th ng-click="manageProduct.order('batch')" style="width: 5em;">批次
+                            <span class="sortorder" ng-show="manageProduct.predicate === 'batch'" ng-class="{reverse:manageProduct.reverse}"></span>
+                        </th>
+                        <th ng-click="manageProduct.order('supplier')" style="width: 10em;">供应商
+                            <span class="sortorder" ng-show="manageProduct.predicate === 'supplier'" ng-class="{reverse:manageProduct.reverse}"></span>
+                        </th>
+                        <th ng-click="manageProduct.order('describe')" style="width: 10em;">描述
+                            <span class="sortorder" ng-show="manageProduct.predicate === 'describe'" ng-class="{reverse:manageProduct.reverse}"></span>
+                        </th>
+                        <th ng-click="manageProduct.order('create_date')" style="width: 10em;">创建时间
+                            <span class="sortorder" ng-show="manageProduct.predicate === 'create_date'" ng-class="{reverse:manageProduct.reverse}"></span>
+                        </th>
+                        <th>操作</th>
+                    </tr>
+                    <tr ng-repeat="product in manageProduct.products| orderBy:manageProduct.predicate:manageProduct.reverse">
+                        <td>{{product.id}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.batch}}</td>
+                        <td>{{product.supplier}}</td>
+                        <td>{{product.describe}}</td>
+                        <td>{{product.create_date}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#modifyModal" ng-click="manageProduct.setModal(product)">
+                                    <i class="fa fa-edit"></i> 修改
+                                </a>
+                                <a class="btn btn-app bg-maroon margin" ng-click="manageProduct.removeProduct(product.id)">
+                                    <i class="glyphicon glyphicon-remove"></i> 删除
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="text-center">
+                    <uib-pagination total-items="manageProduct.totalItems" ng-model="manageProduct.currentPage" max-size="manageProduct.maxSize" items-per-page="manageProduct.itemsPerPage" ng-change="manageProduct.pageChanged()" class="pagination-md" boundary-link-numbers="true"></uib-pagination>
+                </div>
+            </div>
+            <!-- /.box-body -->
         </div>
-        <div class="col-xs-3">
-			<div class="btn-group pull-right">
-				
-				<a class="btn btn-app bg-olive margin" data-toggle="modal" data-target="#newModal" ng-click="manageProduct.setNewModal()" >
-					<i class="glyphicon glyphicon-plus"></i> 新增
-				</a>
-
-			</div>
-        	
-        </div>
-        	
-        </div>
-
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body table-responsive no-padding">
-          <table class="table table-hover">
-            <tr>
-              <th ng-click="manageProduct.order('id')" style="width: 4em;">ID
-              <span class="sortorder" ng-show="manageProduct.predicate === 'id'" ng-class="{reverse:manageProduct.reverse}"></span>
-              </th>
-              <th ng-click="manageProduct.order('name')" style="width: 10em;">产品名称
-              <span class="sortorder" ng-show="manageProduct.predicate === 'name'" ng-class="{reverse:manageProduct.reverse}"></span>
-              </th>
-              <th ng-click="manageProduct.order('batch')" style="width: 5em;">批次
-              <span class="sortorder" ng-show="manageProduct.predicate === 'batch'" ng-class="{reverse:manageProduct.reverse}"></span>
-              </th>
-              <th ng-click="manageProduct.order('supplier')" style="width: 10em;">供应商
-              <span class="sortorder" ng-show="manageProduct.predicate === 'supplier'" ng-class="{reverse:manageProduct.reverse}"></span>
-              </th>
-              <th ng-click="manageProduct.order('describe')" style="width: 10em;">描述
-              <span class="sortorder" ng-show="manageProduct.predicate === 'describe'" ng-class="{reverse:manageProduct.reverse}"></span>
-              </th>
-              <th ng-click="manageProduct.order('create_date')" style="width: 10em;">创建时间
-              <span class="sortorder" ng-show="manageProduct.predicate === 'create_date'" ng-class="{reverse:manageProduct.reverse}"></span>
-              </th>
-              <th>操作</th>
-            </tr>
-            <tr ng-repeat="product in manageProduct.products| orderBy:manageProduct.predicate:manageProduct.reverse">
-              <td>{{product.id}}</td>
-              <td>{{product.name}}</td>
-              <td>{{product.batch}}</td>
-              <td>{{product.supplier}}</td>
-              <td>{{product.describe}}</td>
-              <td>{{product.create_date}}</td>
-              <td>
-              <div class="btn-group">
-              	<a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#modifyModal" ng-click="manageProduct.setModal(product)">
-	               <i class="fa fa-edit"></i> 修改
-	            </a>
-	            <a class="btn btn-app bg-maroon margin" ng-click="manageProduct.removeProduct(product.id)">
-	               <i class="glyphicon glyphicon-remove"></i> 删除
-	            </a>
-              	
-              </div>
-              </td>
-            </tr>
-            
-          </table>
-          <uib-pagination total-items="manageProduct.totalItems" ng-model="manageProduct.currentPage" max-size="manageProduct.maxSize" items-per-page="manageProduct.itemsPerPage" ng-change="manageProduct.pageChanged()" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
-        </div>
-        <!-- /.box-body -->
-      </div>
-  <!-- /.box -->
-	</div>
+        <!-- /.box -->
+    </div>
 </div>
-           
-            
-
 <!--New Modal -->
 <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">新增产品</h4>
-      </div>
-      <div class="modal-body">
-            <!-- form start -->
-            <form class="form-horizontal">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label">产品名称</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" placeholder="产品名称" ng-model="manageProduct.newProduct.name">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="batch" class="col-sm-2 control-label">批次</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="batch" placeholder="批次" ng-model="manageProduct.newProduct.batch">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="supplier" class="col-sm-2 control-label">供应商</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="supplier" placeholder="供应商" ng-model="manageProduct.newProduct.supplier">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="describe" class="col-sm-2 control-label">描述</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="describe" placeholder="描述" ng-model="manageProduct.newProduct.describe">
-                  </div>
-                </div>
-                <div class="form-group">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">新增产品</h4>
+            </div>
+            <div class="modal-body">
+                <!-- form start -->
+                <form class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">产品名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" placeholder="产品名称" ng-model="manageProduct.newProduct.name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="batch" class="col-sm-2 control-label">批次</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="batch" placeholder="批次" ng-model="manageProduct.newProduct.batch">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="supplier" class="col-sm-2 control-label">供应商</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="supplier" placeholder="供应商" ng-model="manageProduct.newProduct.supplier">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="describe" class="col-sm-2 control-label">描述</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="describe" placeholder="描述" ng-model="manageProduct.newProduct.describe">
+                            </div>
+                        </div>
+                        <!--  <div class="form-group">
                   <label for="create_date" class="col-sm-2 control-label">创建时间</label>
 
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="create_date" placeholder="创建时间" ng-model="manageProduct.newProduct.create_date">
                   </div>
-                </div>
-              </div>
-            </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="manageProduct.createProduct()">保存</button>
-      </div>
+                </div> -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="manageProduct.createProduct()">保存</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <!--Modify Modal -->
 <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">修改产品</h4>
-      </div>
-      <div class="modal-body">
-            <!-- form start -->
-            <form class="form-horizontal">
-              <div class="box-body" ng->
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label">产品名称</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" placeholder="产品名称"
-                    ng-model="manageProduct.selectedProduct.name">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="batch" class="col-sm-2 control-label">批次</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="batch" placeholder="批次"
-                    ng-model="manageProduct.selectedProduct.batch">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="supplier" class="col-sm-2 control-label">供应商</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="supplier" placeholder="供应商"
-                    ng-model="manageProduct.selectedProduct.supplier">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="describe" class="col-sm-2 control-label">描述</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="describe" placeholder="描述"
-                    ng-model="manageProduct.selectedProduct.describe">
-                  </div>
-                </div>
-                <div class="form-group">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改产品</h4>
+            </div>
+            <div class="modal-body">
+                <!-- form start -->
+                <form class="form-horizontal">
+                    <div class="box-body" ng->
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">产品名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" placeholder="产品名称" ng-model="manageProduct.selectedProduct.name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="batch" class="col-sm-2 control-label">批次</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="batch" placeholder="批次" ng-model="manageProduct.selectedProduct.batch">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="supplier" class="col-sm-2 control-label">供应商</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="supplier" placeholder="供应商" ng-model="manageProduct.selectedProduct.supplier">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="describe" class="col-sm-2 control-label">描述</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="describe" placeholder="描述" ng-model="manageProduct.selectedProduct.describe">
+                            </div>
+                        </div>
+                        <!--  <div class="form-group">
                   <label for="create_date" class="col-sm-2 control-label">创建时间</label>
 
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="create_date" placeholder="创建时间"
                     ng-model="manageProduct.selectedProduct.create_date">
                   </div>
-                </div>
-              </div>
-            </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" ng-click="manageProduct.updateProduct()" data-dismiss="modal">保存</button>
-      </div>
+                </div> -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" ng-click="manageProduct.updateProduct()" data-dismiss="modal">保存</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

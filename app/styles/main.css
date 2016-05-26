@@ -7,3 +7,6 @@ table > tbody > tr > th{
 .sortorder.reverse:after {
   content: '\25bc';
 }
+.table > tbody > tr > td {
+    vertical-align: middle;
+}

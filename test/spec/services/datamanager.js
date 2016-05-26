@@ -21,11 +21,19 @@ describe('Service: dataManager', function () {
   //products //
   /////////////
   it('C|createProduct should create product ', inject(function($httpBackend) {
-    dataManager.products.save({"data":"data"});
+    dataManager.products.save({"json":{"batch":99,
+            "create_date":"1990-02-26",
+            "describe":"vxhcrt",
+            "name":"Patricia Wilson",
+            "supplier":"Patricia Wilson"}});
     $httpBackend
         .expect('POST', 
-          '/api/products',{
-            "data":"data"
+          '/api/v2/products',{
+            "json":{"batch":99,
+            "create_date":"1990-02-26",
+            "describe":"vxhcrt",
+            "name":"Patricia Wilson",
+            "supplier":"Patricia Wilson"}
           })
         .respond(200, 
           {
@@ -37,7 +45,7 @@ describe('Service: dataManager', function () {
     dataManager.products.get({current_page:1,items_per_page:10,order_by:"id",reverse:true});
     $httpBackend
         .expect('GET', 
-          '/api/products?current_page=1&items_per_page=10&order_by=id&reverse=true')
+          '/api/v2/products?current_page=1&items_per_page=10&order_by=id&reverse=true')
         .respond(200, 
           {
             "products":"content"
@@ -46,12 +54,20 @@ describe('Service: dataManager', function () {
   }));
 
   it('U|update Products should update products ', inject(function($httpBackend) {
-    dataManager.products.update({id:1},{"name":"Nick","email":"a@a.com"});
+    dataManager.products.update({id:1},{
+            "json":{"batch":99,
+            "create_date":"1990-02-26",
+            "describe":"vxhcrt",
+            "name":"Patricia Wilson",
+            "supplier":"Patricia Wilson"}});
     $httpBackend
         .expect('PUT', 
-          '/api/products/1',{
-            "name":"Nick",
-            "email":"a@a.com"
+          '/api/v2/products/1',{
+            "json":{"batch":99,
+            "create_date":"1990-02-26",
+            "describe":"vxhcrt",
+            "name":"Patricia Wilson",
+            "supplier":"Patricia Wilson"}
           })
         .respond(200, 
           {
@@ -67,7 +83,7 @@ describe('Service: dataManager', function () {
     dataManager.products.delete({id:1234});
     $httpBackend
         .expect('DELETE', 
-          '/api/products/1234')
+          '/api/v2/products/1234')
         .respond(200, 
           {
             "status":"success"

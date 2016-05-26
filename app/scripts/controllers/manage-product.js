@@ -44,7 +44,28 @@ angular.module('manageApp')
         /////////////
         // Product //
         /////////////
-
+        self.searchProducts = function(q) {
+        	console.log("q="+q);
+        	self.currentPage = 1;
+            dataManager.products.get({
+                    current_page: self.currentPage,
+                    items_per_page: self.itemsPerPage,
+                    order_by: self.predicate,
+                    q:q,
+                    reverse: self.reverse
+                }).$promise
+                .then(function(response) {
+                    console.log("搜索产品 SUCCESS!");
+                    // console.dir(response);
+                    self.products = response.json;
+                    self.totalItems = response.total_items;
+                });
+        };
+        self.resetSearch =function() {
+        	self.q = "";
+        	self.currentPage = 1;
+        	self.getProducts();
+        };
         self.getProducts = function() {
             dataManager.products.get({
                     current_page: self.currentPage,
@@ -55,7 +76,7 @@ angular.module('manageApp')
                 .then(function(response) {
                     console.log("获取产品 SUCCESS!");
                     // console.dir(response);
-                    self.products = response.products;
+                    self.products = response.json;
                     self.totalItems = response.total_items;
                 });
 
@@ -68,10 +89,12 @@ angular.module('manageApp')
             // console.log(self.selectedProduct);
         };
         self.setNewModal = function() {
-            self.newProduct = null;
+            self.newProduct = {};
         };
         self.createProduct = function() {
-            dataManager.products.save({ "data": "data" }).$promise
+            self.newProduct.create_date = (new Date()).toISOString().slice(0, 10);
+            console.log({ "json": self.newProduct });
+            dataManager.products.save({ "json": self.newProduct }).$promise
                 .then(function() {
                     console.log("新增产品 SUCCESS!");
                     // console.log(data);
@@ -80,10 +103,11 @@ angular.module('manageApp')
                 });
         };
         self.updateProduct = function() {
+            // console.log({"json":self.selectedProduct});
             dataManager.products.update({
                     id: self.selectedProduct.id
                 }, {
-                    "data": self.selectedProduct
+                    "json": self.selectedProduct
                 }).$promise
                 .then(function() {
                     console.log("修改产品 SUCCESS!");
@@ -93,6 +117,7 @@ angular.module('manageApp')
                 });
         };
         self.removeProduct = function(id) {
+            // console.log({ id: id });
             dataManager.products.delete({ id: id }).$promise
                 .then(function() {
                     console.log("删除产品 SUCCESS!");
