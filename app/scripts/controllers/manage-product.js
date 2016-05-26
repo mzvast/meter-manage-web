@@ -42,9 +42,9 @@ angular.module('manageApp')
             self.getProducts();
         };
         /////////////
-        // Product //
+        // search //
         /////////////
-        self.searchProducts = function(q) {
+        self.search = function(q) {
         	console.log("q="+q);
         	self.currentPage = 1;
             dataManager.products.get({
@@ -66,6 +66,9 @@ angular.module('manageApp')
         	self.currentPage = 1;
         	self.getProducts();
         };
+         /////////////
+        // Product //
+        /////////////
         self.getProducts = function() {
             dataManager.products.get({
                     current_page: self.currentPage,
@@ -92,8 +95,8 @@ angular.module('manageApp')
             self.newProduct = {};
         };
         self.createProduct = function() {
-            self.newProduct.create_date = (new Date()).toISOString().slice(0, 10);
-            console.log({ "json": self.newProduct });
+            // self.newProduct.create_date = (new Date()).toISOString().slice(0, 10);
+            // console.log({ "json": self.newProduct });
             dataManager.products.save({ "json": self.newProduct }).$promise
                 .then(function() {
                     console.log("新增产品 SUCCESS!");
