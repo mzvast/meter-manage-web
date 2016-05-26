@@ -14,7 +14,9 @@ module.exports = function (grunt) {
   var api = grunt.option('api'),
       apiHost = grunt.option('apiHost'),
       apiPort = grunt.option('apiPort'),
-      Host = grunt.option('host');
+      Host = grunt.option('host'),
+      Port = grunt.option('port'),
+      livereloadPort = grunt.option('live');
 
   if (typeof apiHost !== 'string') {
     apiHost = 'localhost';
@@ -96,10 +98,10 @@ module.exports = function (grunt) {
     // The actual grunt server settings
     connect: {
       options: {
-        port: 9000,
+        port: Port||9000,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: Host||'localhost',
-        livereload: 35729
+        livereload: livereloadPort||35729
       },
       proxies: {
           context: '/api',// the context of the data service
