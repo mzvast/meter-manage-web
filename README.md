@@ -11,6 +11,8 @@ Run `node index.js` will serve the dist folder.
 
 ## Simple API server forward 
 ###Development env: 
+shortcut:
+`npm run serve`will run `grunt serve --host=0.0.0.0 --port=8000 --live=8001`
 
 Defined in Gruntfile.js
 
