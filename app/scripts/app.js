@@ -18,7 +18,7 @@ angular
   .config(["$locationProvider", function($locationProvider) {
     $locationProvider.html5Mode(true);
   }])
-  
+
     //////////////////////////////
     //configure $cookiesProvider //
     //////////////////////////////
@@ -36,7 +36,7 @@ angular
   	.state('home',{
   		url:'/',
   		templateUrl:'views/main.html',
-  		controller:'MainCtrl',      
+  		controller:'MainCtrl',
   		authenticate:false
   	})
   	.state("login", {
@@ -44,7 +44,7 @@ angular
       templateUrl: "views/login.html",
       controller: "LoginCtrl as login",
       authenticate: false
-    }) 
+    })
     .state("manage-product", {
       url: "/manage-product",
       templateUrl: "views/manage-product.html",
@@ -60,28 +60,29 @@ angular
     .state("manage-requirement", {
       url: "/manage-requirement",
       templateUrl: "views/manage-requirement.html",
+      controller:'ManageRequirementCtrl as manageReq',
       authenticate: false,
     })
     .state("manage-environment", {
       url: "/manage-environment",
       templateUrl: "views/manage-environment.html",
       authenticate: false,
-    }) 
+    })
     .state("manage-plan", {
       url: "/manage-plan",
       templateUrl: "views/manage-plan.html",
       authenticate: false,
-    }) 
+    })
     .state("manage-flaw", {
       url: "/manage-flaw",
       templateUrl: "views/manage-flaw.html",
       authenticate: false,
-    }) 
+    })
     .state("manage-result", {
       url: "/manage-result",
       templateUrl: "views/manage-result.html",
       authenticate: false,
-    }) 
+    })
     .state("action-suite-edit", {
       url: "/action-suite-edit",
       templateUrl: "views/action-suite-edit.html",
@@ -116,7 +117,7 @@ angular
       url: "/action-generate-test-result",
       templateUrl: "views/action-generate-test-result.html",
       authenticate: false,
-    }) 
+    })
     .state("setting-role", {
       url: "/setting-role",
       templateUrl: "views/setting-role.html",
@@ -126,14 +127,14 @@ angular
       url: "/setting-encrypt",
       templateUrl: "views/setting-encrypt.html",
       authenticate: false,
-    })   
+    })
     ;
-  	
+
   }])
-  .config(['$httpProvider', 
+  .config(['$httpProvider',
           'ngRapProvider',
           function (
-            httpProvider, 
+            httpProvider,
             ngRapProvider) {
             ngRapProvider.script = 'http://rap.taobao.org/rap.plugin.js?projectId=3768'; // replce your host and project id
             ngRapProvider.enable({
@@ -147,7 +148,7 @@ angular
       if (toState.authenticate && !AuthService.isAuthenticated()){
         // User isn’t authenticated
         $state.transitionTo("login");
-        event.preventDefault(); 
+        event.preventDefault();
       }
     });
   })

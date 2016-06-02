@@ -45,4 +45,15 @@ angular.module('manageApp')
             }
         });
 
+        ///////////////////
+        //requirements resource //
+        ///////////////////
+        self.requirements = $resource('/api/v2/requirements/:id', {
+            id: '@id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
+        });
+
     }]);
