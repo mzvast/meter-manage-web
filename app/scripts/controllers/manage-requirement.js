@@ -15,8 +15,29 @@ angular.module('manageApp')
             'AngularJS',
             'Karma'
         ];
+        //////////
+        // 列表数据模型 //
+        //////////
+        self.model = {
+            id: "ID",
+            title: "名称",
+            describe: "描述",
+            type: "类型",
+            create_date: "创建时间"
+        };
+        //////////////
+        // form数据模型 //
+        //////////////
+        self.formModel = {
+            id: "ID",
+            title: "名称",
+            describe: "描述",
+            type: "类型"
+        };
+
+
         ////////////////
-        // sort //
+        // 排序 //
         ////////////////
         self.predicate = 'id';
         self.reverse = true;
@@ -26,7 +47,7 @@ angular.module('manageApp')
             self.get();
         };
         ////////////////
-        //Pagination  //
+        //分页  //
         ////////////////
         // self.totalItems = 100;
         self.currentPage = 1;
@@ -42,7 +63,7 @@ angular.module('manageApp')
             self.get();
         };
         /////////////
-        // search //
+        // 搜索 //
         /////////////
         self.search = function(q) {
             console.log("q=" + q);
@@ -89,12 +110,17 @@ angular.module('manageApp')
         self.get();
 
         self.setModal = function(item) {
-            self.selectedItem = item;
+            if (item === undefined) {
+                self.form = {};
+                self.modalTitle = "新增需求";
+                return;
+            } else {
+                self.form = item;
+                self.modalTitle = "修改需求";
+            }
             // console.log(self.selectedItem);
         };
-        self.setNewModal = function() {
-            self.new = {};
-        };
+
         self.create = function() {
             // self.new.create_date = (new Date()).toISOString().slice(0, 10);
             // console.log({ "json": self.new });

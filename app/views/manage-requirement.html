@@ -6,6 +6,7 @@
                     <div class="col-xs-6">
                         <h3 class="text-center"><b>需求管理</b></h3>
                     </div>
+                    <!-- 搜索功能 -->
                     <div class="col-xs-3">
                         <form class="sidebar-form" style="margin-top: 1.6em;">
                             <div class="input-group">
@@ -21,151 +22,96 @@
                             </div>
                         </form>
                     </div>
+                    <!-- /搜索功能  -->
+                    <!-- 新增按钮 -->
                     <div class="col-xs-2 text-center">
-                        <a class="btn btn-app bg-olive margin " data-toggle="modal" data-target="#newModal" ng-click="manageReq.setNewModal()">
+                        <a class="btn btn-app bg-olive margin " data-toggle="modal" data-target="#Modal" ng-click="manageReq.setModal()">
                             <i class="glyphicon glyphicon-plus"></i> 新增
                         </a>
                     </div>
+                    <!-- /新增按钮 -->
                 </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover text-center">
+                    <!-- 列表头 -->
                     <tr>
-                        <th ng-click="manageReq.order('id')" style="width: 5em;">ID
-                            <span class="sortorder" ng-show="manageReq.predicate === 'id'" ng-class="{reverse:manageReq.reverse}"></span>
+                        <!-- 模型列表头 -->
+                        <th ng-repeat="(key, value) in manageReq.model" ng-click="manageReq.order(key)">
+                            {{value}}
+                            <span class="sortorder" ng-show="manageReq.predicate === key" ng-class="{reverse:manageReq.reverse}"></span>
                         </th>
-                        <th ng-click="manageReq.order('title')" style="width: 10em;">名称
-                            <span class="sortorder" ng-show="manageReq.predicate === 'title'" ng-class="{reverse:manageReq.title}"></span>
-                        </th>
-                        <th ng-click="manageReq.order('describe')" style="width: 10em;">描述
-                            <span class="sortorder" ng-show="manageReq.predicate === 'describe'" ng-class="{reverse:manageReq.reverse}"></span>
-                        </th>
-                        <th ng-click="manageReq.order('type')" style="width: 5em;">类型
-                            <span class="sortorder" ng-show="manageReq.predicate === 'type'" ng-class="{reverse:manageReq.type}"></span>
-                        </th>
-                        <th ng-click="manageReq.order('create_date')" style="width: 10em;">创建时间
-                            <span class="sortorder" ng-show="manageReq.predicate === 'create_date'" ng-class="{reverse:manageReq.reverse}"></span>
-                        </th>
+                        <!-- /模型列表头 -->
+                        <!-- 功能列表头 -->
                         <th>操作</th>
+                        <!-- /功能列表头 -->
                     </tr>
-                    <tr ng-repeat="requirement in manageReq.itemList| orderBy:manageReq.predicate:manageReq.reverse">
-                        <td>{{requirement.id}}</td>
-                        <td>{{requirement.title}}</td>
-                        <td>{{requirement.describe}}</td>
-                        <td>{{requirement.type}}</td>
-                        <td>{{requirement.create_date}}</td>
+                    <!-- /列表头 -->
+                    <tr ng-repeat="item in manageReq.itemList| orderBy:manageReq.predicate:manageReq.reverse">
+                        <!-- 模型列表内容  -->
+                        <td ng-repeat="(key, value) in manageReq.model">{{item[key]}}</td>
+                        <!-- /模型列表内容  -->
+                        <!-- 操作按钮  -->
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#modifyModal" ng-click="manageReq.setModal(requirement)">
+                                <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#Modal" ng-click="manageReq.setModal(item)">
                                     <i class="fa fa-edit"></i> 修改
                                 </a>
-                                <a class="btn btn-app bg-maroon margin" ng-click="manageReq.remove(requirement.id)">
+                                <a class="btn btn-app bg-maroon margin" ng-click="manageReq.remove(item.id)">
                                     <i class="glyphicon glyphicon-remove"></i> 删除
                                 </a>
                             </div>
                         </td>
+                        <!-- /操作按钮  -->
                     </tr>
                 </table>
+                <!-- 分页器 -->
                 <div class="text-center">
                     <uib-pagination total-items="manageReq.totalItems" ng-model="manageReq.currentPage" max-size="manageReq.maxSize" items-per-page="manageReq.itemsPerPage" ng-change="manageReq.pageChanged()" class="pagination-md" boundary-link-numbers="true"></uib-pagination>
                 </div>
+                <!-- /分页器 -->
             </div>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
     </div>
 </div>
-<!--New Modal -->
-<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!--Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">新增需求</h4>
+                <h4 class="modal-title" id="myModalLabel">{{manageReq.modalTitle}}</h4>
             </div>
             <div class="modal-body">
-                <!-- form start -->
+                <!-- form  -->
                 <form class="form-horizontal">
                     <div class="box-body">
-                        <div class="form-group">
-                            <label for="title" class="col-sm-2 control-label">名称</label>
+                        <!-- 模型form内容  -->
+                        <div ng-repeat="(key, value) in manageReq.formModel" class="form-group">
+                            <label for="title" class="col-sm-2 control-label">{{value}}</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="title" placeholder="名称" ng-model="manageReq.new.title">
+                                <input type="text" class="form-control" id="{{key}}" placeholder="{{value}}" ng-model="manageReq.form[key]">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="describe" class="col-sm-2 control-label">描述</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="describe" placeholder="描述" ng-model="manageReq.new.describe">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="type" class="col-sm-2 control-label">类型</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="type" placeholder="类型" ng-model="manageReq.new.type">
-                            </div>
-                        </div>
+                        <!-- /模型form内容  -->
+                        <!-- 特殊form内容 -->
                         <div class="form-group">
                             <label for="detail" class="col-sm-2 control-label">详情</label>
-                            <div class="col-sm-10" >
-                                <textarea style="height: 30vh" type="text" class="form-control" id="detail" placeholder="详情" ng-model="manageReq.new.detail">
+                            <div class="col-sm-10">
+                                <textarea style="height: 30vh" type="text" class="form-control" id="detail" placeholder="详情" ng-model="manageReq.form.detail">
                                 </textarea>
                             </div>
                         </div>
+                        <!-- /特殊form内容 -->
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="manageReq.create()">保存</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--Modify Modal -->
-<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">修改需求</h4>
-            </div>
-            <div class="modal-body">
-                <!-- form start -->
-                <form class="form-horizontal">
-                    <div class="box-body" ng->
-                        <div class="form-group">
-                            <label for="title" class="col-sm-2 control-label">名称</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="title" placeholder="名称" ng-model="manageReq.selectedItem.title">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="describe" class="col-sm-2 control-label">描述</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="describe" placeholder="描述" ng-model="manageReq.selectedItem.describe">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="type" class="col-sm-2 control-label">类型</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="type" placeholder="类型" ng-model="manageReq.selectedItem.type">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="detail" class="col-sm-2 control-label">详情</label>
-                            <div class="col-sm-10">
-                                <textarea style="height: 30vh" type="text" class="form-control" id="detail" placeholder="详情" ng-model="manageReq.selectedItem.detail">
-                                </textarea>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" ng-click="manageReq.update()" data-dismiss="modal">保存</button>
             </div>
         </div>
     </div>
