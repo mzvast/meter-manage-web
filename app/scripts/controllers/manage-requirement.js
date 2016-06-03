@@ -15,6 +15,16 @@ angular.module('manageApp')
             'AngularJS',
             'Karma'
         ];
+        ///////////
+        // 页面元数据 //
+        ///////////
+        self.pageResourceName = "需求";
+        self.pageType = "管理";
+        self.pageTitle = self.pageResourceName + self.pageType;
+        ////////////
+        // 定义资源别名 //
+        ////////////
+        self.resource = dataManager.requirements;
         //////////
         // 列表数据模型 //
         //////////
@@ -88,17 +98,17 @@ angular.module('manageApp')
             self.get();
         };
         /////////////
-        // Requirements //
+        // 资源 //
         /////////////
         self.get = function() {
-            dataManager.requirements.get({
+            self.resource.get({
                     current_page: self.currentPage,
                     items_per_page: self.itemsPerPage,
                     order_by: self.predicate,
                     reverse: self.reverse
                 }).$promise
                 .then(function(response) {
-                    console.log("获取需求 SUCCESS!");
+                    console.log("获取"+self.pageResourceName+" SUCCESS!");
                     // console.dir(response);
                     // console.dir(response.json);
                     self.itemList = response.json;
@@ -112,47 +122,63 @@ angular.module('manageApp')
         self.setModal = function(item) {
             if (item === undefined) {
                 self.form = {};
-                self.modalTitle = "新增需求";
+                self.modalType = 0;
+                self.modalTitle = "新增"+self.pageResourceName;
                 return;
             } else {
                 self.form = item;
-                self.modalTitle = "修改需求";
+                self.modalType = 1;
+                self.modalTitle = "修改"+self.pageResourceName;
             }
             // console.log(self.selectedItem);
         };
-
+        ///////////////////
+        // 保存时候区分是新建还是修改 //
+        ///////////////////
+        self.save = function() {
+            switch (self.modalType) {
+                case 0:
+                    self.create();
+                    break;
+                case 1:
+                    self.update();
+                    break;
+                default:
+                    return;
+            }
+        }
         self.create = function() {
             // self.new.create_date = (new Date()).toISOString().slice(0, 10);
             // console.log({ "json": self.new });
-            dataManager.requirements.save({ "json": self.new }).$promise
+            self.resource.save({ "json": self.new }).$promise
                 .then(function() {
-                    console.log("新增需求 SUCCESS!");
+                    console.log("新增资源 SUCCESS!");
                     // console.log(data);
-                    dataManager.addNotification("success", "新需求创建成功");
+                    dataManager.addNotification("success", "新"+self.pageResourceName+"创建成功");
                     self.get();
                 });
         };
         self.update = function() {
             // console.log({"json":self.selectedItem});
-            dataManager.requirements.update({
-                    id: self.selectedItem.id
+            self.resource.update({
+                    id: self.form.id
                 }, {
-                    "json": self.selectedItem
+                    "json": self.form
                 }).$promise
                 .then(function() {
-                    console.log("修改需求 SUCCESS!");
+                    console.log("修改资源 SUCCESS!");
                     // console.log(data);
                     self.get();
-                    dataManager.addNotification("success", "需求" + self.selectedItem.id + "修改成功");
+                    dataManager.addNotification("success", self.pageResourceName + self.form.id + "修改成功");
                 });
         };
         self.remove = function(id) {
             // console.log({ id: id });
-            dataManager.requirements.delete({ id: id }).$promise
+            self.resource.delete({ id: id }).$promise
                 .then(function() {
-                    console.log("删除需求 SUCCESS!");
+                    console.log("删除资源 SUCCESS!");
                     // console.log(data);
-                    dataManager.addNotification("success", "需求" + id + "删除成功");
+                    dataManager.addNotification("success", self.pageResourceName + id + "删除成功");
                     self.get();
                 });
         };
