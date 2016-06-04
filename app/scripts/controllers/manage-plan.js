@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name manageApp.controller:ManageEnvironmentCtrl
+ * @name manageApp.controller:ManagePlanCtrl
  * @description
- * # ManageEnvironmentCtrl
+ * # ManagePlanCtrl
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ManageEnvironmentCtrl', ['dataManager', 'uiManager', function(dataManager, uiManager) {
+  .controller('ManagePlanCtrl', ['dataManager', 'uiManager', function(dataManager, uiManager) {
         var self = this;
         self.awesomeThings = [
             'HTML5 Boilerplate',
@@ -19,23 +19,22 @@ angular.module('manageApp')
         /////////////////////////
         // 页面基础设施初始化 //
         ////////////////////////
-        uiManager.pageInit("环境", "管理", self);
+        uiManager.pageInit("计划", "管理", self);
         //////////////////
         // 列表数据模型 //
         /////////////////
         self.model = {
             id: "ID",
             title: "名称",
-            describe: "描述",
-            type: "类型",
-            create_date: "创建时间"
+            creator:"制定者",
+            create_date: "创建时间",
         };
         ////////////
         // 标签数据模型 //
         ////////////
         self.tabs = {
-            0: "软件环境",
-            1: "硬件环境"
+            0: "未完成",
+            1: "已完成"
         }
         self.setTab = function(value) {
             self.type = value ? value : -1;
@@ -46,7 +45,8 @@ angular.module('manageApp')
         //////////////
         self.formModel = {
             title: "名称",
-            describe: "描述"
+            describe: "描述",
+            type: "类型"
         };
         ////////////
         // 配置调试 //
@@ -57,7 +57,7 @@ angular.module('manageApp')
         // 资源连接 //
         /////////////
         ['C', 'R', 'U', 'D'].map(function(elem) {
-            self[elem] = dataManager[elem]('envs', self);
+            self[elem] = dataManager[elem]('plans', self);
         })
 
         ///////////

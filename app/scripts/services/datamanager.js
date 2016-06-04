@@ -84,6 +84,17 @@ angular.module('manageApp')
                 method: 'PUT'
             }
         });
+
+        //////////////////
+        // plans resource //
+        //////////////////
+        self.plans = $resource('/api/v2/plans/:id', {
+            id: '@id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
+        });
         //////////////
         // CRUD构造函数 //
         //////////////

@@ -72,6 +72,7 @@ angular
     .state("manage-plan", {
       url: "/manage-plan",
       templateUrl: "views/manage-plan.html",
+      controller:'ManagePlanCtrl as managePlan',
       authenticate: false,
     })
     .state("manage-flaw", {
