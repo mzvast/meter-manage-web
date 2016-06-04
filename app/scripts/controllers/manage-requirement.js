@@ -8,7 +8,7 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-    .controller('ManageRequirementCtrl', ['dataManager', function(dataManager) {
+    .controller('ManageRequirementCtrl', ['dataManager', 'uiManager',function(dataManager,uiManager) {
         var self = this;
         self.awesomeThings = [
             'HTML5 Boilerplate',
@@ -19,7 +19,7 @@ angular.module('manageApp')
         /////////////////////////
         // 页面基础设施初始化 //
         ////////////////////////
-        dataManager.pageInitAllConstructor("需求", "管理", self);
+        uiManager.pageInit("需求", "管理", self);
         //////////////////
         // 列表数据模型 //
         /////////////////

@@ -4,186 +4,114 @@
             <div class="box-header">
                 <div class="row">
                     <div class="col-xs-6">
-                        <h3 class="text-center"><b>人员管理</b></h3>
+                        <h3 class="text-center"><b>{{manageUser.pageTitle}}</b></h3>
                     </div>
+                    <!-- 搜索功能 -->
                     <div class="col-xs-3">
                         <form class="sidebar-form" style="margin-top: 1.6em;">
                             <div class="input-group">
                                 <input type="text" name="q" class="form-control" ng-model="manageUser.q" placeholder="搜索">
                                 <span class="input-group-btn">
-                                  <button ng-click="manageUser.search(manageUser.q)"  type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                                  <button ng-click="manageUser.search(manageUser.q)" type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                                   </button>
                                 </span>
                                 <span class="input-group-btn">
-                                  <button ng-click="manageUser.resetSearch()" type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
+                                  <button ng-click="manageUser.search()" type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
                                   </button>
                                 </span>
                             </div>
                         </form>
                     </div>
+                    <!-- /搜索功能  -->
+                    <!-- 新增按钮 -->
                     <div class="col-xs-2 text-center">
-                        <a class="btn btn-app bg-olive margin" data-toggle="modal" data-target="#newModal" ng-click="manageUser.setNewModal()">
+                        <a class="btn btn-app bg-olive margin " data-toggle="modal" data-target="#Modal" ng-click="manageUser.setModal()">
                             <i class="glyphicon glyphicon-plus"></i> 新增
                         </a>
                     </div>
+                    <!-- /新增按钮 -->
                 </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover text-center">
+                    <!-- 列表头 -->
                     <tr>
-                        <th ng-click="manageUser.order('id')" style="width: 5em;">ID
-                            <span class="sortorder" ng-show="manageUser.predicate === 'id'" ng-class="{reverse:manageUser.reverse}"></span>
+                        <!-- 模型列表头 -->
+                        <th ng-repeat="(key, value) in manageUser.model" ng-click="manageUser.order(key)">
+                            {{value}}
+                            <span class="sortorder" ng-show="manageUser.predicate === key" ng-class="{reverse:manageUser.reverse}"></span>
                         </th>
-                        <th ng-click="manageUser.order('name')" style="width: 5em;">姓名
-                            <span class="sortorder" ng-show="manageUser.predicate === 'name'" ng-class="{reverse:manageUser.reverse}"></span>
-                        </th>
-                        <th ng-click="manageUser.order('age')" style="width: 5em;">年龄
-                            <span class="sortorder" ng-show="manageUser.predicate === 'age'" ng-class="{reverse:manageUser.reverse}"></span>
-                        </th>
-                        <th ng-click="manageUser.order('exp')" style="width: 10em;">测试经验
-                            <span class="sortorder" ng-show="manageUser.predicate === 'exp'" ng-class="{reverse:manageUser.reverse}"></span>
-                        </th>
-                        <th ng-click="manageUser.order('skill')" style="width: 10em;">技能
-                            <span class="sortorder" ng-show="manageUser.predicate === 'skill'" ng-class="{reverse:manageUser.reverse}"></span>
-                        </th>
-                        <th ng-click="manageUser.order('perm')" style="width: 8em;">权限
-                            <span class="sortorder" ng-show="manageUser.predicate === 'perm'" ng-class="{reverse:manageUser.reverse}"></span>
-                        </th>
-                        <th ng-click="manageUser.order('create_date')" style="width: 10em;">创建时间
-                            <span class="sortorder" ng-show="manageUser.predicate === 'create_date'" ng-class="{reverse:manageUser.reverse}"></span>
-                        </th>
+                        <!-- /模型列表头 -->
+                        <!-- 功能列表头 -->
                         <th>操作</th>
+                        <!-- /功能列表头 -->
                     </tr>
-                    <tr ng-repeat="user in manageUser.users| orderBy:manageUser.predicate:manageUser.reverse">
-                        <td>{{user.id}}</td>
-                        <td>{{user.name}}</td>
-                        <td>{{user.age}}</td>
-                        <td>{{user.exp}}</td>
-                        <td>{{user.skill}}</td>
-                        <td>{{user.perm}}</td>
-                        <td>{{user.create_date}}</td>
+                    <!-- /列表头 -->
+                    <tr ng-repeat="item in manageUser.itemList| orderBy:manageUser.predicate:manageUser.reverse">
+                        <!-- 模型列表内容  -->
+                        <td ng-repeat="(key, value) in manageUser.model">{{item[key]}}</td>
+                        <!-- /模型列表内容  -->
+                        <!-- 操作按钮  -->
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#modifyModal" ng-click="manageUser.setModal(user)">
+                                <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#Modal" ng-click="manageUser.setModal(item)">
                                     <i class="fa fa-edit"></i> 修改
                                 </a>
-                                <a class="btn btn-app bg-maroon margin" ng-click="manageUser.removeUser(user.id)">
+                                <a class="btn btn-app bg-maroon margin" ng-click="manageUser.remove(item.id)">
                                     <i class="glyphicon glyphicon-remove"></i> 删除
                                 </a>
                             </div>
                         </td>
+                        <!-- /操作按钮  -->
                     </tr>
                 </table>
+                <!-- 分页器 -->
                 <div class="text-center">
                     <uib-pagination total-items="manageUser.totalItems" ng-model="manageUser.currentPage" max-size="manageUser.maxSize" items-per-page="manageUser.itemsPerPage" ng-change="manageUser.pageChanged()" class="pagination-md" boundary-link-numbers="true"></uib-pagination>
                 </div>
+                <!-- /分页器 -->
             </div>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
     </div>
 </div>
-<!--New Modal -->
-<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!--Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">新增用户</h4>
+                <h4 class="modal-title" id="myModalLabel">{{manageUser.modalTitle}}</h4>
             </div>
             <div class="modal-body">
-                <!-- form start -->
+                <!-- form  -->
                 <form class="form-horizontal">
                     <div class="box-body">
-                        <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">姓名</label>
+                        <!-- 模型form内容  -->
+                        <div ng-repeat="(key, value) in manageUser.formModel" class="form-group">
+                            <label for="title" class="col-sm-2 control-label">{{value}}</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="name" placeholder="姓名" ng-model="manageUser.newUser.name">
+                                <input type="text" class="form-control" id="{{key}}" placeholder="{{value}}" ng-model="manageUser.form[key]">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="age" class="col-sm-2 control-label">年龄</label>
+                        <!-- /模型form内容  -->
+                        <!-- 特殊form内容 -->
+                      <!--   <div class="form-group">
+                            <label for="detail" class="col-sm-2 control-label">详情</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="age" placeholder="年龄" ng-model="manageUser.newUser.age">
+                                <textarea style="height: 30vh" type="text" class="form-control" id="detail" placeholder="详情" ng-model="manageUser.form.detail">
+                                </textarea>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="exp" class="col-sm-2 control-label">测试经验</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="exp" placeholder="测试经验" ng-model="manageUser.newUser.exp">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="skill" class="col-sm-2 control-label">技能</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="skill" placeholder="技能" ng-model="manageUser.newUser.skill">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="perm" class="col-sm-2 control-label">权限</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="perm" placeholder="权限" ng-model="manageUser.newUser.perm">
-                            </div>
-                        </div>
+                        </div> -->
+                        <!-- /特殊form内容 -->
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="manageUser.createUser()">保存</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--Modify Modal -->
-<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">修改用户</h4>
-            </div>
-            <div class="modal-body">
-                <!-- form start -->
-                <form class="form-horizontal">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">姓名</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="name" placeholder="姓名" ng-model="manageUser.selectedUser.name">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="age" class="col-sm-2 control-label">年龄</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="age" placeholder="年龄" ng-model="manageUser.selectedUser.age">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="exp" class="col-sm-2 control-label">测试经验</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="exp" placeholder="测试经验" ng-model="manageUser.selectedUser.exp">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="skill" class="col-sm-2 control-label">技能</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="skill" placeholder="技能" ng-model="manageUser.selectedUser.skill">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="perm" class="col-sm-2 control-label">权限</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="perm" placeholder="perm" ng-model="manageUser.selectedUser.perm">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" ng-click="manageUser.updateUser()" data-dismiss="modal">保存</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="manageUser.save()">保存</button>
             </div>
         </div>
     </div>
