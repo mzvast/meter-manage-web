@@ -8,14 +8,56 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ManagePlanCtrl', ['dataManager', 'uiManager', function(dataManager, uiManager) {
+    .controller('ManagePlanCtrl', ['dataManager', 'uiManager', function(dataManager, uiManager) {
         var self = this;
         self.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
             'Karma'
         ];
+        ////////////
+        // 配置调试 //
+        ////////////
+        var log = dataManager.log();
 
+        self.productsList = [];
+        var itemNotInList = function(item, list) {
+            var valid = true;
+            list.map(function(elem) {
+                if (elem.id === item.id) {
+                    valid = false;
+                    return;
+                };
+            })
+            return valid;
+        }
+        self.addToProductsList = function(item) {
+            if (itemNotInList(item, self.productsList)) {
+                self.productsList.push(item);
+            }
+            return;
+        };
+        self.requirementsList = [];
+        self.addToRequirementsList = function(item) {
+            if (itemNotInList(item, self.requirementsList)) {
+                self.requirementsList.push(item);
+            }
+            return;
+        };
+        self.envsList = [];
+        self.addToEnvsList = function(item) {
+            if (itemNotInList(item, self.envsList)) {
+                self.envsList.push(item);
+            }
+            return;
+        };
+        self.usersList = [];
+        self.addToUsersList = function(item) {
+            if (itemNotInList(item, self.usersList)) {
+                self.usersList.push(item);
+            }
+            return;
+        };
         /////////////////////////
         // 页面基础设施初始化 //
         ////////////////////////
@@ -26,7 +68,7 @@ angular.module('manageApp')
         self.model = {
             id: "ID",
             title: "名称",
-            creator:"制定者",
+            creator: "制定者",
             create_date: "创建时间",
         };
         ////////////
@@ -46,20 +88,14 @@ angular.module('manageApp')
         self.formModel = {
             title: "名称",
             describe: "描述",
-            type: "类型"
         };
-        ////////////
-        // 配置调试 //
-        ////////////
-        var log = dataManager.log();
 
         /////////////
         // 资源连接 //
         /////////////
         ['C', 'R', 'U', 'D'].map(function(elem) {
             self[elem] = dataManager[elem]('plans', self);
-        })
-
+        });
         ///////////
         // 弹窗Modal //
         ///////////
@@ -98,7 +134,7 @@ angular.module('manageApp')
                 order_by: self.predicate,
                 q: self.q,
                 reverse: self.reverse,
-                type: self.type||-1
+                type: self.type || -1
             };
             self.R(queryObj);
         };

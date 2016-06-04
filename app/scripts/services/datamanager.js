@@ -43,58 +43,26 @@ angular.module('manageApp')
         self.removeNotification = function(index) {
             self.notifications.splice(index, 1);
         };
-        //////////////////////
-        // products resource//
-        //////////////////////
-        self.products = $resource('/api/v2/products/:id', {
-            id: '@id'
-        }, {
-            update: {
-                method: 'PUT'
-            }
-        });
-        ///////////////////
-        //users resource //
-        ///////////////////
-        self.users = $resource('/api/v2/users/:id', {
-            id: '@id'
-        }, {
-            update: {
-                method: 'PUT'
-            }
-        });
-
-        ///////////////////
-        //requirements resource //
-        ///////////////////
-        self.requirements = $resource('/api/v2/requirements/:id', {
-            id: '@id'
-        }, {
-            update: {
-                method: 'PUT'
-            }
-        });
-        //////////////////
-        // envs resource //
-        //////////////////
-        self.envs = $resource('/api/v2/envs/:id', {
-            id: '@id'
-        }, {
-            update: {
-                method: 'PUT'
-            }
+        //////////////////////////
+        // Resource 构造函数 //
+        //////////////////////////
+        [
+            'products',
+            'users',
+            'requirements',
+            'envs',
+            'plans'
+        ].map(function(elem) {
+            var url = '/api/v2/' + elem + '/:id';
+            self[elem] = $resource(url, {
+                id: '@id'
+            }, {
+                update: {
+                    method: 'PUT'
+                }
+            });
         });
 
-        //////////////////
-        // plans resource //
-        //////////////////
-        self.plans = $resource('/api/v2/plans/:id', {
-            id: '@id'
-        }, {
-            update: {
-                method: 'PUT'
-            }
-        });
         //////////////
         // CRUD构造函数 //
         //////////////

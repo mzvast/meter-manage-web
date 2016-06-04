@@ -75,6 +75,26 @@ angular
       controller:'ManagePlanCtrl as managePlan',
       authenticate: false,
     })
+    .state("manage-plan.new", {
+      url: "/new",
+      templateUrl: "views/manage-plan-new.html",
+    })
+    .state("manage-plan.new.products", {
+      url: "/products",
+      templateUrl: "views/manage-plan-new-products.html",
+    })
+    .state("manage-plan.new.requirements", {
+      url: "/requirements",
+      templateUrl: "views/manage-plan-new-requirements.html",
+    })
+    .state("manage-plan.new.envs", {
+      url: "/envs",
+      templateUrl: "views/manage-plan-new-envs.html",
+    })
+    .state("manage-plan.new.users", {
+      url: "/users",
+      templateUrl: "views/manage-plan-new-users.html",
+    })
     .state("manage-flaw", {
       url: "/manage-flaw",
       templateUrl: "views/manage-flaw.html",
