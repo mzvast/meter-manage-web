@@ -12,6 +12,24 @@ angular.module('manageApp')
         // AngularJS will instantiate a singleton by calling "new" on this function
         var self = this;
         //////////////////
+        // debug config //
+        //////////////////
+        self.debugStatus = true;//控制全局的console调试
+        var configDebugFn = function(value) {
+          if (value===undefined) {
+            console.log("调试选项配置异常");
+            return;
+          }
+          var debug = !value;
+          value?console.log("调试模式已打开"):console.log("调试模式已关闭");
+          return function(content) {
+            debug||console.log(content);
+          }
+        };
+        self.log = function() {
+          return configDebugFn(self.debugStatus)
+        }
+        //////////////////
         //notifications //
         //////////////////
         self.notifications = [];

@@ -15,6 +15,11 @@ angular.module('manageApp')
             'AngularJS',
             'Karma'
         ];
+        ////////////
+        // 配置调试 //
+        ////////////
+        var log = dataManager.log();
+
         ///////////
         // 页面元数据 //
         ///////////
@@ -69,14 +74,14 @@ angular.module('manageApp')
         // };
 
         self.pageChanged = function() {
-            console.log('Page changed to: ' + self.currentPage);
+            log('Page changed to: ' + self.currentPage);
             self.get();
         };
         /////////////
         // 搜索 //
         /////////////
         self.search = function(q) {
-            console.log("q=" + q);
+            log("q=" + q);
             self.currentPage = 1;
             dataManager.requirements.get({
                     current_page: self.currentPage,
@@ -86,7 +91,7 @@ angular.module('manageApp')
                     reverse: self.reverse
                 }).$promise
                 .then(function(response) {
-                    console.log("搜索需求 SUCCESS!");
+                    log("搜索需求 SUCCESS!");
                     // console.dir(response);
                     self.itemList = response.json;
                     self.totalItems = response.total_items;
@@ -97,28 +102,9 @@ angular.module('manageApp')
             self.currentPage = 1;
             self.get();
         };
-        /////////////
-        // 资源 //
-        /////////////
-        self.get = function() {
-            self.resource.get({
-                    current_page: self.currentPage,
-                    items_per_page: self.itemsPerPage,
-                    order_by: self.predicate,
-                    reverse: self.reverse
-                }).$promise
-                .then(function(response) {
-                    console.log("获取"+self.pageResourceName+" SUCCESS!");
-                    // console.dir(response);
-                    // console.dir(response.json);
-                    self.itemList = response.json;
-                    self.totalItems = response.total_items;
-                });
-
-        };
-
-        self.get();
-
+        ///////////
+        // Modal //
+        ///////////
         self.setModal = function(item) {
             if (item === undefined) {
                 self.form = {};
@@ -132,6 +118,28 @@ angular.module('manageApp')
             }
             // console.log(self.selectedItem);
         };
+        /////////////
+        // 资源 //
+        /////////////
+        self.get = function() {
+            self.resource.get({
+                    current_page: self.currentPage,
+                    items_per_page: self.itemsPerPage,
+                    order_by: self.predicate,
+                    reverse: self.reverse
+                }).$promise
+                .then(function(response) {
+                    log("获取"+self.pageResourceName+" SUCCESS!");
+                    // console.dir(response);
+                    // console.dir(response.json);
+                    self.itemList = response.json;
+                    self.totalItems = response.total_items;
+                });
+
+        };
+
+        self.get();
+
         ///////////////////
         // 保存时候区分是新建还是修改 //
         ///////////////////
@@ -149,34 +157,34 @@ angular.module('manageApp')
         }
         self.create = function() {
             // self.new.create_date = (new Date()).toISOString().slice(0, 10);
-            // console.log({ "json": self.new });
-            self.resource.save({ "json": self.new }).$promise
+            log({ "json": self.form });
+            self.resource.save({ "json": self.form }).$promise
                 .then(function() {
-                    console.log("新增资源 SUCCESS!");
+                    log("新增资源 SUCCESS!");
                     // console.log(data);
                     dataManager.addNotification("success", "新"+self.pageResourceName+"创建成功");
                     self.get();
                 });
         };
         self.update = function() {
-            // console.log({"json":self.selectedItem});
+            log({"json":self.form});
             self.resource.update({
                     id: self.form.id
                 }, {
                     "json": self.form
                 }).$promise
                 .then(function() {
-                    console.log("修改资源 SUCCESS!");
+                    log("修改资源 SUCCESS!");
                     // console.log(data);
                     self.get();
                     dataManager.addNotification("success", self.pageResourceName + self.form.id + "修改成功");
                 });
         };
         self.remove = function(id) {
-            // console.log({ id: id });
+            log({ id: id });
             self.resource.delete({ id: id }).$promise
                 .then(function() {
-                    console.log("删除资源 SUCCESS!");
+                    log("删除资源 SUCCESS!");
                     // console.log(data);
                     dataManager.addNotification("success", self.pageResourceName + id + "删除成功");
                     self.get();

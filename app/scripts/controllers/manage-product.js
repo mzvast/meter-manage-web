@@ -15,6 +15,28 @@ angular.module('manageApp')
             'AngularJS',
             'Karma'
         ];
+        //////////
+        // 列表数据模型 //
+        //////////
+        self.model = {
+            id: "ID",
+            title: "名称",
+            batch: "批次",
+            supplier:"供应商",
+            describe:"描述",
+            create_date: "创建时间"
+        };
+        //////////////
+        // form数据模型 //
+        //////////////
+        self.formModel = {
+            id: "ID",
+            title: "名称",
+            batch: "批次",
+            supplier:"供应商",
+            describe:"描述"
+        };
+
         ////////////////
         // sort //
         ////////////////
