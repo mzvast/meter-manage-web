@@ -34,7 +34,6 @@ angular.module('manageApp')
         // form数据模型 //
         //////////////
         self.formModel = {
-            id: "ID",
             title: "名称",
             describe: "描述",
             type: "类型"

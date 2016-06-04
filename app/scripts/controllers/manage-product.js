@@ -34,7 +34,6 @@ angular.module('manageApp')
         // form数据模型 //
         //////////////
         self.formModel = {
-            id: "ID",
             name: "名称",
             batch: "批次",
             supplier:"供应商",
