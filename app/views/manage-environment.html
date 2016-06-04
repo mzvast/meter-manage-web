@@ -1,1 +1,131 @@
-<p>This is the manage-environment view.</p>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-danger">
+            <div class="box-header">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h3 class="text-center"><b>{{manageEnv.pageTitle}}</b></h3>
+                    </div>
+                    <!-- 搜索功能 -->
+                    <div class="col-xs-3">
+                        <form class="sidebar-form" style="margin-top: 1.6em;">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control" ng-model="manageEnv.q" placeholder="搜索">
+                                <span class="input-group-btn">
+                                  <button ng-click="manageEnv.search(manageEnv.q)" type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                                  </button>
+                                </span>
+                                <span class="input-group-btn">
+                                  <button ng-click="manageEnv.search()" type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
+                                  </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /搜索功能  -->
+                    <!-- 新增按钮 -->
+                    <div class="col-xs-2 text-center">
+                        <a class="btn btn-app bg-olive margin " data-toggle="modal" data-target="#Modal" ng-click="manageEnv.setModal()">
+                            <i class="glyphicon glyphicon-plus"></i> 新增
+                        </a>
+                    </div>
+                    <!-- /新增按钮 -->
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <div class="col-md-12">
+                    <!-- Custom Tabs -->
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="" ng-click="manageEnv.setTab()" data-toggle="tab" aria-expanded="true">全部类型</a></li>
+                            <li ng-repeat="(key, value) in manageEnv.tabs"><a href="" ng-click="manageEnv.setTab(key)" data-toggle="tab" aria-expanded="true">{{value}}</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <table class="table table-hover text-center">
+                                <!-- 列表头 -->
+                                <tr>
+                                    <!-- 模型列表头 -->
+                                    <th ng-repeat="(key, value) in manageEnv.model" ng-click="manageEnv.order(key)">
+                                        {{value}}
+                                        <span class="sortorder" ng-show="manageEnv.predicate === key" ng-class="{reverse:manageEnv.reverse}"></span>
+                                    </th>
+                                    <!-- /模型列表头 -->
+                                    <!-- 功能列表头 -->
+                                    <th>操作</th>
+                                    <!-- /功能列表头 -->
+                                </tr>
+                                <!-- /列表头 -->
+                                <tr ng-repeat="item in manageEnv.itemList| orderBy:manageEnv.predicate:manageEnv.reverse">
+                                    <!-- 模型列表内容  -->
+                                    <td ng-repeat="(key, value) in manageEnv.model">{{item[key]}}</td>
+                                    <!-- /模型列表内容  -->
+                                    <!-- 操作按钮  -->
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#Modal" ng-click="manageEnv.setModal(item)">
+                                                <i class="fa fa-edit"></i> 修改
+                                            </a>
+                                            <a class="btn btn-app bg-maroon margin" ng-click="manageEnv.remove(item.id)">
+                                                <i class="glyphicon glyphicon-remove"></i> 删除
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <!-- /操作按钮  -->
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+                    <!-- nav-tabs-custom -->
+                </div>
+                <!-- 分页器 -->
+                <div class="text-center">
+                    <uib-pagination total-items="manageEnv.totalItems" ng-model="manageEnv.currentPage" max-size="manageEnv.maxSize" items-per-page="manageEnv.itemsPerPage" ng-change="manageEnv.pageChanged()" class="pagination-md" boundary-link-numbers="true"></uib-pagination>
+                </div>
+                <!-- /分页器 -->
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+<!--Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{{manageEnv.modalTitle}} {{manageEnv.form.id}}</h4>
+            </div>
+            <div class="modal-body">
+                <!-- form  -->
+                <form class="form-horizontal">
+                    <div class="box-body">
+                        <!-- 模型form内容  -->
+                        <div ng-repeat="(key, value) in manageEnv.formModel" class="form-group">
+                            <label for="title" class="col-sm-2 control-label">{{value}}</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="{{key}}" placeholder="{{value}}" ng-model="manageEnv.form[key]">
+                            </div>
+                        </div>
+                        <!-- /模型form内容  -->
+                        <!-- 特殊form内容 -->
+                        <div class="form-group">
+                            <label for="detail" class="col-sm-2 control-label">详情</label>
+                            <div class="col-sm-10">
+                                <textarea style="height: 30vh" type="text" class="form-control" id="detail" placeholder="详情" ng-model="manageEnv.form.detail">
+                                </textarea>
+                            </div>
+                        </div>
+                        <!-- /特殊form内容 -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="manageEnv.save()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -74,7 +74,16 @@ angular.module('manageApp')
                 method: 'PUT'
             }
         });
-
+        //////////////////
+        // envs resource //
+        //////////////////
+        self.envs = $resource('/api/v2/envs/:id', {
+            id: '@id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
+        });
         //////////////
         // CRUD构造函数 //
         //////////////

@@ -66,6 +66,7 @@ angular
     .state("manage-environment", {
       url: "/manage-environment",
       templateUrl: "views/manage-environment.html",
+      controller:'ManageEnvironmentCtrl as manageEnv',
       authenticate: false,
     })
     .state("manage-plan", {

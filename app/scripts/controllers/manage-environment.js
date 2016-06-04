@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name manageApp.controller:ManageRequirementCtrl
+ * @name manageApp.controller:ManageEnvironmentCtrl
  * @description
- * # ManageRequirementCtrl
+ * # ManageEnvironmentCtrl
  * Controller of the manageApp
  */
 angular.module('manageApp')
-    .controller('ManageRequirementCtrl', ['dataManager', 'uiManager', function(dataManager, uiManager) {
+  .controller('ManageEnvironmentCtrl', ['dataManager', 'uiManager', function(dataManager, uiManager) {
         var self = this;
         self.awesomeThings = [
             'HTML5 Boilerplate',
@@ -19,7 +19,7 @@ angular.module('manageApp')
         /////////////////////////
         // 页面基础设施初始化 //
         ////////////////////////
-        uiManager.pageInit("需求", "管理", self);
+        uiManager.pageInit("环境", "管理", self);
         //////////////////
         // 列表数据模型 //
         /////////////////
@@ -34,10 +34,8 @@ angular.module('manageApp')
         // 标签数据模型 //
         ////////////
         self.tabs = {
-            0: "单元测试",
-            1: "集成测试",
-            2: "功能测试",
-            3: "性能测试"
+            0: "软件环境",
+            1: "硬件环境"
         }
         self.setTab = function(value) {
             self.type = value ? value : -1;
@@ -60,7 +58,7 @@ angular.module('manageApp')
         // 资源连接 //
         /////////////
         ['C', 'R', 'U', 'D'].map(function(elem) {
-            self[elem] = dataManager[elem]('requirements', self);
+            self[elem] = dataManager[elem]('envs', self);
         })
 
         ///////////
