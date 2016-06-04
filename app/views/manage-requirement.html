@@ -34,38 +34,51 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-                <table class="table table-hover text-center">
-                    <!-- 列表头 -->
-                    <tr>
-                        <!-- 模型列表头 -->
-                        <th ng-repeat="(key, value) in manageReq.model" ng-click="manageReq.order(key)">
-                            {{value}}
-                            <span class="sortorder" ng-show="manageReq.predicate === key" ng-class="{reverse:manageReq.reverse}"></span>
-                        </th>
-                        <!-- /模型列表头 -->
-                        <!-- 功能列表头 -->
-                        <th>操作</th>
-                        <!-- /功能列表头 -->
-                    </tr>
-                    <!-- /列表头 -->
-                    <tr ng-repeat="item in manageReq.itemList| orderBy:manageReq.predicate:manageReq.reverse">
-                        <!-- 模型列表内容  -->
-                        <td ng-repeat="(key, value) in manageReq.model">{{item[key]}}</td>
-                        <!-- /模型列表内容  -->
-                        <!-- 操作按钮  -->
-                        <td>
-                            <div class="btn-group">
-                                <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#Modal" ng-click="manageReq.setModal(item)">
-                                    <i class="fa fa-edit"></i> 修改
-                                </a>
-                                <a class="btn btn-app bg-maroon margin" ng-click="manageReq.remove(item.id)">
-                                    <i class="glyphicon glyphicon-remove"></i> 删除
-                                </a>
-                            </div>
-                        </td>
-                        <!-- /操作按钮  -->
-                    </tr>
-                </table>
+                <div class="col-md-12">
+                    <!-- Custom Tabs -->
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="" ng-click="manageReq.setTab()" data-toggle="tab" aria-expanded="true">全部类型</a></li>
+                            <li ng-repeat="(key, value) in manageReq.tabs"><a href="" ng-click="manageReq.setTab(key)" data-toggle="tab" aria-expanded="true">{{value}}</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <table class="table table-hover text-center">
+                                <!-- 列表头 -->
+                                <tr>
+                                    <!-- 模型列表头 -->
+                                    <th ng-repeat="(key, value) in manageReq.model" ng-click="manageReq.order(key)">
+                                        {{value}}
+                                        <span class="sortorder" ng-show="manageReq.predicate === key" ng-class="{reverse:manageReq.reverse}"></span>
+                                    </th>
+                                    <!-- /模型列表头 -->
+                                    <!-- 功能列表头 -->
+                                    <th>操作</th>
+                                    <!-- /功能列表头 -->
+                                </tr>
+                                <!-- /列表头 -->
+                                <tr ng-repeat="item in manageReq.itemList| orderBy:manageReq.predicate:manageReq.reverse">
+                                    <!-- 模型列表内容  -->
+                                    <td ng-repeat="(key, value) in manageReq.model">{{item[key]}}</td>
+                                    <!-- /模型列表内容  -->
+                                    <!-- 操作按钮  -->
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#Modal" ng-click="manageReq.setModal(item)">
+                                                <i class="fa fa-edit"></i> 修改
+                                            </a>
+                                            <a class="btn btn-app bg-maroon margin" ng-click="manageReq.remove(item.id)">
+                                                <i class="glyphicon glyphicon-remove"></i> 删除
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <!-- /操作按钮  -->
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+                    <!-- nav-tabs-custom -->
+                </div>
                 <!-- 分页器 -->
                 <div class="text-center">
                     <uib-pagination total-items="manageReq.totalItems" ng-model="manageReq.currentPage" max-size="manageReq.maxSize" items-per-page="manageReq.itemsPerPage" ng-change="manageReq.pageChanged()" class="pagination-md" boundary-link-numbers="true"></uib-pagination>

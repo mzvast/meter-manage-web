@@ -8,7 +8,7 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-    .controller('ManageRequirementCtrl', ['dataManager', 'uiManager',function(dataManager,uiManager) {
+    .controller('ManageRequirementCtrl', ['dataManager', 'uiManager', function(dataManager, uiManager) {
         var self = this;
         self.awesomeThings = [
             'HTML5 Boilerplate',
@@ -29,6 +29,25 @@ angular.module('manageApp')
             describe: "描述",
             type: "类型",
             create_date: "创建时间"
+        };
+        ////////////
+        // 标签数据模型 //
+        ////////////
+        self.tabs = {
+            0: "单元测试",
+            1: "集成测试",
+            2: "功能测试",
+            3: "性能测试"
+        }
+        self.setTab = function(value) {
+            if (value === undefined) {
+                self.type= value;
+                self.get();
+                return;
+            } else {
+                self.type= value;
+                self.get();
+            }
         };
         //////////////
         // form数据模型 //
@@ -87,7 +106,8 @@ angular.module('manageApp')
                 items_per_page: self.itemsPerPage,
                 order_by: self.predicate,
                 q: self.q,
-                reverse: self.reverse
+                reverse: self.reverse,
+                type:self.type
             };
             self.R(queryObj);
         };

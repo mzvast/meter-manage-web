@@ -10,3 +10,6 @@ table > tbody > tr > th{
 .table > tbody > tr > td {
     vertical-align: middle;
 }
+.nav-tabs-custom>.nav-tabs>li.active {
+    border-top-color: #DD4B39;
+}
