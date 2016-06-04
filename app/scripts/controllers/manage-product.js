@@ -15,6 +15,21 @@ angular.module('manageApp')
             'AngularJS',
             'Karma'
         ];
+        ////////////
+        // 配置调试 //
+        ////////////
+        var log = dataManager.log();
+
+        ///////////
+        // 页面元数据 //
+        ///////////
+        self.pageResourceName = "产品";
+        self.pageType = "管理";
+        self.pageTitle = self.pageResourceName + self.pageType;
+        ////////////
+        // 定义资源别名 //
+        ////////////
+        self.resource = dataManager.products;
         //////////
         // 列表数据模型 //
         //////////
@@ -38,17 +53,17 @@ angular.module('manageApp')
         };
 
         ////////////////
-        // sort //
+        // 排序 //
         ////////////////
         self.predicate = 'id';
         self.reverse = true;
         self.order = function(predicate) {
             self.reverse = (self.predicate === predicate) ? !self.reverse : false;
             self.predicate = predicate;
-            self.getProducts();
+            self.get();
         };
         ////////////////
-        //Pagination  //
+        //分页  //
         ////////////////
         // self.totalItems = 100;
         self.currentPage = 1;
@@ -56,99 +71,124 @@ angular.module('manageApp')
         self.maxSize = 5; //显示的时候页码的最多个数，忽略该参数
 
         // self.setPage = function (pageNo) {
-        // 	self.currentPage = pageNo;
+        //  self.currentPage = pageNo;
         // };
 
         self.pageChanged = function() {
-            console.log('Page changed to: ' + self.currentPage);
-            self.getProducts();
+            log('Page changed to: ' + self.currentPage);
+            self.get();
         };
         /////////////
-        // search //
+        // 搜索 //
         /////////////
         self.search = function(q) {
-        	console.log("q="+q);
-        	self.currentPage = 1;
-            dataManager.products.get({
+            log("q=" + q);
+            self.currentPage = 1;
+            self.resource.get({
                     current_page: self.currentPage,
                     items_per_page: self.itemsPerPage,
                     order_by: self.predicate,
-                    q:q,
+                    q: q,
                     reverse: self.reverse
                 }).$promise
                 .then(function(response) {
-                    console.log("搜索产品 SUCCESS!");
+                    log("搜索需求 SUCCESS!");
                     // console.dir(response);
-                    self.products = response.json;
+                    self.itemList = response.json;
                     self.totalItems = response.total_items;
                 });
         };
-        self.resetSearch =function() {
-        	self.q = "";
-        	self.currentPage = 1;
-        	self.getProducts();
+        self.resetSearch = function() {
+            self.q = "";
+            self.currentPage = 1;
+            self.get();
         };
-         /////////////
-        // Product //
+        ///////////
+        // Modal //
+        ///////////
+        self.setModal = function(item) {
+            if (item === undefined) {
+                self.form = {};
+                self.modalType = 0;
+                self.modalTitle = "新增"+self.pageResourceName;
+                return;
+            } else {
+                self.form = item;
+                self.modalType = 1;
+                self.modalTitle = "修改"+self.pageResourceName;
+            }
+            // console.log(self.selectedItem);
+        };
         /////////////
-        self.getProducts = function() {
-            dataManager.products.get({
+        // 资源 //
+        /////////////
+        self.get = function() {
+            self.resource.get({
                     current_page: self.currentPage,
                     items_per_page: self.itemsPerPage,
                     order_by: self.predicate,
                     reverse: self.reverse
                 }).$promise
                 .then(function(response) {
-                    console.log("获取产品 SUCCESS!");
+                    log("获取"+self.pageResourceName+" SUCCESS!");
                     // console.dir(response);
-                    self.products = response.json;
+                    // console.dir(response.json);
+                    self.itemList = response.json;
                     self.totalItems = response.total_items;
                 });
 
         };
 
-        self.getProducts();
+        self.get();
 
-        self.setModal = function(product) {
-            self.selectedProduct = product;
-            // console.log(self.selectedProduct);
-        };
-        self.setNewModal = function() {
-            self.newProduct = {};
-        };
-        self.createProduct = function() {
-            // self.newProduct.create_date = (new Date()).toISOString().slice(0, 10);
-            // console.log({ "json": self.newProduct });
-            dataManager.products.save({ "json": self.newProduct }).$promise
+        ///////////////////
+        // 保存时候区分是新建还是修改 //
+        ///////////////////
+        self.save = function() {
+            switch (self.modalType) {
+                case 0:
+                    self.create();
+                    break;
+                case 1:
+                    self.update();
+                    break;
+                default:
+                    return;
+            }
+        }
+        self.create = function() {
+            // self.new.create_date = (new Date()).toISOString().slice(0, 10);
+            log({ "json": self.form });
+            self.resource.save({ "json": self.form }).$promise
                 .then(function() {
-                    console.log("新增产品 SUCCESS!");
+                    log("新增资源 SUCCESS!");
                     // console.log(data);
-                    dataManager.addNotification("success", "新产品创建成功");
-                    self.getProducts();
+                    dataManager.addNotification("success", "新"+self.pageResourceName+"创建成功");
+                    self.get();
                 });
         };
-        self.updateProduct = function() {
-            // console.log({"json":self.selectedProduct});
-            dataManager.products.update({
-                    id: self.selectedProduct.id
+        self.update = function() {
+            log({"json":self.form});
+            self.resource.update({
+                    id: self.form.id
                 }, {
-                    "json": self.selectedProduct
+                    "json": self.form
                 }).$promise
                 .then(function() {
-                    console.log("修改产品 SUCCESS!");
+                    log("修改资源 SUCCESS!");
                     // console.log(data);
-                    self.getProducts();
-                    dataManager.addNotification("success", "产品" + self.selectedProduct.id + "修改成功");
+                    self.get();
+                    dataManager.addNotification("success", self.pageResourceName + self.form.id + "修改成功");
                 });
         };
-        self.removeProduct = function(id) {
-            // console.log({ id: id });
-            dataManager.products.delete({ id: id }).$promise
+        self.remove = function(id) {
+            log({ id: id });
+            self.resource.delete({ id: id }).$promise
                 .then(function() {
-                    console.log("删除产品 SUCCESS!");
+                    log("删除资源 SUCCESS!");
                     // console.log(data);
-                    dataManager.addNotification("success", "产品" + id + "删除成功");
-                    self.getProducts();
+                    dataManager.addNotification("success", self.pageResourceName + id + "删除成功");
+                    self.get();
                 });
         };
     }]);
