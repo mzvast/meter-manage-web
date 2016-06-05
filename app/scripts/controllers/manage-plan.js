@@ -19,44 +19,57 @@ angular.module('manageApp')
         // 配置调试 //
         ////////////
         var log = dataManager.log();
-
+        log("hello");
+        ////////////
+        // 新增测试计划 //
+        ////////////
+        self.onProducts = true;
+        self.onRequirements = false;
+        self.onEnvs = false;
+        self.onUsers = false;
+        self.setTopTab = function(value) {
+          ['onProducts','onRequirements','onEnvs','onUsers']
+          .map(function(elem) {
+            return self[elem]=(value===elem);
+          })
+        };
         self.productsList = [];
         var itemNotInList = function(item, list) {
             var valid = true;
             list.map(function(elem) {
                 if (elem.id === item.id) {
                     valid = false;
-                    return;
-                };
-            })
+
+                }
+            });
             return valid;
-        }
+        };
         self.addToProductsList = function(item) {
             if (itemNotInList(item, self.productsList)) {
                 self.productsList.push(item);
             }
-            return;
+
         };
         self.requirementsList = [];
         self.addToRequirementsList = function(item) {
             if (itemNotInList(item, self.requirementsList)) {
                 self.requirementsList.push(item);
             }
-            return;
+
         };
         self.envsList = [];
         self.addToEnvsList = function(item) {
             if (itemNotInList(item, self.envsList)) {
                 self.envsList.push(item);
             }
-            return;
+
         };
         self.usersList = [];
         self.addToUsersList = function(item) {
             if (itemNotInList(item, self.usersList)) {
                 self.usersList.push(item);
             }
-            return;
+
         };
         /////////////////////////
         // 页面基础设施初始化 //
@@ -69,7 +82,7 @@ angular.module('manageApp')
             id: "ID",
             title: "名称",
             creator: "制定者",
-            create_date: "创建时间",
+            create_date: "创建时间"
         };
         ////////////
         // 标签数据模型 //
@@ -77,7 +90,7 @@ angular.module('manageApp')
         self.tabs = {
             0: "未完成",
             1: "已完成"
-        }
+        };
         self.setTab = function(value) {
             self.type = value ? value : -1;
             self.get();
@@ -87,7 +100,7 @@ angular.module('manageApp')
         //////////////
         self.formModel = {
             title: "名称",
-            describe: "描述",
+            describe: "描述"
         };
 
         /////////////
@@ -104,13 +117,13 @@ angular.module('manageApp')
                 self.form = {};
                 self.modalType = 0;
                 self.modalTitle = "新增" + self.pageResourceName;
-                return;
+
             } else {
                 self.form = item;
                 self.modalType = 1;
                 self.modalTitle = "修改" + self.pageResourceName;
-            };
-            // console.log(self.selectedItem);
+            }
+          // console.log(self.selectedItem);
         };
         ///////////////////
         // 保存时候区分是新建还是修改 //
@@ -125,7 +138,7 @@ angular.module('manageApp')
                     break;
                 default:
                     return;
-            };
+            }
         };
         self.get = function() {
             var queryObj = {
