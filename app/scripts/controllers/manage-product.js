@@ -42,14 +42,14 @@ angular.module('manageApp')
         ////////////
         // 配置调试 //
         ////////////
-        var log = dataManager.log();
+        // var log = dataManager.log();
 
         /////////////
         // 资源连接 //
         /////////////
         ['C', 'R', 'U', 'D'].map(function(elem) {
             self[elem] = dataManager[elem]('products', self);
-        })
+        });
 
         ///////////
         // 弹窗Modal //
@@ -59,12 +59,11 @@ angular.module('manageApp')
                 self.form = {};
                 self.modalType = 0;
                 self.modalTitle = "新增" + self.pageResourceName;
-                return;
             } else {
                 self.form = item;
                 self.modalType = 1;
                 self.modalTitle = "修改" + self.pageResourceName;
-            };
+            }
             // console.log(self.selectedItem);
         };
         ///////////////////
@@ -80,7 +79,7 @@ angular.module('manageApp')
                     break;
                 default:
                     return;
-            };
+            }
         };
         self.get = function() {
             var queryObj = {

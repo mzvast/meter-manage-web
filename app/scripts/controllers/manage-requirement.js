@@ -38,7 +38,7 @@ angular.module('manageApp')
             1: "集成测试",
             2: "功能测试",
             3: "性能测试"
-        }
+        };
         self.setTab = function(value) {
             self.type = value ? value : -1;
             self.get();
@@ -54,14 +54,14 @@ angular.module('manageApp')
         ////////////
         // 配置调试 //
         ////////////
-        var log = dataManager.log();
+        // var log = dataManager.log();
 
         /////////////
         // 资源连接 //
         /////////////
         ['C', 'R', 'U', 'D'].map(function(elem) {
             self[elem] = dataManager[elem]('requirements', self);
-        })
+        });
 
         ///////////
         // 弹窗Modal //
@@ -71,12 +71,11 @@ angular.module('manageApp')
                 self.form = {};
                 self.modalType = 0;
                 self.modalTitle = "新增" + self.pageResourceName;
-                return;
             } else {
                 self.form = item;
                 self.modalType = 1;
                 self.modalTitle = "修改" + self.pageResourceName;
-            };
+            }
             // console.log(self.selectedItem);
         };
         ///////////////////
@@ -92,7 +91,7 @@ angular.module('manageApp')
                     break;
                 default:
                     return;
-            };
+            }
         };
         self.get = function() {
             var queryObj = {

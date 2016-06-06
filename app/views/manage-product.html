@@ -12,11 +12,11 @@
                             <div class="input-group">
                                 <input type="text" name="q" class="form-control" ng-model="manageProduct.q" placeholder="搜索">
                                 <span class="input-group-btn">
-                                  <button ng-click="manageProduct.search(manageProduct.q)" type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                                  <button ng-click="manageProduct.search(manageProduct.q)" type="submit" name="search"  class="btn btn-flat"><i class="fa fa-search"></i>
                                   </button>
                                 </span>
                                 <span class="input-group-btn">
-                                  <button ng-click="manageProduct.search()" type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
+                                  <button ng-click="manageProduct.search()" type="submit" name="search"  class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
                                   </button>
                                 </span>
                             </div>
@@ -91,7 +91,7 @@
                     <div class="box-body">
                         <!-- 模型form内容  -->
                         <div ng-repeat="(key, value) in manageProduct.formModel" class="form-group">
-                            <label for="title" class="col-sm-2 control-label">{{value}}</label>
+                            <label for="{{key}}" class="col-sm-2 control-label">{{value}}</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="{{key}}" placeholder="{{value}}" ng-model="manageProduct.form[key]">
                             </div>

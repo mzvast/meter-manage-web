@@ -153,6 +153,9 @@ angular.module('manageApp')
         self.setModal = function(item) {
             if (item === undefined) {
                 // self.form = {};
+                ['productsList','requirementsList','envsList','usersList'].map(function (elem) {
+                  self[elem] = [];
+                });
                 self.modalType = 0;
                 self.modalTitle = "新增" + self.pageResourceName;
 
