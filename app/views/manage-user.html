@@ -11,14 +11,14 @@
             <form class="sidebar-form" style="margin-top: 1.6em;">
               <div class="input-group">
                 <input type="text" name="q" class="form-control" ng-model="manageUser.q" placeholder="搜索">
-                                <span class="input-group-btn">
-                                  <button ng-click="manageUser.search(manageUser.q)" type="submit" name="search"  class="btn btn-flat"><i class="fa fa-search"></i>
-                                  </button>
-                                </span>
-                                <span class="input-group-btn">
-                                  <button ng-click="manageUser.search()" type="submit" name="search"  class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
-                                  </button>
-                                </span>
+                  <span class="input-group-btn">
+                    <button ng-click="manageUser.search(manageUser.q)" type="submit" name="search"  class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                  <span class="input-group-btn">
+                    <button ng-click="manageUser.search()" type="submit" name="search"  class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
+                    </button>
+                  </span>
               </div>
             </form>
           </div>
@@ -50,7 +50,12 @@
                     {{value}}
                     <span class="sortorder" ng-show="manageUser.predicate === key" ng-class="{reverse:manageUser.reverse}"></span>
                   </th>
-                  <th>类型</th>
+                  <!--自定义表头-->
+                  <th ng-click="manageUser.order('type')">
+                    类型
+                    <span class="sortorder" ng-show="manageUser.predicate === 'type'" ng-class="{reverse:manageUser.reverse}"></span>
+                  </th>
+                  <!--/自定义表头-->
                   <!-- /模型列表头 -->
                   <!-- 功能列表头 -->
                   <th>操作</th>
@@ -61,7 +66,18 @@
                   <!-- 模型列表内容  -->
                   <td ng-repeat="(key, value) in manageUser.model">{{item[key]}}</td>
                   <!-- /模型列表内容  -->
-                  <td>{{manageUser.options[item.type]['name']}}</td>
+                  <!--状态彩色指示-->
+                  <td>
+                    <div class="btn-group">
+                      <a class="btn margin" ng-class="{'bg-navy':item.type===0,
+                      'bg-olive':item.type===1,
+                      'bg-purple':item.type===2
+                      }">
+                        {{manageUser.options[item.type]['name']}}
+                      </a>
+                    </div>
+                  </td>
+                  <!--/状态彩色指示-->
                   <!-- 操作按钮  -->
                   <td>
                     <div class="btn-group">

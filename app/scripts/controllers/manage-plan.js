@@ -125,10 +125,13 @@ angular.module('manageApp')
         ////////////
         // 标签数据模型 //
         ////////////
-        self.tabs = {
-            0: "未完成",
-            1: "已完成"
-        };
+        self.tabs =self.options = [{
+          id: 0,
+          name:"未完成"
+        },{
+          id:1,
+          name:"已完成"
+        }];
         self.setTab = function(value) {
             self.type = value ? value : -1;
             self.get();

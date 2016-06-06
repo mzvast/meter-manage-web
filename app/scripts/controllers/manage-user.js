@@ -75,6 +75,7 @@ angular.module('manageApp')
       self.setModal = function(item) {
         if (item === undefined) {
           self.form = {};
+          self.selectedOption = self.options[2];
           self.modalType = 0;
           self.modalTitle = "新增" + self.pageResourceName;
         } else {

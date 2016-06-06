@@ -12,14 +12,14 @@
             <form class="sidebar-form" style="margin-top: 1.6em;">
               <div class="input-group">
                 <input type="text" name="q" class="form-control" ng-model="manageFlaw.q" placeholder="搜索">
-                                <span class="input-group-btn">
-                                  <button ng-click="manageFlaw.search(manageFlaw.q)" type="submit" name="search"  class="btn btn-flat"><i class="fa fa-search"></i>
-                                  </button>
-                                </span>
-                                <span class="input-group-btn">
-                                  <button ng-click="manageFlaw.search()" type="submit" name="search"  class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
-                                  </button>
-                                </span>
+                  <span class="input-group-btn">
+                    <button ng-click="manageFlaw.search(manageFlaw.q)" type="submit" name="search"  class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                  <span class="input-group-btn">
+                    <button ng-click="manageFlaw.search()" type="submit" name="search"  class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
+                    </button>
+                  </span>
               </div>
             </form>
           </div>
@@ -51,10 +51,13 @@
                     {{value}}
                     <span class="sortorder" ng-show="manageFlaw.predicate === key" ng-class="{reverse:manageFlaw.reverse}"></span>
                   </th>
+                  <!--自定义表头-->
                   <th ng-click="manageFlaw.order('type')">
                     状态
                     <span class="sortorder" ng-show="manageFlaw.predicate === 'type'" ng-class="{reverse:manageFlaw.reverse}"></span>
                   </th>
+                  <!--/自定义表头-->
+
                   <!-- /模型列表头 -->
                   <!-- 功能列表头 -->
                   <th>操作</th>
@@ -65,7 +68,7 @@
                   <!-- 模型列表内容  -->
                   <td ng-repeat="(key, value) in manageFlaw.model">{{item[key]}}</td>
                   <!-- /模型列表内容  -->
-                  <!-- 操作按钮  -->
+                  <!--状态彩色指示外加快捷更改状态-->
                   <td>
                     <div class="btn-group">
                       <a class="btn margin"
@@ -85,7 +88,9 @@
                       </ul>
                     </div>
                     </td>
+                  <!--/状态彩色指示外加快捷更改状态-->
 
+                  <!-- 操作按钮  -->
                   <td>
                     <div class="btn-group">
                       <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#Modal" ng-click="manageFlaw.setModal(item)">

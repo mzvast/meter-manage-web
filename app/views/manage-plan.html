@@ -44,7 +44,7 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="" ng-click="managePlan.setTab()" data-toggle="tab" aria-expanded="true">全部类型</a></li>
-                            <li ng-repeat="(key, value) in managePlan.tabs"><a href="" ng-click="managePlan.setTab(key)" data-toggle="tab" aria-expanded="true">{{value}}</a></li>
+                            <li ng-repeat="item in managePlan.tabs"><a href="" ng-click="managePlan.setTab(item.id)" data-toggle="tab" aria-expanded="true">{{item.name}}</a></li>
                         </ul>
                         <div class="tab-content">
                             <table class="table table-hover text-center">
@@ -56,6 +56,12 @@
                                         <span class="sortorder" ng-show="managePlan.predicate === key" ng-class="{reverse:managePlan.reverse}"></span>
                                     </th>
                                     <!-- /模型列表头 -->
+                                  <!--自定义表头-->
+                                  <th ng-click="managePlan.order('type')">
+                                    类型
+                                    <span class="sortorder" ng-show="managePlan.predicate === 'type'" ng-class="{reverse:managePlan.reverse}"></span>
+                                  </th>
+                                  <!--/自定义表头-->
                                     <!-- 功能列表头 -->
                                     <th>操作</th>
                                     <!-- /功能列表头 -->
@@ -65,6 +71,15 @@
                                     <!-- 模型列表内容  -->
                                     <td ng-repeat="(key, value) in managePlan.model">{{item[key]}}</td>
                                     <!-- /模型列表内容  -->
+                                  <!--状态彩色指示-->
+                                  <td>
+                                    <div class="btn-group">
+                                      <a class="btn margin" ng-class="{'bg-navy':item.type===0,'bg-olive':item.type===1}">
+                                        {{managePlan.options[item.type]['name']}}
+                                      </a>
+                                    </div>
+                                  </td>
+                                  <!--/状态彩色指示-->
                                     <!-- 操作按钮  -->
                                     <td>
                                         <div class="btn-group">
