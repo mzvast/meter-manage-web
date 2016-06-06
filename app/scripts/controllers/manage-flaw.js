@@ -28,19 +28,10 @@ angular.module('manageApp')
       title: "名称",
       productID: "产品ID",
       planID: "测试计划ID",
-      type:"状态",
+      // type:"状态",
       create_date: "创建时间"
     };
-    ////////////
-    // 标签数据模型 //
-    ////////////
-    // self.tabs = {
-    //   0: "提交",
-    //   1: "确认",
-    //   2: "修复",
-    //   3: "重新打开",
-    //   4: "关闭"
-    // };
+
     self.tabs =self.options = [{
         id: 0,
         name:"提交"
@@ -52,22 +43,13 @@ angular.module('manageApp')
         name:"修复"
       },{
         id:3,
-        name:"重新打开"
-    },{
-      id:4,
-      name:"关闭"
-    }];
+        name:"重开"
+      },{
+        id:4,
+        name:"关闭"
+      }];
 
-    var getOptionByID = function (id,optionsList) {
-      return function () {
-        for(var i=0; i<optionsList.length; i++){
-          if(id === optionsList[i].id){
-            return optionsList[i]
-          }
-        }
-      }()
 
-    };
     self.setTab = function(value) {
       self.type = value ? value : -1;
       self.get();
@@ -104,7 +86,8 @@ angular.module('manageApp')
         self.modalTitle = "新增" + self.pageResourceName;
       } else {
         self.form = item;
-        self.selectedOption = getOptionByID(item.type,self.options);//用type值设置selectedOption
+        self.selectedOption = self.options[item.type];//用type值设置selectedOption
+        // log(self.options[item.type]);
         self.modalType = 1;
         self.modalTitle = "修改" + self.pageResourceName;
       }
@@ -141,8 +124,16 @@ angular.module('manageApp')
       self.C(self.form);
     };
 
+    //快速设定状态
+    self.updateType = function (item,typeVal) {
+      self.setModal(item);
+      self.form.type = typeVal;
+      // log(self.form);
+      self.U(self.form);
+    };
     self.update = function() {
       self.form.type = self.selectedOption.id;//将选中对象转换回去
+      // log(self.form);
       self.U(self.form);
     };
     self.remove = function(id) {
