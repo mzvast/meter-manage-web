@@ -3,11 +3,11 @@
         <div class="box box-danger">
             <div class="box-header">
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-7">
                         <h3 class="text-center"><b>{{manageProduct.pageResourceName}}选择</b></h3>
                     </div>
                     <!-- 搜索功能 -->
-                    <div class="col-xs-6">
+                    <div class="col-xs-4">
                         <form class="sidebar-form" style="margin-top: 1.6em;">
                             <div class="input-group">
                                 <input type="text" name="q" class="form-control" ng-model="manageProduct.q" placeholder="搜索">
@@ -48,11 +48,14 @@
                         <!-- /模型列表内容  -->
                         <!-- 操作按钮  -->
                         <td>
-                            <div  class="btn-group">
-                                <a class="btn bg-olive margin" ng-click="managePlan.addToProductsList(item)">
-                                <i class="glyphicon glyphicon-plus"></i>
-                                </a>
-                            </div>
+                          <div class="btn-group" >
+                            <a ng-show="managePlan.itemNotInProductsList(item)" class="btn bg-olive margin" ng-click="managePlan.addToProductsList(item)">
+                              <i class="glyphicon glyphicon-plus"></i>
+                            </a>
+                            <a ng-hide="managePlan.itemNotInProductsList(item)" class="btn bg-maroon margin" ng-click="managePlan.removeFromProductsList(item)">
+                              <i class="fa fa-fw fa-minus"></i>
+                            </a>
+                          </div>
                         </td>
                         <!-- /操作按钮  -->
                     </tr>

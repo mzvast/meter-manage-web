@@ -33,22 +33,13 @@ angular.module('manageApp')
             return self[elem]=(value===elem);
           })
         };
-        self.productsList = [];
-        var itemNotInList = function(item, list) {
-            var valid = true;
-            list.map(function(elem) {
-                if (elem.id === item.id) {
-                    valid = false;
 
-                }
-            });
-            return valid;
-        };
+
+        self.productsList = [];
         self.addToProductsList = function(item) {
             if (itemNotInList(item, self.productsList)) {
                 self.productsList.push(item);
             }
-
         };
         self.requirementsList = [];
         self.addToRequirementsList = function(item) {
@@ -69,7 +60,54 @@ angular.module('manageApp')
             if (itemNotInList(item, self.usersList)) {
                 self.usersList.push(item);
             }
+        };
 
+        var removeItemFromList = function (item, list) {
+          var itemID = -1;
+          list.map(function (elem,index) {
+            if(elem.id === item.id){
+              itemID = index;
+            }
+          });
+          list.splice(itemID,1);
+        };
+
+      self.removeFromProductsList = function (item) {
+        removeItemFromList(item,self.productsList);
+      };
+      self.removeFromRequirementsList = function (item) {
+        removeItemFromList(item,self.requirementsList);
+      };
+      self.removeFromEnvsList = function (item) {
+        removeItemFromList(item,self.envsList);
+      };
+      self.removeFromUsersList = function (item) {
+        removeItemFromList(item,self.usersList);
+      };
+        // 操作按钮样式
+        var itemNotInList = function(item, list) {
+          var valid = true;
+          list.map(function(elem) {
+            if (elem.id === item.id) {
+              valid = false;
+
+            }
+          });
+          return valid;
+        };
+
+        self.itemNotInProductsList = function(item) {
+          return itemNotInList(item,self.productsList)
+        };
+
+        self.itemNotInRequirementsList = function(item) {
+          return itemNotInList(item,self.requirementsList)
+        };
+        self.itemNotInEnvsList = function(item) {
+          return itemNotInList(item,self.envsList)
+        };
+        self.itemNotInUsersList = function(item) {
+          return itemNotInList(item,self.usersList)
         };
         /////////////////////////
         // 页面基础设施初始化 //
@@ -152,8 +190,22 @@ angular.module('manageApp')
             self.R(queryObj);
         };
         self.get(); //页面第一次加载
+
+
         self.create = function() {
-            self.C(self.form);
+            var form = {};
+            form.productsList = self.productsList;
+            form.requirementsList = self.requirementsList;
+            form.envsList = self.envsList;
+            form.usersList = self.usersList;
+            // log(form);
+            self.C(form);
+        };
+
+        self.reset = function () {
+            ['productsList','requirementsList','envsList','usersList'].map(function (elem) {
+                self[elem] = [];
+            })
         };
 
         self.update = function() {

@@ -28,7 +28,7 @@ angular.module('manageApp')
         };
         self.log = function() {
             return configDebugFn(self.debugStatus)
-        }
+        };
         var log = self.log();
         //////////////////
         //notifications //
