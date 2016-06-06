@@ -75,44 +75,24 @@ angular
       controller:'ManagePlanCtrl as managePlan',
       authenticate: false
     })
-    .state("manage-plan.new", {
-      url: "/new",
+    .state("manage-plan.on", {
+      url: "-on",
       templateUrl: "views/manage-plan-new.html"
     })
-    .state("manage-plan.new.products", {
-      url: "/products",
+    .state("manage-plan.on.products", {
+      url: "-products",
       templateUrl: "views/manage-plan-new-products.html"
     })
-    .state("manage-plan.new.requirements", {
-      url: "/requirements",
+    .state("manage-plan.on.requirements", {
+      url: "-requirements",
       templateUrl: "views/manage-plan-new-requirements.html"
     })
-    .state("manage-plan.new.envs", {
-      url: "/envs",
+    .state("manage-plan.on.envs", {
+      url: "-envs",
       templateUrl: "views/manage-plan-new-envs.html"
     })
-    .state("manage-plan.new.users", {
-      url: "/users",
-      templateUrl: "views/manage-plan-new-users.html"
-    })
-    .state("manage-plan.update", {
-      url: "/update",
-      templateUrl: "views/manage-plan-new.html"
-    })
-    .state("manage-plan.update.products", {
-      url: "/products",
-      templateUrl: "views/manage-plan-new-products.html"
-    })
-    .state("manage-plan.update.requirements", {
-      url: "/requirements",
-      templateUrl: "views/manage-plan-new-requirements.html"
-    })
-    .state("manage-plan.update.envs", {
-      url: "/envs",
-      templateUrl: "views/manage-plan-new-envs.html"
-    })
-    .state("manage-plan.update.users", {
-      url: "/users",
+    .state("manage-plan.on.users", {
+      url: "Users",
       templateUrl: "views/manage-plan-new-users.html"
     })
     .state("manage-flaw", {

@@ -26,6 +26,8 @@ angular.module('manageApp')
     self.model = {
       id: "ID",
       title: "名称",
+      productName:"产品名称",
+      supplier:"供应商",
       productID: "产品ID",
       planID: "测试计划ID",
       // type:"状态",
