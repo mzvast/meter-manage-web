@@ -112,7 +112,7 @@ angular.module('manageApp')
         /////////////////////////
         // 页面基础设施初始化 //
         ////////////////////////
-        uiManager.pageInit("计划", "管理", self);
+        uiManager.pageInit("测试计划", "管理", self);
         //////////////////
         // 列表数据模型 //
         /////////////////
@@ -152,12 +152,16 @@ angular.module('manageApp')
         ///////////
         self.setModal = function(item) {
             if (item === undefined) {
-                self.form = {};
+                // self.form = {};
                 self.modalType = 0;
                 self.modalTitle = "新增" + self.pageResourceName;
 
             } else {
-                self.form = item;
+                // self.form = item;
+                log(item);
+                ['productsList','requirementsList','envsList','usersList'].map(function (elem) {
+                  self[elem] = item[elem];
+                });
                 self.modalType = 1;
                 self.modalTitle = "修改" + self.pageResourceName;
             }
@@ -198,7 +202,7 @@ angular.module('manageApp')
             form.requirementsList = self.requirementsList;
             form.envsList = self.envsList;
             form.usersList = self.usersList;
-            // log(form);
+
             self.C(form);
         };
 
@@ -209,6 +213,12 @@ angular.module('manageApp')
         };
 
         self.update = function() {
+            var form = {};
+            form.productsList = self.productsList;
+            form.requirementsList = self.requirementsList;
+            form.envsList = self.envsList;
+            form.usersList = self.usersList;
+
             self.U(self.form);
         };
         self.remove = function(id) {

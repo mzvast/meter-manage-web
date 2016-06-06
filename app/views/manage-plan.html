@@ -12,11 +12,11 @@
                             <div class="input-group">
                                 <input type="text" name="q" class="form-control" ng-model="managePlan.q" placeholder="搜索">
                                 <span class="input-group-btn">
-                                  <button ng-click="managePlan.search(managePlan.q)" type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                                  <button ng-click="managePlan.search(managePlan.q)" type="submit" name="search"  class="btn btn-flat"><i class="fa fa-search"></i>
                                   </button>
                                 </span>
                                 <span class="input-group-btn">
-                                  <button ng-click="managePlan.search()" type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
+                                  <button ng-click="managePlan.search()" type="submit" name="search"  class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
                                   </button>
                                 </span>
                             </div>
@@ -30,7 +30,7 @@
                         </a>
                     </div> -->
                      <div class="col-xs-2 text-center">
-                        <a class="btn btn-app bg-olive margin "  ui-sref="manage-plan.new.products">
+                        <a class="btn btn-app bg-olive margin "  ui-sref="manage-plan.new.products" ng-click="managePlan.setModal()">
                             <i class="glyphicon glyphicon-plus"></i> 新增
                         </a>
                     </div>
@@ -68,7 +68,7 @@
                                     <!-- 操作按钮  -->
                                     <td>
                                         <div class="btn-group">
-                                            <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#Modal" ng-click="managePlan.setModal(item)">
+                                            <a class="btn btn-app bg-orange margin" ui-sref="manage-plan.update.products" ng-click="managePlan.setModal(item)">
                                                 <i class="fa fa-edit"></i> 修改
                                             </a>
                                             <a class="btn btn-app bg-maroon margin" ng-click="managePlan.remove(item.id)">

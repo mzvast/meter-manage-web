@@ -49,106 +49,126 @@ angular
       url: "/manage-product",
       templateUrl: "views/manage-product.html",
       controller:'ManageProductCtrl as manageProduct',
-      authenticate: false,
+      authenticate: false
     })
     .state("manage-user", {
       url: "/manage-user",
       templateUrl: "views/manage-user.html",
       controller:'ManageUserCtrl as manageUser',
-      authenticate: false,
+      authenticate: false
     })
     .state("manage-requirement", {
       url: "/manage-requirement",
       templateUrl: "views/manage-requirement.html",
       controller:'ManageRequirementCtrl as manageReq',
-      authenticate: false,
+      authenticate: false
     })
     .state("manage-environment", {
       url: "/manage-environment",
       templateUrl: "views/manage-environment.html",
       controller:'ManageEnvironmentCtrl as manageEnv',
-      authenticate: false,
+      authenticate: false
     })
     .state("manage-plan", {
       url: "/manage-plan",
       templateUrl: "views/manage-plan.html",
       controller:'ManagePlanCtrl as managePlan',
-      authenticate: false,
+      authenticate: false
     })
     .state("manage-plan.new", {
       url: "/new",
-      templateUrl: "views/manage-plan-new.html",
+      templateUrl: "views/manage-plan-new.html"
     })
     .state("manage-plan.new.products", {
       url: "/products",
-      templateUrl: "views/manage-plan-new-products.html",
+      templateUrl: "views/manage-plan-new-products.html"
     })
     .state("manage-plan.new.requirements", {
       url: "/requirements",
-      templateUrl: "views/manage-plan-new-requirements.html",
+      templateUrl: "views/manage-plan-new-requirements.html"
     })
     .state("manage-plan.new.envs", {
       url: "/envs",
-      templateUrl: "views/manage-plan-new-envs.html",
+      templateUrl: "views/manage-plan-new-envs.html"
     })
     .state("manage-plan.new.users", {
       url: "/users",
-      templateUrl: "views/manage-plan-new-users.html",
+      templateUrl: "views/manage-plan-new-users.html"
+    })
+    .state("manage-plan.update", {
+      url: "/update",
+      templateUrl: "views/manage-plan-new.html"
+    })
+    .state("manage-plan.update.products", {
+      url: "/products",
+      templateUrl: "views/manage-plan-new-products.html"
+    })
+    .state("manage-plan.update.requirements", {
+      url: "/requirements",
+      templateUrl: "views/manage-plan-new-requirements.html"
+    })
+    .state("manage-plan.update.envs", {
+      url: "/envs",
+      templateUrl: "views/manage-plan-new-envs.html"
+    })
+    .state("manage-plan.update.users", {
+      url: "/users",
+      templateUrl: "views/manage-plan-new-users.html"
     })
     .state("manage-flaw", {
       url: "/manage-flaw",
       templateUrl: "views/manage-flaw.html",
-      authenticate: false,
+      authenticate: false
     })
     .state("manage-result", {
       url: "/manage-result",
       templateUrl: "views/manage-result.html",
-      authenticate: false,
+      authenticate: false
     })
     .state("action-suite-edit", {
       url: "/action-suite-edit",
       templateUrl: "views/action-suite-edit.html",
-      authenticate: false,
+      authenticate: false
     })
     .state("action-process-record", {
       url: "/action-process-record",
       templateUrl: "views/action-process-record.html",
-      authenticate: false,
+      authenticate: false
     })
     .state("action-flaw-submit", {
       url: "/action-flaw-submit",
       templateUrl: "views/action-flaw-submit.html",
-      authenticate: false,
+      authenticate: false
     })
     .state("action-product-register", {
       url: "/action-product-register",
       templateUrl: "views/action-product-register.html",
-      authenticate: false,
+      authenticate: false
     })
     .state("action-registered-software-encrypt", {
       url: "/action-registered-software-encrypt",
       templateUrl: "views/action-registered-software-encrypt.html",
-      authenticate: false,
+      authenticate: false
     })
     .state("action-registered-product-compare", {
       url: "/action-registered-product-compare",
       templateUrl: "views/action-registered-product-compare.html",
-      authenticate: false,
+      authenticate: false
     })
     .state("action-generate-test-result", {
       url: "/action-generate-test-result",
       templateUrl: "views/action-generate-test-result.html",
-      authenticate: false,
+      authenticate: false
     })
     .state("setting-role", {
       url: "/setting-role",
       templateUrl: "views/setting-role.html",
-      authenticate: false,
+      authenticate: false
     })
     .state("setting-encrypt", {
       url: "/setting-encrypt",
       templateUrl: "views/setting-encrypt.html",
-      authenticate: false,
+      authenticate: false
     })
     ;
 
