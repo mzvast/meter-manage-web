@@ -118,6 +118,7 @@ angular
     .state("manage-flaw", {
       url: "/manage-flaw",
       templateUrl: "views/manage-flaw.html",
+      controller:"ManageFlawCtrl as manageFlaw",
       authenticate: false
     })
     .state("manage-result", {

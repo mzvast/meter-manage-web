@@ -51,7 +51,8 @@ angular.module('manageApp')
             'users',
             'requirements',
             'envs',
-            'plans'
+            'plans',
+            'flaws'
         ].map(function(elem) {
             var url = '/api/v2/' + elem + '/:id';
             self[elem] = $resource(url, {
