@@ -31,6 +31,9 @@ module.exports = function(config) {
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/AdminLTE/dist/js/app.js',
       'bower_components/angular-resource/angular-resource.js',
+      'bower_components/api-check/dist/api-check.js',
+      'bower_components/angular-formly/dist/formly.js',
+      'bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
@@ -71,7 +74,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_INFO
 
     // Uncomment the following lines if you are using grunt's server to run the tests
     // proxies: {

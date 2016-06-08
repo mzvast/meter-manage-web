@@ -1,0 +1,362 @@
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name manageApp.controller:ActionProductRegisterCtrl
+ * @description
+ * # ActionProductRegisterCtrl
+ * Controller of the manageApp
+ */
+angular.module('manageApp')
+  .controller('ActionProductRegisterCtrl', ["formlyVersion", function (formlyVersion) {
+    var vm = this;
+    vm.awesomeThings = [
+      'HTML5 Boilerplate',
+      'AngularJS',
+      'Karma'
+    ];
+    vm.onSubmit = onSubmit;
+
+    // variable assignment
+    vm.author = { // optionally fill in your info below :-)
+      name: 'Kent C. Dodds',
+      url: 'https://twitter.com/kentcdodds' // a link to your twitter/github/blog/whatever
+    };
+    vm.exampleTitle = 'Introduction';
+    vm.env = {
+      angularVersion: angular.version.full,
+      formlyVersion: formlyVersion
+    };
+
+    vm.model = {
+      awesome: true,
+      createDate: Date.now()
+    };
+    vm.options = {
+      formState: {
+        awesomeIsForced: false
+      }
+    };
+
+    vm.fields = [
+      {
+        className: "row",
+        fieldGroup: [
+          {
+            className: "col-xs-6",
+            key: 'companyName',
+            type: 'input',
+            templateOptions: {
+              label: '厂家名称',
+              placeholder: 'XXXXXXXX有限公司'
+            }
+          },
+          {
+            className: "col-xs-6",
+            key: 'companyCode',
+            type: 'input',
+            templateOptions: {
+              label: '厂家代码',
+              placeholder: 'XXXX（国网公司分配的厂家代码，例0020）'
+            }
+          }
+        ]
+      },
+      {
+        className: "row",
+        fieldGroup: [
+          {
+            className: "col-xs-6",
+            key: 'fullCheckCode',
+            type: 'input',
+            templateOptions: {
+              label: '全性能检测报告编号',
+              placeholder: 'SGCM01162013 XXXX'
+            }
+          },
+          {
+            className: "col-xs-6",
+            key: "regType",
+            type: "radio",
+            templateOptions: {
+              label: "备案种类",
+              options: [
+                {
+                  "name": "国网计量中心",
+                  "value": "country"
+                },
+                {
+                  "name": "网省计量中心",
+                  "value": "province"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        className:"row",
+        fieldGroup:[
+          {
+            className:"col-xs-6",
+            key: "meterModel",
+            type: "input",
+            templateOptions: {
+              label: "电能表型号",
+              placeholder: "例:DDSF001-M"
+            }
+          },
+          {
+            className:"col-xs-6",
+            key: "programVersion",
+            type: "input",
+            templateOptions: {
+              label: "程序版本号",
+              placeholder: "V xx.xx"
+            }
+          }
+        ]
+      },
+      {
+        className: "row",
+        fieldGroup: [
+          {
+            className: "col-xs-6",
+            key: "vSpec",
+            type: "input",
+            templateOptions: {
+              label: "电压规格",
+              placeholder: "220V"
+            }
+          }, {
+            className: "col-xs-6",
+            key: "iSpec",
+            type: "input",
+            templateOptions: {
+              label: "电流规格",
+              placeholder: "5（60）A"
+            }
+          }
+        ]
+      },
+      {
+        className:"row",
+        fieldGroup:[
+          {
+            className:"col-xs-6 col-xs-offset-3",
+            key: "mcuModel",
+            type: "input",
+            templateOptions: {
+              label: "MCU型号",
+              placeholder: "瑞萨电子R5F212B8"
+            }
+          }
+        ]
+
+      },
+      {
+        className:"row",
+        fieldGroup:[
+          {
+            className:"col-xs-6",
+            key: "programStartAddress",
+            type: "input",
+            templateOptions: {
+              label: "程序存储器起始地址",
+              placeholder: "4000"
+            }
+          },
+          {
+            className:"col-xs-6",
+            key: "programEndAddress",
+            type: "input",
+            templateOptions: {
+              label: "程序存储器结束地址",
+              placeholder: "13fff"
+            }
+          }
+        ]
+      },
+      {
+        className:"row",
+        fieldGroup:[
+          {
+            className:"col-xs-6",
+            key: "softwareStartAddress",
+            type: "input",
+            templateOptions: {
+              label: "软件代码起始地址",
+              placeholder: "4000"
+            }
+          },
+          {
+            className:"col-xs-6",
+            key: "softwareEndAddress",
+            type: "input",
+            templateOptions: {
+              label: "软件代码结束地址",
+              placeholder: "97fff"
+            }
+          }
+        ]
+      },
+      {
+        className:"row",
+        fieldGroup:[
+          {
+            className:"col-xs-6",
+            key: "protect1StartAddress",
+            type: "input",
+            templateOptions: {
+              label: "保护区1起始地址",
+              placeholder: "12000"
+            }
+          },
+          {
+            className:"col-xs-6",
+            key: "protect1EndAddress",
+            type: "input",
+            templateOptions: {
+              label: "保护区1结束地址",
+              placeholder: "121ff"
+            }
+          }
+        ]
+      },
+      {
+        className:"row",
+        fieldGroup:[
+          {
+            className:"col-xs-6",
+            key: "protect2StartAddress",
+            type: "input",
+            templateOptions: {
+              label: "保护区2起始地址",
+              placeholder: "13000"
+            }
+          },
+          {
+            className:"col-xs-6",
+            key: "protect2EndAddress",
+            type: "input",
+            templateOptions: {
+              label: "保护区2结束地址",
+              placeholder: "133ff"
+            }
+          }
+        ]
+      },
+      {
+        className:"row",
+        fieldGroup:[
+          {
+            className:"col-xs-6",
+            key: "preserve1StartAddress",
+            type: "input",
+            templateOptions: {
+              label: "保留区1起始地址",
+              placeholder: "12000"
+            }
+          },
+          {
+            className:"col-xs-6",
+            key: "preserve1EndAddress",
+            type: "input",
+            templateOptions: {
+              label: "保留区1结束地址",
+              placeholder: "121ff"
+            }
+          }
+        ]
+      },
+      {
+        className:"row",
+        fieldGroup:[
+          {
+            className:"col-xs-6",
+            key: "preserve2StartAddress",
+            type: "input",
+            templateOptions: {
+              label: "保留区2起始地址",
+              placeholder: "13000"
+            }
+          },
+          {
+            className:"col-xs-6",
+            key: "preserve2EndAddress",
+            type: "input",
+            templateOptions: {
+              label: "保留区2结束地址",
+              placeholder: "133ff"
+            }
+          }
+        ]
+      },
+      {
+        className:"row",
+        fieldGroup:[
+          {
+            className:"col-xs-6",
+            key: "unusedSpaceFillWith",
+            type: "radio",
+            templateOptions: {
+              label: "未用存贮空间填充数据",
+              options: [
+                {
+                  "name": "00H",
+                  "value": "00H"
+                },
+                {
+                  "name": "FFH",
+                  "value": "FFH"
+                },
+                {
+                  "name": "其他（16进制）",
+                  "value": "others"
+                }
+              ]
+            }
+          }
+        ]
+
+      },
+      {
+        className:"row",
+        fieldGroup:[
+          {
+            className:"col-xs-4",
+            key: 'contactName',
+            type: 'input',
+            templateOptions: {
+              label: '联系人姓名',
+              placeholder: '张XX'
+            }
+          },
+          {
+            className:"col-xs-4",
+            key: 'contactTel',
+            type: 'input',
+            templateOptions: {
+              label: '电话',
+              placeholder: 'XXX-XXXXXXXX '
+            }
+          },
+          {
+            className:"col-xs-4",
+            key: 'createDate',
+            type: 'datepicker',
+            templateOptions: {
+              label: '填写日期',
+              type: 'text',
+              datepickerPopup: 'dd-MMMM-yyyy'
+            }
+          }
+        ]
+      }
+    ];
+
+    // function definition
+    function onSubmit() {
+      alert(JSON.stringify(vm.model), null, 2);
+    }
+  }]);
