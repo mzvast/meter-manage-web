@@ -8,7 +8,7 @@
  * Service in the manageApp.
  */
 angular.module('manageApp')
-  .service('AuthService', ['$cookies','$http',function ($cookies,$http) {
+  .service('authService', ['$cookies','$http',function ($cookies, $http) {
     // AngularJS will instantiate a singleton by calling "new" on this function
   var self = this;
   self.authStatus = false;

@@ -1,0 +1,145 @@
+{
+  "title": "试验委托协议",
+  "fields": [
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "requester",
+          "type": "input",
+          "templateOptions": {
+            "label": "委托单位",
+            "placeholder": "XXXXXXXX有限公司"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "generatingUnit",
+          "type": "input",
+          "templateOptions": {
+            "label": "生产单位",
+            "placeholder": "XXXXXXXX有限公司"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-8",
+          "key": "address",
+          "type": "input",
+          "templateOptions": {
+            "label": "地址",
+            "placeholder": "XXX省XXX市XXXXXXXXXXXX"
+          }
+        },
+        {
+          "className": "col-xs-4",
+          "key": "zipcode",
+          "type": "input",
+          "templateOptions": {
+            "label": "邮政编码",
+            "placeholder": "XXXXXXXX"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-4",
+          "key": "contact",
+          "type": "input",
+          "templateOptions": {
+            "label": "联系人",
+            "placeholder": "XXX"
+          }
+        },
+        {
+          "className": "col-xs-4",
+          "key": "fax",
+          "type": "input",
+          "templateOptions": {
+            "label": "传真",
+            "placeholder": "XXXXXXXX"
+          }
+        },
+        {
+          "className": "col-xs-4",
+          "key": "contactTel",
+          "type": "input",
+          "templateOptions": {
+            "label": "电话",
+            "placeholder": "XXX-XXXXXXXX "
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "testType",
+          "defaultValue": "委托试验",
+          "type": "select",
+          "templateOptions": {
+            "label": "试验类型",
+            "valueProp": "name",
+            "options": [
+              {
+                "name": "委托试验"
+              },
+              {
+                "name": "型式试验"
+              },
+              {
+                "name": "抽样试验"
+              },
+              {
+                "name": "其他试验"
+              }
+            ]
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "standard",
+          "defaultValue": "行业标准",
+          "type": "select",
+          "templateOptions": {
+            "label": "依据标准",
+            "valueProp": "name",
+            "options": [
+              {
+                "name": "国家标准"
+              },
+              {
+                "name": "检定规程"
+              },
+              {
+                "name": "型式评价大纲"
+              },
+              {
+                "name": "行业标准"
+              },
+              {
+                "name": "企业标准"
+              },
+              {
+                "name": "国际标准"
+              },
+              {
+                "name": "其他"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

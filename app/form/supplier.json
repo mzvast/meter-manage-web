@@ -1,0 +1,204 @@
+{
+  "title": "供应商信息登记表",
+  "fields": [
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "companyName",
+          "type": "input",
+          "templateOptions": {
+            "label": "检测单位",
+            "placeholder": "国网计量中心/XX省计量中心"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "companyName",
+          "type": "input",
+          "templateOptions": {
+            "label": "厂家名称",
+            "placeholder": "XXXXXXXX有限公司"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "companyCode",
+          "type": "input",
+          "templateOptions": {
+            "label": "厂家代码",
+            "placeholder": "XXXX（国网公司分配的厂家代码，例0020）"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "programVersion",
+          "type": "input",
+          "templateOptions": {
+            "label": "程序版本号",
+            "placeholder": "V xx.xx"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className":"col-xs-6",
+          "key": "meterType",
+          "type": "select",
+          "templateOptions": {
+            "label": "适用表型",
+            "valueProp": "name",
+            "options": [
+              {
+                "name": "0.2s级三相智能电能表",
+                "group":"0.2s级"
+              },
+              {
+                "name": "0.2S级三相智能电能表(互感器接入100V) ",
+                "group":"0.2s级"
+              },
+              {
+                "name": "0.5s级三相智能电能表",
+                "group":"0.5s级"
+              },
+              {
+                "name": "0.5S级三相智能电能表(互感器接入100V)",
+                "group":"0.5s级"
+              },
+              {
+                "name": "0.5s级三相本地费控智能电能表（模块-CPU卡-开关外置）",
+                "group":"0.5s级"
+              },
+              {
+                "name": "0.5s级三相费控智能电能表（模块-远程-开关外置）",
+                "group":"0.5s级"
+              },
+              {
+                "name": "1级三相智能电能表(互感器接入100V)",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相智能电能表(互感器接入)",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相本地费控智能电能表（CPU卡-开关外置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相本地费控智能电能表（CPU卡-开关内置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相费控智能电能表（远程-开关外置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相费控智能电能表（远程-开关内置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相本地费控智能电能表（模块- CPU卡-开关外置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相本地费控智能电能表（模块- CPU卡-开关内置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相费控智能电能表（模块-远程-开关外置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相费控智能电能表（模块-远程-开关内置）",
+                "group":"1级"
+              },
+              {
+                "name": "2级单相本地费控智能电能表（CPU卡-开关外置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相本地费控智能电能表（CPU卡-开关内置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相本地费控智能电能表（模块-CPU卡-开关外置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相本地费控智能电能表（模块-CPU卡-开关内置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相费控智能电能表（远程-开关外置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相费控智能电能表（远程-开关内置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相费控智能电能表（模块-远程-开关外置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相费控智能电能表（模块-远程-开关内置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相静止式多费率电能表",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相静止式多费率电能表(模块)",
+                "group": "2级"
+              }
+            ]
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "companyAuthMan",
+          "type": "input",
+          "templateOptions": {
+            "label": "企业授权人",
+            "placeholder": "xxx"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "tel",
+          "type": "input",
+          "templateOptions": {
+            "label": "电话",
+            "placeholder": "XXX-XXXXXXXX"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "createDate",
+          "type": "datepicker",
+          "templateOptions": {
+            "label": "填写日期",
+            "type": "text",
+            "datepickerPopup": "dd-MMMM-yyyy"
+          }
+        }
+      ]
+    }
+  ]
+}

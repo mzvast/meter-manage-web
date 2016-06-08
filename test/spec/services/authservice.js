@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: AuthService', function () {
+describe('Service: authService', function () {
 
   // load the service's module
   beforeEach(module('manageApp',function($urlRouterProvider,$httpProvider) {
