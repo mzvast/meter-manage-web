@@ -1,0 +1,33 @@
+<div class="row" ng-controller="ActionProductRegisterCtrl as reg">
+  <div class="col-xs-12" >
+    <div class="box" >
+      <!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">
+        <div class="col-md-12">
+          <!-- Custom Tabs -->
+          <div class="nav-tabs-custom" style="margin-top: 10px;">
+            <ul class="nav nav-tabs">
+              <!--<li class="active"><a href="" ng-click="reg.setTab()" data-toggle="tab" aria-expanded="true">全部类型</a>-->
+              <!--</li>-->
+              <li ui-sref-active="active" ng-repeat="item in reg.tabs">
+                <a  ui-sref="action-test.form.show({fid:item.fid})" ng-click="reg.setTab(item.id)"  aria-expanded="true"
+
+                >{{ item.id+1 }}.{{item.name}}</a>
+              </li>
+            </ul>
+            <div class="tab-content text-center" ui-view>
+              请填写以上信息登记表
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- nav-tabs-custom -->
+        </div>
+
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
+<!--Modal -->
+

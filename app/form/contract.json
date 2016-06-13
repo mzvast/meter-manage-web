@@ -2,6 +2,13 @@
   "title": "试验委托协议",
   "fields": [
     {
+      "type":"custom",
+      "className":"row",
+      "templateOptions": {
+        "label": "客户信息"
+      }
+    },
+    {
       "className": "row",
       "fieldGroup": [
         {
@@ -80,6 +87,76 @@
       ]
     },
     {
+      "className":"row",
+      "type": "repeatSection",
+      "key": "products",
+      "templateOptions": {
+        "btnText":"添加产品",
+        "label":"样品信息",
+        "fields": [
+          {
+            "className":"col-xs-2",
+            "key":"name",
+            "type":"input",
+            "templateOptions": {
+              "label": "样品名称"
+            }
+          },
+          {
+            "className":"col-xs-2",
+            "key":"model",
+            "type":"input",
+            "templateOptions": {
+              "label": "型号规格"
+            }
+          },
+          {
+            "className":"col-xs-2",
+            "key":"code",
+            "type":"input",
+            "templateOptions": {
+              "label": "出厂编号"
+            }
+          },
+          {
+            "className":"col-xs-2",
+            "key":"produceUnit",
+            "type":"input",
+            "templateOptions": {
+              "label": "制造单位"
+            }
+          },
+          {
+            "className":"col-xs-2",
+            "key":"volume",
+            "defaultValue":"",
+            "type":"input",
+            "templateOptions": {
+              "label": "数量",
+              "type": "number",
+              "max": 99999,
+              "min": 0
+            }
+          },
+          {
+            "className":"col-xs-2",
+            "key":"PS",
+            "type":"input",
+            "templateOptions": {
+              "label": "备注"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type":"custom",
+      "className":"row",
+      "templateOptions": {
+        "label": "委托要求"
+      }
+    },
+    {
       "className": "row",
       "fieldGroup": [
         {
@@ -139,7 +216,147 @@
             ]
           }
         }
+
+      ]
+    },
+    {
+      "className": "row",
+      "key": "productInfo",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "throwMethod",
+          "defaultValue": "自取",
+          "type": "select",
+          "templateOptions": {
+            "label": "处置方式",
+            "valueProp": "name",
+            "options": [
+              {
+                "name": "自取"
+              },
+              {
+                "name": "自愿放弃"
+              },
+              {
+                "name": "其他"
+              }
+            ]
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "sendMethod",
+          "defaultValue": "送样",
+          "type": "select",
+          "templateOptions": {
+            "label": "收样方式",
+            "valueProp": "name",
+            "options": [
+              {
+                "name": "送样"
+              },
+              {
+                "name": "抽检"
+              },
+              {
+                "name": "现场"
+              },
+              {
+                "name": "内部周检"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type":"custom",
+      "className":"row",
+      "templateOptions": {
+        "label": "报告信息",
+        "hr":true
+      }
+    },
+    {
+      "className": "row",
+      "key": "reportInfo",
+      "fieldGroup": [
+        {
+          "className": "col-xs-4",
+          "key": "type",
+          "defaultValue": "检验报告",
+          "type": "select",
+          "templateOptions": {
+            "label": "报告类型",
+            "valueProp": "name",
+            "options": [
+              {
+                "name": "检验证书"
+              },
+              {
+                "name": "校准证书"
+              },
+              {
+                "name": "测试证书"
+              },
+              {
+                "name": "检验报告"
+              },
+              {
+                "name": "检测报告"
+              },
+              {
+                "name": "测试报告"
+              },
+              {
+                "name": "型式评价报告"
+              }
+            ]
+          }
+        },
+        {
+          "className": "col-xs-4",
+          "key": "style",
+          "defaultValue": "中文版",
+          "type": "select",
+          "templateOptions": {
+            "label": "报告版式",
+            "valueProp": "name",
+            "options": [
+              {
+                "name": "中文版"
+              },
+              {
+                "name": "英文版"
+              },
+              {
+                "name": "其他"
+              }
+            ]
+          }
+        },
+        {
+          "className": "col-xs-4",
+          "key": "sendMethod",
+          "defaultValue": "自取",
+          "type": "select",
+          "templateOptions": {
+            "label": "报告提取方式",
+            "valueProp": "name",
+            "options": [
+              {
+                "name": "自取"
+              },
+              {
+                "name": "邮寄"
+              }
+            ]
+          }
+        }
       ]
     }
+
   ]
 }
+

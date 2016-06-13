@@ -8,7 +8,7 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('FormCtrl', ['formManager','$stateParams', function (formManager,$stateParams) {
+  .controller('FormCtrl', ['formManager', '$stateParams' ,'$state',function (formManager, $stateParams,$state) {
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
@@ -16,18 +16,54 @@ angular.module('manageApp')
       'Karma'
     ];
 
-    console.log("进入form.js",$stateParams.fid);
+    // console.log("进入form.js",$stateParams.fid);
 
     vm.onSubmit = onSubmit;
 
-    vm.model = {
-      createDate: Date.now()
-    };
+    switch ($stateParams.fid) {
+      case "contract":
+      {
+        console.log("contract");
+        vm.model = {
+          createDate: Date.now(),
+          items:{
+          }
+        };
+        break;
+      }
+      case "apply":
+      case "supplier":
+      default:
+      {
+        console.log("hello");
+        vm.model = {
+          createDate: Date.now()
+        };
+      }
+    }
+
 
     vm.fields = formManager.getForm($stateParams.fid, vm);
 
     // function definition
     function onSubmit() {
-      alert(JSON.stringify(vm.model), null, 2);
+      console.log($stateParams.fid=== "apply");
+      switch ($stateParams.fid){
+        case "apply":
+        {
+          $state.go(".",{fid:"supplier"});
+          break;
+        }
+        case "supplier":
+        {
+          $state.go(".",{fid:"contract"});
+          break;
+        }
+        case "contract":
+        default:
+        {
+          alert(JSON.stringify(vm.model), null, 2);
+        }
+      }
     }
   }]);

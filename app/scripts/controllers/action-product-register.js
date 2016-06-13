@@ -16,7 +16,7 @@ angular.module('manageApp')
       'Karma'
     ];
     /*配置页面基本元数据*/
-    uiManager.pageMetaDateConstructor("备案软件","登记",self);
+    uiManager.pageMetaDateConstructor("备案软件","申请",self);
     ////////////
     // 标签数据模型 //
     ////////////
@@ -48,7 +48,7 @@ angular.module('manageApp')
       createDate: Date.now()
     };
 
-    self.fields = formManager.getForm("apply", self);
+    // self.fields = formManager.getForm("apply", self);
 
     // function definition
     function onSubmit() {
