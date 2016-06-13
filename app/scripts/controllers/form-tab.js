@@ -2,14 +2,15 @@
 
 /**
  * @ngdoc function
- * @name manageApp.controller:ActionProductRegisterCtrl
+ * @name manageApp.controller:FormTabCtrl
  * @description
- * # ActionProductRegisterCtrl
+ * # FormTabCtrl
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionProductRegisterCtrl', ["uiManager", "formManager", function (uiManager, formManager) {
+  .controller('FormTabCtrl', ["uiManager", "formManager", function (uiManager, formManager) {
     var self = this;
+    console.log("Form Tab");
     self.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

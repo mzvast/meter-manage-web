@@ -51,12 +51,12 @@ angular.module('manageApp')
       switch ($stateParams.fid){
         case "apply":
         {
-          $state.go(".",{fid:"supplier"});
+          $state.go("action-product-register.form",{fid:"supplier"});
           break;
         }
         case "supplier":
         {
-          $state.go(".",{fid:"contract"});
+          $state.go("action-product-register.form",{fid:"contract"});
           break;
         }
         case "contract":

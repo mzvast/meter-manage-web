@@ -1,23 +1,23 @@
 'use strict';
 
-describe('Controller: ActionProductRegisterCtrl', function () {
+describe('Controller: ActionTestEncryptCtrl', function () {
 
   // load the controller's module
   beforeEach(module('manageApp'));
 
-  var ActionProductRegisterCtrl,
+  var ActionTestEncryptCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    ActionProductRegisterCtrl = $controller('ActionProductRegisterCtrl', {
+    ActionTestEncryptCtrl = $controller('ActionTestEncryptCtrl', {
       $scope: scope
       // place here mocked dependencies
     });
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
-    expect(ActionProductRegisterCtrl.awesomeThings.length).toBe(3);
+    expect(ActionTestEncryptCtrl.awesomeThings.length).toBe(3);
   });
 });

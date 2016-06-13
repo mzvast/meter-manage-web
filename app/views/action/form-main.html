@@ -1,4 +1,4 @@
-<div class="row" ng-controller="ActionProductRegisterCtrl as reg">
+<div class="row" >
   <div class="col-xs-12" >
     <div class="box" >
       <!-- /.box-header -->
@@ -7,10 +7,10 @@
           <!-- Custom Tabs -->
           <div class="nav-tabs-custom" style="margin-top: 10px;">
             <ul class="nav nav-tabs">
-              <!--<li class="active"><a href="" ng-click="reg.setTab()" data-toggle="tab" aria-expanded="true">全部类型</a>-->
+              <!--<li class="active"><a href="" ng-click="formTabCtrl.setTab()" data-toggle="tab" aria-expanded="true">全部类型</a>-->
               <!--</li>-->
-              <li ui-sref-active="active" ng-repeat="item in reg.tabs">
-                <a  ui-sref="action-test.form.show({fid:item.fid})" ng-click="reg.setTab(item.id)"  aria-expanded="true"
+              <li ui-sref-active="active" ng-repeat="item in formTabCtrl.tabs">
+                <a  ui-sref="action-test.form.show({fid:item.fid})" aria-expanded="true"
 
                 >{{ item.id+1 }}.{{item.name}}</a>
               </li>

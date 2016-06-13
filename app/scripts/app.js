@@ -113,21 +113,35 @@ angular
           authenticate: false
         })
         /*测试执行*/
-        .state("action-test",{
-          url:"/action-test",
-          templateUrl:"views/action/test.html",
+        .state("action-test", {
+          url: "/action-test",
+          templateUrl: "views/action/test.html",
           controller: 'ActionTestCtrl as vm',
-          authenticate:false
+          authenticate: false
         })
-        .state("action-test.form",{
-          url:"/form",
-          templateUrl:"views/action/form-main.html",
-          authenticate:false
+        .state("action-test.form", {
+          url: "/form",
+          templateUrl: "views/action/form-main.html",
+          controller:"FormTabCtrl as formTabCtrl",
+          authenticate: false
         })
         .state("action-test.form.show", {
           url: "/show/:fid",
           templateUrl: "views/action/form-detail.html",
+          controller:"FormCtrl as formCtrl",
           authenticate: false
+        })
+        .state("action-test.run",{
+          url:"/run",
+          templateUrl:"views/action/run.html",
+          controller: 'ActionTestRunCtrl as runCtrl',
+          authenticate:false
+        })
+        .state("action-test.encrypt",{
+          url:"/encrypt",
+          templateUrl:"views/action/encrypt.html",
+          controller: 'ActionTestEncryptCtrl as encryptCtrl',
+          authenticate:false
         })
         .state("action-suite-edit", {
           url: "/action-suite-edit",
@@ -173,12 +187,12 @@ angular
         /*系统配置*/
         .state("setting-role", {
           url: "/setting-role",
-          templateUrl: "views/setting-role.html",
+          templateUrl: "views/setting/role.html",
           authenticate: false
         })
         .state("setting-encrypt", {
           url: "/setting-encrypt",
-          templateUrl: "views/setting-encrypt.html",
+          templateUrl: "views/setting/encrypt.html",
           authenticate: false
         })
       ;
