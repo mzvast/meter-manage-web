@@ -1,0 +1,22 @@
+<div>
+  <hr>
+  <h3 class="text-center"><b>{{options.templateOptions.label}}</b></h3>
+  <!--loop through each element in model array-->
+  <div class="{{hideRepeat}}">
+    <div class="repeatsection" ng-repeat="element in model[options.key]" ng-init="fields = copyFields(to.fields)">
+      <formly-form fields="fields"
+                   model="element"
+                   form="form">
+      </formly-form>
+      <div class="text-center" style="margin-bottom:20px;">
+        <button type="button" class="btn btn-sm btn-danger" ng-click="model[options.key].splice($index, 1)">
+          X 删除产品
+        </button>
+      </div>
+    </div>
+    <p class="AddNewButton text-center">
+      <button type="button" class="btn btn-success" ng-click="addNew()">{{to.btnText}}</button>
+    </p>
+  </div>
+  <hr>
+</div>
