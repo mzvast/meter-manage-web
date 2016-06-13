@@ -23,18 +23,23 @@ angular.module('manageApp')
     self.tabs = self.options = [
       {
         id: 0,
-        name: "填写申请表",
+        name: "申请表",
         state:"action-test.form"
       },
       {
         id: 1,
-        name: "执行测试",
+        name: "测试执行",
         state:"action-test.run"
       },
       {
         id: 2,
-        name: "备案加密",
+        name: "软件上传加密",
         state:"action-test.encrypt"
+      },
+      {
+        id: 3,
+        name: "备案状态",
+        state:"action-test.status"
       }
     ];
     self.setTab = function (value) {

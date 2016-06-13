@@ -139,8 +139,13 @@ angular
         })
         .state("action-test.encrypt",{
           url:"/encrypt",
-          templateUrl:"views/action/encrypt.html",
+          templateUrl:"views/action/upload.html",
           controller: 'ActionTestEncryptCtrl as encryptCtrl',
+          authenticate:false
+        })
+        .state("action-test.status",{
+          url:"/status",
+          templateUrl:"views/action/register-status.html",
           authenticate:false
         })
         .state("action-suite-edit", {
