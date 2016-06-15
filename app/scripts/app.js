@@ -312,7 +312,7 @@ angular
     var unique = 1;
     formlyConfig.setType({
       name: 'repeatSection',
-      templateUrl: 'views/form/repeatSection.html',
+      templateUrl: 'views/form/repeat-section.html',
       controller: ['$scope',function ($scope) {
         $scope.formOptions = {formState: $scope.formState};
         $scope.addNew = addNew;
