@@ -23,7 +23,7 @@ console.log('Forwarding API requests to ' + apiForwardingUrl);
 
 // Node express server setup.
 var server = express();
-server.set('port', 3000);
+server.set('port', 8000);
 // server.use(express.static(__dirname + '/dist'));
 server
   .use(modRewrite(['!/api|\\.jpg|\\.gif|\\.png|\\.svg|\\.woff2|\\.eot|\\.html|\\.js|\\.css|\\.woff|\\.ttf|\\.swf$ /index.html [L]']))
