@@ -1,7 +1,7 @@
 {
   "name": "manage",
   "private": true,
- "devDependencies": {
+  "devDependencies": {
     "autoprefixer-core": "^5.2.1",
     "connect-modrewrite": "^0.9.0",
     "grunt": "^0.4.5",
@@ -43,11 +43,12 @@
   "scripts": {
     "start": "grunt serve",
     "test": "karma start test/karma.conf.js",
-    "serve":"grunt serve --host=0.0.0.0 --port=8000 --live=8001",
-    "dist":"grunt build && node index.js"
+    "serve": "grunt serve --host=0.0.0.0 --port=8000 --live=8001",
+    "dist": "grunt build && node index.js"
   },
   "dependencies": {
     "body-parser": "^1.15.1",
+    "connect-modrewrite": "^0.9.0",
     "express": "^4.13.4",
     "http-proxy": "^1.13.2"
   }
