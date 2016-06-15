@@ -313,7 +313,7 @@ angular
     formlyConfig.setType({
       name: 'repeatSection',
       templateUrl: 'views/form/repeatSection.html',
-      controller: function ($scope) {
+      controller: ['$scope',function ($scope) {
         $scope.formOptions = {formState: $scope.formState};
         $scope.addNew = addNew;
 
@@ -356,7 +356,7 @@ angular
         function getRandomInt(min, max) {
           return Math.floor(Math.random() * (max - min)) + min;
         }
-      }
+      }]
     });
   })
 ;
