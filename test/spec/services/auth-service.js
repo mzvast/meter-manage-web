@@ -9,123 +9,123 @@ describe('Service: authService', function () {
 }));
 
   // instantiate service
-  var AuthService;
-  beforeEach(inject(function (_AuthService_) {
-    AuthService = _AuthService_;
+  var authService;
+  beforeEach(inject(function (_authService_) {
+    authService = _authService_;
   }));
 
 
   it('should do something', function () {
-    expect(!!AuthService).toBe(true);
+    expect(!!authService).toBe(true);
   });
 
   it('before login ,should return false ', function() {
-    expect(AuthService.authStatus).toBe(false);
+    expect(authService.authStatus).toBe(false);
   });
 
   it('login success,should return true ', inject(function($httpBackend) {
-    AuthService.doLogin('abc','123');
+    authService.doLogin('abc','123');
     $httpBackend
-        .expect('POST', 
+        .expect('POST',
           '/api/login',
           {
             username:'abc',
             password:'123'
           })
-        .respond(200, 
+        .respond(200,
           {
             status: 'success',
             token:'12345'
         });
       $httpBackend.flush();
-      expect(AuthService.authStatus).toBe(true);
+      expect(authService.authStatus).toBe(true);
   }));
 
   it('login fail,should return false ', inject(function($httpBackend) {
-    AuthService.doLogin('a','b');
+    authService.doLogin('a','b');
     $httpBackend
-        .when('POST', 
+        .when('POST',
           '/api/login'
           )
-        .respond(200, 
+        .respond(200,
           {
             status: 'fail'
         });
-        
+
       $httpBackend.flush();
-      expect(AuthService.authStatus).toBe(false);
+      expect(authService.authStatus).toBe(false);
   }));
 
   it('logout ,should return false ', function() {
-    AuthService.authStatus=true;
-    expect(AuthService.authStatus).toBe(true);
-    AuthService.doLogout();
-    expect(AuthService.authStatus).toBe(false);
+    authService.authStatus=true;
+    expect(authService.authStatus).toBe(true);
+    authService.doLogout();
+    expect(authService.authStatus).toBe(false);
   });
 
   it('Login By username|password should return token', inject(function ($httpBackend) {
-  
-      AuthService.doLoginByPass('abc','123');
-  
-      
+
+      authService.doLoginByPass('abc','123');
+
+
       $httpBackend
-        .expect('POST', 
+        .expect('POST',
           '/api/login',
           {
             username:'abc',
             password:'123'
           })
-        .respond(200, 
+        .respond(200,
           {
             status: 'success',
             token:'12345'
         });
-  
-  
+
+
       $httpBackend.flush();
-          expect(AuthService.token).toBe('12345');
+          expect(authService.token).toBe('12345');
     }))
 
   it('Verified token should return true', inject(function ($httpBackend) {
-      AuthService.token = '12345';
-      AuthService.doLoginByToken();
-  
-      
+      authService.token = '12345';
+      authService.doLoginByToken();
+
+
       $httpBackend
-        .expect('POST', 
+        .expect('POST',
           '/api/verifytoken',
           {
             token:'12345'
           })
-        .respond(200, 
+        .respond(200,
           {
             status: 'success'
         });
-  
-  
+
+
       $httpBackend.flush();
-            expect(AuthService.authStatus).toBe(true);
+            expect(authService.authStatus).toBe(true);
     }))
 
 
   it('Invalid token should return false', inject(function ($httpBackend) {
-    
-      AuthService.token = 'badToken';
-      AuthService.doLoginByToken();
-  
-      
+
+      authService.token = 'badToken';
+      authService.doLoginByToken();
+
+
       $httpBackend
-        .when('POST', 
+        .when('POST',
           '/api/verifytoken'
           )
-        .respond(200, 
+        .respond(200,
           {
             status: 'fail'
         });
-  
-  
+
+
       $httpBackend.flush();
 
-      expect(AuthService.authStatus).toBe(false);
+      expect(authService.authStatus).toBe(false);
     }))
 });
