@@ -1,0 +1,36 @@
+<!--备案加密-->
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">软件一致性比对</h3>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form role="form">
+        <div class="box-body">
+          <div class="form-group">
+            <label for="exampleInputFile">选择软件</label>
+            <input type="file" id="exampleInputFile">
+          </div>
+          <div class="form-group">
+            <label>比对方式</label>
+            <select class="form-control">
+              <option>随机10段</option>
+              <option>随机20段</option>
+              <option>随机30段</option>
+              <option>随机50段</option>
+              <option>随机100段</option>
+            </select>
+          </div>
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer">
+          <button type="submit" class="btn btn-primary" ng-click="compareCtrl.doCompare()">开始比对</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

@@ -28,8 +28,8 @@ angular.module('manageApp')
       },
       {
         id: 1,
-        name: "测试执行",
-        state:"action-test.run"
+        name: "源码比对",
+        state:"action-test.compare"
       },
       {
         id: 2,

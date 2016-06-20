@@ -10,8 +10,9 @@
       <form role="form">
         <div class="box-body">
           <div class="form-group">
-            <label for="exampleInputFile">选择软件</label>
-            <input type="file" id="exampleInputFile">
+            <label for="softToUpload">选择软件</label>
+            <input id="softToUpload" type="file" file-model="encryptCtrl.myFile"/>
+            <button ng-click="encryptCtrl.uploadFile()">upload me</button>
           </div>
           <div class="form-group">
             <label>加密方式</label>

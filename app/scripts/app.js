@@ -18,7 +18,8 @@ angular
       'ngRap',
       'formly',
       'formlyBootstrap',
-      'ui.bootstrap'
+      'ui.bootstrap',
+      'ngWebSocket'
     ])
   .config(["$locationProvider", function ($locationProvider) {
     $locationProvider.html5Mode(true);
@@ -135,6 +136,12 @@ angular
           url:"/run",
           templateUrl:"views/action/run.html",
           controller: 'ActionTestRunCtrl as runCtrl',
+          authenticate:false
+        })
+        .state("action-test.compare",{
+          url:"/compare",
+          templateUrl:"views/action/compare.html",
+          controller: 'ActionTestCompareCtrl as compareCtrl',
           authenticate:false
         })
         .state("action-test.encrypt",{
