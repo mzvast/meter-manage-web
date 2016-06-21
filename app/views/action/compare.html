@@ -10,18 +10,14 @@
       <form role="form">
         <div class="box-body">
           <div class="form-group">
-            <label for="exampleInputFile">选择软件</label>
-            <input type="file" id="exampleInputFile">
+            <label for="chooseCompare">选择软件</label>
+            <input id="chooseCompare" type="file" file-model="compareCtrl.myFile"/>
           </div>
+          <hr>
           <div class="form-group">
-            <label>比对方式</label>
-            <select class="form-control">
-              <option>随机10段</option>
-              <option>随机20段</option>
-              <option>随机30段</option>
-              <option>随机50段</option>
-              <option>随机100段</option>
-            </select>
+            <label for="msg">发送文本消息</label>
+            <input id="msg" type="text" ng-model="compareCtrl.msg">
+            <button ng-click="compareCtrl.sendMsg()">发送</button>
           </div>
         </div>
         <!-- /.box-body -->
