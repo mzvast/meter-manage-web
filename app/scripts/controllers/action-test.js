@@ -16,32 +16,49 @@ angular.module('manageApp')
       'Karma'
     ];
     /*配置页面基本元数据*/
-    uiManager.pageMetaDateConstructor("测试备案加密","",self);
+    uiManager.pageMetaDateConstructor("备案比对","",self);
     ////////////
     // 标签数据模型 //
     ////////////
-    self.tabs = self.options = [
+
+    var rawTabs = [
       {
-        id: 0,
-        name: "申请表",
+        name:"产品选择",
+        state:""
+      },
+      {
+        name: "信息录入",
         state:"action-test.form"
       },
       {
-        id: 1,
-        name: "源码比对",
+        name:"参数配置",
+        state:""
+      },
+      {
+        name:"上传hex文件",
+        state:""
+      },
+      {
+        name:"开始比对",
         state:"action-test.compare"
       },
       {
-        id: 2,
-        name: "软件上传加密",
+        name: "加密上传",
         state:"action-test.encrypt"
       },
       {
-        id: 3,
-        name: "备案状态",
+        name: "比对报告",
         state:"action-test.status"
       }
     ];
+
+    var addIdToRawTabs =function () {
+      var i;
+      for(i=0;i<rawTabs.length;i++){
+        rawTabs[i]['id']=i;
+      }
+    }();
+    self.tabs = rawTabs;
     self.setTab = function (value) {
       self.type = value ? value : -1;
       // self.get();
