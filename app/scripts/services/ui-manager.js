@@ -35,6 +35,7 @@ angular.module('manageApp')
                 vm.pageTitle = vm.pageResourceName + vm.pageType;
             }();
         };
+        self.pageMetaDateConstructor = pageMetaDateConstructor;//暴露
         ////////////
         // 分页构造函数 //
         ////////////

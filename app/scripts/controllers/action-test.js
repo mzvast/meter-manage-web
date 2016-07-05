@@ -59,10 +59,7 @@ angular.module('manageApp')
       }
     }();
     self.tabs = rawTabs;
-    self.setTab = function (value) {
-      self.type = value ? value : -1;
-      // self.get();
-    };
+    
 
     self.onSubmit = onSubmit;
 
