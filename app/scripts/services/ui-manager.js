@@ -8,26 +8,27 @@
  * Service in the manageApp.
  */
 angular.module('manageApp')
-    .service('uiManager', ['dataManager', function(dataManager) {
+    .service('uiManager', ['dataManager', function(_dataManager) {
         // AngularJS will instantiate a singleton by calling "new" on this function
         var self = this;
         ////////////
         // 配置调试 //
         ////////////
-        var log = dataManager.log();
+        var log = _dataManager.log();
         /////////////////////
         // 页面All初始化构造函数bundle //
         /////////////////////
         self.pageInit = function(pageResourceName, pageType, vm) {
-            self.pageMetaDateConstructor(pageResourceName, pageType, vm);
-            self.paginationConstructor(vm);
-            self.sortConstructor(vm);
-            self.searchConstructor(vm);
+            pageMetaDateConstructor(pageResourceName, pageType, vm);
+            paginationConstructor(vm);
+            sortConstructor(vm);
+            searchConstructor(vm);
+            setTabConstructor(vm);
         };
         ///////////////
         // 页面元数据构造函数 //
         ///////////////
-        self.pageMetaDateConstructor = function(pageResourceName, pageType, vm) {
+        var pageMetaDateConstructor = function(pageResourceName, pageType, vm) {
             return function() {
                 vm.pageResourceName = pageResourceName;
                 vm.pageType = pageType;
@@ -37,7 +38,7 @@ angular.module('manageApp')
         ////////////
         // 分页构造函数 //
         ////////////
-        self.paginationConstructor = function(vm) {
+        var paginationConstructor = function(vm) {
             return function() {
                 // vm.totalItems = 100;
                 vm.currentPage = 1;
@@ -57,7 +58,7 @@ angular.module('manageApp')
         ////////////
         // 排序构造函数 //
         ////////////
-        self.sortConstructor = function(vm) {
+        var sortConstructor = function(vm) {
             return function() {
                 vm.predicate = 'id';
                 vm.reverse = true;
@@ -71,7 +72,7 @@ angular.module('manageApp')
         ////////////
         // 搜索构造函数 //
         ////////////
-        self.searchConstructor = function(vm) {
+        var searchConstructor = function(vm) {
             return function() {
                 vm.search = function(q) {
                     log("q=" + q);
@@ -86,4 +87,21 @@ angular.module('manageApp')
                 };
             }();
         };
+      /**
+       * 设置标签构造函数
+       * @param vm
+       */
+        var setTabConstructor = function (vm) {
+          return function () {
+            vm.setTab = function (value) {
+              log("value="+value);
+              if (typeof value === "undefined") {
+                vm.type = -1;
+              }else{
+                vm.type = value;
+              }
+              vm.get();
+            };
+          }();
+        }
     }]);

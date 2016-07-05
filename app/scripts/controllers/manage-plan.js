@@ -8,9 +8,9 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-    .controller('ManagePlanCtrl', ['dataManager', 'uiManager', function(dataManager, uiManager) {
-        var self = this;
-        self.awesomeThings = [
+    .controller('ManagePlanCtrl', ['dataManager', 'uiManager', function(_dataManager, _uiManager) {
+        var vm = this;
+        vm.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
             'Karma'
@@ -18,47 +18,47 @@ angular.module('manageApp')
         ////////////
         // 配置调试 //
         ////////////
-        var log = dataManager.log();
+        var log = _dataManager.log();
         log("hello");
         ////////////
         // 新增测试计划 //
         ////////////
-        self.onProducts = true;
-        self.onRequirements = false;
-        self.onEnvs = false;
-        self.onUsers = false;
-        self.setTopTab = function(value) {
+        vm.onProducts = true;
+        vm.onRequirements = false;
+        vm.onEnvs = false;
+        vm.onUsers = false;
+        vm.setTopTab = function(value) {
           ['onProducts','onRequirements','onEnvs','onUsers']
           .map(function(elem) {
-            return self[elem]=(value===elem);
+            return vm[elem]=(value===elem);
           })
         };
 
 
-        self.productsList = [];
-        self.addToProductsList = function(item) {
-            if (itemNotInList(item, self.productsList)) {
-                self.productsList.push(item);
+        vm.productsList = [];
+        vm.addToProductsList = function(item) {
+            if (itemNotInList(item, vm.productsList)) {
+                vm.productsList.push(item);
             }
         };
-        self.requirementsList = [];
-        self.addToRequirementsList = function(item) {
-            if (itemNotInList(item, self.requirementsList)) {
-                self.requirementsList.push(item);
-            }
-
-        };
-        self.envsList = [];
-        self.addToEnvsList = function(item) {
-            if (itemNotInList(item, self.envsList)) {
-                self.envsList.push(item);
+        vm.requirementsList = [];
+        vm.addToRequirementsList = function(item) {
+            if (itemNotInList(item, vm.requirementsList)) {
+                vm.requirementsList.push(item);
             }
 
         };
-        self.usersList = [];
-        self.addToUsersList = function(item) {
-            if (itemNotInList(item, self.usersList)) {
-                self.usersList.push(item);
+        vm.envsList = [];
+        vm.addToEnvsList = function(item) {
+            if (itemNotInList(item, vm.envsList)) {
+                vm.envsList.push(item);
+            }
+
+        };
+        vm.usersList = [];
+        vm.addToUsersList = function(item) {
+            if (itemNotInList(item, vm.usersList)) {
+                vm.usersList.push(item);
             }
         };
 
@@ -72,17 +72,17 @@ angular.module('manageApp')
           list.splice(itemID,1);
         };
 
-      self.removeFromProductsList = function (item) {
-        removeItemFromList(item,self.productsList);
+      vm.removeFromProductsList = function (item) {
+        removeItemFromList(item,vm.productsList);
       };
-      self.removeFromRequirementsList = function (item) {
-        removeItemFromList(item,self.requirementsList);
+      vm.removeFromRequirementsList = function (item) {
+        removeItemFromList(item,vm.requirementsList);
       };
-      self.removeFromEnvsList = function (item) {
-        removeItemFromList(item,self.envsList);
+      vm.removeFromEnvsList = function (item) {
+        removeItemFromList(item,vm.envsList);
       };
-      self.removeFromUsersList = function (item) {
-        removeItemFromList(item,self.usersList);
+      vm.removeFromUsersList = function (item) {
+        removeItemFromList(item,vm.usersList);
       };
         // 操作按钮样式
         var itemNotInList = function(item, list) {
@@ -96,27 +96,27 @@ angular.module('manageApp')
           return valid;
         };
 
-        self.itemNotInProductsList = function(item) {
-          return itemNotInList(item,self.productsList)
+        vm.itemNotInProductsList = function(item) {
+          return itemNotInList(item,vm.productsList)
         };
 
-        self.itemNotInRequirementsList = function(item) {
-          return itemNotInList(item,self.requirementsList)
+        vm.itemNotInRequirementsList = function(item) {
+          return itemNotInList(item,vm.requirementsList)
         };
-        self.itemNotInEnvsList = function(item) {
-          return itemNotInList(item,self.envsList)
+        vm.itemNotInEnvsList = function(item) {
+          return itemNotInList(item,vm.envsList)
         };
-        self.itemNotInUsersList = function(item) {
-          return itemNotInList(item,self.usersList)
+        vm.itemNotInUsersList = function(item) {
+          return itemNotInList(item,vm.usersList)
         };
         /////////////////////////
         // 页面基础设施初始化 //
         ////////////////////////
-        uiManager.pageInit("测试计划", "管理", self);
+        _uiManager.pageInit("测试计划", "管理", vm);
         //////////////////
         // 列表数据模型 //
         /////////////////
-        self.model = {
+        vm.model = {
             id: "ID",
             title: "名称",
             creator: "制定者",
@@ -125,21 +125,18 @@ angular.module('manageApp')
         ////////////
         // 标签数据模型 //
         ////////////
-        self.tabs =self.options = [{
+        vm.tabs =vm.options = [{
           id: 0,
           name:"未完成"
         },{
           id:1,
           name:"已完成"
         }];
-        self.setTab = function(value) {
-            self.type = value ? value : -1;
-            self.get();
-        };
+
         //////////////
         // form数据模型 //
         //////////////
-        self.formModel = {
+        vm.formModel = {
             title: "名称",
             describe: "描述"
         };
@@ -147,87 +144,88 @@ angular.module('manageApp')
         /////////////
         // 资源连接 //
         /////////////
-        ['C', 'R', 'U', 'D'].map(function(elem) {
-            self[elem] = dataManager[elem]('plans', self);
-        });
+      var _C = _dataManager.C('plans', vm),
+          _R = _dataManager.R('plans', vm),
+          _U = _dataManager.U('plans', vm),
+          _D = _dataManager.D('plans', vm);
         ///////////
         // 弹窗Modal //
         ///////////
-        self.setModal = function(item) {
+        vm.setModal = function(item) {
             if (item === undefined) {
-                // self.form = {};
+                // vm.form = {};
                 ['productsList','requirementsList','envsList','usersList'].map(function (elem) {
-                  self[elem] = [];
+                  vm[elem] = [];
                 });
-                self.modalType = 0;
-                self.modalTitle = "新增" + self.pageResourceName;
+                vm.modalType = 0;
+                vm.modalTitle = "新增" + vm.pageResourceName;
 
             } else {
-                // self.form = item;
+                // vm.form = item;
                 log(item);
                 ['productsList','requirementsList','envsList','usersList'].map(function (elem) {
-                  self[elem] = item[elem];
+                  vm[elem] = item[elem];
                 });
-                self.modalType = 1;
-                self.modalTitle = "修改" + self.pageResourceName;
+                vm.modalType = 1;
+                vm.modalTitle = "修改" + vm.pageResourceName;
             }
-          // console.log(self.selectedItem);
+          // console.log(vm.selectedItem);
         };
         ///////////////////
         // 保存时候区分是新建还是修改 //
         ///////////////////
-        self.save = function() {
-            switch (self.modalType) {
+        vm.save = function() {
+            switch (vm.modalType) {
                 case 0:
-                    self.create();
+                    vm.create();
                     break;
                 case 1:
-                    self.update();
+                    vm.update();
                     break;
                 default:
                     return;
             }
         };
-        self.get = function() {
+        vm.get = function() {
             var queryObj = {
-                current_page: self.currentPage,
-                items_per_page: self.itemsPerPage,
-                order_by: self.predicate,
-                q: self.q,
-                reverse: self.reverse,
-                type: self.type || -1
+                current_page: vm.currentPage,
+                items_per_page: vm.itemsPerPage,
+                order_by: vm.predicate,
+                q: vm.q,
+                reverse: vm.reverse,
+                type: vm.type
             };
-            self.R(queryObj);
+            _R(queryObj);
         };
-        self.get(); //页面第一次加载
+        vm.get(); //页面第一次加载
 
 
-        self.create = function() {
+        vm.create = function() {
             var form = {};
-            form.productsList = self.productsList;
-            form.requirementsList = self.requirementsList;
-            form.envsList = self.envsList;
-            form.usersList = self.usersList;
+            form.productsList = vm.productsList;
+            form.requirementsList = vm.requirementsList;
+            form.envsList = vm.envsList;
+            form.usersList = vm.usersList;
 
-            self.C(form);
+            _C(form);
         };
 
-        self.reset = function () {
+        vm.reset = function () {
             ['productsList','requirementsList','envsList','usersList'].map(function (elem) {
-                self[elem] = [];
+                vm[elem] = [];
             })
         };
 
-        self.update = function() {
+        vm.update = function() {
             var form = {};
-            form.productsList = self.productsList;
-            form.requirementsList = self.requirementsList;
-            form.envsList = self.envsList;
-            form.usersList = self.usersList;
+            form.productsList = vm.productsList;
+            form.requirementsList = vm.requirementsList;
+            form.envsList = vm.envsList;
+            form.usersList = vm.usersList;
 
-            self.U(self.form);
+            _U(vm.form);
         };
-        self.remove = function(id) {
-            self.D(id);
+        vm.remove = function(id) {
+            _D(id);
         };
     }]);

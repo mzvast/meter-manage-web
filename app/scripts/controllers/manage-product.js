@@ -41,14 +41,7 @@ angular.module('manageApp')
         id: 1,
         name: "已备案"
       }];
-      vm.setTab = function (value) {
-        if (typeof value === undefined) {
-          vm.type = -1;
-        }else{
-          vm.type = value;
-        }
-        vm.get();
-      };
+      
       //////////////
       // form数据模型 //
       //////////////

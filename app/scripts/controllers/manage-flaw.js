@@ -8,9 +8,9 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ManageFlawCtrl', ['dataManager', 'uiManager', function(dataManager, uiManager) {
-    var self = this;
-    self.awesomeThings = [
+  .controller('ManageFlawCtrl', ['dataManager', 'uiManager', function(_dataManager, _uiManager) {
+    var vm = this;
+    vm.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
@@ -19,11 +19,11 @@ angular.module('manageApp')
     /////////////////////////
     // 页面基础设施初始化 //
     ////////////////////////
-    uiManager.pageInit("缺陷", "管理", self);
+    _uiManager.pageInit("缺陷", "管理", vm);
     //////////////////
     // 列表数据模型 //
     /////////////////
-    self.model = {
+    vm.model = {
       id: "ID",
       title: "名称",
       productName:"产品名称",
@@ -34,7 +34,7 @@ angular.module('manageApp')
       create_date: "创建时间"
     };
 
-    self.tabs =self.options = [{
+    vm.tabs =vm.options = [{
         id: 0,
         name:"提交"
       },{
@@ -52,93 +52,91 @@ angular.module('manageApp')
       }];
 
 
-    self.setTab = function(value) {
-      self.type = value ? value : -1;
-      self.get();
-    };
+
     //////////////
     // form数据模型 //
     //////////////
-    self.formModel = {
+    vm.formModel = {
       title: "名称"
     };
-    self.formModelFrozen = {
+    vm.formModelFrozen = {
       productID: "产品ID",
       planID: "测试计划ID"
     };
     ////////////
     // 配置调试 //
     ////////////
-    var log = dataManager.log();
+    var log = _dataManager.log();
 
     /////////////
     // 资源连接 //
     /////////////
-    ['C', 'R', 'U', 'D'].map(function(elem) {
-      self[elem] = dataManager[elem]('flaws', self);
-    });
+    var _C = _dataManager.C('flaws', vm),
+        _R = _dataManager.R('flaws', vm),
+        _U = _dataManager.U('flaws', vm),
+        _D = _dataManager.D('flaws', vm);
 
     ///////////
     // 弹窗Modal //
     ///////////
-    self.setModal = function(item) {
+    vm.setModal = function(item) {
       if (item === undefined) {
-        self.form = {};
-        self.modalType = 0;
-        self.modalTitle = "新增" + self.pageResourceName;
+        vm.form = {};
+        vm.modalType = 0;
+        vm.modalTitle = "新增" + vm.pageResourceName;
       } else {
-        self.form = item;
-        self.selectedOption = self.options[item.type];//用type值设置selectedOption
-        // log(self.options[item.type]);
-        self.modalType = 1;
-        self.modalTitle = "修改" + self.pageResourceName;
+        vm.form = item;
+        vm.selectedOption = vm.options[item.type];//用type值设置selectedOption
+        // log(vm.options[item.type]);
+        vm.modalType = 1;
+        vm.modalTitle = "修改" + vm.pageResourceName;
       }
-      // console.log(self.selectedItem);
+      // console.log(vm.selectedItem);
     };
     ///////////////////
     // 保存时候区分是新建还是修改 //
     ///////////////////
-    self.save = function() {
-      switch (self.modalType) {
+    vm.save = function() {
+      switch (vm.modalType) {
         case 0:
-          self.create();
+          vm.create();
           break;
         case 1:
-          self.update();
+          vm.update();
           break;
         default:
           return;
       }
     };
-    self.get = function() {
+    vm.get = function() {
       var queryObj = {
-        current_page: self.currentPage,
-        items_per_page: self.itemsPerPage,
-        order_by: self.predicate,
-        q: self.q,
-        reverse: self.reverse,
-        type: self.type||-1
+        current_page: vm.currentPage,
+        items_per_page: vm.itemsPerPage,
+        order_by: vm.predicate,
+        q: vm.q,
+        reverse: vm.reverse,
+        type: vm.type
       };
-      self.R(queryObj);
+      _R(queryObj);
     };
-    self.get(); //页面第一次加载
-    self.create = function() {
-      self.C(self.form);
+    vm.get(); //页面第一次加载
+    vm.create = function() {
+     _C(vm.form);
     };
 
     //快速设定状态
-    self.updateType = function (item,typeVal) {
-      self.setModal(item);
-      self.form.type = typeVal;
-      // log(self.form);
-      self.U(self.form);
+    vm.updateType = function (item,typeVal) {
+      vm.setModal(item);
+      vm.form.type = typeVal;
+      // log(vm.form);
+      _U(vm.form);
     };
-    self.update = function() {
-      self.form.type = self.selectedOption.id;//将选中对象转换回去
-      // log(self.form);
-      self.U(self.form);
+    vm.update = function() {
+      vm.form.type = vm.selectedOption.id;//将选中对象转换回去
+      // log(vm.form);
+      _U(vm.form);
     };
-    self.remove = function(id) {
-      self.D(id);
+    vm.remove = function(id) {
+      _D(id);
     };
   }]);
