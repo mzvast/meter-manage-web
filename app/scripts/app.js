@@ -113,43 +113,55 @@ angular
           authenticate: false
         })
         /*测试执行*/
-        .state("action-test", {
-          url: "/action-test",
+        .state("action-beian", {
+          url: "/beian",
           templateUrl: "views/action/test.html",
-          controller: 'ActionTestCtrl as vm',
+          controller: 'ActionBeianCtrl as beianCtrl',
           authenticate: false
         })
-        .state("action-test.form", {
-          url: "/form",
-          templateUrl: "views/action/form-main.html",
-          controller:"FormTabCtrl as formTabCtrl",
+        .state("action-beian.selectProduct", {
+          url: "/selectProduct",
+          templateUrl: "views/action/select-product.html",
+          controller: "ManageProductCtrl as manageProduct",
           authenticate: false
         })
-        .state("action-test.form.show", {
-          url: "/show/:fid",
-          templateUrl: "views/action/form-detail.html",
-          controller:"FormCtrl as formCtrl",
+        .state("action-beian.info", {
+          url: "/info",
+          templateUrl: "views/action/info.html",
+          controller: "ActionBeianInfoCtrl as infoCtrl",
           authenticate: false
         })
-        .state("action-test.run",{
+        // .state("action-beian.form", {
+        //   url: "/form",
+        //   templateUrl: "views/action/form-main.html",
+        //   controller:"FormTabCtrl as formTabCtrl",
+        //   authenticate: false
+        // })
+        // .state("action-beian.form.show", {
+        //   url: "/show/:fid",
+        //   templateUrl: "views/action/form-detail.html",
+        //   controller:"FormCtrl as formCtrl",
+        //   authenticate: false
+        // })
+        .state("action-beian.run",{
           url:"/run",
           templateUrl:"views/action/run.html",
           controller: 'ActionTestRunCtrl as runCtrl',
           authenticate:false
         })
-        .state("action-test.compare",{
+        .state("action-beian.compare",{
           url:"/compare",
           templateUrl:"views/action/compare.html",
           controller: 'ActionTestCompareCtrl as compareCtrl',
           authenticate:false
         })
-        .state("action-test.encrypt",{
+        .state("action-beian.encrypt",{
           url:"/encrypt",
           templateUrl:"views/action/encrypt.html",
           controller: 'ActionTestEncryptCtrl as encryptCtrl',
           authenticate:false
         })
-        .state("action-test.status",{
+        .state("action-beian.status",{
           url:"/status",
           templateUrl:"views/action/register-status.html",
           authenticate:false

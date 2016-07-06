@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name manageApp.controller:ActionTestCtrl
+ * @name manageApp.controller:ActionBeianCtrl
  * @description
- * # ActionTestCtrl
+ * # ActionBeianCtrl
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionTestCtrl', ["uiManager", "formManager", function (uiManager, formManager) {
+  .controller('ActionBeianCtrl', ["uiManager", "formManager", function (uiManager, formManager) {
     var self = this;
     self.awesomeThings = [
       'HTML5 Boilerplate',
@@ -21,14 +21,14 @@ angular.module('manageApp')
     // 标签数据模型 //
     ////////////
 
-    var rawTabs = [
+    var tabs = [
       {
         name:"产品选择",
-        state:""
+        state:"action-beian.selectProduct"
       },
       {
         name: "信息录入",
-        state:"action-test.form"
+        state:"action-beian.info"
       },
       {
         name:"参数配置",
@@ -40,26 +40,27 @@ angular.module('manageApp')
       },
       {
         name:"开始比对",
-        state:"action-test.compare"
+        state:"action-beian.compare"
       },
       {
         name: "加密上传",
-        state:"action-test.encrypt"
+        state:"action-beian.encrypt"
       },
       {
         name: "比对报告",
-        state:"action-test.status"
+        state:"action-beian.status"
       }
     ];
 
-    var addIdToRawTabs =function () {
+    var addIdToTabs =function () {
       var i;
-      for(i=0;i<rawTabs.length;i++){
-        rawTabs[i]['id']=i;
+      for(i=0;i<tabs.length;i++){
+        tabs[i]['id'] = i;
       }
+
     }();
-    self.tabs = rawTabs;
-    
+    self.tabs = tabs;
+
 
     self.onSubmit = onSubmit;
 

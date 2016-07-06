@@ -4,7 +4,7 @@
       <div class="box-header">
         <div class="row">
           <div class="col-xs-6">
-            <h3 class="text-center"><b>{{vm.pageTitle}}</b></h3>
+            <h3 class="text-center"><b>{{beianCtrl.pageTitle}}</b></h3>
           </div>
         </div>
       </div>
@@ -14,10 +14,10 @@
           <!-- Custom Tabs -->
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <!--<li class="active"><a href="" ng-click="vm.setTab()" data-toggle="tab" aria-expanded="true">全部类型</a>-->
+              <!--<li class="active"><a href="" ng-click="beianCtrl.setTab()" data-toggle="tab" aria-expanded="true">全部类型</a>-->
               <!--</li>-->
-              <li ui-sref-active="active" ng-repeat="item in vm.tabs">
-                <a  ui-state="item.state" ng-click="vm.setTab(item.id)"  aria-expanded="true"
+              <li ui-sref-active="active" ng-repeat="item in beianCtrl.tabs">
+                <a  ui-state="item.state" ng-click="beianCtrl.setTab(item.id)"  aria-expanded="true"
 
                 >{{ item.id+1 }}.{{item.name}}</a>
               </li>
