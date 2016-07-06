@@ -12,13 +12,15 @@
           <table class="table table-striped">
             <tbody><tr>
               <th>编号</th>
-              <th>名称</th>
+              <th>项目</th>
+              <th>属性</th>
               <th>满足</th>
               <th>修改</th>
             </tr>
             <tr>
               <td>1</td>
               <td>产品选择</td>
+              <td><span ng-if="compareCtrl.setStatus.product ">id/名称:{{ compareCtrl.setStatus.product.id }}/{{ compareCtrl.setStatus.product.name }}</span></td>
               <td>
                 <div class="btn-group">
                   <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.product,'bg-olive':compareCtrl.setStatus.product}">
@@ -38,6 +40,7 @@
             <tr>
               <td>2</td>
               <td>信息录入</td>
+              <td><span ng-if="compareCtrl.setStatus.info ">正常</span></td>
               <td>
                 <div class="btn-group">
                   <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.info,'bg-olive':compareCtrl.setStatus.info}">
@@ -57,6 +60,7 @@
             <tr>
               <td>3</td>
               <td>参数配置</td>
+              <td><span ng-if="compareCtrl.setStatus.arg ">正常</span></td>
               <td>
                 <div class="btn-group">
                   <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.arg,'bg-olive':compareCtrl.setStatus.arg}">
@@ -76,6 +80,7 @@
             <tr>
               <td>4</td>
               <td>暂存HEX文件</td>
+              <td><span ng-if="compareCtrl.setStatus.hex ">{{ compareCtrl.hexLength }}bytes</span></td>
               <td>
                 <div class="btn-group">
                   <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.hex,'bg-olive':compareCtrl.setStatus.hex}">

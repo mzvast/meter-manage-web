@@ -15,9 +15,12 @@ angular.module('manageApp')
       'AngularJS',
       'Karma'
     ];
-    
+
     vm.setStatus = _beianManager.getAll();
     vm.isAllSet = vm.setStatus.product&&vm.setStatus.info&&vm.setStatus.arg&&vm.setStatus.hex;
+
+    vm.hexLength = vm.setStatus.hex?vm.setStatus.hex.byteLength:undefined;
+
     vm.doCompare = function () {
       _beianManager.getHexLength();
     };

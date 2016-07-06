@@ -81,7 +81,7 @@ angular.module('manageApp')
         hex:hex
       };
     };
-    vm.unsetAll = function () {
+    vm.resetAll = function () {
       product=undefined;
       info=undefined;
       arg=undefined;
