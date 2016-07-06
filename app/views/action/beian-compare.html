@@ -1,0 +1,114 @@
+<!--备案加密-->
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <div class="box box-primary">
+      <div class="box-header with-border text-center">
+        <h3 class="box-title">比对信息验核</h3>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <div class="box-body">
+        <form role="form">
+          <table class="table table-striped">
+            <tbody><tr>
+              <th>编号</th>
+              <th>名称</th>
+              <th>满足</th>
+              <th>修改</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>产品选择</td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.product,'bg-olive':compareCtrl.setStatus.product}">
+                    <span ng-show="compareCtrl.setStatus.product">是</span>
+                    <span ng-show="!compareCtrl.setStatus.product">否</span>
+                  </a>
+                </div>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn bg-olive margin" ui-sref="action-beian.setProduct">
+                    <i class="fa fa-fw fa-pencil"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>信息录入</td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.info,'bg-olive':compareCtrl.setStatus.info}">
+                    <span ng-show="compareCtrl.setStatus.info">是</span>
+                    <span ng-show="!compareCtrl.setStatus.info">否</span>
+                  </a>
+                </div>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn bg-olive margin" ui-sref="action-beian.setInfo">
+                    <i class="fa fa-fw fa-pencil"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>参数配置</td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.arg,'bg-olive':compareCtrl.setStatus.arg}">
+                    <span ng-show="compareCtrl.setStatus.arg">是</span>
+                    <span ng-show="!compareCtrl.setStatus.arg">否</span>
+                  </a>
+                </div>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn bg-olive margin" ui-sref="action-beian.setArg">
+                    <i class="fa fa-fw fa-pencil"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>暂存HEX文件</td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.hex,'bg-olive':compareCtrl.setStatus.hex}">
+                    <span ng-show="compareCtrl.setStatus.hex">是</span>
+                    <span ng-show="!compareCtrl.setStatus.hex">否</span>
+                  </a>
+                </div>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn bg-olive margin" ui-sref="action-beian.setHex">
+                    <i class="fa fa-fw fa-pencil"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <div  class="col-xs-6 col-xs-offset-3">
+              <button ng-show="compareCtrl.isAllSet" type="submit" class="btn btn-primary btn-block" ng-click="compareCtrl.doCompare()">开始比对</button>
+              <span ng-hide="compareCtrl.isAllSet">验核不通过，不能开始比对</span>
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+

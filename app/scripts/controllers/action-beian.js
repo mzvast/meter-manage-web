@@ -23,31 +23,31 @@ angular.module('manageApp')
     var tabs = [
       {
         name:"产品选择",
-        state:"action-beian.selectProduct"
+        state:"action-beian.setProduct"
       },
       {
         name: "信息录入",
-        state:"action-beian.info"
+        state:"action-beian.setInfo"
       },
       {
         name:"参数配置",
-        state:"action-beian.arg"
+        state:"action-beian.setArg"
       },
       {
-        name:"上传hex文件",
-        state:""
+        name:"暂存HEX文件",
+        state:"action-beian.setHex"
       },
       {
         name:"开始比对",
         state:"action-beian.compare"
       },
-      {
-        name: "加密上传",
-        state:"action-beian.encrypt"
-      },
+      // {
+      //   name: "加密上传",
+      //   state:"action-beian.encrypt"
+      // },
       {
         name: "比对报告",
-        state:"action-beian.status"
+        state:"action-beian.report"
       }
     ];
 

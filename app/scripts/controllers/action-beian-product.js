@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name manageApp.controller:ActionBeianSelectProductCtrl
+ * @name manageApp.controller:ActionBeianProductCtrl
  * @description
- * # ActionBeianSelectProductCtrl
+ * # ActionBeianProductCtrl
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianSelectProductCtrl', ['$state','dataManager', 'uiManager','beianManager', function ($state,_dataManager, _uiManager,_beianManager) {
+  .controller('ActionBeianProductCtrl', ['$state','dataManager', 'uiManager','beianManager', function ($state,_dataManager, _uiManager,_beianManager) {
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
@@ -114,7 +114,10 @@ angular.module('manageApp')
     };
 
     vm.setProduct = function (item) {
-      _beianManager.setProduct(item);
-      $state.go("action-beian.info")
+      if(_beianManager.setProduct(item)){
+        $state.go("action-beian.setInfo")
+      }else{
+        _dataManager.addNotification("danger","设置失败！");
+      }
     };
   }]);

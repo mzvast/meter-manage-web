@@ -115,25 +115,25 @@ angular
         /*测试执行*/
         .state("action-beian", {
           url: "/beian",
-          templateUrl: "views/action/beian.html",
+          templateUrl: "views/action/beian-main.html",
           controller: 'ActionBeianCtrl as beianCtrl',
           authenticate: false
         })
-        .state("action-beian.selectProduct", {
-          url: "/selectProduct",
-          templateUrl: "views/action/select-product.html",
-          controller: "ActionBeianSelectProductCtrl as productCtrl",
+        .state("action-beian.setProduct", {
+          url: "/setProduct",
+          templateUrl: "views/action/set-product.html",
+          controller: "ActionBeianProductCtrl as productCtrl",
           authenticate: false
         })
-        .state("action-beian.info", {
-          url: "/info",
-          templateUrl: "views/action/info.html",
+        .state("action-beian.setInfo", {
+          url: "/setInfo",
+          templateUrl: "views/action/set-info.html",
           controller: "ActionBeianInfoCtrl as infoCtrl",
           authenticate: false
         })
-        .state("action-beian.arg", {
-          url: "/arg",
-          templateUrl: "views/action/arg.html",
+        .state("action-beian.setArg", {
+          url: "/setArg",
+          templateUrl: "views/action/set-arg.html",
           controller: "ActionBeianArgCtrl as argCtrl",
           authenticate: false
         })
@@ -149,6 +149,12 @@ angular
         //   controller:"FormCtrl as formCtrl",
         //   authenticate: false
         // })
+        .state("action-beian.setHex",{
+          url:"/setHex",
+          templateUrl:"views/action/set-hex.html",
+          controller: 'ActionBeianHexCtrl as hexCtrl',
+          authenticate:false
+        })
         .state("action-beian.run",{
           url:"/run",
           templateUrl:"views/action/run.html",
@@ -157,10 +163,16 @@ angular
         })
         .state("action-beian.compare",{
           url:"/compare",
-          templateUrl:"views/action/compare.html",
-          controller: 'ActionTestCompareCtrl as compareCtrl',
+          templateUrl:"views/action/beian-compare.html",
+          controller: 'ActionBeianCompareCtrl as compareCtrl',
           authenticate:false
         })
+        // .state("action-beian.compare",{
+        //   url:"/compare",
+        //   templateUrl:"views/action/beian-compare.html",
+        //   controller: 'ActionTestCompareCtrl as compareCtrl',
+        //   authenticate:false
+        // })
         .state("action-beian.encrypt",{
           url:"/encrypt",
           templateUrl:"views/action/encrypt.html",
@@ -205,7 +217,7 @@ angular
         })
         .state("action-registered-product-compare", {
           url: "/action-registered-product-compare",
-          templateUrl: "views/action/registered-product-compare.html",
+          templateUrl: "views/action/registered-product-beian-compare.html",
           authenticate: false
         })
         .state("action-generate-test-result", {

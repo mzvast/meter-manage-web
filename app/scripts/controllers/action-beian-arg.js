@@ -78,8 +78,10 @@ angular.module('manageApp')
         _dataManager.addNotification("warning","至少输入一组参数！");
       }else{
         if(_beianManager.setArg(formatedArgs)){
-          // $state.go()
-        };
+          $state.go("action-beian.setHex")
+        }else{
+          _dataManager.addNotification("danger","设置失败！");
+        }
       }
       // $state.go("action-beian.arg");
     };

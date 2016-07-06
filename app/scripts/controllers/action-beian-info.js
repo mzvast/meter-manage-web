@@ -18,11 +18,13 @@ angular.module('manageApp')
     ////////////
     // 配置调试 //
     ////////////
-    var log = _dataManager.log();
     vm.onSubmit = function () {
       // alert(JSON.stringify(vm.model), null, 2);
-      _beianManager.setInfo(vm.model);
-      $state.go("action-beian.arg");
+      if(_beianManager.setInfo(vm.model)){
+        $state.go("action-beian.setArg");
+      }else{
+        _dataManager.addNotification("danger","设置失败！");
+      }
     };
 
 
