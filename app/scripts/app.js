@@ -115,20 +115,26 @@ angular
         /*测试执行*/
         .state("action-beian", {
           url: "/beian",
-          templateUrl: "views/action/test.html",
+          templateUrl: "views/action/beian.html",
           controller: 'ActionBeianCtrl as beianCtrl',
           authenticate: false
         })
         .state("action-beian.selectProduct", {
           url: "/selectProduct",
           templateUrl: "views/action/select-product.html",
-          controller: "ManageProductCtrl as manageProduct",
+          controller: "ActionBeianSelectProductCtrl as productCtrl",
           authenticate: false
         })
         .state("action-beian.info", {
           url: "/info",
           templateUrl: "views/action/info.html",
           controller: "ActionBeianInfoCtrl as infoCtrl",
+          authenticate: false
+        })
+        .state("action-beian.arg", {
+          url: "/arg",
+          templateUrl: "views/action/arg.html",
+          controller: "ActionBeianArgCtrl as argCtrl",
           authenticate: false
         })
         // .state("action-beian.form", {

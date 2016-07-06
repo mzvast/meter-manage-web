@@ -8,62 +8,24 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianInfoCtrl', ['formManager', '$stateParams' ,'$state',function (_formManager, $stateParams,$state) {
+  .controller('ActionBeianInfoCtrl', ['formManager', '$stateParams' ,'$state','dataManager','beianManager',function (_formManager, $stateParams,$state,_dataManager,_beianManager) {
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
-
-    // console.log("进入form.js",$stateParams.fid);
-
-    vm.onSubmit = onSubmit;
-
-    switch ($stateParams.fid) {
-      case "contract":
-      {
-        console.log("contract");
-        vm.model = {
-          createDate: Date.now(),
-          items:{
-          }
-        };
-        break;
-      }
-      case "apply":
-      case "supplier":
-      default:
-      {
-        console.log("hello");
-        vm.model = {
-          createDate: Date.now()
-        };
-      }
-    }
+    ////////////
+    // 配置调试 //
+    ////////////
+    var log = _dataManager.log();
+    vm.onSubmit = function () {
+      // alert(JSON.stringify(vm.model), null, 2);
+      _beianManager.setInfo(vm.model);
+      $state.go("action-beian.arg");
+    };
 
 
     vm.fields = _formManager.getForm('apply', vm);
 
-    // function definition
-    function onSubmit() {
-      console.log($stateParams.fid=== "apply");
-      switch ($stateParams.fid){
-        case "apply":
-        {
-          $state.go("action-product-register.form",{fid:"supplier"});
-          break;
-        }
-        case "supplier":
-        {
-          $state.go("action-product-register.form",{fid:"contract"});
-          break;
-        }
-        case "contract":
-        default:
-        {
-          alert(JSON.stringify(vm.model), null, 2);
-        }
-      }
-    }
   }]);

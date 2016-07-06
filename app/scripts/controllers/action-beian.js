@@ -8,19 +8,18 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianCtrl', ["uiManager", "formManager", function (uiManager, formManager) {
-    var self = this;
-    self.awesomeThings = [
+  .controller('ActionBeianCtrl', ["uiManager", "formManager","beianManager","$state", function (_uiManager, _formManager,_beianManager,$state) {
+    var vm = this;
+    vm.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
     /*配置页面基本元数据*/
-    uiManager.pageMetaDateConstructor("备案比对","",self);
+    _uiManager.pageMetaDateConstructor("备案比对","",vm);
     ////////////
     // 标签数据模型 //
     ////////////
-
     var tabs = [
       {
         name:"产品选择",
@@ -32,7 +31,7 @@ angular.module('manageApp')
       },
       {
         name:"参数配置",
-        state:""
+        state:"action-beian.arg"
       },
       {
         name:"上传hex文件",
@@ -57,21 +56,9 @@ angular.module('manageApp')
       for(i=0;i<tabs.length;i++){
         tabs[i]['id'] = i;
       }
-
     }();
-    self.tabs = tabs;
+    vm.tabs = tabs;
 
-
-    self.onSubmit = onSubmit;
-
-    self.model = {
-      createDate: Date.now()
-    };
-
-    self.fields = formManager.getForm("apply", self);
-
-    // function definition
-    function onSubmit() {
-      alert(JSON.stringify(self.model), null, 2);
-    }
+    //获取form
+    vm.fields = _formManager.getForm("apply", vm);
   }]);

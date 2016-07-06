@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form class="form-horizontal">
+      <table class="table table-striped">
+        <tbody><tr>
+          <th>启用</th>
+          <th>表位</th>
+          <th>表号</th>
+          <th>表地址</th>
+          <th>单三相</th>
+          <th>额定电压</th>
+        </tr>
+        <tr ng-repeat="arg in argCtrl.args">
+          <td>
+            <div class="checkbox">
+              <label><input type="checkbox" ng-model="arg.on"></label>
+            </div>
+             </td>
+          <td>{{ arg.id }}</td>
+          <td>
+            <input class="form-control" type="text" ng-model="arg.num" ng-disabled="!arg.on">
+          </td>
+          <td>
+            <input class="form-control" type="text" ng-model="arg.addr" ng-disabled="!arg.on">
+          </td>
+          <td>
+              <select class="form-control" ng-model="arg.type" ng-disabled="!arg.on">
+              <option>单相</option>
+              <option>三相</option>
+              </select>
+          </td>
+          <td>
+            <select class="form-control" ng-model="arg.vol" ng-disabled="!arg.on">
+              <option>220V</option>
+              <option>380V</option>
+            </select>
+          </td>
+        </tr>
+
+        </tbody></table>
+
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <button type="input" class="btn btn-default pull-left" ng-click="argCtrl.changeAll()">全启用/禁用</button>
+        <button type="input" class="btn btn-info pull-right" ng-click="argCtrl.onSubmit()">保存参数</button>
+      </div>
+      <!-- /.box-footer -->
+    </form>
+  </div>
+</div>
+
