@@ -14,7 +14,8 @@ module.exports = function(config) {
     // testing framework to use (jasmine/mocha/qunit/...)
     // as well as any additional frameworks (requirejs/chai/sinon/...)
     frameworks: [
-      'jasmine'
+      'jasmine',
+      'browserify'
     ],
 
     // list of files / patterns to load in the browser
@@ -42,7 +43,13 @@ module.exports = function(config) {
       'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],
+    preprocessors: {
+      'test/spec/services/beian-manager.js': [ 'browserify' ]
+    },
 
+    browserify: {
+      debug: true
+    },
     // list of files / patterns to exclude
     exclude: [
     ],
@@ -65,7 +72,8 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
-      'karma-jasmine'
+      'karma-jasmine',
+      'karma-browserify'
     ],
 
     // Continuous Integration mode

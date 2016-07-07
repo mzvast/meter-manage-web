@@ -74,8 +74,7 @@ angular.module('manageApp')
     //////////////
     self.R = function (resourceName, vm) {
       return function (queryObj) {
-        log("queryObj=");
-        log(queryObj);
+        // log(queryObj);
         self[resourceName].get(queryObj).$promise
           .then(function (response) {
             log("获取" + vm.pageResourceName + " SUCCESS!");

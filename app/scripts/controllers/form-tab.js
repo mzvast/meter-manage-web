@@ -10,7 +10,6 @@
 angular.module('manageApp')
   .controller('FormTabCtrl', ["uiManager", "formManager", function (uiManager, formManager) {
     var self = this;
-    console.log("Form Tab");
     self.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

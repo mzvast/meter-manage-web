@@ -20,6 +20,8 @@ angular.module('manageApp')
         arg,
         hex;
 
+    var ws;
+
     vm.setProduct = function (item) {
       product = item;
       log("product id = "+item.id);
@@ -74,6 +76,16 @@ angular.module('manageApp')
         return md5;
       }
     };
+
+    vm.createWS = function(){
+      ws = new WebSocket("ws://localhost:3456");
+      vm.messages = [];
+
+      ws.onmessage = function(event){
+        vm.messages.push(event.data);
+      };
+    };
+
     vm.doCompare = function () {
 
     };

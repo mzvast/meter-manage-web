@@ -35,7 +35,6 @@ angular.module('manageApp')
       case "supplier":
       default:
       {
-        console.log("hello");
         vm.model = {
           createDate: Date.now()
         };

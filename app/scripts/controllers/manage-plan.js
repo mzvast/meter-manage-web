@@ -19,7 +19,6 @@ angular.module('manageApp')
         // 配置调试 //
         ////////////
         var log = _dataManager.log();
-        log("hello");
         ////////////
         // 新增测试计划 //
         ////////////
