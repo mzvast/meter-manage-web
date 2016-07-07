@@ -29,7 +29,7 @@ angular.module('manageApp')
             on:false,
             num: "111111111111",
             addr:"ffffffffffff",
-            type:"单相",
+            type:"single_phase",
             vol:"220V",
             keyIndex:"04h"
           })
