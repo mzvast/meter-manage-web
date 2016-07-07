@@ -65,13 +65,10 @@ angular.module('manageApp')
             checked = false;
           }else{
             itemNum++;
-            formatedArgs.push({
-              id:vm.args[i].id,
-              addr:vm.args[i].addr,
-              num:vm.args[i].num,
-              type:vm.args[i].type,
-              vol:vm.args[i].vol
-            });
+            var temp = vm.args[i];
+            delete temp['on'];
+            delete temp["$$hashKey"];
+            formatedArgs.push(temp);
           }
 
         }
