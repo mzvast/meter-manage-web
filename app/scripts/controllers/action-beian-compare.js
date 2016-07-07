@@ -19,8 +19,8 @@ angular.module('manageApp')
     vm.setStatus = _beianManager.getAll();
     vm.isAllSet = vm.setStatus.product&&vm.setStatus.info&&vm.setStatus.arg&&vm.setStatus.hex;
 
-    vm.hexLength = vm.setStatus.hex?vm.setStatus.hex.byteLength:undefined;
-
+    vm.hexLength = vm.setStatus.hex?_beianManager.getHexLength():undefined;
+    vm.md5 = vm.setStatus.hex?_beianManager.getMd5():undefined;
     vm.doCompare = function () {
       _beianManager.getHexLength();
     };

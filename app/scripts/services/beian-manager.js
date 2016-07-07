@@ -19,7 +19,7 @@ angular.module('manageApp')
         info,
         arg,
         hex;
-    
+
     vm.setProduct = function (item) {
       product = item;
       log("product id = "+item.id);
@@ -59,10 +59,19 @@ angular.module('manageApp')
     vm.getHex = function () {
       return hex;
     };
-    
+
     vm.getHexLength = function () {
       if(hex instanceof ArrayBuffer){
-        log("byteLength:"+hex.byteLength );
+        var len = hex.byteLength;
+        log("byteLength:"+ len);
+        return len;
+      }
+    };
+    vm.getMd5 = function () {
+      if(hex instanceof ArrayBuffer){
+        var md5 = SparkMD5.ArrayBuffer.hash(hex);
+        log("md5:"+md5);
+        return md5;
       }
     };
     vm.doCompare = function () {
@@ -72,7 +81,7 @@ angular.module('manageApp')
     vm.getReport = function () {
 
     };
-    
+
     vm.getAll = function () {
       return {
         product:product,
@@ -85,6 +94,6 @@ angular.module('manageApp')
       product=undefined;
       info=undefined;
       arg=undefined;
-      hex=undefined;     
+      hex=undefined;
     }
   }]);

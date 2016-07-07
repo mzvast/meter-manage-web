@@ -9,13 +9,14 @@
           <th>表地址</th>
           <th>单三相</th>
           <th>额定电压</th>
+          <th>密钥索引</th>
         </tr>
         <tr ng-repeat="arg in argCtrl.args">
           <td>
             <div class="checkbox">
               <label><input type="checkbox" ng-model="arg.on"></label>
             </div>
-             </td>
+         </td>
           <td>{{ arg.id }}</td>
           <td>
             <input class="form-control" type="text" ng-model="arg.num" ng-disabled="!arg.on">
@@ -34,6 +35,9 @@
               <option>220V</option>
               <option>380V</option>
             </select>
+          </td>
+          <td>
+            <input class="form-control" type="text" ng-model="arg.keyIndex" ng-disabled="!arg.on">
           </td>
         </tr>
 
