@@ -24,15 +24,17 @@ angular.module('manageApp')
       var args = [],
         i;
       for(i=0;i<8;i++){
-          args.push({
-            id:i+1,
-            on:false,
-            num: "111111111111",
-            addr:"ffffffffffff",
-            type:"single_phase",
-            vol:"220V",
-            keyIndex:"04h"
-          })
+          args.push(
+            {
+              id:i+1,
+              on:false,
+              num: "111111111111",
+              addr:"ffffffffffff",
+              type:"single_phase",
+              vol:"220V",
+              key_index:"04h"
+            }
+          )
       }
       args[0]['on'] = true;
       return args;

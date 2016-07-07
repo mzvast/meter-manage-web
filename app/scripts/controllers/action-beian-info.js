@@ -29,5 +29,8 @@ angular.module('manageApp')
 
 
     vm.fields = _formManager.getForm('info', vm);
-
+    vm.model = {
+      "protect_addr":[{},{}],
+      "reserve_addr": [{},{}]
+    }
   }]);
