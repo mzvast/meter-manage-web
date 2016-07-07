@@ -45,6 +45,11 @@
         <button type="input" class="btn btn-info pull-right" ng-click="argCtrl.onSubmit()">保存参数</button>
       </div>
       <!-- /.box-footer -->
+      <div>
+        <pre>
+        {{ argCtrl.args|json }}
+        </pre>
+      </div>
     </form>
   </div>
 </div>

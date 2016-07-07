@@ -1,0 +1,426 @@
+{
+  "title":"备案比对申请信息",
+  "fields":[
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-12",
+          "key": "companyName",
+          "defaultValue":"XXXXXXXX有限公司",
+          "type": "input",
+          "templateOptions": {
+            "label": "厂家名称",
+            "placeholder": "XXXXXXXX有限公司"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-12",
+          "key": "meterName",
+          "defaultValue":"XXXX",
+          "type": "input",
+          "templateOptions": {
+            "label": "电能表名称",
+            "placeholder": "XXXX"
+        }}
+    ]},
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "companyCode",
+          "defaultValue":"0020",
+          "type": "input",
+          "templateOptions": {
+            "label": "厂家代码",
+            "placeholder": "XXXX（国网公司分配的厂家代码，例0020）"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "meterModel",
+          "defaultValue":"DDSF001-M",
+          "type": "input",
+          "templateOptions": {
+            "label": "电能表型号",
+            "placeholder": "例:DDSF001-M"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "vSpec",
+          "defaultValue":"220V",
+          "type": "input",
+          "templateOptions": {
+            "label": "电压规格",
+            "placeholder": "220V"
+          }
+        }, {
+          "className": "col-xs-6",
+          "key": "iSpec",
+          "defaultValue":"5(60)A",
+          "type": "input",
+          "templateOptions": {
+            "label": "电流规格",
+            "placeholder": "5(60)A"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "meterType",
+          "defaultValue":"em_esam",
+          "type": "select",
+          "templateOptions": {
+            "label": "软件适用表型",
+            "valueProp": "value",
+            "options": [
+              {
+                "name": "嵌ESAM表",
+                "value": "em_esam"
+              },
+              {
+                "name": "普通",
+                "value": "ordinary"
+              }
+            ]}
+        },
+        {
+          "className": "col-xs-6",
+          "key": "mcuModel",
+          "defaultValue":"瑞萨电子R5F212B8",
+          "type": "input",
+          "templateOptions": {
+            "label": "MCU型号",
+            "placeholder": "瑞萨电子R5F212B8"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "programVersion",
+          "defaultValue":"V 1.0",
+          "type": "input",
+          "templateOptions": {
+            "label": "软件版本号",
+            "placeholder": "V xx.xx"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "programType",
+          "defaultValue":"normal",
+          "type": "select",
+          "templateOptions": {
+            "label": "软件适用表型",
+            "valueProp": "value",
+            "options": [
+              {
+                "name": "通用程序",
+                "value": "normal"
+              },
+              {
+                "name": "非通用程序",
+                "value": "abnormal"
+              }
+            ]}
+        }
+      ]
+
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "programStartAddress",
+          "defaultValue":"4000",
+          "type": "input",
+          "templateOptions": {
+            "label": "程序存储器起始地址",
+            "placeholder": "4000"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "programEndAddress",
+          "defaultValue":"13fff",
+          "type": "input",
+          "templateOptions": {
+            "label": "程序存储器结束地址",
+            "placeholder": "13fff"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "softwareStartAddress",
+          "defaultValue":"4000",
+          "type": "input",
+          "templateOptions": {
+            "label": "软件代码起始地址",
+            "placeholder": "4000"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "softwareEndAddress",
+          "defaultValue":"97fff",
+          "type": "input",
+          "templateOptions": {
+            "label": "软件代码结束地址",
+            "placeholder": "97fff"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "protect1StartAddress",
+          "defaultValue":"12000",
+          "type": "input",
+          "templateOptions": {
+            "label": "保护区1起始地址",
+            "placeholder": "12000"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "protect1EndAddress",
+          "defaultValue":"121ff",
+          "type": "input",
+          "templateOptions": {
+            "label": "保护区1结束地址",
+            "placeholder": "121ff"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "protect2StartAddress",
+          "defaultValue":"13000",
+          "type": "input",
+          "templateOptions": {
+            "label": "保护区2起始地址",
+            "placeholder": "13000"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "protect2EndAddress",
+          "defaultValue":"133ff",
+          "type": "input",
+          "templateOptions": {
+            "label": "保护区2结束地址",
+            "placeholder": "133ff"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "preserve1StartAddress",
+          "defaultValue":"12000",
+          "type": "input",
+          "templateOptions": {
+            "label": "保留区1起始地址",
+            "placeholder": "12000"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "preserve1EndAddress",
+          "defaultValue":"121ff",
+          "type": "input",
+          "templateOptions": {
+            "label": "保留区1结束地址",
+            "placeholder": "121ff"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "preserve2StartAddress",
+          "defaultValue":"13000",
+          "type": "input",
+          "templateOptions": {
+            "label": "保留区2起始地址",
+            "placeholder": "13000"
+          }
+        },
+        {
+          "className": "col-xs-6",
+          "key": "preserve2EndAddress",
+           "defaultValue":"",
+          "type": "input",
+          "templateOptions": {
+            "label": "保留区2结束地址",
+            "placeholder": "133ff"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className":"col-xs-12",
+          "key": "costcontrolType",
+          "defaultValue":"0.2s级三相智能电能表",
+          "type": "select",
+          "templateOptions": {
+            "label": "软件适用表型",
+            "valueProp": "name",
+            "options": [
+              {
+                "name": "0.2s级三相智能电能表",
+                "group":"0.2s级"
+              },
+              {
+                "name": "0.2S级三相智能电能表(互感器接入100V) ",
+                "group":"0.2s级"
+              },
+              {
+                "name": "0.5s级三相智能电能表",
+                "group":"0.5s级"
+              },
+              {
+                "name": "0.5S级三相智能电能表(互感器接入100V)",
+                "group":"0.5s级"
+              },
+              {
+                "name": "0.5s级三相本地费控智能电能表（模块-CPU卡-开关外置）",
+                "group":"0.5s级"
+              },
+              {
+                "name": "0.5s级三相费控智能电能表（模块-远程-开关外置）",
+                "group":"0.5s级"
+              },
+              {
+                "name": "1级三相智能电能表(互感器接入100V)",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相智能电能表(互感器接入)",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相本地费控智能电能表（CPU卡-开关外置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相本地费控智能电能表（CPU卡-开关内置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相费控智能电能表（远程-开关外置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相费控智能电能表（远程-开关内置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相本地费控智能电能表（模块- CPU卡-开关外置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相本地费控智能电能表（模块- CPU卡-开关内置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相费控智能电能表（模块-远程-开关外置）",
+                "group":"1级"
+              },
+              {
+                "name": "1级三相费控智能电能表（模块-远程-开关内置）",
+                "group":"1级"
+              },
+              {
+                "name": "2级单相本地费控智能电能表（CPU卡-开关外置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相本地费控智能电能表（CPU卡-开关内置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相本地费控智能电能表（模块-CPU卡-开关外置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相本地费控智能电能表（模块-CPU卡-开关内置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相费控智能电能表（远程-开关外置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相费控智能电能表（远程-开关内置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相费控智能电能表（模块-远程-开关外置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相费控智能电能表（模块-远程-开关内置）",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相静止式多费率电能表",
+                "group": "2级"
+              },
+              {
+                "name": "2级单相静止式多费率电能表(模块)",
+                "group": "2级"
+              }
+            ]
+          }
+        }
+
+      ]
+
+    }
+
+  ]
+
+}

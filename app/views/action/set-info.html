@@ -6,7 +6,9 @@
               <button type="submit" class="btn btn-primary submit-button" ng-disabled="infoCtrl.form.$invalid">提交</button>
             </div>
           </formly-form>
-          <div>{{ infoCtrl.model }}</div>
+          <div>
+            <pre>{{ infoCtrl.model|json }}</pre>
+          </div>
         </form>
     </div>
   </div>

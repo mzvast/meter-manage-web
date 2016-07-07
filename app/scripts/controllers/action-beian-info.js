@@ -28,6 +28,6 @@ angular.module('manageApp')
     };
 
 
-    vm.fields = _formManager.getForm('apply', vm);
+    vm.fields = _formManager.getForm('info', vm);
 
   }]);
