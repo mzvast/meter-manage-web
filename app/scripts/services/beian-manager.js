@@ -194,11 +194,63 @@ angular.module('manageApp')
         "num":"xxxxxxxxxxxx",
         "addr":"xxxxxxxxxxxx",
         "type":"single_phase",
-        "vol":"220",
+        "vol":220,
         "key_index":"04h"
       }];
 
+    };
 
-
-    }
+    vm.expectData = {
+      "type": "info",
+      "data": {
+        "file_info": [
+          {
+            "cpu_id": 1,
+            "md5": "d9fc6d737aea3345f681f24c8a2bb07c"
+          }
+        ],
+        "cpu_info": [
+          {
+            "cpu_id": 1,
+            "memory_addr": {
+              "start": "4000h",
+              "end": "13fffh"
+            },
+            "code_addr": {
+              "start": "4000h",
+              "end": "97ffh"
+            },
+            "protect_addr": [
+              {
+                "start": "12000h",
+                "end": "121ffh"
+              },
+              {
+                "start": "13000h",
+                "end": "133ff"
+              }
+            ],
+            "reserve_addr": [
+              {
+                "start": "12000h",
+                "end": "121ffh"
+              },
+              {
+                "start": "13000h",
+                "end": "133ffh"
+              }
+            ]
+          }
+        ],
+        "meter_info": [{
+          "bit": 1,
+          "type": "single_phase",
+          "costcontrol_type": "em_esam",
+          "num": "xxxxxxxxxxxx",
+          "addr": "xxxxxxxxxxxx",
+          "vol": 220,
+          "key_index": "04h"
+        }]
+      }
+    };
   }]);

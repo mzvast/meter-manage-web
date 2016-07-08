@@ -19,7 +19,10 @@ angular.module('manageApp')
     // 配置调试 //
     ////////////
     var log = _dataManager.log();
-
+    vm.options = {
+      '220V':220,
+      '380v':380
+    };
     vm.args = function () {
       var args = [],
         i;
@@ -31,7 +34,7 @@ angular.module('manageApp')
               num: "xxxxxxxxxxxx",
               addr:"xxxxxxxxxxxx",
               type:"single_phase",
-              vol:"220",
+              vol:220,
               key_index:"04h"
             }
           )

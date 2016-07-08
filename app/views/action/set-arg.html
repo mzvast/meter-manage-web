@@ -31,9 +31,7 @@
               </select>
           </td>
           <td style="width: 4em;">
-            <select class="form-control" ng-model="arg.vol" ng-disabled="!arg.on">
-              <option value="220">220V</option>
-              <option value="380">380V</option>
+            <select class="form-control" ng-model="arg.vol" ng-disabled="!arg.on" ng-options="name for (name,value) in argCtrl.options">
             </select>
           </td>
           <td style="width: 3em;">

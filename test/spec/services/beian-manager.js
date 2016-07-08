@@ -52,7 +52,7 @@ describe('Service: beianManager', function () {
       },100);
   });
 
-  it('Client should send info to Server',function (done) {
+  it('Client send info to Server',function (done) {
     var mockServer = new Server('ws://localhost:3456');
     var serverMsg =[];
     mockServer.on('message',function (e){
@@ -63,7 +63,24 @@ describe('Service: beianManager', function () {
     beianManager.wsSendInfoMsg();
     setTimeout(
       function () {
-        expect(serverMsg[0].type==='info').toBe(true);
+
+        expect(serverMsg[0]['type']).toEqual(beianManager.expectData['type']);
+
+        expect(serverMsg[0]['data']['meter_info']).toEqual(beianManager.expectData['data']['meter_info']);
+
+        expect(serverMsg[0]['data']['file_info']).toEqual(beianManager.expectData['data']['file_info']);
+
+        expect(serverMsg[0]['data']['cpu_info']['protect_addr']).toEqual(beianManager.expectData['data']['cpu_info']['protect_addr']);
+
+        expect(serverMsg[0]['data']['cpu_info']['reserve_addr']).toEqual(beianManager.expectData['data']['cpu_info']['reserve_addr']);
+
+        expect(serverMsg[0]['data']['cpu_info']['memory_addr']).toEqual(beianManager.expectData['data']['cpu_info']['memory_addr']);
+
+        expect(serverMsg[0]['data']['cpu_info']['code_addr']).toEqual(beianManager.expectData['data']['cpu_info']['code_addr']);
+
+        expect(serverMsg[0]['data']['cpu_info']['cpu_id']).toEqual(beianManager.expectData['data']['cpu_info']['cpu_id']);
+
+        // expect(serverMsg[0]).toEqual(beianManager.expectData);
         mockServer.stop();
         done();
       },100);
