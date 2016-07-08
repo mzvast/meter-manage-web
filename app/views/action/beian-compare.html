@@ -10,88 +10,29 @@
       <div class="box-body">
         <form role="form">
           <table class="table table-striped">
-            <tbody><tr>
+            <tbody>
+            <tr>
               <th style="width: 2em">编号</th>
               <th style="width: 2em">项目</th>
               <th style="width: 4em">属性</th>
               <th style="width: 2em">满足</th>
               <th style="width: 2em">修改</th>
             </tr>
-            <tr>
-              <td>1</td>
-              <td>产品选择</td>
-              <td><span ng-if="compareCtrl.setStatus.product ">id/名称:{{ compareCtrl.setStatus.product.id }}/{{ compareCtrl.setStatus.product.name }}</span></td>
+            <tr ng-repeat="item in compareCtrl.items">
+              <td>{{item.id}}</td>
+              <td>{{item.name}}</td>
+              <td><div>{{item.prop}}</div></td>
               <td>
                 <div class="btn-group">
-                  <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.product,'bg-olive':compareCtrl.setStatus.product}">
-                    <span ng-show="compareCtrl.setStatus.product">是</span>
-                    <span ng-show="!compareCtrl.setStatus.product">否</span>
+                  <a class="btn margin" ng-class="{'bg-maroon':!item.ok,'bg-olive':item.ok}">
+                    <span ng-show="item.ok">是</span>
+                    <span ng-show="!item.ok">否</span>
                   </a>
                 </div>
               </td>
               <td>
                 <div class="btn-group">
-                  <a class="btn bg-olive margin" ui-sref="action-beian.setProduct">
-                    <i class="fa fa-fw fa-pencil"></i>
-                  </a>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>信息录入</td>
-              <td><span ng-if="compareCtrl.setStatus.info ">正常</span></td>
-              <td>
-                <div class="btn-group">
-                  <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.info,'bg-olive':compareCtrl.setStatus.info}">
-                    <span ng-show="compareCtrl.setStatus.info">是</span>
-                    <span ng-show="!compareCtrl.setStatus.info">否</span>
-                  </a>
-                </div>
-              </td>
-              <td>
-                <div class="btn-group">
-                  <a class="btn bg-olive margin" ui-sref="action-beian.setInfo">
-                    <i class="fa fa-fw fa-pencil"></i>
-                  </a>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>参数配置</td>
-              <td><span ng-if="compareCtrl.setStatus.arg ">正常</span></td>
-              <td>
-                <div class="btn-group">
-                  <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.arg,'bg-olive':compareCtrl.setStatus.arg}">
-                    <span ng-show="compareCtrl.setStatus.arg">是</span>
-                    <span ng-show="!compareCtrl.setStatus.arg">否</span>
-                  </a>
-                </div>
-              </td>
-              <td>
-                <div class="btn-group">
-                  <a class="btn bg-olive margin" ui-sref="action-beian.setArg">
-                    <i class="fa fa-fw fa-pencil"></i>
-                  </a>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>暂存HEX文件</td>
-              <td><span ng-if="compareCtrl.setStatus.hex ">size:{{ compareCtrl.hexLength }}bytes;<br>md5:{{ compareCtrl.md5 }}</span></td>
-              <td>
-                <div class="btn-group">
-                  <a class="btn margin" ng-class="{'bg-maroon':!compareCtrl.setStatus.hex,'bg-olive':compareCtrl.setStatus.hex}">
-                    <span ng-show="compareCtrl.setStatus.hex">是</span>
-                    <span ng-show="!compareCtrl.setStatus.hex">否</span>
-                  </a>
-                </div>
-              </td>
-              <td>
-                <div class="btn-group">
-                  <a class="btn bg-olive margin" ui-sref="action-beian.setHex">
+                  <a class="btn bg-olive margin" ui-sref="{{ item.sref }}">
                     <i class="fa fa-fw fa-pencil"></i>
                   </a>
                 </div>

@@ -26,12 +26,12 @@ angular.module('manageApp')
       for(i=0;i<8;i++){
           args.push(
             {
-              id:i+1,
+              bit:i+1,
               on:false,
-              num: "111111111111",
-              addr:"ffffffffffff",
+              num: "xxxxxxxxxxxx",
+              addr:"xxxxxxxxxxxx",
               type:"single_phase",
-              vol:"220V",
+              vol:"220",
               key_index:"04h"
             }
           )

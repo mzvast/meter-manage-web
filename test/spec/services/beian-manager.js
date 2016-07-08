@@ -25,13 +25,48 @@ describe('Service: beianManager', function () {
       mockServer.send('test message 1');
       mockServer.send('test message 2');
     });
-    beianManager.createWS();
+    beianManager.wsCreate('ws://localhost:3456');
     setTimeout(
       function () {
         var messageLen = beianManager.messages.length;
-        console.log("messageLen:"+messageLen);
+        expect(messageLen===2).toBe(true);
+        mockServer.stop();
+        done();
+      },100);
+  });
+
+  it('Client should send message to Server',function (done) {
+    var mockServer = new Server('ws://localhost:3456');
+    var serverMsg =[];
+    mockServer.on('message',function (e){
+      serverMsg.push(e);
+    });
+    beianManager.wsCreate('ws://localhost:3456');
+    beianManager.wsSend('hello Server!');
+    beianManager.wsSend('hello Server2!');
+    setTimeout(
+      function () {
+        expect(serverMsg.length===2).toBe(true);
+        mockServer.stop();
+        done();
+      },100);
+  });
+
+  it('Client should send info to Server',function (done) {
+    var mockServer = new Server('ws://localhost:3456');
+    var serverMsg =[];
+    mockServer.on('message',function (e){
+      serverMsg.push(e);
+    });
+    beianManager.fakeData();
+    beianManager.wsCreate('ws://localhost:3456');
+    beianManager.wsSendInfoMsg();
+    setTimeout(
+      function () {
+        expect(serverMsg[0].type==='info').toBe(true);
         mockServer.stop();
         done();
       },100);
   })
+
 });

@@ -40,7 +40,7 @@ angular.module('manageApp')
         // Handle UTF-16 file dump
         var u8 = new Uint8Array(buffer);
 
-        if(_beianManager.setHex(buffer)){
+        if(_beianManager.setHex(buffer,0)){
             $state.go("action-beian.compare");
         }else{
           _dataManager.addNotification("danger","暂存失败！请重试！");

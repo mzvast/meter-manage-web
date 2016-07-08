@@ -30,7 +30,9 @@ angular.module('manageApp')
 
     vm.fields = _formManager.getForm('info', vm);
     vm.model = {
+      cpu_info:{
       "protect_addr":[{},{}],
       "reserve_addr": [{},{}]
+      }
     }
   }]);
