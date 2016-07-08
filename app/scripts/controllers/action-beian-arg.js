@@ -35,7 +35,7 @@ angular.module('manageApp')
               addr:"xxxxxxxxxxxx",
               type:"single_phase",
               vol:220,
-              key_index:"04h"
+              key_index:"04"
             }
           )
       }

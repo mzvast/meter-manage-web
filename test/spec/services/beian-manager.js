@@ -58,7 +58,7 @@ describe('Service: beianManager', function () {
     mockServer.on('message',function (e){
       serverMsg.push(e);
     });
-    beianManager.fakeData();
+    beianManager.fakeData();//伪造数据
     beianManager.wsCreate('ws://localhost:3456');
     beianManager.wsSendInfoMsg();
     setTimeout(
@@ -70,15 +70,22 @@ describe('Service: beianManager', function () {
 
         expect(serverMsg[0]['data']['file_info']).toEqual(beianManager.expectData['data']['file_info']);
 
-        expect(serverMsg[0]['data']['cpu_info']['protect_addr']).toEqual(beianManager.expectData['data']['cpu_info']['protect_addr']);
+        expect(serverMsg[0]['data']['cpu_info'][0]['protect_addr']).toEqual(beianManager.expectData['data']['cpu_info'][0]['protect_addr']);
 
-        expect(serverMsg[0]['data']['cpu_info']['reserve_addr']).toEqual(beianManager.expectData['data']['cpu_info']['reserve_addr']);
+        expect(serverMsg[0]['data']['cpu_info'][0]['reserve_addr']).toEqual(beianManager.expectData['data']['cpu_info'][0]['reserve_addr']);
 
-        expect(serverMsg[0]['data']['cpu_info']['memory_addr']).toEqual(beianManager.expectData['data']['cpu_info']['memory_addr']);
+        expect(serverMsg[0]['data']['cpu_info'][0]['memory_addr']).toEqual(beianManager.expectData['data']['cpu_info'][0]['memory_addr']);
 
-        expect(serverMsg[0]['data']['cpu_info']['code_addr']).toEqual(beianManager.expectData['data']['cpu_info']['code_addr']);
+        expect(serverMsg[0]['data']['cpu_info'][0]['code_addr']).toEqual(beianManager.expectData['data']['cpu_info'][0]['code_addr']);
 
-        expect(serverMsg[0]['data']['cpu_info']['cpu_id']).toEqual(beianManager.expectData['data']['cpu_info']['cpu_id']);
+        expect(serverMsg[0]['data']['cpu_info'][0]['cpu_id']).toEqual(beianManager.expectData['data']['cpu_info'][0]['cpu_id']);
+
+        console.log("=========");
+        console.log(serverMsg[0]['data']['cpu_info'][0]['cpu_id']);
+        console.log(serverMsg[0]['data']['cpu_info'][1]['cpu_id']);
+        console.log(beianManager.expectData['data']['cpu_info'][0]['cpu_id']);
+        console.log(beianManager.expectData['data']['cpu_info'][1]['cpu_id']);
+
 
         // expect(serverMsg[0]).toEqual(beianManager.expectData);
         mockServer.stop();

@@ -189,11 +189,11 @@
         {
           "className": "col-xs-6",
           "key": "cpu_info.code_addr.end",
-          "defaultValue":"97fff",
+          "defaultValue":"97ff",
           "type": "input",
           "templateOptions": {
             "label": "软件代码结束地址",
-            "placeholder": "97fff"
+            "placeholder": "97ff"
           }
         }
       ]
@@ -289,7 +289,7 @@
         {
           "className": "col-xs-6",
           "key": "cpu_info.reserve_addr[1].end",
-           "defaultValue":"133ffh",
+           "defaultValue":"133ff",
           "type": "input",
           "templateOptions": {
             "label": "保留区2结束地址",

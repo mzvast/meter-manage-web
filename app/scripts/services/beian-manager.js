@@ -103,13 +103,36 @@ angular.module('manageApp')
           meter_info:[]
         }
       };
+      var setFileInfo = function  () {
+        var i;
+        for(i=0;i<md5.length;i++){
+          infoMsg.data.file_info.push({
+            cpu_id:i+1,
+            md5:md5[i]
+          });
+        }
+      }();
 
-      infoMsg.data.file_info.push({
-          cpu_id:1,
-          md5:md5[0]
-        });
-      infoMsg.data.cpu_info.push(info.cpu_info);
-      infoMsg.data.cpu_info[0]['cpu_id'] = 1;
+      var setCpuInfo = function () {
+
+        var doIt = function () {
+          for(var i=0;i<md5.length;i++){
+            var obj = angular.copy(info.cpu_info);
+            infoMsg['data']['cpu_info'].push(obj);//两个CPU信息完全一样
+            infoMsg['data']['cpu_info'][i]['cpu_id'] = i+1;
+          }
+        }();
+
+
+
+
+
+        for(var j=0;j<md5.length;j++){
+          console.log("cpu"+j+"id="+infoMsg.data.cpu_info[j]['cpu_id']);
+        }
+
+      }();
+
       infoMsg.data.meter_info.push(arg[0]);
       infoMsg.data.meter_info[0]['costcontrol_type']=info.costcontrol_type;
     };
@@ -144,6 +167,7 @@ angular.module('manageApp')
 
     vm.fakeData = function () {
       md5[0]='d9fc6d737aea3345f681f24c8a2bb07c';
+      md5[1]='d9fc6d737aea3345f681f24c8a2bb07d';
 
       info = {
         "cpu_info": {
@@ -164,7 +188,7 @@ angular.module('manageApp')
             },
             {
               "start": "13000",
-              "end": "133ffh"
+              "end": "133ff"
             }
           ],
           "memory_addr": {
@@ -173,7 +197,7 @@ angular.module('manageApp')
           },
           "code_addr": {
             "start": "4000",
-            "end": "97fff"
+            "end": "97ff"
           }
         },
         "company_name": "XXXXXXXX有限公司",
@@ -195,7 +219,7 @@ angular.module('manageApp')
         "addr":"xxxxxxxxxxxx",
         "type":"single_phase",
         "vol":220,
-        "key_index":"04h"
+        "key_index":"04"
       }];
 
     };
@@ -207,37 +231,72 @@ angular.module('manageApp')
           {
             "cpu_id": 1,
             "md5": "d9fc6d737aea3345f681f24c8a2bb07c"
+          },
+          {
+            "cpu_id": 2,
+            "md5": "d9fc6d737aea3345f681f24c8a2bb07d"
           }
         ],
         "cpu_info": [
           {
             "cpu_id": 1,
             "memory_addr": {
-              "start": "4000h",
-              "end": "13fffh"
+              "start": "4000",
+              "end": "13fff"
             },
             "code_addr": {
-              "start": "4000h",
-              "end": "97ffh"
+              "start": "4000",
+              "end": "97ff"
             },
             "protect_addr": [
               {
-                "start": "12000h",
-                "end": "121ffh"
+                "start": "12000",
+                "end": "121ff"
               },
               {
-                "start": "13000h",
+                "start": "13000",
                 "end": "133ff"
               }
             ],
             "reserve_addr": [
               {
-                "start": "12000h",
-                "end": "121ffh"
+                "start": "12000",
+                "end": "121ff"
               },
               {
-                "start": "13000h",
-                "end": "133ffh"
+                "start": "13000",
+                "end": "133ff"
+              }
+            ]
+          },
+          {
+            "cpu_id": 2,
+            "memory_addr": {
+              "start": "4000",
+              "end": "13fff"
+            },
+            "code_addr": {
+              "start": "4000",
+              "end": "97ff"
+            },
+            "protect_addr": [
+              {
+                "start": "12000",
+                "end": "121ff"
+              },
+              {
+                "start": "13000",
+                "end": "133ff"
+              }
+            ],
+            "reserve_addr": [
+              {
+                "start": "12000",
+                "end": "121ff"
+              },
+              {
+                "start": "13000",
+                "end": "133ff"
               }
             ]
           }
@@ -249,8 +308,11 @@ angular.module('manageApp')
           "num": "xxxxxxxxxxxx",
           "addr": "xxxxxxxxxxxx",
           "vol": 220,
-          "key_index": "04h"
+          "key_index": "04"
         }]
       }
-    };
+    }
+    ;
+
+
   }]);
