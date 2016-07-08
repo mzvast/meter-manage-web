@@ -50,7 +50,7 @@ angular.module('manageApp')
         id:4,
         name:"暂存HEX文件",
         prop:(md5[0]&&md5[1])?'双核模式':md5[0]?'单核模式':'HEX文件未暂存',
-        ok:(md5[0]&&md5[1])||md5[0],
+        ok:md5[0]||md5[1],
         sref:"action-beian.setHex",
         data:md5
       }

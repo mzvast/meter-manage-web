@@ -75,6 +75,7 @@ angular.module('manageApp')
     };
     vm.getMd5 = function (index) {
       if(md5[index]){
+        log(md5[index]);
         return md5[index];
       }
     };

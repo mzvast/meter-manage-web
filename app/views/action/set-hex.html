@@ -2,17 +2,34 @@
   <div class="box-body">
     <div class="row">
       <div class="col-xs-2 col-xs-offset-2 text-center">
-        <input id="hexFile" type="file" file-model="hexCtrl.hexFile" />
-        <!--<a class="btn btn-app bg-olive margin " data-toggle="modal" data-target="#Modal" ng-click="hexCtrl.selectFile()">-->
-          <!--<i class="glyphicon glyphicon-plus"></i> 选择HEX文件-->
-        <!--</a>-->
+        <button id="button1" type="button" class="btn btn-block btn-default btn-lg">CPU1</button>
+        <input id="hexFile0" type="file" file-model="hexCtrl.hexFile[0]" style="display: none"/>
+      </div>
+      <div class="col-xs-2">
+        <h4>{{ hexCtrl.hexFile[0].name||'请选择' }}</h4>
+      </div>
+      <div class="col-xs-2" style="line-height:2.5em;">
+        <span>{{ hexCtrl.hash1?'md5:'+hexCtrl.hash1:'' }}</span>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-2 text-center">
+        <button id="button2" type="button" class="btn btn-block btn-default btn-lg">CPU2</button>
+        <input id="hexFile1" type="file" file-model="hexCtrl.hexFile[1]" style="display: none"/>
+      </div>
+      <div class="col-xs-2">
+        <h4>{{ hexCtrl.hexFile[1].name||'请选择' }}</h4>
+      </div>
+      <div class="col-xs-2" style="line-height:2.5em;">
+        <span>{{ hexCtrl.hash2?'md5:'+hexCtrl.hash2:'' }}</span>
       </div>
     </div>
   </div>
   <hr>
   <div class="row">
-    <div class="col-xs-2 col-xs-offset-2 form-group text-center">
-      <button type="submit" class="btn btn-primary" ng-click="hexCtrl.setHex()">开始暂存</button>
+    <div class="col-xs-2 col-xs-offset-4">
+      <button type="button" class="btn btn-primary btn-block" ng-click="hexCtrl.setHex()">暂存</button>
     </div>
   </div>
 

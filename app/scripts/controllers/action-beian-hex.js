@@ -8,26 +8,43 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianHexCtrl', ['$state','dataManager','beianManager', function ($state,_dataManager,_beianManager){
+  .controller('ActionBeianHexCtrl', ['$scope','$state','dataManager','beianManager', function ($scope,$state,_dataManager,_beianManager){
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
-    vm.selectFile = function () {
-      var elem = $("#hexFile");
-      if(elem){
-        elem.click();
-      }
-    };
+
+    $('#button1').on('click',function () {
+      $('#hexFile0').click()
+    });
+    $('#button2').on('click',function () {
+      $('#hexFile1').click()
+    });
 
     vm.setHex = function () {
+      var cpu0 = vm['hexFile'][0],
+          cpu1 = vm['hexFile'][1];
 
-      if(vm.hexFile===undefined){
+      readHex(cpu0,0);
+      readHex(cpu1,1);
+
+      window.setTimeout(function () {
+        if(vm.hash1||vm.hash2){
+          $state.go("action-beian.compare");
+        }else{
+          _dataManager.addNotification("warning","请至少选择一个hex文件")
+        }
+      },500);
+
+    };
+
+    var readHex = function (model,index) {
+      if(!model){
         return;
       }
-      var file = vm.hexFile;
+      var file = model;
       console.log(file.size);
       var reader = new FileReader();
       reader.readAsArrayBuffer(file);
@@ -39,13 +56,21 @@ angular.module('manageApp')
         // console.log(evt.target.result);
         // Handle UTF-16 file dump
         var u8 = new Uint8Array(buffer);
+        sendHexToManager(buffer,index);
+      };
 
-        if(_beianManager.setHex(buffer,0)){
-            $state.go("action-beian.compare");
+      var sendHexToManager = function (buffer,index) {
+        var result = _beianManager.setHex(buffer,index);
+        if(result){
+          $scope.$apply(refreshHash());
         }else{
-          _dataManager.addNotification("danger","暂存失败！请重试！");
           vm.hexFile = undefined;
         }
       };
+
+      var refreshHash = function () {
+        vm.hash1 =  _beianManager.getMd5(0);
+        vm.hash2 =  _beianManager.getMd5(1);
+      }
     }
   }]);
