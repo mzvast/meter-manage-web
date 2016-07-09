@@ -50,6 +50,16 @@ angular.module('manageApp')
       return arg;
     };
 
+    vm.resetHex = function () {
+        hex=[];
+        md5=[];
+    };
+    
+    vm.removeHex = function (index) {
+      hex.splice(index,1);
+      md5.splice(index,1);
+    };
+    
     vm.setHex = function (hexFile,index) {
       if(hexFile instanceof ArrayBuffer) {
         log("true");
@@ -114,23 +124,11 @@ angular.module('manageApp')
       }();
 
       var setCpuInfo = function () {
-
-        var doIt = function () {
           for(var i=0;i<md5.length;i++){
             var obj = angular.copy(info.cpu_info);
             infoMsg['data']['cpu_info'].push(obj);//两个CPU信息完全一样
             infoMsg['data']['cpu_info'][i]['cpu_id'] = i+1;
           }
-        }();
-
-
-
-
-
-        for(var j=0;j<md5.length;j++){
-          console.log("cpu"+j+"id="+infoMsg.data.cpu_info[j]['cpu_id']);
-        }
-
       }();
 
       infoMsg.data.meter_info.push(arg[0]);
@@ -162,7 +160,8 @@ angular.module('manageApp')
       product=undefined;
       info=undefined;
       arg=undefined;
-      hex=undefined;
+      hex=[];
+      md5=[];
     };
 
     vm.fakeData = function () {

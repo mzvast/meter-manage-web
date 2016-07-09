@@ -1,35 +1,53 @@
 <!-- form start -->
   <div class="box-body">
     <div class="row">
-      <div class="col-xs-2 col-xs-offset-2 text-center">
-        <button id="button1" type="button" class="btn btn-block btn-default btn-lg">CPU1</button>
-        <input id="hexFile0" type="file" file-model="hexCtrl.hexFile[0]" style="display: none"/>
-      </div>
-      <div class="col-xs-2">
-        <h4>{{ hexCtrl.hexFile[0].name||'请选择' }}</h4>
-      </div>
-      <div class="col-xs-2" style="line-height:2.5em;">
-        <span>{{ hexCtrl.hash1?'md5:'+hexCtrl.hash1:'' }}</span>
+      <div class="col-xs-12">
+        <table class="table table-striped">
+          <tbody>
+          <tr>
+            <th>核心</th>
+            <th>状态</th>
+            <th>MD5</th>
+            <th>操作</th>
+          </tr>
+          <tr>
+            <td>CPU1 <input id="hexFile0" type="file" file-model="hexCtrl.hexFile[0]" style="display: none"/></td>
+            <td>
+              <h4 ng-hide="hexCtrl.hash1">{{ hexCtrl.hexFile[0].name||'未选择HEX文件' }}</h4>
+              <h4 ng-show="hexCtrl.hash1">已暂存</h4>
+            </td>
+            <td><h4>{{ hexCtrl.hash1?'md5:'+hexCtrl.hash1:'' }}</h4></td>
+            <td>
+              <a ng-show="hexCtrl.hash1" class="btn btn-app bg-maroon margin" ng-click="hexCtrl.removeHex(0)">
+              <i class="glyphicon glyphicon-remove"></i> 删除</a>
+              <a ng-hide="hexCtrl.hash1" id="button0" type="button" class="btn btn-app bg-olive margin "><i class="glyphicon glyphicon-plus"></i> 新增</a>
+            </td>
+          </tr>
+          <tr>
+            <td>CPU1 <input id="hexFile1" type="file" file-model="hexCtrl.hexFile[1]" style="display: none"/></td>
+            <td>
+              <h4 ng-hide="hexCtrl.hash2">{{ hexCtrl.hexFile[1].name||'未选择HEX文件' }}</h4>
+              <h4 ng-show="hexCtrl.hash2">已暂存</h4>
+            </td>
+            <td><h4>{{ hexCtrl.hash2?'md5:'+hexCtrl.hash2:'' }}</h4></td>
+            <td>
+              <a ng-show="hexCtrl.hash2" class="btn btn-app bg-maroon margin" ng-click="hexCtrl.removeHex(1)">
+                <i class="glyphicon glyphicon-remove"></i> 删除</a>
+              <a ng-hide="hexCtrl.hash2" id="button1" type="button" class="btn btn-app bg-olive margin "><i class="glyphicon glyphicon-plus"></i> 新增</a>
+            </td>
+          </tr>
+          </tbody>
+          </table>
+        <hr>
+        <div class="row">
+          <div class="col-xs-2 col-xs-offset-4">
+            <button type="button" class="btn btn-primary btn-block" ng-click="hexCtrl.setHex()">暂存</button>
+          </div>
+        </div>
       </div>
     </div>
-    <br>
-    <div class="row">
-      <div class="col-xs-2 col-xs-offset-2 text-center">
-        <button id="button2" type="button" class="btn btn-block btn-default btn-lg">CPU2</button>
-        <input id="hexFile1" type="file" file-model="hexCtrl.hexFile[1]" style="display: none"/>
-      </div>
-      <div class="col-xs-2">
-        <h4>{{ hexCtrl.hexFile[1].name||'请选择' }}</h4>
-      </div>
-      <div class="col-xs-2" style="line-height:2.5em;">
-        <span>{{ hexCtrl.hash2?'md5:'+hexCtrl.hash2:'' }}</span>
-      </div>
-    </div>
+
+
   </div>
-  <hr>
-  <div class="row">
-    <div class="col-xs-2 col-xs-offset-4">
-      <button type="button" class="btn btn-primary btn-block" ng-click="hexCtrl.setHex()">暂存</button>
-    </div>
-  </div>
+
 

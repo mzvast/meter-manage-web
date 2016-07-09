@@ -8,7 +8,7 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianHexCtrl', ['$scope','$state','dataManager','beianManager', function ($scope,$state,_dataManager,_beianManager){
+  .controller('ActionBeianHexCtrl', ['$state','dataManager','beianManager', function ($state,_dataManager,_beianManager){
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
@@ -16,12 +16,17 @@ angular.module('manageApp')
       'Karma'
     ];
 
-    $('#button1').on('click',function () {
+    $('#button0').on('click',function () {
       $('#hexFile0').click()
     });
-    $('#button2').on('click',function () {
+    $('#button1').on('click',function () {
       $('#hexFile1').click()
     });
+
+    vm.removeHex = function (index) {
+      _beianManager.removeHex(index);
+      refreshHash();
+    };
 
     vm.setHex = function () {
       var cpu0 = vm['hexFile'][0],
@@ -59,18 +64,20 @@ angular.module('manageApp')
         sendHexToManager(buffer,index);
       };
 
-      var sendHexToManager = function (buffer,index) {
-        var result = _beianManager.setHex(buffer,index);
-        if(result){
-          $scope.$apply(refreshHash());
-        }else{
-          vm.hexFile = undefined;
-        }
-      };
-
-      var refreshHash = function () {
-        vm.hash1 =  _beianManager.getMd5(0);
-        vm.hash2 =  _beianManager.getMd5(1);
+    };
+    var sendHexToManager = function (buffer,index) {
+      var result = _beianManager.setHex(buffer,index);
+      if(result){
+        refreshHash();
+      }else{
+        vm.hexFile = undefined;
       }
-    }
+    };
+
+    var refreshHash = function () {
+      vm.hash1 =  _beianManager.getMd5(0);
+      vm.hash2 =  _beianManager.getMd5(1);
+    };
+
+    refreshHash();//首次加载读取_beianManager的hex状态
   }]);
