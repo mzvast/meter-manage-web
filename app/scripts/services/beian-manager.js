@@ -56,8 +56,8 @@ angular.module('manageApp')
     };
 
     vm.removeHex = function (index) {
-      hex.splice(index,1);
-      md5.splice(index,1);
+      hex.splice(index,1,undefined);
+      md5.splice(index,1,undefined);
     };
 
     vm.setHex = function (hexFile,index) {
@@ -100,7 +100,7 @@ angular.module('manageApp')
         direction:"out",
         type:"success",
         time:Date.now(),
-        event:"WebSocket连接成功"
+        event:"建立WebSocket连接"
       });
 
       ws.onerror = function () {
@@ -116,10 +116,24 @@ angular.module('manageApp')
       };
 
       ws.onmessage = function(event){
-        addMessage(event);
-        console.log(event.data);
-        if(event.data.type==='info'){
-          switch (event.data.state){
+        var cleanData;
+        if (!event.data.match("^\{(.+:.+,*){1,}\}$"))
+        {
+          cleanData = event.data;
+          //普通字符串处理
+          addMessage(cleanData);
+          console.log(cleanData);
+          return;
+        }else{
+          //通过这种方法可将字符串转换为对象
+          // data = eval("("+data+")");
+          cleanData = JSON.parse(event.data);
+          addMessage(cleanData);
+          console.log(cleanData);
+        }
+
+        if(cleanData.type==='info'){
+          switch (cleanData.state){
             case 'success':{
               vm.addTimelineMsg({
                 direction:"in",
@@ -134,13 +148,13 @@ angular.module('manageApp')
                 direction:"in",
                 type:"fail",
                 time:Date.now(),
-                event:"比对信息发送失败，原因"+event.data.reason||'未知'
+                event:"比对信息发送失败，原因"+cleanData.reason||'未知'
               });
             }
           }
         }
-        if(event.data.type==='file'){
-          switch (event.data.state){
+        if(cleanData.type==='file'){
+          switch (cleanData.state){
             case 'next':{
               vm.addTimelineMsg({
                 direction:"in",
@@ -164,13 +178,13 @@ angular.module('manageApp')
                 direction:"in",
                 type:"fail",
                 time:Date.now(),
-                event:"HEX文件发送失败，原因"+event.data.reason||"未知"
+                event:"HEX文件发送失败，原因"+cleanData.reason||"未知"
               });
             }
           }
         }
-        if(event.data.type==='start_compare'){
-          switch (event.data.state){
+        if(cleanData.type==='start_compare'){
+          switch (cleanData.state){
             case 'success':{
               vm.addTimelineMsg({
                 direction:"in",
@@ -185,13 +199,13 @@ angular.module('manageApp')
                 direction:"in",
                 type:"fail",
                 time:Date.now(),
-                event:"比对开始失败，原因"+event.data.reason||"未知"
+                event:"比对开始失败，原因"+cleanData.reason||"未知"
               });
             }
           }
         }
-        if(event.data.type==='compare_result'){
-          switch (event.data.state){
+        if(cleanData.type==='compare_result'){
+          switch (cleanData.state){
             case 'success':{
               vm.addTimelineMsg({
                 direction:"in-final",
@@ -206,7 +220,7 @@ angular.module('manageApp')
                 direction:"in-final",
                 type:"fail",
                 time:Date.now(),
-                event:"["+event.data.result.fail+"]表位比对失败"
+                event:"["+cleanData.result.fail+"]表位比对失败"
               });
             }
           }
@@ -225,7 +239,7 @@ angular.module('manageApp')
 
     vm.wsSend = function (msg) {
       if(ws){
-        ws.send(msg);
+        ws.send(JSON.stringify(msg));
       }
     };
 
@@ -274,7 +288,7 @@ angular.module('manageApp')
         time:Date.now(),
         event:"发送比对信息"
       });
-      ws.send(infoMsg);
+      vm.wsSend(infoMsg);
     };
 
     vm.wsSendHex = function (index) {
@@ -302,8 +316,8 @@ angular.module('manageApp')
         type:"success",
         time:Date.now(),
         event:"发送开始比对命令"
-      })
-      ws.send(startMsg);
+      });
+      vm.wsSend(startMsg);
     };
 
     vm.addTimelineMsg = function (msg) {

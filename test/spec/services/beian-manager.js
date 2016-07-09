@@ -22,8 +22,8 @@ describe('Service: beianManager', function () {
   it('wsCreate should create Websocket',function (done) {
     var mockServer = new Server('ws://localhost:3456');
     mockServer.on('connection',function (){
-      mockServer.send('test message 1');
-      mockServer.send('test message 2');
+      mockServer.send(JSON.stringify({msg:'test message 1'}));
+      mockServer.send(JSON.stringify({msg:'test message 2'}));
     });
     beianManager.wsCreate('ws://localhost:3456');
     setTimeout(
@@ -41,7 +41,7 @@ describe('Service: beianManager', function () {
     var mockServer = new Server('ws://localhost:3456');
     var serverMsg =[];
     mockServer.on('message',function (e){
-      serverMsg.push(e);
+      serverMsg.push(JSON.parse(e));
     });
     beianManager.wsCreate('ws://localhost:3456');
     beianManager.wsSend('hello Server!');
@@ -58,7 +58,7 @@ describe('Service: beianManager', function () {
     var mockServer = new Server('ws://localhost:3456');
     var serverMsg =[];
     mockServer.on('message',function (e){
-      serverMsg.push(e);
+      serverMsg.push(JSON.parse(e));
     });
     beianManager.fakeData();//伪造数据
     beianManager.wsCreate('ws://localhost:3456');
@@ -113,12 +113,12 @@ describe('Service: beianManager', function () {
     var mockServer = new Server('ws://localhost:3456');
     var serverMsg =[];
     mockServer.on('message',function (e){
-      serverMsg.push(e);
-      if(e.type==='info'){
-        mockServer.send({
+      serverMsg.push(JSON.parse(e));
+      if(JSON.parse(e).type==='info'){
+        mockServer.send(JSON.stringify({
           "type": "info",
           "state": "success"
-        }) ;
+        })) ;
       }
     });
     beianManager.fakeData();//伪造数据
@@ -139,13 +139,13 @@ describe('Service: beianManager', function () {
     var mockServer = new Server('ws://localhost:3456');
     var serverMsg =[];
     mockServer.on('message',function (e){
-      serverMsg.push(e);
-      if(e.type==='info'){
-        mockServer.send({
+      serverMsg.push(JSON.parse(e));
+      if(JSON.parse(e).type==='info'){
+        mockServer.send(JSON.stringify({
           "type": "info",
           "state": "fail",
           "reason":"hehe"
-        }) ;
+        })) ;
       }
     });
     beianManager.fakeData();//伪造数据
@@ -167,10 +167,10 @@ describe('Service: beianManager', function () {
     var serverMsg =[];
     mockServer.on('message',function (e){
       serverMsg.push(e);
-        mockServer.send({
+        mockServer.send(JSON.stringify({
           "type": "file",
           "state": "next"
-        });
+        }));
     });
     beianManager.fakeData();//伪造数据
     beianManager.wsCreate('ws://localhost:3456');
@@ -191,10 +191,10 @@ describe('Service: beianManager', function () {
     var serverMsg =[];
     mockServer.on('message',function (e){
       serverMsg.push(e);
-      mockServer.send({
+      mockServer.send(JSON.stringify({
         "type": "file",
         "state": "success"
-      });
+      }));
     });
     beianManager.fakeData();//伪造数据
     beianManager.wsCreate('ws://localhost:3456');
@@ -215,11 +215,11 @@ describe('Service: beianManager', function () {
     var serverMsg =[];
     mockServer.on('message',function (e){
       serverMsg.push(e);
-      mockServer.send({
+      mockServer.send(JSON.stringify({
         "type": "file",
         "state": "fail",
         "reason":"hehe"
-      });
+      }));
     });
     beianManager.fakeData();//伪造数据
     beianManager.wsCreate('ws://localhost:3456');
@@ -239,12 +239,12 @@ describe('Service: beianManager', function () {
     var mockServer = new Server('ws://localhost:3456');
     var serverMsg =[];
     mockServer.on('message',function (e){
-      serverMsg.push(e);
-      if(e.type==="start_compare"){
-        mockServer.send({
+      serverMsg.push(JSON.parse(e));
+      if(JSON.parse(e).type==="start_compare"){
+        mockServer.send(JSON.stringify({
           "type": "start_compare",
           "state": "success"
-        })
+        }))
       }
     });
     beianManager.fakeData();//伪造数据
@@ -265,13 +265,13 @@ describe('Service: beianManager', function () {
     var mockServer = new Server('ws://localhost:3456');
     var serverMsg =[];
     mockServer.on('message',function (e){
-      serverMsg.push(e);
-      if(e.type==="start_compare"){
-        mockServer.send({
+      serverMsg.push(JSON.parse(e));
+      if(JSON.parse(e).type==="start_compare"){
+        mockServer.send(JSON.stringify({
           "type": "start_compare",
           "state": "fail",
           "reason":"hehe"
-        })
+        }))
       }
     });
     beianManager.fakeData();//伪造数据
@@ -293,10 +293,10 @@ describe('Service: beianManager', function () {
     var serverMsg =[];
     mockServer.on('message',function (e){
       serverMsg.push(e);
-        mockServer.send({
+        mockServer.send(JSON.stringify({
           "type": "compare_result",
           "state": "success"
-        })
+        }))
     });
     beianManager.fakeData();//伪造数据
     beianManager.wsCreate('ws://localhost:3456');
@@ -315,7 +315,7 @@ describe('Service: beianManager', function () {
     var serverMsg =[];
     mockServer.on('message',function (e){
       serverMsg.push(e);
-      mockServer.send({
+      mockServer.send(JSON.stringify({
         "type": "compare_result",
         "state": "fail",
         "reason":"通信不通，电源异常",//异常信息、失败原因
@@ -323,7 +323,7 @@ describe('Service: beianManager', function () {
           "pass": [1,2], //通过的表位号
           "fail": [3,4] //失败的表位号
         }
-      })
+      }))
     });
     beianManager.fakeData();//伪造数据
     beianManager.wsCreate('ws://localhost:3456');
