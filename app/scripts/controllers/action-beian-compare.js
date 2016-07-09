@@ -76,5 +76,75 @@ angular.module('manageApp')
     vm.fake = function () {
       _beianManager.fakeData();
       refresh();
-    }
+    };
+
+    // vm.wsCreate = _beianManager('ws://localhost:3456');
+
+    vm.timelineMsg = [{
+      direction:"out",
+      type:"success",
+      time:"5 mins ago",
+      event:"WebSocket连接成功"
+    },{
+      direction:"in",
+      type:"fail",
+      time:Date.now(),
+      event:"WebSocket连接失败"
+    },{
+      direction:"out",
+      type:"success",
+      time:"4 mins ago",
+      event:"发送比对信息"
+    },{
+      direction:"in",
+      type:"success",
+      time:"4 mins ago",
+      event:"比对信息发送成功"
+    },{
+      direction:"in",
+      type:"fail",
+      time:Date.now(),
+      event:"比对信息发送失败"
+    },{
+      direction:"out",
+      type:"success",
+      time:"3 mins ago",
+      event:"发送HEX文件"
+    },{
+      direction:"in",
+      type:"success",
+      time:"3 mins ago",
+      event:"上一个HEX文件发送成功,准备发送下一个"
+    },{
+      direction:"in",
+      type:"fail",
+      time:"3 mins ago",
+      event:"HEX文件发送失败"
+    },{
+      direction:"out",
+      type:"success",
+      time:"2 mins ago",
+      event:"发送开始比对命令"
+    },{
+      direction:"in",
+      type:"success",
+      time:"2 mins ago",
+      event:"比对开始"
+    },{
+      direction:"in",
+      type:"fail",
+      time:Date.now(),
+      event:"比对开始失败"
+    },
+      {
+        direction:"in-final",
+        type:"success",
+        time:"1 mins ago",
+        event:"比对成功"
+      },{
+        direction:"in-final",
+        type:"fail",
+        time:Date.now(),
+        event:"["+[1,2]+"]表位比对失败"
+      }]
   }]);

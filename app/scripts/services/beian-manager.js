@@ -100,7 +100,7 @@ angular.module('manageApp')
         direction:"out",
         type:"success",
         time:Date.now(),
-        event:"建立WebSocket连接"
+        event:"WebSocket连接成功"
       });
 
       ws.onerror = function () {
@@ -113,12 +113,6 @@ angular.module('manageApp')
       };
 
       ws.onopen = function () {
-        vm.addTimelineMsg({
-          direction:"in",
-          type:"success",
-          time:Date.now(),
-          event:"WebSocket连接成功"
-        })
       };
 
       ws.onmessage = function(event){
@@ -140,7 +134,7 @@ angular.module('manageApp')
                 direction:"in",
                 type:"fail",
                 time:Date.now(),
-                event:"比对信息发送失败"
+                event:"比对信息发送失败，原因"+event.data.reason||'未知'
               });
             }
           }
@@ -170,7 +164,7 @@ angular.module('manageApp')
                 direction:"in",
                 type:"fail",
                 time:Date.now(),
-                event:"HEX文件发送失败"
+                event:"HEX文件发送失败，原因"+event.data.reason||"未知"
               });
             }
           }
@@ -191,7 +185,7 @@ angular.module('manageApp')
                 direction:"in",
                 type:"fail",
                 time:Date.now(),
-                event:"比对开始失败"
+                event:"比对开始失败，原因"+event.data.reason||"未知"
               });
             }
           }
@@ -274,23 +268,23 @@ angular.module('manageApp')
 
     vm.wsSendInfoMsg = function () {
       makeInfoMsg();
-      ws.send(infoMsg);
       vm.addTimelineMsg({
         direction:"out",
         type:"success",
         time:Date.now(),
         event:"发送比对信息"
-      })
+      });
+      ws.send(infoMsg);
     };
 
     vm.wsSendHex = function (index) {
-      ws.send(hex[index]);
       vm.addTimelineMsg({
         direction:"out",
         type:"success",
         time:Date.now(),
         event:"发送HEX文件["+index+"]"
-      })
+      });
+      ws.send(hex[index]);
     };
 
     vm.wsSendStartCompare = function () {
@@ -303,13 +297,13 @@ angular.module('manageApp')
           startMsg.bit.push(arg[i]['bit']);
         }
       }();
-      ws.send(startMsg);
       vm.addTimelineMsg({
         direction:"out",
         type:"success",
         time:Date.now(),
         event:"发送开始比对命令"
       })
+      ws.send(startMsg);
     };
 
     vm.addTimelineMsg = function (msg) {
