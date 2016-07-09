@@ -21,7 +21,7 @@ angular.module('manageApp')
         hex = [],
         md5 = [];
 
-    var ws,infoMsg;
+    var ws,infoMsg,message=[],timelineMsg=[];
 
     vm.setProduct = function (item) {
       product = item;
@@ -93,11 +93,140 @@ angular.module('manageApp')
     vm.wsCreate = function(url){
       if(!url) return;
       ws = new WebSocket(url);
-      vm.messages = [];
+      timelineMsg=[];
+      message = [];
+
+      vm.addTimelineMsg({
+        direction:"out",
+        type:"success",
+        time:Date.now(),
+        event:"建立WebSocket连接"
+      });
+
+      ws.onerror = function () {
+        vm.addTimelineMsg({
+          direction:"in",
+          type:"fail",
+          time:Date.now(),
+          event:"WebSocket连接失败"
+        })
+      };
+
+      ws.onopen = function () {
+        vm.addTimelineMsg({
+          direction:"in",
+          type:"success",
+          time:Date.now(),
+          event:"WebSocket连接成功"
+        })
+      };
 
       ws.onmessage = function(event){
-        vm.messages.push(event);
+        addMessage(event);
+        console.log(event.data);
+        if(event.data.type==='info'){
+          switch (event.data.state){
+            case 'success':{
+              vm.addTimelineMsg({
+                direction:"in",
+                type:"success",
+                time:Date.now(),
+                event:"比对信息发送成功"
+              });
+              break;
+            }
+            case 'fail':{
+              vm.addTimelineMsg({
+                direction:"in",
+                type:"fail",
+                time:Date.now(),
+                event:"比对信息发送失败"
+              });
+            }
+          }
+        }
+        if(event.data.type==='file'){
+          switch (event.data.state){
+            case 'next':{
+              vm.addTimelineMsg({
+                direction:"in",
+                type:"success",
+                time:Date.now(),
+                event:"上一个HEX文件发送成功,准备发送下一个"
+              });
+              break;
+            }
+            case 'success':{
+              vm.addTimelineMsg({
+                direction:"in",
+                type:"success",
+                time:Date.now(),
+                event:"HEX文件全部发送成功"
+              });
+              break;
+            }
+            case 'fail':{
+              vm.addTimelineMsg({
+                direction:"in",
+                type:"fail",
+                time:Date.now(),
+                event:"HEX文件发送失败"
+              });
+            }
+          }
+        }
+        if(event.data.type==='start_compare'){
+          switch (event.data.state){
+            case 'success':{
+              vm.addTimelineMsg({
+                direction:"in",
+                type:"success",
+                time:Date.now(),
+                event:"比对开始"
+              });
+              break;
+            }
+            case 'fail':{
+              vm.addTimelineMsg({
+                direction:"in",
+                type:"fail",
+                time:Date.now(),
+                event:"比对开始失败"
+              });
+            }
+          }
+        }
+        if(event.data.type==='compare_result'){
+          switch (event.data.state){
+            case 'success':{
+              vm.addTimelineMsg({
+                direction:"in-final",
+                type:"success",
+                time:Date.now(),
+                event:"比对成功"
+              });
+              break;
+            }
+            case 'fail':{
+              vm.addTimelineMsg({
+                direction:"in-final",
+                type:"fail",
+                time:Date.now(),
+                event:"["+event.data.result.fail+"]表位比对失败"
+              });
+            }
+          }
+        }
+
       };
+    };
+
+    var addMessage = function (msg) {
+        message.push(msg);
+    };
+
+    vm.getMessage = function () {
+      return message;
     };
 
     vm.wsSend = function (msg) {
@@ -146,24 +275,49 @@ angular.module('manageApp')
     vm.wsSendInfoMsg = function () {
       makeInfoMsg();
       ws.send(infoMsg);
+      vm.addTimelineMsg({
+        direction:"out",
+        type:"success",
+        time:Date.now(),
+        event:"发送比对信息"
+      })
     };
 
     vm.wsSendHex = function (index) {
       ws.send(hex[index]);
+      vm.addTimelineMsg({
+        direction:"out",
+        type:"success",
+        time:Date.now(),
+        event:"发送HEX文件["+index+"]"
+      })
     };
 
     vm.wsSendStartCompare = function () {
       var startMsg = {
         "type": "start_compare",
-        "data": []
+        "bit": []
       };
       var setMsg = function () {
         for(var i=0;i<arg.length;i++){
-          var obj = angular.copy(arg[i]['bit']);
-          startMsg.data.push({"meter_bit":obj});
+          startMsg.bit.push(arg[i]['bit']);
         }
       }();
       ws.send(startMsg);
+      vm.addTimelineMsg({
+        direction:"out",
+        type:"success",
+        time:Date.now(),
+        event:"发送开始比对命令"
+      })
+    };
+
+    vm.addTimelineMsg = function (msg) {
+      timelineMsg.push(msg);
+    };
+
+    vm.getTimelineMsg = function () {
+      return timelineMsg;
     };
 
     vm.doCompare = function () {
@@ -362,14 +516,7 @@ angular.module('manageApp')
 
     vm.expectStartData = {
       "type": "start_compare",
-      "data": [
-        {
-          "meter_bit": 1
-        },
-        {
-          "meter_bit": 2
-        }
-      ]
+      "bit":[1,2]
     };
 
 
