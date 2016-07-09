@@ -54,12 +54,12 @@ angular.module('manageApp')
         hex=[];
         md5=[];
     };
-    
+
     vm.removeHex = function (index) {
       hex.splice(index,1);
       md5.splice(index,1);
     };
-    
+
     vm.setHex = function (hexFile,index) {
       if(hexFile instanceof ArrayBuffer) {
         log("true");
@@ -101,7 +101,9 @@ angular.module('manageApp')
     };
 
     vm.wsSend = function (msg) {
-      ws.send(msg);
+      if(ws){
+        ws.send(msg);
+      }
     };
 
     var makeInfoMsg = function () {
@@ -131,13 +133,37 @@ angular.module('manageApp')
           }
       }();
 
-      infoMsg.data.meter_info.push(arg[0]);
-      infoMsg.data.meter_info[0]['costcontrol_type']=info.costcontrol_type;
+      var setMeterInfo = function () {
+        for(var i=0;i<arg.length;i++){
+          var obj = angular.copy(arg[i]);
+          infoMsg.data.meter_info.push(obj);
+          infoMsg.data.meter_info[i]['costcontrol_type']=info.costcontrol_type;
+        }
+      }();
+
     };
 
     vm.wsSendInfoMsg = function () {
       makeInfoMsg();
       ws.send(infoMsg);
+    };
+
+    vm.wsSendHex = function (index) {
+      ws.send(hex[index]);
+    };
+
+    vm.wsSendStartCompare = function () {
+      var startMsg = {
+        "type": "start_compare",
+        "data": []
+      };
+      var setMsg = function () {
+        for(var i=0;i<arg.length;i++){
+          var obj = angular.copy(arg[i]['bit']);
+          startMsg.data.push({"meter_bit":obj});
+        }
+      }();
+      ws.send(startMsg);
     };
 
     vm.doCompare = function () {
@@ -165,6 +191,13 @@ angular.module('manageApp')
     };
 
     vm.fakeData = function () {
+      product = {
+        id:"23",
+        name: "苹果电表",
+        batch: "01",
+        supplier: "APPLE",
+        describe: "此人很懒"};
+
       md5[0]='d9fc6d737aea3345f681f24c8a2bb07c';
       md5[1]='d9fc6d737aea3345f681f24c8a2bb07d';
 
@@ -214,6 +247,13 @@ angular.module('manageApp')
 
       arg = [{
         "bit":1,
+        "num":"xxxxxxxxxxxx",
+        "addr":"xxxxxxxxxxxx",
+        "type":"single_phase",
+        "vol":220,
+        "key_index":"04"
+      },{
+        "bit":2,
         "num":"xxxxxxxxxxxx",
         "addr":"xxxxxxxxxxxx",
         "type":"single_phase",
@@ -308,10 +348,29 @@ angular.module('manageApp')
           "addr": "xxxxxxxxxxxx",
           "vol": 220,
           "key_index": "04"
+        },{
+            "bit": 2,
+            "type": "single_phase",
+            "costcontrol_type": "em_esam",
+            "num": "xxxxxxxxxxxx",
+            "addr": "xxxxxxxxxxxx",
+            "vol": 220,
+            "key_index": "04"
         }]
       }
-    }
-    ;
+    };
+
+    vm.expectStartData = {
+      "type": "start_compare",
+      "data": [
+        {
+          "meter_bit": 1
+        },
+        {
+          "meter_bit": 2
+        }
+      ]
+    };
 
 
   }]);

@@ -19,7 +19,7 @@ describe('Service: beianManager', function () {
     expect(!!beianManager).toBe(true);
   });
 
-  it('should create Websocket',function (done) {
+  it('wsCreate should create Websocket',function (done) {
     var mockServer = new Server('ws://localhost:3456');
     mockServer.on('connection',function (){
       mockServer.send('test message 1');
@@ -35,7 +35,7 @@ describe('Service: beianManager', function () {
       },100);
   });
 
-  it('Client should send message to Server',function (done) {
+  it('wsSend',function (done) {
     var mockServer = new Server('ws://localhost:3456');
     var serverMsg =[];
     mockServer.on('message',function (e){
@@ -52,7 +52,7 @@ describe('Service: beianManager', function () {
       },100);
   });
 
-  it('Client send info to Server',function (done) {
+  it('wsSendInfoMsg',function (done) {
     var mockServer = new Server('ws://localhost:3456');
     var serverMsg =[];
     mockServer.on('message',function (e){
@@ -80,17 +80,26 @@ describe('Service: beianManager', function () {
 
         expect(serverMsg[0]['data']['cpu_info'][0]['cpu_id']).toEqual(beianManager.expectData['data']['cpu_info'][0]['cpu_id']);
 
-        console.log("=========");
-        console.log(serverMsg[0]['data']['cpu_info'][0]['cpu_id']);
-        console.log(serverMsg[0]['data']['cpu_info'][1]['cpu_id']);
-        console.log(beianManager.expectData['data']['cpu_info'][0]['cpu_id']);
-        console.log(beianManager.expectData['data']['cpu_info'][1]['cpu_id']);
-
-
         // expect(serverMsg[0]).toEqual(beianManager.expectData);
         mockServer.stop();
         done();
       },100);
   })
-
+  it('wsSendStartCompare',function (done) {
+    var mockServer = new Server('ws://localhost:3456');
+    var serverMsg =[];
+    mockServer.on('message',function (e){
+      serverMsg.push(e);
+    });
+    beianManager.fakeData();//伪造数据
+    beianManager.wsCreate('ws://localhost:3456');
+    beianManager.wsSendStartCompare();
+    setTimeout(
+      function () {
+        expect(serverMsg[0]['type']).toEqual(beianManager.expectStartData['type']);
+        expect(serverMsg[0]['data']).toEqual(beianManager.expectStartData['data']);
+        mockServer.stop();
+        done();
+      },100);
+  })
 });

@@ -25,7 +25,7 @@ angular.module('manageApp')
     };
     vm.args = function () {
       var args = [],
-        i;
+        i,j;
       for(i=0;i<8;i++){
           args.push(
             {
@@ -39,7 +39,15 @@ angular.module('manageApp')
             }
           )
       }
-      args[0]['on'] = true;
+      // args[0]['on'] = true;
+      var settedArg = _beianManager.getArg();
+      if(settedArg){
+        for(j=0; j<settedArg.length; j++){
+          args.splice((settedArg[j]['bit']-1),1,settedArg[j]);
+          args[(settedArg[j]['bit']-1)]['on']=true;
+        }
+      }
+
       return args;
     }();
 
@@ -68,7 +76,7 @@ angular.module('manageApp')
             checked = false;
           }else{
             itemNum++;
-            var temp = vm.args[i];
+            var temp = angular.copy(vm.args[i]);
             delete temp['on'];
             delete temp["$$hashKey"];
             formatedArgs.push(temp);

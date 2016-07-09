@@ -1,7 +1,6 @@
 <!--备案加密-->
 <div class="row">
-  <div class="col-xs-10 col-xs-offset-1">
-    <div class="box box-primary">
+  <div class="col-xs-12">
       <div class="box-header with-border text-center">
         <h3 class="box-title">比对信息验核</h3>
       </div>
@@ -19,7 +18,7 @@
               <th style="width: 2em">修改</th>
             </tr>
             <tr ng-repeat="item in compareCtrl.items">
-              <td>{{item.id}}</td>
+              <td>{{ item.id }}</td>
               <td>{{item.name}}</td>
               <td><div>{{item.prop}}</div></td>
               <td>
@@ -43,9 +42,14 @@
 
           <!-- /.box-body -->
           <div class="box-footer">
-            <div  class="col-xs-6 col-xs-offset-3">
-              <button ng-show="compareCtrl.isAllSet" type="submit" class="btn btn-primary btn-block" ng-click="compareCtrl.doCompare()">开始比对</button>
-              <span ng-hide="compareCtrl.isAllSet">验核不通过，不能开始比对</span>
+            <div class="col-xs-3 col-xs-offset-2">
+              <button ng-click="compareCtrl.fake()" type="button" class="btn btn-warning btn-block" >产生模拟数据</button>
+            </div>
+            <div  class="col-xs-4">
+              <button ng-disabled="!compareCtrl.isAllSet" type="button" class="btn btn-primary btn-block" ng-class="" ng-click="compareCtrl.doCompare()">
+                <span ng-show="compareCtrl.isAllSet">开始比对</span>
+                <span ng-hide="compareCtrl.isAllSet">验核失败，不能比对</span>
+              </button>
             </div>
 
           </div>
@@ -54,7 +58,6 @@
       </div>
 
 
-    </div>
   </div>
 </div>
 

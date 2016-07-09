@@ -29,10 +29,16 @@ angular.module('manageApp')
 
 
     vm.fields = _formManager.getForm('info', vm);
-    vm.model = {
-      cpu_info:{
-      "protect_addr":[{},{}],
-      "reserve_addr": [{},{}]
+    var settedInfo = _beianManager.getInfo();
+    if(settedInfo){
+      vm.model = settedInfo;
+    }else{
+      vm.model = {
+        cpu_info:{
+          "protect_addr":[{},{}],
+          "reserve_addr": [{},{}]
+        }
       }
     }
+
   }]);
