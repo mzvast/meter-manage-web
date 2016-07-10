@@ -372,6 +372,11 @@ angular.module('manageApp')
       md5=[];
     };
 
+    vm.fakeDataDemo = function () {
+      vm.fakeData();
+      md5=[]
+    };
+
     vm.fakeData = function () {
       product = {
         id:"23",

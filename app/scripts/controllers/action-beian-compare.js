@@ -102,7 +102,7 @@ angular.module('manageApp')
     };
 
     vm.fake = function () {
-      _beianManager.fakeData();
+      _beianManager.fakeDataDemo();
       refresh();
     };
 
