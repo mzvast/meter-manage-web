@@ -8,7 +8,7 @@
  * Service in the manageApp.
  */
 angular.module('manageApp')
-  .service('beianManager', ['dataManager',function (_dataManager) {
+  .service('beianManager', ['$rootScope','dataManager',function ($rootScope,_dataManager) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var vm = this;
     ////////////
@@ -225,6 +225,7 @@ angular.module('manageApp')
             }
           }
         }
+        $rootScope.$apply();
 
       };
     };

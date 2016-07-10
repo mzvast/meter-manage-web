@@ -141,9 +141,10 @@ angular.module('manageApp')
     };
 
     $scope.$watch('service.getTimelineMsg()', function(newVal) {
-      console.log("New Data", newVal);
-      vm.timelineMsg = newVal;
+      console.log(" New Data", newVal);
+      vm.timelineMsg =newVal;
     });
+ 
 
     // vm.timelineMsg = [{
     //   direction:"out",
