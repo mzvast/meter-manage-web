@@ -89,6 +89,11 @@ angular.module('manageApp')
         return md5[index];
       }
     };
+    vm.wsClose = function () {
+      if(ws&&ws.readyState!==WebSocket.CLOSED){
+        ws.close()
+      }
+    };
 
     vm.wsCreate = function(url){
       if(!url) return;
@@ -109,10 +114,18 @@ angular.module('manageApp')
           type:"fail",
           time:Date.now(),
           event:"WebSocket连接失败"
-        })
+        });
+        $rootScope.$apply();
       };
 
-      ws.onopen = function () {
+      ws.onclose = function () {
+        vm.addTimelineMsg({
+          direction:"in-final",
+          type:"success",
+          time:Date.now(),
+          event:"WebSocket连接已关闭"
+        });
+        $rootScope.$apply();
       };
 
       ws.onmessage = function(event){
@@ -132,7 +145,14 @@ angular.module('manageApp')
           console.log(cleanData);
         }
 
-        if(cleanData.type==='info'){
+        if(cleanData.type==='welcome'){
+          vm.addTimelineMsg({
+            direction:"in",
+            type:"success",
+            time:Date.now(),
+            event:"WebSocket连接成功"
+          });
+        }else if(cleanData.type==='info'){
           switch (cleanData.state){
             case 'success':{
               vm.addTimelineMsg({
@@ -152,8 +172,7 @@ angular.module('manageApp')
               });
             }
           }
-        }
-        if(cleanData.type==='file'){
+        }else if(cleanData.type==='file'){
           switch (cleanData.state){
             case 'next':{
               vm.addTimelineMsg({
@@ -182,8 +201,7 @@ angular.module('manageApp')
               });
             }
           }
-        }
-        if(cleanData.type==='start_compare'){
+        }else if(cleanData.type==='start_compare'){
           switch (cleanData.state){
             case 'success':{
               vm.addTimelineMsg({
@@ -203,8 +221,7 @@ angular.module('manageApp')
               });
             }
           }
-        }
-        if(cleanData.type==='compare_result'){
+        }else if(cleanData.type==='compare_result'){
           switch (cleanData.state){
             case 'success':{
               vm.addTimelineMsg({
@@ -213,6 +230,7 @@ angular.module('manageApp')
                 time:Date.now(),
                 event:"比对成功"
               });
+              ws.close();
               break;
             }
             case 'fail':{
@@ -222,6 +240,7 @@ angular.module('manageApp')
                 time:Date.now(),
                 event:"["+cleanData.result.fail+"]表位比对失败"
               });
+              ws.close();
             }
           }
         }

@@ -20,26 +20,26 @@ angular.module('manageApp')
 
     vm.opModel = [
       {
-        name:"刷新timeline",
-        action:"refreshTimeline"
-      },{
-       name:"建立连接",
-        action:"wsCreate"
-      },{
-        name:"增加测试消息",
+        name:"0.测试本地消息",
         action:"addTimelineMsg"
       },{
-        name:"发送比对信息",
+       name:"1.建立连接",
+        action:"wsCreate"
+      },{
+        name:"2.发送比对信息",
         action:"sendInfo"
       },{
-        name:"发送hex文件CPU1",
+        name:"3.发送hex文件CPU1",
         action:"sendHex0"
       },{
-        name:"发送hex文件CPU2",
+        name:"4.发送hex文件CPU2",
         action:"sendHex1"
       },{
-        name:"发送比对开始指令",
+        name:"5.发送比对开始指令",
         action:"sendStartCompare"
+      },{
+        name:"6.结束比对",
+        action:"stopCompare"
       }
     ];
 
@@ -136,81 +136,14 @@ angular.module('manageApp')
       _beianManager.wsSendStartCompare();
     };
 
-    vm.refreshTimeline = function () {
-      vm.timelineMsg = _beianManager.getTimelineMsg();
+    vm.stopCompare = function () {
+      vm.start = false;
+      _beianManager.wsClose();
     };
 
     $scope.$watch('service.getTimelineMsg()', function(newVal) {
-      console.log(" New Data", newVal);
+      // console.log(" New Data", newVal);
       vm.timelineMsg =newVal;
     });
- 
 
-    // vm.timelineMsg = [{
-    //   direction:"out",
-    //   type:"success",
-    //   time:"5 mins ago",
-    //   event:"WebSocket连接成功"
-    // },{
-    //   direction:"in",
-    //   type:"fail",
-    //   time:Date.now(),
-    //   event:"WebSocket连接失败"
-    // },{
-    //   direction:"out",
-    //   type:"success",
-    //   time:"4 mins ago",
-    //   event:"发送比对信息"
-    // },{
-    //   direction:"in",
-    //   type:"success",
-    //   time:"4 mins ago",
-    //   event:"比对信息发送成功"
-    // },{
-    //   direction:"in",
-    //   type:"fail",
-    //   time:Date.now(),
-    //   event:"比对信息发送失败"
-    // },{
-    //   direction:"out",
-    //   type:"success",
-    //   time:"3 mins ago",
-    //   event:"发送HEX文件"
-    // },{
-    //   direction:"in",
-    //   type:"success",
-    //   time:"3 mins ago",
-    //   event:"上一个HEX文件发送成功,准备发送下一个"
-    // },{
-    //   direction:"in",
-    //   type:"fail",
-    //   time:"3 mins ago",
-    //   event:"HEX文件发送失败"
-    // },{
-    //   direction:"out",
-    //   type:"success",
-    //   time:"2 mins ago",
-    //   event:"发送开始比对命令"
-    // },{
-    //   direction:"in",
-    //   type:"success",
-    //   time:"2 mins ago",
-    //   event:"比对开始"
-    // },{
-    //   direction:"in",
-    //   type:"fail",
-    //   time:Date.now(),
-    //   event:"比对开始失败"
-    // },
-    //   {
-    //     direction:"in-final",
-    //     type:"success",
-    //     time:"1 mins ago",
-    //     event:"比对成功"
-    //   },{
-    //     direction:"in-final",
-    //     type:"fail",
-    //     time:Date.now(),
-    //     event:"["+[1,2]+"]表位比对失败"
-    //   }]
   }]);
