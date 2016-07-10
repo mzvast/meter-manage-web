@@ -90,7 +90,7 @@ angular.module('manageApp')
           data:md5
         }
       };
-      vm.isAllSet = product&&info&&arg&&md5;
+      vm.isAllSet = product&&info&&arg&&(md5[0]||md5[1]);
     };
 
     refresh();//init when load
