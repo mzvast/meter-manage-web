@@ -200,7 +200,6 @@ angular.module('manageApp')
             time: Date.now(),
             event: "WebSocket连接成功"
           });
-          flow('welcome','success');
         } else if (cleanData.type === 'info') {
           switch (cleanData.state) {
             case 'success':
@@ -211,7 +210,6 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: "比对信息发送成功"
               });
-              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'fail':
@@ -223,7 +221,6 @@ angular.module('manageApp')
                 event: "比对信息发送失败，原因" + cleanData.reason || '未知'
               });
             }
-              flow(cleanData.type,cleanData.state);
           }
         } else if (cleanData.type === 'file') {
           switch (cleanData.state) {
@@ -235,7 +232,6 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: "上一个HEX文件发送成功,准备发送下一个"
               });
-              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'success':
@@ -246,7 +242,6 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: "HEX文件全部发送成功"
               });
-              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'fail':
@@ -258,7 +253,6 @@ angular.module('manageApp')
                 event: "HEX文件发送失败，原因" + cleanData.reason || "未知"
               });
             }
-              flow(cleanData.type,cleanData.state);
           }
         } else if (cleanData.type === 'record_num') {
           switch (cleanData.state) {
@@ -270,7 +264,6 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: "备案号发送成功"
               });
-              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'fail':
@@ -282,7 +275,6 @@ angular.module('manageApp')
                 event: "备案号发送失败，原因" + cleanData.reason || "未知"
               });
             }
-              flow(cleanData.type,cleanData.state);
           }
         } else if (cleanData.type === 'start_compare') {
           switch (cleanData.state) {
@@ -294,7 +286,6 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: "比对开始"
               });
-              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'fail':
@@ -306,7 +297,6 @@ angular.module('manageApp')
                 event: "比对开始失败，原因" + cleanData.reason || "未知"
               });
             }
-              flow(cleanData.type,cleanData.state);
           }
         } else if (cleanData.type === 'compare_result') {
           switch (cleanData.state) {
@@ -319,7 +309,6 @@ angular.module('manageApp')
                 event: "比对成功"
               });
               ws.close();
-              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'fail':
@@ -332,9 +321,9 @@ angular.module('manageApp')
               });
               ws.close();
             }
-              flow(cleanData.type,cleanData.state);
           }
         }
+        flow(cleanData.type,cleanData.state);
         $rootScope.$apply();
 
       };
