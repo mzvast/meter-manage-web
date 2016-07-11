@@ -71,6 +71,9 @@ angular.module('manageApp')
       },{
         name:"7.结束比对",
         action:"stopCompare"
+      },{
+        name:"清除时间线消息",
+        action:"clearTimelineMsg"
       }
     ];
 
@@ -174,6 +177,10 @@ angular.module('manageApp')
     vm.stopCompare = function () {
       vm.start = false;
       _beianManager.wsClose();
+    };
+
+    vm.clearTimelineMsg = function () {
+      _beianManager.clearTimelineMsg();
     };
 
     $scope.$watch('service.getTimelineMsg()', function(newVal) {

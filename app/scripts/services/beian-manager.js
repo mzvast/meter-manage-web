@@ -506,6 +506,11 @@ angular.module('manageApp')
       return timelineMsg;
     };
 
+    vm.clearTimelineMsg = function () {
+      timelineMsg = [];
+      message = [];
+    };
+
     vm.doCompare = function () {
 
     };
