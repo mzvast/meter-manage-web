@@ -19,10 +19,19 @@ angular.module('manageApp')
         info,
         arg,
         hex = [],
-        md5 = [];
+        md5 = [],
+        recordNum;
 
-    var ws,infoMsg,message=[],timelineMsg=[];
-
+    var ws,
+        infoMsg,//比对信息对象
+      message=[],//系统消息
+      timelineMsg=[],//时间线
+      mode;//自动流转模式标志，1-备案比对，2-供货比对
+    /**
+     * 产品选择
+     * @param item
+     * @returns {boolean}
+       */
     vm.setProduct = function (item) {
       product = item;
       log("product id = "+item.id);
@@ -31,7 +40,11 @@ angular.module('manageApp')
     vm.getProduct = function () {
       return product;
     };
-
+    /**
+     * 比对信息
+     * @param item
+     * @returns {boolean}
+       */
     vm.setInfo = function (item) {
       info = item;
       log(JSON.stringify(item));
@@ -40,7 +53,11 @@ angular.module('manageApp')
     vm.getInfo = function () {
       return info;
     };
-
+    /**
+     * 参数设置
+     * @param item
+     * @returns {boolean}
+       */
     vm.setArg = function (item) {
       arg = item;
       log(JSON.stringify(item));
@@ -49,17 +66,25 @@ angular.module('manageApp')
     vm.getArg = function () {
       return arg;
     };
-
-    vm.resetHex = function () {
-        hex=[];
-        md5=[];
+    /**
+     * 备案信息
+     * @param item
+     * @returns {boolean}
+       */
+    vm.setRecordNum = function (item) {
+      recordNum = item;
+      return true;
     };
 
-    vm.removeHex = function (index) {
-      hex.splice(index,1,undefined);
-      md5.splice(index,1,undefined);
+    vm.getRecordNum = function () {
+        return recordNum;
     };
-
+    /**
+     * HEX文件
+     * @param hexFile
+     * @param index
+     * @returns {boolean}
+       */
     vm.setHex = function (hexFile,index) {
       if(hexFile instanceof ArrayBuffer) {
         log("true");
@@ -70,10 +95,21 @@ angular.module('manageApp')
         log("false");
       return false;
     };
+
     vm.getHex = function (index) {
       if(hex[index]){
         return hex[index];
       }
+    };
+
+    vm.resetHex = function () {
+      hex=[];
+      md5=[];
+    };
+
+    vm.removeHex = function (index) {
+      hex.splice(index,1,undefined);
+      md5.splice(index,1,undefined);
     };
 
     vm.getHexLength = function (index) {
@@ -89,12 +125,13 @@ angular.module('manageApp')
         return md5[index];
       }
     };
-    vm.wsClose = function () {
-      if(ws&&ws.readyState!==WebSocket.CLOSED){
-        ws.close()
-      }
-    };
 
+
+
+    /**
+     * 新建WebSocket连接
+     * @param url 格式'ws//host:port'
+       */
     vm.wsCreate = function(url){
       if(!url) return;
       ws = new WebSocket(url);
@@ -107,7 +144,9 @@ angular.module('manageApp')
         time:Date.now(),
         event:"建立WebSocket连接"
       });
-
+      /**
+       * WebSocket错误处理
+       */
       ws.onerror = function () {
         vm.addTimelineMsg({
           direction:"in",
@@ -117,7 +156,9 @@ angular.module('manageApp')
         });
         $rootScope.$apply();
       };
-
+      /**
+       * WebSocket关闭事件
+       */
       ws.onclose = function () {
         vm.addTimelineMsg({
           direction:"in-final",
@@ -127,7 +168,10 @@ angular.module('manageApp')
         });
         $rootScope.$apply();
       };
-
+      /**
+       * WebSocket传入事件处理
+       * @param event 传入的JSON字符串
+         */
       ws.onmessage = function(event){
         var cleanData;
         if (!event.data.match("^\{(.+:.+,*){1,}\}$"))
@@ -201,6 +245,26 @@ angular.module('manageApp')
               });
             }
           }
+        }else if(cleanData.type==='record_num'){
+          switch (cleanData.state){
+            case 'success':{
+              vm.addTimelineMsg({
+                direction:"in",
+                type:"success",
+                time:Date.now(),
+                event:"备案号发送成功"
+              });
+              break;
+            }
+            case 'fail':{
+              vm.addTimelineMsg({
+                direction:"in",
+                type:"fail",
+                time:Date.now(),
+                event:"备案号发送失败，原因"+cleanData.reason||"未知"
+              });
+            }
+          }
         }else if(cleanData.type==='start_compare'){
           switch (cleanData.state){
             case 'success':{
@@ -248,7 +312,14 @@ angular.module('manageApp')
 
       };
     };
-
+    /**
+     * 关闭WebSocket连接
+     */
+    vm.wsClose = function () {
+      if(ws&&ws.readyState!==WebSocket.CLOSED){
+        ws.close()
+      }
+    };
     var addMessage = function (msg) {
         message.push(msg);
     };
@@ -256,13 +327,18 @@ angular.module('manageApp')
     vm.getMessage = function () {
       return message;
     };
-
+    /**
+     * 使用WebSocket发送JSON字符串化对象
+     * @param msg
+       */
     vm.wsSend = function (msg) {
       if(ws){
         ws.send(JSON.stringify(msg));
       }
     };
-
+    /**
+     * 比对信息生成辅助函数
+     */
     var makeInfoMsg = function () {
       infoMsg = {
         type:'info',
@@ -299,7 +375,9 @@ angular.module('manageApp')
       }();
 
     };
-
+    /**
+     * 发送比对信息
+     */
     vm.wsSendInfoMsg = function () {
       makeInfoMsg();
       vm.addTimelineMsg({
@@ -310,7 +388,10 @@ angular.module('manageApp')
       });
       vm.wsSend(infoMsg);
     };
-
+    /**
+     * 发送HEX文件
+     * @param index 文件索引，取值0或者1
+       */
     vm.wsSendHex = function (index) {
       vm.addTimelineMsg({
         direction:"out",
@@ -320,7 +401,9 @@ angular.module('manageApp')
       });
       ws.send(hex[index]);
     };
-
+    /**
+     * 发送开始比对命令
+     */
     vm.wsSendStartCompare = function () {
       var startMsg = {
         "type": "start_compare",
@@ -339,11 +422,33 @@ angular.module('manageApp')
       });
       vm.wsSend(startMsg);
     };
-
+    /**
+     * 发送备案号
+     */
+    vm.wsSendRecordNum = function () {
+      vm.addTimelineMsg({
+        direction:"out",
+        type:"success",
+        time:Date.now(),
+        event:"发送备案号"
+      });
+      var obj = {
+        type:"record_num",
+        value:recordNum
+      };
+      vm.wsSend(obj);
+    };
+    /**
+     * 时间线添加消息
+     * @param msg
+       */
     vm.addTimelineMsg = function (msg) {
       timelineMsg.push(msg);
     };
-
+    /**
+     * 获取时间线
+     * @returns {Array}
+       */
     vm.getTimelineMsg = function () {
       return timelineMsg;
     };
@@ -356,27 +461,40 @@ angular.module('manageApp')
 
     };
 
+    /**
+     * 获取全部变量
+     * @returns {{product: *, info: *, arg: *, md5: Array}}
+     */
     vm.getAll = function () {
       return {
         product:product,
         info:info,
         arg:arg,
-        md5:md5
+        md5:md5,
+        recordNum:recordNum
       };
     };
+    /**
+     * 重置全部变量
+     */
     vm.resetAll = function () {
       product=undefined;
       info=undefined;
       arg=undefined;
+      recordNum=undefined;
       hex=[];
       md5=[];
     };
-
+    /**
+     * 生成模拟数据（除了HEX文件，无md5）
+     */
     vm.fakeDataDemo = function () {
       vm.fakeData();
       md5=[]
     };
-
+    /**
+     * 生成模拟数据（含md5）
+     */
     vm.fakeData = function () {
       product = {
         id:"23",
@@ -449,108 +567,5 @@ angular.module('manageApp')
       }];
 
     };
-
-    vm.expectData = {
-      "type": "info",
-      "data": {
-        "file_info": [
-          {
-            "cpu_id": 1,
-            "md5": "d9fc6d737aea3345f681f24c8a2bb07c"
-          },
-          {
-            "cpu_id": 2,
-            "md5": "d9fc6d737aea3345f681f24c8a2bb07d"
-          }
-        ],
-        "cpu_info": [
-          {
-            "cpu_id": 1,
-            "memory_addr": {
-              "start": "4000",
-              "end": "13fff"
-            },
-            "code_addr": {
-              "start": "4000",
-              "end": "97ff"
-            },
-            "protect_addr": [
-              {
-                "start": "12000",
-                "end": "121ff"
-              },
-              {
-                "start": "13000",
-                "end": "133ff"
-              }
-            ],
-            "reserve_addr": [
-              {
-                "start": "12000",
-                "end": "121ff"
-              },
-              {
-                "start": "13000",
-                "end": "133ff"
-              }
-            ]
-          },
-          {
-            "cpu_id": 2,
-            "memory_addr": {
-              "start": "4000",
-              "end": "13fff"
-            },
-            "code_addr": {
-              "start": "4000",
-              "end": "97ff"
-            },
-            "protect_addr": [
-              {
-                "start": "12000",
-                "end": "121ff"
-              },
-              {
-                "start": "13000",
-                "end": "133ff"
-              }
-            ],
-            "reserve_addr": [
-              {
-                "start": "12000",
-                "end": "121ff"
-              },
-              {
-                "start": "13000",
-                "end": "133ff"
-              }
-            ]
-          }
-        ],
-        "meter_info": [{
-          "bit": 1,
-          "type": "single_phase",
-          "costcontrol_type": "em_esam",
-          "num": "xxxxxxxxxxxx",
-          "addr": "xxxxxxxxxxxx",
-          "vol": 220,
-          "key_index": "04"
-        },{
-            "bit": 2,
-            "type": "single_phase",
-            "costcontrol_type": "em_esam",
-            "num": "xxxxxxxxxxxx",
-            "addr": "xxxxxxxxxxxx",
-            "vol": 220,
-            "key_index": "04"
-        }]
-      }
-    };
-
-    vm.expectStartData = {
-      "type": "start_compare",
-      "bit":[1,2]
-    };
-
 
   }]);
