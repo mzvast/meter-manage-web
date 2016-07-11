@@ -16,10 +16,38 @@ angular.module('manageApp')
       'Karma'
     ];
 
+    vm.setMode1 = function () {
+      _beianManager.setMode(1);
+    };
+    vm.setMode2 = function () {
+      _beianManager.setMode(2);
+    };
+    vm.setMode0 = function () {
+      _beianManager.setMode(0);
+    };
+    vm.getMode = function () {
+      _beianManager.getMode();
+    };
+
     $scope.service = _beianManager;
 
     vm.opModel = [
       {
+        name:"读取模式",
+        action:"getMode"
+      },
+      {
+        name:"模式设置0单步运行",
+        action:"setMode0"
+      },
+      {
+        name:"模式设置1备案比对",
+        action:"setMode1"
+      },
+      {
+        name:"模式设置2供货比对",
+        action:"setMode2"
+      },{
         name:"0.测试本地消息",
         action:"addTimelineMsg"
       },{
@@ -38,7 +66,10 @@ angular.module('manageApp')
         name:"5.发送比对开始指令",
         action:"sendStartCompare"
       },{
-        name:"6.结束比对",
+        name:"6.发送备案号",
+        action:"sendRecordNum"
+      },{
+        name:"7.结束比对",
         action:"stopCompare"
       }
     ];
@@ -119,7 +150,7 @@ angular.module('manageApp')
         time:Date.now(),
         event:"测试消息"})
     };
-    
+
     vm.sendInfo = function () {
       _beianManager.wsSendInfoMsg();
     };
@@ -130,6 +161,10 @@ angular.module('manageApp')
 
     vm.sendHex1 = function () {
       _beianManager.wsSendHex(1);
+    };
+
+    vm.sendRecordNum = function () {
+      _beianManager.wsSendRecordNum();
     };
 
     vm.sendStartCompare = function () {

@@ -310,13 +310,14 @@ describe('Service: beianManager', function () {
       console.log("connected!");
     });
     mockServer.on('message',function (e){
-      serverMsg.push(e);
       if(typeof e!== 'string'){
+        serverMsg.push(e);
         mockServer.send(JSON.stringify({
           "type": "file",
           "state": "next"
         }));
       }else{
+      serverMsg.push(JSON.parse(e));
         if(JSON.parse(e).type==='hello'){
           mockServer.send(JSON.stringify({
             "type": "welcome",
@@ -329,11 +330,13 @@ describe('Service: beianManager', function () {
     beianManager.wsCreate('ws://localhost:3456');
     setTimeout(
       function () {
-        beianManager.wsSendHex();
+        beianManager.wsSendHex(0);
         var timelineMsg = beianManager.getTimelineMsg();
         // console.log(timelineMsg);
         // console.log(serverMsg);
-        console.log("timelineMsg[]"+JSON.stringify(timelineMsg));
+        // console.log("timelineMsg[]"+JSON.stringify(timelineMsg));
+        // console.log("serverMsg[]"+JSON.stringify(serverMsg));
+
         expect(timelineMsg[3]['event']).toEqual("上一个HEX文件发送成功,准备发送下一个");
         mockServer.stop();
         done();
@@ -366,7 +369,7 @@ describe('Service: beianManager', function () {
     beianManager.wsCreate('ws://localhost:3456');
     setTimeout(
       function () {
-        beianManager.wsSendHex();
+        beianManager.wsSendHex(0);
         var timelineMsg = beianManager.getTimelineMsg();
         // console.log(timelineMsg);
         // console.log(serverMsg);
@@ -391,6 +394,7 @@ describe('Service: beianManager', function () {
           "reason":"hehe"
         }));
       }else{
+        serverMsg.push(JSON.parse(e));
         if(JSON.parse(e).type==='hello'){
           mockServer.send(JSON.stringify({
             "type": "welcome",
@@ -404,10 +408,10 @@ describe('Service: beianManager', function () {
     beianManager.wsCreate('ws://localhost:3456');
     setTimeout(
       function () {
-        beianManager.wsSendHex();
+        beianManager.wsSendHex(0);
         var timelineMsg = beianManager.getTimelineMsg();
-        // console.log(timelineMsg);
-        // console.log(serverMsg);
+        // console.log("timelineMsg[]"+JSON.stringify(timelineMsg));
+        // console.log("serverMsg[]"+JSON.stringify(serverMsg));
         expect(timelineMsg[3]['event']).toEqual("HEX文件发送失败，原因hehe");
         mockServer.stop();
         done();

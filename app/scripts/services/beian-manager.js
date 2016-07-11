@@ -26,7 +26,22 @@ angular.module('manageApp')
       infoMsg,//比对信息对象
       message = [],//系统消息
       timelineMsg = [],//时间线
-      mode;//自动流转模式标志，1-备案比对，2-供货比对
+      mode=0;//自动流转模式标志，1-备案比对，2-供货比对,0-测试模式（单步运行）
+
+    vm.setMode = function (value) {
+      mode = value;
+      if(mode===0){
+        console.log('测试模式 mode:'+mode);
+      }else if(mode===1){
+        console.log('备案比对模式 mode:'+mode);
+      }else if(mode===2){
+        console.log('供货比对 mode:'+mode);
+      }
+    };
+
+    vm.getMode = function () {
+      console.log("当前mode:"+mode)
+    };
     /**
      * 产品选择
      * @param item
@@ -169,14 +184,11 @@ angular.module('manageApp')
        */
       ws.onmessage = function (event) {
         var cleanData;
-        if (!event.data.match("^\{(.+:.+,*){1,}\}$")) {
+        if (!event.data.match("^\{(.+:.+,*){1,}\}$")) {//普通字符串处理
           cleanData = event.data;
-          //普通字符串处理
           return;
         } else {
-          //通过这种方法可将字符串转换为对象
-          // data = eval("("+data+")");
-          cleanData = JSON.parse(event.data);
+          cleanData = JSON.parse(event.data);//通过这种方法可将字符串转换为对象 data = eval("("+data+")");
         }
           addMessage(cleanData);
           console.log(cleanData);
@@ -188,6 +200,7 @@ angular.module('manageApp')
             time: Date.now(),
             event: "WebSocket连接成功"
           });
+          flow('welcome','success');
         } else if (cleanData.type === 'info') {
           switch (cleanData.state) {
             case 'success':
@@ -198,6 +211,7 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: "比对信息发送成功"
               });
+              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'fail':
@@ -209,6 +223,7 @@ angular.module('manageApp')
                 event: "比对信息发送失败，原因" + cleanData.reason || '未知'
               });
             }
+              flow(cleanData.type,cleanData.state);
           }
         } else if (cleanData.type === 'file') {
           switch (cleanData.state) {
@@ -220,6 +235,7 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: "上一个HEX文件发送成功,准备发送下一个"
               });
+              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'success':
@@ -230,6 +246,7 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: "HEX文件全部发送成功"
               });
+              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'fail':
@@ -241,6 +258,7 @@ angular.module('manageApp')
                 event: "HEX文件发送失败，原因" + cleanData.reason || "未知"
               });
             }
+              flow(cleanData.type,cleanData.state);
           }
         } else if (cleanData.type === 'record_num') {
           switch (cleanData.state) {
@@ -252,6 +270,7 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: "备案号发送成功"
               });
+              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'fail':
@@ -263,6 +282,7 @@ angular.module('manageApp')
                 event: "备案号发送失败，原因" + cleanData.reason || "未知"
               });
             }
+              flow(cleanData.type,cleanData.state);
           }
         } else if (cleanData.type === 'start_compare') {
           switch (cleanData.state) {
@@ -274,6 +294,7 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: "比对开始"
               });
+              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'fail':
@@ -285,6 +306,7 @@ angular.module('manageApp')
                 event: "比对开始失败，原因" + cleanData.reason || "未知"
               });
             }
+              flow(cleanData.type,cleanData.state);
           }
         } else if (cleanData.type === 'compare_result') {
           switch (cleanData.state) {
@@ -297,6 +319,7 @@ angular.module('manageApp')
                 event: "比对成功"
               });
               ws.close();
+              flow(cleanData.type,cleanData.state);
               break;
             }
             case 'fail':
@@ -309,6 +332,7 @@ angular.module('manageApp')
               });
               ws.close();
             }
+              flow(cleanData.type,cleanData.state);
           }
         }
         $rootScope.$apply();
@@ -520,12 +544,19 @@ angular.module('manageApp')
      */
     vm.fakeDataDemo = function () {
       vm.fakeData();
-      md5 = []
+      md5 = [];
+      hex=[];
     };
     /**
      * 生成模拟数据（含md5）
      */
     vm.fakeData = function () {
+
+      hex[0]=new ArrayBuffer();
+      hex[1]=new ArrayBuffer();
+
+      recordNum=1234567890123456;
+
       product = {
         id: "23",
         name: "苹果电表",
@@ -600,6 +631,10 @@ angular.module('manageApp')
     };
 
     var flow = function (from, state) {
+      console.log("进入flow,mode:"+mode);
+      if(mode===0) return false;
+      console.log("from:"+from);
+
       if (state === 'fail') {
         return false;
       } else {
@@ -614,8 +649,16 @@ angular.module('manageApp')
             break;
           case 'file':
             if (state === 'next') {
-              vm.wsSendHex(1);
-            } else if (state === 'success') {
+              if(hex[1]){
+                vm.wsSendHex(1);//浏览器判断发完了
+              }else{
+                if(mode===1){
+                  vm.wsSendStartCompare();
+                }else if(mode===2){
+                  vm.wsSendRecordNum();
+                }
+              }
+            } else if (state === 'success') {//客户端判断发完了
               if(mode===1){
                 vm.wsSendStartCompare();
               }else if(mode===2){
