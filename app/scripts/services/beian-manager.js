@@ -8,7 +8,7 @@
  * Service in the manageApp.
  */
 angular.module('manageApp')
-  .service('beianManager', ['$rootScope','dataManager',function ($rootScope,_dataManager) {
+  .service('beianManager', ['$rootScope', 'dataManager', function ($rootScope, _dataManager) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var vm = this;
     ////////////
@@ -16,25 +16,25 @@ angular.module('manageApp')
     ////////////
     var log = _dataManager.log();
     var product,
-        info,
-        arg,
-        hex = [],
-        md5 = [],
-        recordNum;
+      info,
+      arg,
+      hex = [],
+      md5 = [],
+      recordNum;
 
     var ws,
-        infoMsg,//比对信息对象
-      message=[],//系统消息
-      timelineMsg=[],//时间线
+      infoMsg,//比对信息对象
+      message = [],//系统消息
+      timelineMsg = [],//时间线
       mode;//自动流转模式标志，1-备案比对，2-供货比对
     /**
      * 产品选择
      * @param item
      * @returns {boolean}
-       */
+     */
     vm.setProduct = function (item) {
       product = item;
-      log("product id = "+item.id);
+      log("product id = " + item.id);
       return true;
     };
     vm.getProduct = function () {
@@ -44,7 +44,7 @@ angular.module('manageApp')
      * 比对信息
      * @param item
      * @returns {boolean}
-       */
+     */
     vm.setInfo = function (item) {
       info = item;
       log(JSON.stringify(item));
@@ -57,7 +57,7 @@ angular.module('manageApp')
      * 参数设置
      * @param item
      * @returns {boolean}
-       */
+     */
     vm.setArg = function (item) {
       arg = item;
       log(JSON.stringify(item));
@@ -70,89 +70,84 @@ angular.module('manageApp')
      * 备案信息
      * @param item
      * @returns {boolean}
-       */
+     */
     vm.setRecordNum = function (item) {
       recordNum = item;
       return true;
     };
 
     vm.getRecordNum = function () {
-        return recordNum;
+      return recordNum;
     };
     /**
      * HEX文件
      * @param hexFile
      * @param index
      * @returns {boolean}
-       */
-    vm.setHex = function (hexFile,index) {
-      if(hexFile instanceof ArrayBuffer) {
+     */
+    vm.setHex = function (hexFile, index) {
+      if (hexFile instanceof ArrayBuffer) {
         log("true");
-        hex[index]=hexFile;
+        hex[index] = hexFile;
         md5[index] = SparkMD5.ArrayBuffer.hash(hex[index]);
         return true;
       }
-        log("false");
+      log("false");
       return false;
     };
 
     vm.getHex = function (index) {
-      if(hex[index]){
+      if (hex[index]) {
         return hex[index];
       }
     };
 
     vm.resetHex = function () {
-      hex=[];
-      md5=[];
+      hex = [];
+      md5 = [];
     };
 
     vm.removeHex = function (index) {
-      hex.splice(index,1,undefined);
-      md5.splice(index,1,undefined);
+      hex.splice(index, 1, undefined);
+      md5.splice(index, 1, undefined);
     };
 
     vm.getHexLength = function (index) {
-      if(hex[index]&&(hex[index] instanceof ArrayBuffer)){
+      if (hex[index] && (hex[index] instanceof ArrayBuffer)) {
         var len = hex[index].byteLength;
-        log("byteLength:"+ len);
+        log("byteLength:" + len);
         return len;
       }
     };
     vm.getMd5 = function (index) {
-      if(md5[index]){
+      if (md5[index]) {
         log(md5[index]);
         return md5[index];
       }
     };
 
 
-
     /**
      * 新建WebSocket连接
      * @param url 格式'ws//host:port'
-       */
-    vm.wsCreate = function(url){
-      if(!url) return;
+     */
+    vm.wsCreate = function (url) {
+      if (!url) return;
       ws = new WebSocket(url);
-      timelineMsg=[];
+      timelineMsg = [];
       message = [];
 
-      vm.addTimelineMsg({
-        direction:"out",
-        type:"success",
-        time:Date.now(),
-        event:"建立WebSocket连接"
-      });
+      // vm.wsSendHello();
+
       /**
        * WebSocket错误处理
        */
       ws.onerror = function () {
         vm.addTimelineMsg({
-          direction:"in",
-          type:"fail",
-          time:Date.now(),
-          event:"WebSocket连接失败"
+          direction: "in",
+          type: "fail",
+          time: Date.now(),
+          event: "WebSocket连接失败"
         });
         $rootScope.$apply();
       };
@@ -161,148 +156,156 @@ angular.module('manageApp')
        */
       ws.onclose = function () {
         vm.addTimelineMsg({
-          direction:"in-final",
-          type:"success",
-          time:Date.now(),
-          event:"WebSocket连接已关闭"
+          direction: "in-final",
+          type: "success",
+          time: Date.now(),
+          event: "WebSocket连接已关闭"
         });
         $rootScope.$apply();
       };
       /**
        * WebSocket传入事件处理
        * @param event 传入的JSON字符串
-         */
-      ws.onmessage = function(event){
+       */
+      ws.onmessage = function (event) {
         var cleanData;
-        if (!event.data.match("^\{(.+:.+,*){1,}\}$"))
-        {
+        if (!event.data.match("^\{(.+:.+,*){1,}\}$")) {
           cleanData = event.data;
           //普通字符串处理
-          addMessage(cleanData);
-          console.log(cleanData);
           return;
-        }else{
+        } else {
           //通过这种方法可将字符串转换为对象
           // data = eval("("+data+")");
           cleanData = JSON.parse(event.data);
+        }
           addMessage(cleanData);
           console.log(cleanData);
-        }
 
-        if(cleanData.type==='welcome'){
+        if (cleanData.type === 'welcome') {
           vm.addTimelineMsg({
-            direction:"in",
-            type:"success",
-            time:Date.now(),
-            event:"WebSocket连接成功"
+            direction: "in",
+            type: "success",
+            time: Date.now(),
+            event: "WebSocket连接成功"
           });
-        }else if(cleanData.type==='info'){
-          switch (cleanData.state){
-            case 'success':{
+        } else if (cleanData.type === 'info') {
+          switch (cleanData.state) {
+            case 'success':
+            {
               vm.addTimelineMsg({
-                direction:"in",
-                type:"success",
-                time:Date.now(),
-                event:"比对信息发送成功"
+                direction: "in",
+                type: "success",
+                time: Date.now(),
+                event: "比对信息发送成功"
               });
               break;
             }
-            case 'fail':{
+            case 'fail':
+            {
               vm.addTimelineMsg({
-                direction:"in",
-                type:"fail",
-                time:Date.now(),
-                event:"比对信息发送失败，原因"+cleanData.reason||'未知'
+                direction: "in",
+                type: "fail",
+                time: Date.now(),
+                event: "比对信息发送失败，原因" + cleanData.reason || '未知'
               });
             }
           }
-        }else if(cleanData.type==='file'){
-          switch (cleanData.state){
-            case 'next':{
+        } else if (cleanData.type === 'file') {
+          switch (cleanData.state) {
+            case 'next':
+            {
               vm.addTimelineMsg({
-                direction:"in",
-                type:"success",
-                time:Date.now(),
-                event:"上一个HEX文件发送成功,准备发送下一个"
+                direction: "in",
+                type: "success",
+                time: Date.now(),
+                event: "上一个HEX文件发送成功,准备发送下一个"
               });
               break;
             }
-            case 'success':{
+            case 'success':
+            {
               vm.addTimelineMsg({
-                direction:"in",
-                type:"success",
-                time:Date.now(),
-                event:"HEX文件全部发送成功"
+                direction: "in",
+                type: "success",
+                time: Date.now(),
+                event: "HEX文件全部发送成功"
               });
               break;
             }
-            case 'fail':{
+            case 'fail':
+            {
               vm.addTimelineMsg({
-                direction:"in",
-                type:"fail",
-                time:Date.now(),
-                event:"HEX文件发送失败，原因"+cleanData.reason||"未知"
+                direction: "in",
+                type: "fail",
+                time: Date.now(),
+                event: "HEX文件发送失败，原因" + cleanData.reason || "未知"
               });
             }
           }
-        }else if(cleanData.type==='record_num'){
-          switch (cleanData.state){
-            case 'success':{
+        } else if (cleanData.type === 'record_num') {
+          switch (cleanData.state) {
+            case 'success':
+            {
               vm.addTimelineMsg({
-                direction:"in",
-                type:"success",
-                time:Date.now(),
-                event:"备案号发送成功"
+                direction: "in",
+                type: "success",
+                time: Date.now(),
+                event: "备案号发送成功"
               });
               break;
             }
-            case 'fail':{
+            case 'fail':
+            {
               vm.addTimelineMsg({
-                direction:"in",
-                type:"fail",
-                time:Date.now(),
-                event:"备案号发送失败，原因"+cleanData.reason||"未知"
+                direction: "in",
+                type: "fail",
+                time: Date.now(),
+                event: "备案号发送失败，原因" + cleanData.reason || "未知"
               });
             }
           }
-        }else if(cleanData.type==='start_compare'){
-          switch (cleanData.state){
-            case 'success':{
+        } else if (cleanData.type === 'start_compare') {
+          switch (cleanData.state) {
+            case 'success':
+            {
               vm.addTimelineMsg({
-                direction:"in",
-                type:"success",
-                time:Date.now(),
-                event:"比对开始"
+                direction: "in",
+                type: "success",
+                time: Date.now(),
+                event: "比对开始"
               });
               break;
             }
-            case 'fail':{
+            case 'fail':
+            {
               vm.addTimelineMsg({
-                direction:"in",
-                type:"fail",
-                time:Date.now(),
-                event:"比对开始失败，原因"+cleanData.reason||"未知"
+                direction: "in",
+                type: "fail",
+                time: Date.now(),
+                event: "比对开始失败，原因" + cleanData.reason || "未知"
               });
             }
           }
-        }else if(cleanData.type==='compare_result'){
-          switch (cleanData.state){
-            case 'success':{
+        } else if (cleanData.type === 'compare_result') {
+          switch (cleanData.state) {
+            case 'success':
+            {
               vm.addTimelineMsg({
-                direction:"in-final",
-                type:"success",
-                time:Date.now(),
-                event:"比对成功"
+                direction: "in-final",
+                type: "success",
+                time: Date.now(),
+                event: "比对成功"
               });
               ws.close();
               break;
             }
-            case 'fail':{
+            case 'fail':
+            {
               vm.addTimelineMsg({
-                direction:"in-final",
-                type:"fail",
-                time:Date.now(),
-                event:"["+cleanData.result.fail+"]表位比对失败"
+                direction: "in-final",
+                type: "fail",
+                time: Date.now(),
+                event: "[" + cleanData.result.fail + "]表位比对失败"
               });
               ws.close();
             }
@@ -311,17 +314,24 @@ angular.module('manageApp')
         $rootScope.$apply();
 
       };
+
+      ws.onopen = function () {
+        vm.wsSendHello();
+        $rootScope.$apply();
+      }
     };
     /**
      * 关闭WebSocket连接
      */
     vm.wsClose = function () {
-      if(ws&&ws.readyState!==WebSocket.CLOSED){
-        ws.close()
+      if (ws && ws.readyState !== WebSocket.CLOSED) {
+        ws.close();
+        timelineMsg=[];
+        message = [];
       }
     };
     var addMessage = function (msg) {
-        message.push(msg);
+      message.push(msg);
     };
 
     vm.getMessage = function () {
@@ -330,9 +340,9 @@ angular.module('manageApp')
     /**
      * 使用WebSocket发送JSON字符串化对象
      * @param msg
-       */
+     */
     vm.wsSend = function (msg) {
-      if(ws){
+      if (ws) {
         ws.send(JSON.stringify(msg));
       }
     };
@@ -341,39 +351,56 @@ angular.module('manageApp')
      */
     var makeInfoMsg = function () {
       infoMsg = {
-        type:'info',
-        data:{
-          file_info:[],
-          cpu_info:[],
-          meter_info:[]
+        type: 'info',
+        data: {
+          file_info: [],
+          cpu_info: [],
+          meter_info: []
         }
       };
-      var setFileInfo = function  () {
+      var setFileInfo = function () {
         var i;
-        for(i=0;i<md5.length;i++){
+        for (i = 0; i < md5.length; i++) {
           infoMsg.data.file_info.push({
-            cpu_id:i+1,
-            md5:md5[i]
+            cpu_id: i + 1,
+            md5: md5[i]
           });
         }
       }();
 
       var setCpuInfo = function () {
-          for(var i=0;i<md5.length;i++){
-            var obj = angular.copy(info.cpu_info);
-            infoMsg['data']['cpu_info'].push(obj);//两个CPU信息完全一样
-            infoMsg['data']['cpu_info'][i]['cpu_id'] = i+1;
-          }
-      }();
-
-      var setMeterInfo = function () {
-        for(var i=0;i<arg.length;i++){
-          var obj = angular.copy(arg[i]);
-          infoMsg.data.meter_info.push(obj);
-          infoMsg.data.meter_info[i]['costcontrol_type']=info.costcontrol_type;
+        for (var i = 0; i < md5.length; i++) {
+          var obj = angular.copy(info.cpu_info);
+          infoMsg['data']['cpu_info'].push(obj);//两个CPU信息完全一样
+          infoMsg['data']['cpu_info'][i]['cpu_id'] = i + 1;
         }
       }();
 
+      var setMeterInfo = function () {
+        for (var i = 0; i < arg.length; i++) {
+          var obj = angular.copy(arg[i]);
+          infoMsg.data.meter_info.push(obj);
+          infoMsg.data.meter_info[i]['costcontrol_type'] = info.costcontrol_type;
+        }
+      }();
+
+    };
+
+      /**
+       * 发送握手信息和模式信息
+       */
+    vm.wsSendHello = function () {
+      vm.addTimelineMsg({
+        direction: "out",
+        type: "success",
+        time: Date.now(),
+        event: "建立WebSocket连接"
+      });
+      console.log("欢迎信息已发送");
+      vm.wsSend({
+        type:"hello",
+        mode:mode?mode:0
+      });
     };
     /**
      * 发送比对信息
@@ -381,25 +408,27 @@ angular.module('manageApp')
     vm.wsSendInfoMsg = function () {
       makeInfoMsg();
       vm.addTimelineMsg({
-        direction:"out",
-        type:"success",
-        time:Date.now(),
-        event:"发送比对信息"
+        direction: "out",
+        type: "success",
+        time: Date.now(),
+        event: "发送比对信息"
       });
       vm.wsSend(infoMsg);
     };
     /**
      * 发送HEX文件
      * @param index 文件索引，取值0或者1
-       */
+     */
     vm.wsSendHex = function (index) {
-      vm.addTimelineMsg({
-        direction:"out",
-        type:"success",
-        time:Date.now(),
-        event:"发送HEX文件["+index+"]"
-      });
-      ws.send(hex[index]);
+      if(hex[index]){
+        vm.addTimelineMsg({
+          direction: "out",
+          type: "success",
+          time: Date.now(),
+          event: "发送HEX文件[" + index + "]"
+        });
+        ws.send(hex[index]);
+      }
     };
     /**
      * 发送开始比对命令
@@ -410,15 +439,15 @@ angular.module('manageApp')
         "bit": []
       };
       var setMsg = function () {
-        for(var i=0;i<arg.length;i++){
+        for (var i = 0; i < arg.length; i++) {
           startMsg.bit.push(arg[i]['bit']);
         }
       }();
       vm.addTimelineMsg({
-        direction:"out",
-        type:"success",
-        time:Date.now(),
-        event:"发送开始比对命令"
+        direction: "out",
+        type: "success",
+        time: Date.now(),
+        event: "发送开始比对命令"
       });
       vm.wsSend(startMsg);
     };
@@ -427,28 +456,28 @@ angular.module('manageApp')
      */
     vm.wsSendRecordNum = function () {
       vm.addTimelineMsg({
-        direction:"out",
-        type:"success",
-        time:Date.now(),
-        event:"发送备案号"
+        direction: "out",
+        type: "success",
+        time: Date.now(),
+        event: "发送备案号"
       });
       var obj = {
-        type:"record_num",
-        value:recordNum
+        type: "record_num",
+        value: recordNum
       };
       vm.wsSend(obj);
     };
     /**
      * 时间线添加消息
      * @param msg
-       */
+     */
     vm.addTimelineMsg = function (msg) {
       timelineMsg.push(msg);
     };
     /**
      * 获取时间线
      * @returns {Array}
-       */
+     */
     vm.getTimelineMsg = function () {
       return timelineMsg;
     };
@@ -467,44 +496,46 @@ angular.module('manageApp')
      */
     vm.getAll = function () {
       return {
-        product:product,
-        info:info,
-        arg:arg,
-        md5:md5,
-        recordNum:recordNum
+        product: product,
+        info: info,
+        arg: arg,
+        md5: md5,
+        recordNum: recordNum
       };
     };
     /**
      * 重置全部变量
      */
     vm.resetAll = function () {
-      product=undefined;
-      info=undefined;
-      arg=undefined;
-      recordNum=undefined;
-      hex=[];
-      md5=[];
+      ws = undefined;
+      product = undefined;
+      info = undefined;
+      arg = undefined;
+      recordNum = undefined;
+      hex = [];
+      md5 = [];
     };
     /**
      * 生成模拟数据（除了HEX文件，无md5）
      */
     vm.fakeDataDemo = function () {
       vm.fakeData();
-      md5=[]
+      md5 = []
     };
     /**
      * 生成模拟数据（含md5）
      */
     vm.fakeData = function () {
       product = {
-        id:"23",
+        id: "23",
         name: "苹果电表",
         batch: "01",
         supplier: "APPLE",
-        describe: "此人很懒"};
+        describe: "此人很懒"
+      };
 
-      md5[0]='d9fc6d737aea3345f681f24c8a2bb07c';
-      md5[1]='d9fc6d737aea3345f681f24c8a2bb07d';
+      md5[0] = 'd9fc6d737aea3345f681f24c8a2bb07c';
+      md5[1] = 'd9fc6d737aea3345f681f24c8a2bb07d';
 
       info = {
         "cpu_info": {
@@ -551,21 +582,54 @@ angular.module('manageApp')
       };
 
       arg = [{
-        "bit":1,
-        "num":"xxxxxxxxxxxx",
-        "addr":"xxxxxxxxxxxx",
-        "type":"single_phase",
-        "vol":220,
-        "key_index":"04"
-      },{
-        "bit":2,
-        "num":"xxxxxxxxxxxx",
-        "addr":"xxxxxxxxxxxx",
-        "type":"single_phase",
-        "vol":220,
-        "key_index":"04"
+        "bit": 1,
+        "num": "xxxxxxxxxxxx",
+        "addr": "xxxxxxxxxxxx",
+        "type": "single_phase",
+        "vol": 220,
+        "key_index": "04"
+      }, {
+        "bit": 2,
+        "num": "xxxxxxxxxxxx",
+        "addr": "xxxxxxxxxxxx",
+        "type": "single_phase",
+        "vol": 220,
+        "key_index": "04"
       }];
 
     };
 
+    var flow = function (from, state) {
+      if (state === 'fail') {
+        return false;
+      } else {
+        switch (from) {
+          case 'welcome':
+            vm.wsSendInfoMsg();
+            break;
+          case 'info':
+            if (state === 'success') {
+              vm.wsSendHex(0);
+            }
+            break;
+          case 'file':
+            if (state === 'next') {
+              vm.wsSendHex(1);
+            } else if (state === 'success') {
+              if(mode===1){
+                vm.wsSendStartCompare();
+              }else if(mode===2){
+                vm.wsSendRecordNum();
+              }
+            }
+            break;
+          case 'record_num':{
+            if(state==='success'){
+              vm.wsSendStartCompare();
+            }
+            break;
+          }
+        }
+      }
+    }
   }]);

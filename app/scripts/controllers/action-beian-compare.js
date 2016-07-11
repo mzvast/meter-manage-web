@@ -119,7 +119,7 @@ angular.module('manageApp')
         time:Date.now(),
         event:"测试消息"})
     };
-
+    
     vm.sendInfo = function () {
       _beianManager.wsSendInfoMsg();
     };
