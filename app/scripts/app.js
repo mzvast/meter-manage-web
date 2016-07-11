@@ -137,28 +137,10 @@ angular
           controller: "ActionBeianArgCtrl as argCtrl",
           authenticate: false
         })
-        // .state("action-beian.form", {
-        //   url: "/form",
-        //   templateUrl: "views/action/form-main.html",
-        //   controller:"FormTabCtrl as formTabCtrl",
-        //   authenticate: false
-        // })
-        // .state("action-beian.form.show", {
-        //   url: "/show/:fid",
-        //   templateUrl: "views/action/form-detail.html",
-        //   controller:"FormCtrl as formCtrl",
-        //   authenticate: false
-        // })
         .state("action-beian.setHex",{
           url:"/setHex",
           templateUrl:"views/action/set-hex.html",
           controller: 'ActionBeianHexCtrl as hexCtrl',
-          authenticate:false
-        })
-        .state("action-beian.run",{
-          url:"/run",
-          templateUrl:"views/action/run.html",
-          controller: 'ActionTestRunCtrl as runCtrl',
           authenticate:false
         })
         .state("action-beian.compare",{
@@ -167,64 +149,7 @@ angular
           controller: 'ActionBeianCompareCtrl as compareCtrl',
           authenticate:false
         })
-        // .state("action-beian.compare",{
-        //   url:"/compare",
-        //   templateUrl:"views/action/beian-compare.html",
-        //   controller: 'ActionTestCompareCtrl as compareCtrl',
-        //   authenticate:false
-        // })
-        .state("action-beian.encrypt",{
-          url:"/encrypt",
-          templateUrl:"views/action/encrypt.html",
-          controller: 'ActionTestEncryptCtrl as encryptCtrl',
-          authenticate:false
-        })
-        .state("action-beian.status",{
-          url:"/status",
-          templateUrl:"views/action/register-status.html",
-          authenticate:false
-        })
-        .state("action-suite-edit", {
-          url: "/action-suite-edit",
-          templateUrl: "views/action/suite-edit.html",
-          authenticate: false
-        })
-        .state("action-process-record", {
-          url: "/action-process-record",
-          templateUrl: "views/action/process-record.html",
-          authenticate: false
-        })
-        .state("action-flaw-submit", {
-          url: "/action-flaw-submit",
-          templateUrl: "views/action/flaw-submit.html",
-          authenticate: false
-        })
-        .state("action-product-register", {
-          url: "/action-product-register",
-          controller: 'ActionProductRegisterCtrl as reg',
-          templateUrl: "views/form-main.html",
-          authenticate: false
-        })
-        .state("action-product-register.form", {
-          url: "-form/:fid",
-          templateUrl: "views/form-detail.html",
-          authenticate: false
-        })
-        .state("action-registered-software-encrypt", {
-          url: "/action-registered-software-encrypt",
-          templateUrl: "views/action/registered-software-encrypt.html",
-          authenticate: false
-        })
-        .state("action-registered-product-compare", {
-          url: "/action-registered-product-compare",
-          templateUrl: "views/action/registered-product-beian-compare.html",
-          authenticate: false
-        })
-        .state("action-generate-test-result", {
-          url: "/action-generate-test-result",
-          templateUrl: "views/action/generate-test-result.html",
-          authenticate: false
-        })
+
         /*系统配置*/
         .state("setting-role", {
           url: "/setting-role",
@@ -247,7 +172,7 @@ angular
       ngRapProvider.enable({
         mode: 3
       });
-      // httpProvider.interceptors.push('rapMockInterceptor');
+      httpProvider.interceptors.push('rapMockInterceptor');
     }]
   )
   .run(function ($rootScope, $state, authService) {
