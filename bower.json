@@ -16,7 +16,8 @@
     "angular-formly": "^8.2.1",
     "angular-formly-templates-bootstrap": "^6.3.2",
     "PACE": "pace#^1.0.2",
-    "SparkMD5": "https://github.com/satazor/js-spark-md5.git#master"
+    "SparkMD5": "https://github.com/satazor/js-spark-md5.git#master",
+    "jspdf": "^1.2.61"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"

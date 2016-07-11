@@ -149,6 +149,12 @@ angular
           controller: 'ActionBeianCompareCtrl as compareCtrl',
           authenticate:false
         })
+        .state("action-beian.report",{
+          url:"/report",
+          templateUrl:"views/action/beian-report.html",
+          controller: 'ActionBeianReportCtrl as reportCtrl',
+          authenticate:false
+        })
 
         /*系统配置*/
         .state("setting-role", {
@@ -172,7 +178,7 @@ angular
       ngRapProvider.enable({
         mode: 3
       });
-      httpProvider.interceptors.push('rapMockInterceptor');
+      // httpProvider.interceptors.push('rapMockInterceptor');
     }]
   )
   .run(function ($rootScope, $state, authService) {
