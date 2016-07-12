@@ -20,14 +20,9 @@
     <li class="treeview">
       <a href="#"><i class="glyphicon glyphicon-play"></i> <span>测试执行</span> <i class="fa fa-angle-left pull-right"></i></a>
       <ul class="treeview-menu" style="padding-left: 1.8em;">
-        <li ui-sref-active="active"><a ui-sref="action-beian">备案比对</a></li>
-        <!--<li ui-sref-active="active"><a ui-sref="action-suite-edit">用例编写</a></li>-->
-        <!--<li ui-sref-active="active"><a ui-sref="action-process-record">过程记录</a></li>-->
-        <!--<li ui-sref-active="active"><a ui-sref="action-flaw-submit">缺陷检查提交</a></li>-->
-        <!--<li ui-sref-active="active"><a ui-sref="action-product-register">产品备案验证</a></li>-->
-        <!--<li ui-sref-active="active"><a ui-sref="action-registered-software-encrypt">备案软件加密</a></li>-->
-        <li ui-sref-active="active"><a ui-sref="action-registered-product-compare">供货比对</a></li>
-        <!--<li ui-sref-active="active"><a ui-sref="action-generate-test-result">测试报告生成</a></li>-->
+        <li ui-sref-active="active"><a ui-sref="action-beian.compare({mode:'debug'})">开发者模式</a></li>
+        <li ui-sref-active="active"><a ui-sref="action-beian.compare({mode:'beian'})">备案比对</a></li>
+        <li ui-sref-active="active"><a ui-sref="action-beian.compare({mode:'gonghuo'})">供货比对</a></li>
       </ul>
     </li>
     <li class="treeview">
