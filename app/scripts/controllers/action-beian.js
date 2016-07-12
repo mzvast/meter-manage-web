@@ -8,55 +8,75 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianCtrl', ["uiManager", "formManager","beianManager","$state", function (_uiManager, _formManager,_beianManager,$state) {
+  .controller('ActionBeianCtrl', ["uiManager", "formManager","beianManager","$state","$stateParams", function (_uiManager, _formManager,_beianManager,$state,$stateParams) {
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
+    var urlMode = $stateParams.mode,
+      mode,//0,1,2
+      tabs,
+      title;//页面标题
+    console.log(urlMode);
+    switch (urlMode){
+      case 'debug':{
+        _beianManager.setMode(0);
+        title = '开发者模式';
+        break;
+      }
+      case 'beian':{
+        _beianManager.setMode(1);
+        title = '备案比对';
+        break;
+      }
+      case 'gonghuo':{
+        _beianManager.setMode(2);
+        title = '供货比对';
+      }
+    }
+
+    mode=_beianManager.getMode();
+
     /*配置页面基本元数据*/
-    _uiManager.pageMetaDateConstructor("备案比对","",vm);
+    _uiManager.pageMetaDateConstructor(title,"",vm);
     ////////////
     // 标签数据模型 //
     ////////////
-    var tabs = [
-      {
-        name:"产品选择",
-        state:"action-beian.setProduct"
-      },
-      {
-        name: "信息录入",
-        state:"action-beian.setInfo"
-      },
-      {
-        name:"参数配置",
-        state:"action-beian.setArg"
-      },
-      {
-        name:"暂存HEX文件",
-        state:"action-beian.setHex"
-      },
-      {
-        name:"开始比对",
-        state:"action-beian.compare"
-      },
-      // {
-      //   name: "加密上传",
-      //   state:"action-beian.encrypt"
-      // },
-      {
-        name: "比对报告",
-        state:"action-beian.report"
-      }
-    ];
+    var setTabByMode = function () {
+      tabs = [
+        {
+          name:"比对信息验核",
+          state:"action-beian.compare"
+        },
+        {
+          name:"产品选择",
+          state:"action-beian.setProduct"
+        },
+        {
+          name: "信息录入",
+          state:"action-beian.setInfo"
+        },
+        {
+          name:"参数配置",
+          state:"action-beian.setArg"
+        },
+        {
+          name:"暂存HEX文件",
+          state:"action-beian.setHex"
+        }
+      ];
 
-    var addIdToTabs =function () {
-      var i;
-      for(i=0;i<tabs.length;i++){
-        tabs[i]['id'] = i;
-      }
+      if(mode===0){
+        tabs.push({
+          name: "比对报告",
+          state:"action-beian.report"
+        })}
     }();
+
+
+    
     vm.tabs = tabs;
 
     //获取form

@@ -16,10 +16,28 @@ angular.module('manageApp')
       'Karma'
     ];
 
-    _beianManager.fakeDataDemo();//开发方便，模拟数据
+    var mode =_beianManager.getMode(),
+      isAllset = _beianManager.isAllSet();
+    if(!isAllset){//没有数据,强制不进行下一步
+      _beianManager.fakeDataDemo();//开发方便，模拟数据
+      isAllset = _beianManager.isAllSet();
+    }
+    var result = _beianManager.getResult();
+
     vm.info = _beianManager.getInfo();
     vm.record_num = _beianManager.getRecordNum();
-
+    vm.modeName = (mode===2?'供货':(mode===1?'备案':''));
+    vm.resultStr = function(){
+      switch (mode){
+          case 1:{//备案
+            return result?"备案成功，比对合格":"备案失败，比对不合格";
+          }case 2:{//供货
+          return result?"供货比对成功":"供货比对失败";
+        }case 0:{
+        return result?"比对成功":"比对失败";
+      }
+      }
+    }();
     var countProtectNum = function () {
       var count=0;
       count+=vm.info.cpu_info.protect_addr[0].start?1:0;
@@ -71,7 +89,7 @@ angular.module('manageApp')
     vm.date = function () {
       var Today=new Date();
       var todayStr = Today.getFullYear()+ " 年 " + (Today.getMonth()+1) + " 月 " + Today.getDate() + " 日";
-      console.log(todayStr);
+      // console.log(todayStr);
       return todayStr;
     }();
 
@@ -79,7 +97,7 @@ angular.module('manageApp')
       var dd = {
         pageSize: 'A4',
         content: [
-          { text: '备案比对测试报告', style: 'header' },
+          { text: vm.modeName+'比对测试报告', style: 'header' },
           { text: '报告编号:XXXXXXXXXXX', style: 'subheader' },
           {
             style: 'tableExample',
@@ -121,7 +139,7 @@ angular.module('manageApp')
                 ],
                 [{ text:
                   [
-                    {text:'备案成功，比对合格\n\n\n\n',style:'bigMiddle'},
+                    {text:vm.resultStr+'\n\n\n\n',style:'bigMiddle'},
                     {text:'盖章（签字）\n',style:'smallRight'},
                     {text:vm.date,style:'smallRight'}
                   ], colSpan: 4,style:'result'
@@ -132,8 +150,6 @@ angular.module('manageApp')
           },
           {text: '检验人员:                                       ' +
           '审核人员:', style: 'tableFooter' }
-
-
         ],
         styles: {
           header: {
@@ -209,6 +225,6 @@ angular.module('manageApp')
           pdfMake.createPdf(dd).download();
         }
       }
-      
+
     }
   }]);

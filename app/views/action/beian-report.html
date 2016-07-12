@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-xs-12">
       <h2 class="page-header text-center text-bold">
-        备案比对测试报告
+        {{ reportCtrl.modeName }}比对测试报告
         <small class="pull-right">报告编号: XXXXXXXXXXX（系统生成）</small>
       </h2>
     </div>
@@ -90,7 +90,7 @@
   <div class="row">
     <!-- accepted payments column -->
     <div class="col-xs-8 text-center">
-      <p class="lead"><h3><br><br>备案成功，比对合格</h3></p>
+      <p class="lead"><h3><br><br>{{ reportCtrl.resultStr }}</h3></p>
     </div>
     <!-- /.col -->
     <div class="col-xs-3">

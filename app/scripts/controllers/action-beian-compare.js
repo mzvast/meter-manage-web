@@ -8,7 +8,7 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianCompareCtrl', ['$scope','beianManager',function ($scope,_beianManager) {
+  .controller('ActionBeianCompareCtrl', ['$scope','beianManager','$state',function ($scope,_beianManager,$state) {
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
@@ -26,8 +26,11 @@ angular.module('manageApp')
       _beianManager.setMode(0);
     };
     vm.getMode = function () {
-      _beianManager.getMode();
+      console.log("当前mode:"+_beianManager.getMode());
     };
+
+    vm.mode = _beianManager.getMode();
+
 
     $scope.service = _beianManager;
 
@@ -71,6 +74,15 @@ angular.module('manageApp')
       },{
         name:"7.结束比对",
         action:"stopCompare"
+      },{
+        name:"8.1 设置比对结果:成功",
+        action:"setResultTrue"
+      },{
+        name:"8.2 设置比对结果:失败",
+        action:"setResultFalse"
+      },{
+        name:"9. 查看比对报告结果",
+        action:"goReport"
       },{
         name:"清除时间线消息",
         action:"clearTimelineMsg"
@@ -124,7 +136,7 @@ angular.module('manageApp')
           data:md5
         }
       };
-      vm.isAllSet = product&&info&&arg&&(md5[0]||md5[1]);
+      vm.isAllSet = _beianManager.isAllSet();
     };
 
     refresh();//init when load
@@ -179,13 +191,33 @@ angular.module('manageApp')
       _beianManager.wsClose();
     };
 
+    vm.setResultTrue = function () {
+      _beianManager.setResult(true);
+    };
+
+    vm.setResultFalse = function () {
+      _beianManager.setResult(false);
+    };
+
     vm.clearTimelineMsg = function () {
       _beianManager.clearTimelineMsg();
+    };
+
+    vm.goReport = function () {
+      $state.go('action-beian.report');
     };
 
     $scope.$watch('service.getTimelineMsg()', function(newVal) {
       // console.log(" New Data", newVal);
       vm.timelineMsg =newVal;
     });
+
+    vm.startCompare = function () {
+      vm.start = true;
+      if(vm.mode===0){
+        return;
+      }
+        vm.wsCreate();
+    }
 
   }]);

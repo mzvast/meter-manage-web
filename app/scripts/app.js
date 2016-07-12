@@ -114,7 +114,7 @@ angular
         })
         /*测试执行*/
         .state("action-beian", {
-          url: "/beian",
+          url: "/:mode",
           templateUrl: "views/action/beian-main.html",
           controller: 'ActionBeianCtrl as beianCtrl',
           authenticate: false

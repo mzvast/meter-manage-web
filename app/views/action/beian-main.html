@@ -17,9 +17,9 @@
               <!--<li class="active"><a href="" ng-click="beianCtrl.setTab()" data-toggle="tab" aria-expanded="true">全部类型</a>-->
               <!--</li>-->
               <li ui-sref-active="active" ng-repeat="item in beianCtrl.tabs">
-                <a  ui-state="item.state" ng-click="beianCtrl.setTab(item.id)"  aria-expanded="true"
+                <a  ui-state="item.state"  aria-expanded="true"
 
-                >{{ item.id+1 }}.{{item.name}}</a>
+                >{{ $index }}.{{item.name}}</a>
               </li>
             </ul>
             <div class="tab-content" ui-view>

@@ -8,7 +8,7 @@
  * Service in the manageApp.
  */
 angular.module('manageApp')
-  .service('beianManager', ['$rootScope', 'dataManager', function ($rootScope, _dataManager) {
+  .service('beianManager', ['$rootScope', 'dataManager', '$state',function ($rootScope, _dataManager,$state) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var vm = this;
     ////////////
@@ -26,7 +26,30 @@ angular.module('manageApp')
       infoMsg,//比对信息对象
       message = [],//系统消息
       timelineMsg = [],//时间线
-      mode=0;//自动流转模式标志，1-备案比对，2-供货比对,0-测试模式（单步运行）
+      mode=0,//自动流转模式标志，1-备案比对，2-供货比对,0-测试模式（单步运行）
+      result=false;//比对结果
+    /**
+     * 判断数据是否都设置正确
+     * @returns {boolean}
+       */
+    vm.isAllSet = function(){
+      return (product&&info&&arg&&(md5[0]||md5[1]))?true:false;
+    };
+
+    /**
+     * 比对结果设置
+     * @param value
+       */
+    vm.setResult = function (value) {
+      result = value;
+      console.log("设置比对结果:"+(value?"成功":"失败"));
+      return true;
+    };
+
+    vm.getResult = function () {
+      console.log("比对结果:"+(result?"成功":"失败"));
+      return result;
+    };
 
     vm.setMode = function (value) {
       mode = value;
@@ -40,7 +63,7 @@ angular.module('manageApp')
     };
 
     vm.getMode = function () {
-      console.log("当前mode:"+mode)
+      return mode;
     };
     /**
      * 产品选择
@@ -147,6 +170,7 @@ angular.module('manageApp')
      * @param url 格式'ws//host:port'
      */
     vm.wsCreate = function (url) {
+      vm.setResult(false);//重置测试结果
       if (!url) return;
       ws = new WebSocket(url);
       timelineMsg = [];
@@ -630,7 +654,11 @@ angular.module('manageApp')
       console.log("from:"+from);
 
       if (state === 'fail') {
-        return false;
+        if(from==='compare_result'){
+          vm.setResult(false);
+          $state.go('action-beian.report');
+        }
+        // return false;
       } else {
         switch (from) {
           case 'welcome':
@@ -665,6 +693,12 @@ angular.module('manageApp')
               vm.wsSendStartCompare();
             }
             break;
+          }
+          case 'compare_result':{
+            if(state==='success'){
+              vm.setResult(true);
+              $state.go('action-beian.report');
+            }
           }
         }
       }
