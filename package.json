@@ -39,7 +39,8 @@
     "mock-socket": "^3.0.1",
     "phantomjs-prebuilt": "^2.1.7",
     "time-grunt": "^1.0.0",
-    "watchify": "^3.7.0"
+    "watchify": "^3.7.0",
+    "ws": "^1.1.1"
   },
   "engines": {
     "node": ">=0.10.0"
@@ -49,12 +50,16 @@
     "test": "karma start test/karma.conf.js",
     "serve": "grunt serve --host=0.0.0.0 --port=8000 --live=8001",
     "build": "grunt build",
-    "dist": "node index.js"
+    "main": "node index.js",//生产入口Server
+    "nodeApi": "node nodeapi.js",//生产PDF Server
+    "ws": "node ws.js",//WebSocket测试Server
+    "dist":"npm run main&&npm run nodeApi"//生产部署
   },
   "dependencies": {
     "body-parser": "^1.15.1",
     "connect-modrewrite": "^0.9.0",
     "express": "^4.13.4",
-    "http-proxy": "^1.13.2"
+    "http-proxy": "^1.13.2",
+    "pdfmake": "^0.1.18"
   }
 }

@@ -8,7 +8,7 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianReportCtrl', ['$scope','beianManager',function ($scope,_beianManager)  {
+  .controller('ActionBeianReportCtrl', ['$scope','beianManager','dataManager',function ($scope,_beianManager,_dataManager)  {
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
@@ -93,7 +93,7 @@ angular.module('manageApp')
       return todayStr;
     }();
 
-    vm.pdfmake = function(action) {
+    vm.pdfmake = function() {
       var dd = {
         pageSize: 'A4',
         content: [
@@ -122,20 +122,20 @@ angular.module('manageApp')
                   vm.info.cpu_info.memory_addr.end],
                 ["软件代码起始地址",
                   vm.info.cpu_info.code_addr.start,
-                "软件代码结束地址",
-                 vm.info.cpu_info.code_addr.end
+                  "软件代码结束地址",
+                  vm.info.cpu_info.code_addr.end
                 ],["保护区数",
                   countProtectNum()+'',
-                "保留区数",
+                  "保留区数",
                   countReserveNum()+''
                 ],["保护区1起始地址",
-                 vm.info.cpu_info.protect_addr[0].start,
-                "保护区1结束地址",
-                 vm.info.cpu_info.protect_addr[0].end
+                  vm.info.cpu_info.protect_addr[0].start,
+                  "保护区1结束地址",
+                  vm.info.cpu_info.protect_addr[0].end
                 ],["保护区2起始地址",
-                 vm.info.cpu_info.protect_addr[1].start,
-                "保护区2结束地址",
-                 vm.info.cpu_info.protect_addr[1].end
+                  vm.info.cpu_info.protect_addr[1].start,
+                  "保护区2结束地址",
+                  vm.info.cpu_info.protect_addr[1].end
                 ],
                 [{ text:
                   [
@@ -197,34 +197,7 @@ angular.module('manageApp')
         }
 
       };
-      pdfMake.fonts = {
-        Roboto: {
-          normal: 'Roboto-Regular.ttf',
-          bold: 'Roboto-Medium.ttf',
-          italics: 'Roboto-Italic.ttf',
-          bolditalics: 'Roboto-Italic.ttf'
-        },
-        msyh: {
-          normal: 'msyh.ttf',
-          bold: 'msyh.ttf',
-          italics: 'msyh.ttf',
-          bolditalics: 'msyh.ttf'
-        }
-      };
-      //导出PDF
-      switch (action){
-        case 'open':{
-          pdfMake.createPdf(dd).open();
-          break;
-        }
-        case 'print':{
-          pdfMake.createPdf(dd).print();
-          break;
-        }
-        case 'download':{
-          pdfMake.createPdf(dd).download();
-        }
-      }
-
+      _dataManager.pdfMake(JSON.stringify(dd));
+      console.log('hehe');
     }
   }]);

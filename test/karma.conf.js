@@ -37,8 +37,6 @@ module.exports = function(config) {
       'bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.js',
       'bower_components/PACE/pace.js',
       'bower_components/SparkMD5/spark-md5.js',
-      'bower_components/pdfmake/build/pdfmake.js',
-      'bower_components/pdfmake/build/vfs_fonts.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

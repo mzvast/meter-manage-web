@@ -34,6 +34,10 @@ angular.module('manageApp')
     };
     var log = self.log();
 
+    self.pdfMake = function (docDef) {
+      $http.post("/node/pdf",docDef)
+    };
+
     //////////////////
     //notifications //
     //////////////////

@@ -103,18 +103,31 @@ module.exports = function (grunt) {
         hostname: Host||'localhost',
         livereload: livereloadPort||35729
       },
-      proxies: {
+      proxies: [{
           context: '/api',// the context of the data service
           host: apiHost,// wherever the data service is running
           port: apiPort,// the port that the data service is running on
           changeOrgin: true,
           headers: {
             'host': apiHost
-          },
-          rewrite:{
-            '/api':''
           }
-        },
+        // ,
+        //   rewrite:{
+        //     '/api':''
+        //   }
+        },{
+        context: '/node',// the context of the data service
+        host: apiHost,// wherever the data service is running
+        port: 8088,// the port that the data service is running on
+        changeOrgin: true,
+        headers: {
+          'host': apiHost
+        }
+        // ,
+        // rewrite:{
+        //   '/node':''
+        // }
+      }],
       livereload: {
         options: {
           open: true,
