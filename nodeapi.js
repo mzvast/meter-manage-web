@@ -5,7 +5,6 @@ var express = require('express');
 var httpProxy = require('http-proxy');
 var bodyParser = require('body-parser');
 var pdfPrinter = require('pdfmake');
-var fs = require('fs');
 // Node express server setup.
 var server = express();
 server.set('port', 8088);
@@ -18,14 +17,14 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 // server.use(express.static(__dirname + '/dist'));
 
-server.all("/node/pdf",jsonParser,function (req, res) {
+server.post("/node/pdf",jsonParser,function (req, res) {
   if (!req.body) {
     return res.sendStatus(400);
   }
   console.log('get pdf!');
-  console.log(req.body);
-  print(req.body);
-  return res.sendStatus(200);
+  // console.log(req.body);
+  printToResponse(req.body,res);
+
 });
 
 // Start Server.
@@ -33,7 +32,7 @@ server.listen(server.get('port'), function() {
   console.log('Express server listening on port ' + server.get('port'));
 });
 
-var print = function (dd) {
+var printToResponse = function (dd,res) {
 
   var docDefinition = dd;
 
@@ -53,8 +52,8 @@ var print = function (dd) {
   };
   var printer = new pdfPrinter(fonts);
   var pdfDoc = printer.createPdfKitDocument(docDefinition);
-  pdfDoc.pipe(fs.createWriteStream('pdfs/basics.pdf'));
-  pdfDoc.end();
 
+  pdfDoc.pipe(res);//流处理，不在服务器存储结果
+  pdfDoc.end();
 
 };

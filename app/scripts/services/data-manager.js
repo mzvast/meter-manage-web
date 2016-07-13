@@ -35,7 +35,10 @@ angular.module('manageApp')
     var log = self.log();
 
     self.pdfMake = function (docDef) {
-      $http.post("/node/pdf",docDef)
+      return $http.post("/node/pdf",docDef,{responseType: 'arraybuffer'});
+    };
+    self.getReportPdf = function () {
+      return $http.get("/node/pdf",{responseType: 'arraybuffer'});
     };
 
     //////////////////

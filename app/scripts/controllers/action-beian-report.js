@@ -8,7 +8,7 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianReportCtrl', ['$scope','beianManager','dataManager',function ($scope,_beianManager,_dataManager)  {
+  .controller('ActionBeianReportCtrl', ['$window','$scope','beianManager','dataManager',function ($window,$scope,_beianManager,_dataManager)  {
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
@@ -197,7 +197,27 @@ angular.module('manageApp')
         }
 
       };
-      _dataManager.pdfMake(JSON.stringify(dd));
-      console.log('hehe');
+      _dataManager.pdfMake(JSON.stringify(dd))
+        .then(function successCallback(data) {
+          console.log(data.data);
+          var file = new Blob([data.data], {type: 'application/pdf'});
+          var fileURL = URL.createObjectURL(file);
+          $window.open(fileURL);
+        })
+    };
+    vm.getReportPdf = function () {
+      _dataManager.getReportPdf()
+        .then(function successCallback(data) {
+          console.log(data.data);
+          var file = new Blob([data.data], {type: 'application/pdf'});
+          var fileURL = URL.createObjectURL(file);
+          $window.open(fileURL);
+          // var a         = document.createElement('a');
+          // a.href        = fileURL;
+          // a.target      = '_blank';
+          // a.download    = name+'.pdf';
+          // document.body.appendChild(a);
+          // a.click();
+        })
     }
   }]);
