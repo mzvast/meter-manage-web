@@ -50,10 +50,9 @@
     "test": "karma start test/karma.conf.js",
     "serve": "grunt serve --host=0.0.0.0 --port=8000 --live=8001",
     "build": "grunt build",
-    "main": "node index.js",//生产入口Server
-    "nodeApi": "node nodeapi.js",//生产PDF Server
-    "ws": "node ws.js",//WebSocket测试Server
-    "dist":"npm run main&&npm run nodeApi"//生产部署
+    "main": "node index.js",
+    "nodeApi": "node nodeapi.js",
+    "ws": "node ws.js"
   },
   "dependencies": {
     "body-parser": "^1.15.1",
