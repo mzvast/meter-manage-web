@@ -92,8 +92,11 @@ angular.module('manageApp')
       // console.log(todayStr);
       return todayStr;
     }();
-
-    vm.pdfmake = function() {
+    /**
+     * 生成并打开pdf
+     */
+    var file,fileURL;
+    var generatePDF = function() {
       var dd = {
         pageSize: 'A4',
         content: [
@@ -200,24 +203,29 @@ angular.module('manageApp')
       _dataManager.pdfMake(JSON.stringify(dd))
         .then(function successCallback(data) {
           console.log(data.data);
-          var file = new Blob([data.data], {type: 'application/pdf'});
-          var fileURL = URL.createObjectURL(file);
-          $window.open(fileURL);
+          file = new Blob([data.data], {type: 'application/pdf'});
+          fileURL = URL.createObjectURL(file);
         })
-    };
-    vm.getReportPdf = function () {
-      _dataManager.getReportPdf()
-        .then(function successCallback(data) {
-          console.log(data.data);
-          var file = new Blob([data.data], {type: 'application/pdf'});
-          var fileURL = URL.createObjectURL(file);
+    }();
+
+    vm.pdfmake = function (action) {
+      switch (action){
+        case 'open':{
           $window.open(fileURL);
-          // var a         = document.createElement('a');
-          // a.href        = fileURL;
-          // a.target      = '_blank';
-          // a.download    = name+'.pdf';
-          // document.body.appendChild(a);
-          // a.click();
-        })
+          break;
+        }
+        case 'download':{
+          if (navigator.appVersion.toString().indexOf('.NET') > 0){
+            window.navigator.msSaveBlob(file, 'report.pdf');
+          }else{
+            var a         = document.createElement('a');
+            a.href        = fileURL;
+            a.target      = '_blank';
+            a.download    = 'report.pdf';
+            document.body.appendChild(a);
+            a.click();
+          }
+        }
+      }
     }
   }]);
