@@ -18,7 +18,7 @@ angular.module('manageApp')
     ////////////
     // 配置调试 //
     ////////////
-    var log = _dataManager.log();
+
     vm.options = {
       '220V':220,
       '380v':380

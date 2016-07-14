@@ -49,10 +49,6 @@ angular.module('manageApp')
       skill:"技能",
       exp:"经验"
     };
-    ////////////
-    // 配置调试 //
-    ////////////
-    var log = _dataManager.log();
 
     /////////////
     // 资源连接 //
@@ -74,12 +70,10 @@ angular.module('manageApp')
         vm.modalTitle = "新增" + vm.pageResourceName;
       } else {
         vm.form = item;
-        log(item.type);
         vm.selectedOption = vm.options[item.type];
         vm.modalType = 1;
         vm.modalTitle = "修改" + vm.pageResourceName;
       }
-      // console.log(vm.selectedItem);
     };
     ///////////////////
     // 保存时候区分是新建还是修改 //

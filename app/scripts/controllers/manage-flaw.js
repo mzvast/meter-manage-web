@@ -63,10 +63,6 @@ angular.module('manageApp')
       productID: "产品ID",
       planID: "测试计划ID"
     };
-    ////////////
-    // 配置调试 //
-    ////////////
-    var log = _dataManager.log();
 
     /////////////
     // 资源连接 //
@@ -87,11 +83,9 @@ angular.module('manageApp')
       } else {
         vm.form = item;
         vm.selectedOption = vm.options[item.type];//用type值设置selectedOption
-        // log(vm.options[item.type]);
         vm.modalType = 1;
         vm.modalTitle = "修改" + vm.pageResourceName;
       }
-      // console.log(vm.selectedItem);
     };
     ///////////////////
     // 保存时候区分是新建还是修改 //
@@ -128,12 +122,10 @@ angular.module('manageApp')
     vm.updateType = function (item,typeVal) {
       vm.setModal(item);
       vm.form.type = typeVal;
-      // log(vm.form);
       _U(vm.form);
     };
     vm.update = function() {
       vm.form.type = vm.selectedOption.id;//将选中对象转换回去
-      // log(vm.form);
       _U(vm.form);
     };
     vm.remove = function(id) {

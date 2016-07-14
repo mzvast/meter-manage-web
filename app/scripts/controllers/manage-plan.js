@@ -15,10 +15,7 @@ angular.module('manageApp')
             'AngularJS',
             'Karma'
         ];
-        ////////////
-        // 配置调试 //
-        ////////////
-        var log = _dataManager.log();
+
         ////////////
         // 新增测试计划 //
         ////////////
@@ -161,14 +158,12 @@ angular.module('manageApp')
 
             } else {
                 // vm.form = item;
-                log(item);
                 ['productsList','requirementsList','envsList','usersList'].map(function (elem) {
                   vm[elem] = item[elem];
                 });
                 vm.modalType = 1;
                 vm.modalTitle = "修改" + vm.pageResourceName;
             }
-          // console.log(vm.selectedItem);
         };
         ///////////////////
         // 保存时候区分是新建还是修改 //

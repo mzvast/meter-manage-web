@@ -9,15 +9,15 @@
  */
 angular.module('manageApp')
   .controller('NotificationCtrl', ['dataManager',function (dataManager) {
-    	var self = this;
-      self.notifications = dataManager.getNotifications();
-      self.awesomeThings = [
+    	var vm = this;
+      vm.notifications = dataManager.getNotifications();
+      vm.awesomeThings = [
         'HTML5 Boilerplate',
         'AngularJS',
         'Karma'
       ];
-      
-      self.closeAlert = function(index) {
+
+      vm.closeAlert = function(index) {
         dataManager.removeNotification(index);
       };
     }]);
