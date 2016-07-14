@@ -51,28 +51,13 @@ angular
           authenticate: false
         })
         /*测试管理*/
-        .state("manage-product", {
-          url: "/manage-product",
-          templateUrl: "views/manage/product.html",
-          controller: 'ManageProductCtrl as manageProduct',
-          authenticate: false
-        })
-        .state("manage-user", {
-          url: "/manage-user",
-          templateUrl: "views/manage/user.html",
-          controller: 'ManageUserCtrl as manageUser',
-          authenticate: false
-        })
-        .state("manage-requirement", {
-          url: "/manage-requirement",
-          templateUrl: "views/manage/requirement.html",
-          controller: 'ManageRequirementCtrl as manageReq',
-          authenticate: false
-        })
-        .state("manage-environment", {
-          url: "/manage-environment",
-          templateUrl: "views/manage/environment.html",
-          controller: 'ManageEnvironmentCtrl as manageEnv',
+        .state("manage",{
+          url:"/manage/:category",
+          params:{
+            canEdit:true
+          },
+          templateUrl: "views/manage/main.html",
+          controller: 'ManageCtrl as manageCtrl',
           authenticate: false
         })
         .state("manage-plan", {
@@ -87,25 +72,39 @@ angular
         })
         .state("manage-plan.on.products", {
           url: "-products",
-          templateUrl: "views/manage/plan-new-products.html"
+          params:{
+            canEdit:false,
+            category:'products'
+          },
+          controller: 'ManageCtrl as manageCtrl',
+          templateUrl: "views/manage/main.html"
         })
         .state("manage-plan.on.requirements", {
           url: "-requirements",
-          templateUrl: "views/manage/plan-new-requirements.html"
+          params:{
+            canEdit:false,
+            category:'requirements'
+          },
+          controller: 'ManageCtrl as manageCtrl',
+          templateUrl: "views/manage/main.html"
         })
         .state("manage-plan.on.envs", {
           url: "-envs",
-          templateUrl: "views/manage/plan-new-envs.html"
+          params:{
+            canEdit:false,
+            category:'envs'
+          },
+          controller: 'ManageCtrl as manageCtrl',
+          templateUrl: "views/manage/main.html"
         })
         .state("manage-plan.on.users", {
           url: "-users",
-          templateUrl: "views/manage/plan-new-users.html"
-        })
-        .state("manage-flaw", {
-          url: "/manage-flaw",
-          templateUrl: "views/manage/flaw.html",
-          controller: "ManageFlawCtrl as manageFlaw",
-          authenticate: false
+          params:{
+            canEdit:false,
+            category:'users'
+          },
+          controller: 'ManageCtrl as manageCtrl',
+          templateUrl: "views/manage/main.html"
         })
         .state("manage-result", {
           url: "/manage-result",

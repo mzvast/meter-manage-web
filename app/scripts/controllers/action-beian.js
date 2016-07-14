@@ -8,7 +8,7 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianCtrl', ["uiManager", "formManager","beianManager","$state","$stateParams", function (_uiManager, _formManager,_beianManager,$state,$stateParams) {
+  .controller('ActionBeianCtrl', ["formManager","beianManager","$state","$stateParams","dataManager" ,function (_formManager,_beianManager,$state,$stateParams,_dataManager) {
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
@@ -40,7 +40,7 @@ angular.module('manageApp')
     mode=_beianManager.getMode();
 
     /*配置页面基本元数据*/
-    _uiManager.pageMetaDateConstructor(title,"",vm);
+    _dataManager.pageMetaDateConstructor(title,"",vm);
     ////////////
     // 标签数据模型 //
     ////////////
@@ -76,7 +76,7 @@ angular.module('manageApp')
     }();
 
 
-    
+
     vm.tabs = tabs;
 
     //获取form

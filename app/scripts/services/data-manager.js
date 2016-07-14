@@ -30,6 +30,10 @@ angular.module('manageApp')
       self.notifications.splice(index, 1);
     };
 
+    self.getResourceByName = function (name) {
+      return self[name];
+    };
+
     //////////////////////////
     // Resource 构造函数 //
     //////////////////////////
@@ -116,7 +120,7 @@ angular.module('manageApp')
 
     self.getModelByName = function (name) {
       switch (name) {
-        case 'product': {
+        case 'products': {
           return {
             id: "ID",
             name: "名称",
@@ -126,7 +130,7 @@ angular.module('manageApp')
             create_date: "创建时间"
           };
         }
-        case 'user':
+        case 'users':
           return {
             id: "ID",
             name: "名称",
@@ -135,28 +139,28 @@ angular.module('manageApp')
             exp: "经验",
             create_date: "创建时间"
           };
-        case 'req':
+        case 'requirements':
           return {
             id: "ID",
             title: "名称",
             describe: "描述",
             create_date: "创建时间"
           };
-        case 'plan':
+        case 'plans':
           return {
             id: "ID",
             title: "名称",
             creator: "制定者",
             create_date: "创建时间"
           };
-        case 'env':
+        case 'envs':
           return {
             id: "ID",
             title: "名称",
             describe: "描述",
             create_date: "创建时间"
           };
-        case 'flaw':
+        case 'flaws':
           return {
             id: "ID",
             title: "名称",
@@ -172,7 +176,7 @@ angular.module('manageApp')
 
     self.getTabByName = function (name) {
       switch (name) {
-        case 'product':
+        case 'products':
           return [{
             id: 0,
             name: "未备案"
@@ -180,7 +184,7 @@ angular.module('manageApp')
             id: 1,
             name: "已备案"
           }];
-        case 'user':
+        case 'users':
           return [{
             id: 0,
             name: "超级管理员"
@@ -191,7 +195,7 @@ angular.module('manageApp')
             id: 2,
             name: "测试员"
           }];
-        case 'req':
+        case 'requirements':
           return [{
             id: 0,
             name: "单元测试"
@@ -205,7 +209,7 @@ angular.module('manageApp')
             id: 3,
             name: "性能测试"
           }];
-        case 'plan':
+        case 'plans':
           return [{
             id: 0,
             name: "未完成"
@@ -213,7 +217,7 @@ angular.module('manageApp')
             id: 1,
             name: "已完成"
           }];
-        case 'env':
+        case 'envs':
           return [{
             id: 0,
             name: "软件环境"
@@ -221,7 +225,7 @@ angular.module('manageApp')
             id: 1,
             name: "硬件环境"
           }];
-        case 'flaw':
+        case 'flaws':
           return [{
             id: 0,
             name: "提交"
@@ -239,47 +243,162 @@ angular.module('manageApp')
             name: "关闭"
           }];
       }
-    }
+    };
 
     self.getFormModelByName = function (name) {
       switch (name) {
-        case 'product':
+        case 'products':
           return {
             name: "名称",
             batch: "批次",
             supplier: "供应商",
             describe: "描述"
           };
-        case 'user':
+        case 'users':
           return {
             name: "名称",
             age:"年龄",
             skill:"技能",
             exp:"经验"
           };
-        case 'req':
+        case 'requirements':
           return {
             title: "名称",
             describe: "描述"
           };
-        case 'plan':
+        case 'plans':
           return {
             title: "名称",
             describe: "描述"
           };
-        case 'env':
+        case 'envs':
           return {
             name: "名称",
             age:"年龄",
             skill:"技能",
             exp:"经验"
           };
-        case 'flaw':
+        case 'flaws':
           return {
             title: "名称"
           };
       }
 
+    };
+    self.getFrozenFormModelByName = function (name) {
+      switch (name){
+        case 'flaws':
+          return {
+            productID: "产品ID",
+            planID: "测试计划ID"
+          };
+        default:
+          return;
+      }
+    };
+    self.getResourceName = function (name) {
+      switch (name){
+        case 'products':
+          return "产品";
+        case 'users':
+          return "人员";
+        case 'requirements':
+          return "需求";
+        case 'envs':
+          return "环境";
+        case 'plans':
+          return "计划";
+        case 'flaws':
+          return "缺陷";
+      }
+    };
+
+    /////////////////////
+    // 页面All初始化构造函数bundle //
+    /////////////////////
+    self.pageInit = function(pageResourceName, pageType, vm) {
+      pageMetaDateConstructor(pageResourceName, pageType, vm);
+      paginationConstructor(vm);
+      sortConstructor(vm);
+      searchConstructor(vm);
+      setTabConstructor(vm);
+    };
+    ///////////////
+    // 页面元数据构造函数 //
+    ///////////////
+    var pageMetaDateConstructor = function(pageResourceName, pageType, vm) {
+      return function() {
+        vm.pageResourceName = pageResourceName;
+        vm.pageType = pageType;
+        vm.pageTitle = vm.pageResourceName + vm.pageType;
+      }();
+    };
+    self.pageMetaDateConstructor = pageMetaDateConstructor;//暴露
+    ////////////
+    // 分页构造函数 //
+    ////////////
+    var paginationConstructor = function(vm) {
+      return function() {
+        // vm.totalItems = 100;
+        vm.currentPage = 1;
+        vm.itemsPerPage = 10;
+        vm.maxSize = 5; //显示的时候页码的最多个数，忽略该参数
+
+        // vm.setPage = function (pageNo) {
+        //  vm.currentPage = pageNo;
+        // };
+
+        vm.pageChanged = function() {
+          vm.get();
+        };
+      }();
+    };
+    ////////////
+    // 排序构造函数 //
+    ////////////
+    var sortConstructor = function(vm) {
+      return function() {
+        vm.predicate = 'id';
+        vm.reverse = true;
+        vm.order = function(predicate) {
+          vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
+          vm.predicate = predicate;
+          vm.get();
+        };
+      }();
+    };
+    ////////////
+    // 搜索构造函数 //
+    ////////////
+    var searchConstructor = function(vm) {
+      return function() {
+        vm.search = function(q) {
+          if (q === undefined) {
+            vm.q = "";
+            vm.get();
+            return;
+          }
+          vm.q = q;
+          vm.get();
+          vm.currentPage = 1;
+        };
+      }();
+    };
+    /**
+     * 设置标签构造函数
+     * @param vm
+     */
+    var setTabConstructor = function (vm) {
+      return function () {
+        vm.setTab = function (value) {
+          if (typeof value === "undefined") {
+            vm.type = -1;
+          }else{
+            vm.type = value;
+          }
+          vm.get();
+        };
+      }();
     }
 
   }]);

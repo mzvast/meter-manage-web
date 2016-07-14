@@ -23,16 +23,16 @@ angular.module('manageApp')
       //////////////////
       // 列表数据模型 //
       /////////////////
-      vm.model = _dataManager.getModelByName('req');
+      vm.model = _dataManager.getModelByName('requirements');
       ////////////
       // 标签数据模型 //
       ////////////
-      vm.tabs =vm.options = _dataManager.getTabByName('req');
+      vm.tabs =vm.options = _dataManager.getTabByName('requirements');
 
       //////////////
       // form数据模型 //
       //////////////
-      vm.formModel = _dataManager.getFormModelByName('req');
+      vm.formModel = _dataManager.getFormModelByName('requirements');
 
       /////////////
       // 资源连接 //

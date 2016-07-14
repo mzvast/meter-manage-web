@@ -23,16 +23,16 @@ angular.module('manageApp')
     //////////////////
     // 列表数据模型 //
     /////////////////
-    vm.model = _dataManager.getModelByName('flaw');
+    vm.model = _dataManager.getModelByName('flaws');
 
-    vm.tabs =vm.options = _dataManager.getTabByName('flaw');
+    vm.tabs =vm.options = _dataManager.getTabByName('flaws');
 
 
 
     //////////////
     // form数据模型 //
     //////////////
-    vm.formModel = _dataManager.getFormModelByName('flaw');
+    vm.formModel = _dataManager.getFormModelByName('flaws');
     vm.formModelFrozen = {
       productID: "产品ID",
       planID: "测试计划ID"
