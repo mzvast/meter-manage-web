@@ -11,10 +11,7 @@ angular.module('manageApp')
     .service('uiManager', ['dataManager', function(_dataManager) {
         // AngularJS will instantiate a singleton by calling "new" on this function
         var self = this;
-        ////////////
-        // 配置调试 //
-        ////////////
-        var log = _dataManager.log();
+
         /////////////////////
         // 页面All初始化构造函数bundle //
         /////////////////////
@@ -51,7 +48,6 @@ angular.module('manageApp')
                 // };
 
                 vm.pageChanged = function() {
-                    log('Page changed to: ' + vm.currentPage);
                     vm.get();
                 };
             }();
@@ -76,7 +72,6 @@ angular.module('manageApp')
         var searchConstructor = function(vm) {
             return function() {
                 vm.search = function(q) {
-                    log("q=" + q);
                     if (q === undefined) {
                         vm.q = "";
                         vm.get();
@@ -95,7 +90,6 @@ angular.module('manageApp')
         var setTabConstructor = function (vm) {
           return function () {
             vm.setTab = function (value) {
-              log("value="+value);
               if (typeof value === "undefined") {
                 vm.type = -1;
               }else{

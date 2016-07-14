@@ -23,42 +23,16 @@ angular.module('manageApp')
     //////////////////
     // 列表数据模型 //
     /////////////////
-    vm.model = {
-      id: "ID",
-      title: "名称",
-      productName:"产品名称",
-      supplier:"供应商",
-      productID: "产品ID",
-      planID: "测试计划ID",
-      // type:"状态",
-      create_date: "创建时间"
-    };
+    vm.model = _dataManager.getModelByName('flaw');
 
-    vm.tabs =vm.options = [{
-        id: 0,
-        name:"提交"
-      },{
-        id:1,
-        name:"确认"
-      },{
-        id:2,
-        name:"修复"
-      },{
-        id:3,
-        name:"重开"
-      },{
-        id:4,
-        name:"关闭"
-      }];
+    vm.tabs =vm.options = _dataManager.getTabByName('flaw');
 
 
 
     //////////////
     // form数据模型 //
     //////////////
-    vm.formModel = {
-      title: "名称"
-    };
+    vm.formModel = _dataManager.getFormModelByName('flaw');
     vm.formModelFrozen = {
       productID: "产品ID",
       planID: "测试计划ID"

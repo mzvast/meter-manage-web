@@ -11,10 +11,6 @@ angular.module('manageApp')
   .service('beianManager', ['$rootScope', 'dataManager', '$state',function ($rootScope, _dataManager,$state) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var vm = this;
-    ////////////
-    // 配置调试 //
-    ////////////
-    var log = _dataManager.log();
     var product,
       info,
       arg,
@@ -72,7 +68,7 @@ angular.module('manageApp')
      */
     vm.setProduct = function (item) {
       product = item;
-      log("product id = " + item.id);
+      console.log("product id = " + item.id);
       return true;
     };
     vm.getProduct = function () {
@@ -85,7 +81,7 @@ angular.module('manageApp')
      */
     vm.setInfo = function (item) {
       info = item;
-      log(JSON.stringify(item));
+      console.log(JSON.stringify(item));
       return true;
     };
     vm.getInfo = function () {
@@ -98,7 +94,7 @@ angular.module('manageApp')
      */
     vm.setArg = function (item) {
       arg = item;
-      log(JSON.stringify(item));
+      console.log(JSON.stringify(item));
       return true;
     };
     vm.getArg = function () {
@@ -125,12 +121,12 @@ angular.module('manageApp')
      */
     vm.setHex = function (hexFile, index) {
       if (hexFile instanceof ArrayBuffer) {
-        log("true");
+        console.log("true");
         hex[index] = hexFile;
         md5[index] = SparkMD5.ArrayBuffer.hash(hex[index]);
         return true;
       }
-      log("false");
+      console.log("false");
       return false;
     };
 
@@ -153,13 +149,13 @@ angular.module('manageApp')
     vm.getHexLength = function (index) {
       if (hex[index] && (hex[index] instanceof ArrayBuffer)) {
         var len = hex[index].byteLength;
-        log("byteLength:" + len);
+        console.log("byteLength:" + len);
         return len;
       }
     };
     vm.getMd5 = function (index) {
       if (md5[index]) {
-        log(md5[index]);
+        console.log(md5[index]);
         return md5[index];
       }
     };

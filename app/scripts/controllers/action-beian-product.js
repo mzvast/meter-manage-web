@@ -51,10 +51,6 @@ angular.module('manageApp')
       supplier: "供应商",
       describe: "描述"
     };
-    ////////////
-    // 配置调试 //
-    ////////////
-    var log = _dataManager.log();
 
     /////////////
     // 资源连接 //

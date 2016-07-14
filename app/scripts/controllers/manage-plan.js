@@ -112,30 +112,16 @@ angular.module('manageApp')
         //////////////////
         // 列表数据模型 //
         /////////////////
-        vm.model = {
-            id: "ID",
-            title: "名称",
-            creator: "制定者",
-            create_date: "创建时间"
-        };
+        vm.model = _dataManager.getModelByName('plan');
         ////////////
         // 标签数据模型 //
         ////////////
-        vm.tabs =vm.options = [{
-          id: 0,
-          name:"未完成"
-        },{
-          id:1,
-          name:"已完成"
-        }];
+        vm.tabs =vm.options = _dataManager.getTabByName('plan');
 
         //////////////
         // form数据模型 //
         //////////////
-        vm.formModel = {
-            title: "名称",
-            describe: "描述"
-        };
+        vm.formModel = _dataManager.getFormModelByName('plan');
 
         /////////////
         // 资源连接 //

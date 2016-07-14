@@ -23,32 +23,16 @@ angular.module('manageApp')
     //////////////////
     // 列表数据模型 //
     /////////////////
-    vm.model = {
-      id: "ID",
-      title: "名称",
-      describe: "描述",
-      create_date: "创建时间"
-    };
+    vm.model = _dataManager.getModelByName('env');
     ////////////
     // 标签数据模型 //
     ////////////
-    vm.tabs =vm.options = [{
-      id: 0,
-      name:"软件环境"
-    },{
-      id:1,
-      name:"硬件环境"
-    }];
+    vm.tabs =vm.options = _dataManager.getTabByName('env');
 
     //////////////
     // form数据模型 //
     //////////////
-    vm.formModel = {
-      name: "名称",
-      age:"年龄",
-      skill:"技能",
-      exp:"经验"
-    };
+    vm.formModel = _dataManager.getFormModelByName('env');
 
     /////////////
     // 资源连接 //

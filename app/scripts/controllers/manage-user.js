@@ -23,37 +23,16 @@ angular.module('manageApp')
       //////////////////
       // 列表数据模型 //
       /////////////////
-      vm.model = {
-        id: "ID",
-        name: "名称",
-        age:"年龄",
-        skill:"技能",
-        exp:"经验",
-        create_date: "创建时间"
-      };
+      vm.model = _dataManager.getModelByName('user');
       ////////////
       // 标签数据模型 //
       ////////////
-      vm.tabs =vm.options = [{
-        id: 0,
-        name:"超级管理员"
-      },{
-        id:1,
-        name:"管理员"
-      },{
-        id:2,
-        name:"测试员"
-      }];
+      vm.tabs =vm.options = _dataManager.getTabByName('user');
 
       //////////////
       // form数据模型 //
       //////////////
-      vm.formModel = {
-        name: "名称",
-        age:"年龄",
-        skill:"技能",
-        exp:"经验"
-      };
+      vm.formModel = _dataManager.getFormModelByName('user');
 
       /////////////
       // 资源连接 //
