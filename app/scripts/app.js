@@ -120,8 +120,12 @@ angular
         })
         .state("action-beian.setProduct", {
           url: "/setProduct",
-          templateUrl: "views/action/set-product.html",
-          controller: "ActionBeianProductCtrl as productCtrl",
+          templateUrl: "views/manage/main.html",
+          params:{
+            canEdit:false,
+            category:'products'
+          },
+          controller: "ManageCtrl as manageCtrl",
           authenticate: false
         })
         .state("action-beian.setInfo", {

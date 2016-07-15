@@ -8,35 +8,71 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianInfoCtrl', ['formManager', '$stateParams' ,'$state','dataManager','beianManager',function (_formManager, $stateParams,$state,_dataManager,_beianManager) {
+  .controller('ActionBeianInfoCtrl', ['formManager', '$stateParams', '$state', 'dataManager', 'beianManager', function (_formManager, $stateParams, $state, _dataManager, _beianManager) {
     var vm = this;
+    vm.mode = $stateParams.mode;//识别比对
     vm.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
-    ////////////
-    // 配置调试 //
-    ////////////
+    /////////////
+    // 资源连接 //
+    /////////////
+    var _resource = _dataManager.getResourceByName('infos');
+
+    var settedProduct = _beianManager.getProduct();
+    var settedInfo = _beianManager.getInfo();//本地优先
+    if (settedProduct) {
+      vm.canEdit = true;
+      if (!settedInfo) {//向服务器获取
+        _dataManager.getRemoteInfo(
+          settedProduct.id,
+          function (response) {
+            vm.model = response;
+          })
+      }
+    }
+
+
     vm.onSubmit = function () {
       // alert(JSON.stringify(vm.model), null, 2);
-      if(_beianManager.setInfo(vm.model)){
-        $state.go("action-beian.setArg");
-      }else{
-        _dataManager.addNotification("danger","设置失败！");
+      if (_beianManager.setInfo(vm.model)) {
+        //上传传给服务器
+        _dataManager.setRemoteInfo(
+          settedProduct.id,
+          vm.model,
+          function () {
+            $state.go("action-beian.setArg");
+          })
+      } else {
+        _dataManager.addNotification("danger", "设置失败！");
       }
     };
 
+    switch (vm.mode) {
+      case 'beian': {
+
+        break;
+      }
+      case 'gonghuo': {
+
+      }
+    }
+
 
     vm.fields = _formManager.getForm('info', vm);
-    var settedInfo = _beianManager.getInfo();
-    if(settedInfo){
+
+    if (settedInfo) {
       vm.model = settedInfo;
-    }else{
+    } else {
       vm.model = {
-        cpu_info:{
-          "protect_addr":[{},{}],
-          "reserve_addr": [{},{}]
+        product_id: settedProduct ? settedProduct.id : '',
+        company_name: settedProduct ? settedProduct.vendor : '',
+        meter_name: settedProduct ? settedProduct.name : '',
+        cpu_info: {
+          "protect_addr": [{}, {}],
+          "reserve_addr": [{}, {}]
         }
       }
     }

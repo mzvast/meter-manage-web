@@ -40,7 +40,7 @@
         <div class="col-md-12">
           <!-- Custom Tabs -->
           <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs" ng-hide="manageCtrl.hideTab">
               <li class="active"><a href="" ng-click="manageCtrl.setTab()" data-toggle="tab"
                                     aria-expanded="true">全部类型</a></li>
               <li ng-repeat="item in manageCtrl.tabs"><a href="" ng-click="manageCtrl.setTab(item.id)" data-toggle="tab"
@@ -94,14 +94,22 @@
                         <i class="glyphicon glyphicon-remove"></i> 删除
                       </a>
                     </div>
-                    <div ng-if="!manageCtrl.canEdit" ng-switch on="manageCtrl.category">
+                    <div ng-if="!manageCtrl.canEdit" ng-switch="manageCtrl.category">
                       <div ng-switch-when="products" class="btn-group" >
-                        <a ng-show="managePlan.itemNotInProductsList(item)" class="btn bg-olive margin" ng-click="managePlan.addToProductsList(item)">
-                          <i class="glyphicon glyphicon-plus"></i>
-                        </a>
-                        <a ng-hide="managePlan.itemNotInProductsList(item)" class="btn bg-maroon margin" ng-click="managePlan.removeFromProductsList(item)">
-                          <i class="fa fa-fw fa-minus"></i>
-                        </a>
+                        <div ng-hide="manageCtrl.compare">
+                          <a ng-show="managePlan.itemNotInProductsList(item)" class="btn bg-olive margin" ng-click="managePlan.addToProductsList(item)">
+                            <i class="glyphicon glyphicon-plus"></i>
+                          </a>
+                          <a ng-hide="managePlan.itemNotInProductsList(item)" class="btn bg-maroon margin" ng-click="managePlan.removeFromProductsList(item)">
+                            <i class="fa fa-fw fa-minus"></i>
+                          </a>
+                        </div>
+                        <div class="btn-group" ng-show="manageCtrl.compare">
+                          <a class="btn bg-olive margin" ng-click="manageCtrl.setProduct(item)">
+                            <i class="fa fa-fw fa-hand-pointer-o"></i>
+                          </a>
+
+                        </div>
                       </div>
                       <div ng-switch-when="requirements" class="btn-group" >
                         <a ng-show="managePlan.itemNotInRequirementsList(item)" class="btn bg-olive margin" ng-click="managePlan.addToRequirementsList(item)">
@@ -176,7 +184,7 @@
             </div>
             <!-- /模型form内容  -->
             <!-- 特殊form内容 -->
-            <div ng-switch on="manageCtrl.category">
+            <div ng-switch="manageCtrl.category">
               <!--products-->
               <div class="form-group" ng-switch-when="products">
                 <label for="select" class="col-sm-2 control-label">状态</label>

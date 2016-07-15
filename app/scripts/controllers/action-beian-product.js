@@ -45,12 +45,7 @@ angular.module('manageApp')
     //////////////
     // form数据模型 //
     //////////////
-    vm.formModel = {
-      name: "名称",
-      batch: "批次",
-      supplier: "供应商",
-      describe: "描述"
-    };
+    vm.formModel = _dataManager.getModelByName('products');
 
     /////////////
     // 资源连接 //

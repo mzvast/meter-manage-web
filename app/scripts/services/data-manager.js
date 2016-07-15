@@ -43,7 +43,8 @@ angular.module('manageApp')
       'requirements',
       'envs',
       'plans',
-      'flaws'
+      'flaws',
+      'infos'
     ].map(function (elem) {
       var url = '/api/v2/' + elem + '/:id';
       self[elem] = $resource(url, {
@@ -54,6 +55,59 @@ angular.module('manageApp')
         }
       });
     });
+    /**
+     * 获取产品详细信息
+     * @param id
+     * @param cb
+       */
+    self.getRemoteInfo = function (id,cb) {
+      self['infos'].get({
+        id:id
+      }).$promise
+        .then(function (response) {
+          console.log("获取" + 'info' + " SUCCESS!");
+
+          // console.dir(response);
+          // console.dir(response.json);
+          cb(response)
+        });
+    };
+    /**
+     * 设置产品详细信息
+     * @param id
+     * @param data
+     * @param cb
+       */
+    self.setRemoteInfo = function (id,data,cb) {
+      self['infos'].save({
+        id: id
+      }, {"json": data}).$promise
+        .then(function () {
+          console.log("新增资源 SUCCESS!");
+          // console.log(data);
+          self.addNotification("success", "新" + 'info详细信息' + "创建成功");
+          cb();
+        });
+    };
+
+    self.setRemoteHex = function (id,fileArray,cb) {
+      var uploadUrl = '/api/v2/hex/'+ id;
+      var fd = new FormData();
+      var i;
+      for(i=0;i<fileArray.length;i++)
+      {
+        fd.append(i+1, fileArray[i]);
+      }
+      $http.post(uploadUrl, fd, {
+        transformRequest: angular.identity,
+        headers: {'Content-Type': undefined}
+      })
+        .success(function(){
+          cb();
+        })
+        .error(function(){
+        });
+    };
 
     //////////////
     // CRUD构造函数 //
@@ -125,8 +179,8 @@ angular.module('manageApp')
             id: "ID",
             name: "名称",
             batch: "批次",
-            supplier: "供应商",
-            describe: "描述",
+            vendor: "供应商",
+            description: "描述",
             create_date: "创建时间"
           };
         }

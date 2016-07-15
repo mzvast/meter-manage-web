@@ -49,7 +49,8 @@ angular.module('manageApp')
         {
           name:"比对信息验核",
           state:"action-beian.compare"
-        },
+        }
+        ,
         {
           name:"产品选择",
           state:"action-beian.setProduct"
@@ -74,7 +75,6 @@ angular.module('manageApp')
           state:"action-beian.report"
         })}
     }();
-
 
 
     vm.tabs = tabs;

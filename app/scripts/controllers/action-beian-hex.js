@@ -30,14 +30,23 @@ angular.module('manageApp')
 
     vm.setHex = function () {
       var cpu0 = vm['hexFile'][0],
-          cpu1 = vm['hexFile'][1];
+          cpu1 = vm['hexFile'][1],
+        cpus = [];
 
-      readHex(cpu0,0);
-      readHex(cpu1,1);
+      var i = 0;
+      [cpu0,cpu1].map(function (item) {
+        if(item){
+          cpus.push(item);
+          readHex(item,i);
+        }
+        i++;
+      });
 
       window.setTimeout(function () {
         if(vm.hash1||vm.hash2){
-          $state.go("action-beian.compare");
+          _dataManager.setRemoteHex(_beianManager.getProduct().id,cpus,function () {
+            $state.go("action-beian.compare");
+          });
         }else{
           _dataManager.addNotification("warning","请至少选择一个hex文件")
         }
