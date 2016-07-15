@@ -85,11 +85,13 @@
           <div class="div box-footer">
             <!--{{ compareCtrl.timelineMsg }}-->
           </div>
+          <div ng-show="compareCtrl.showInfoMsg"><pre>{{ compareCtrl.infoMsg|json }}</pre></div>
         </div>
       </div>
     </div>
     <!-- row -->
     <div class="row" ng-show="compareCtrl.start">
+
       <div class="col-xs-6 col-xs-offset-2">
         <!-- The time line -->
         <ul class="timeline">

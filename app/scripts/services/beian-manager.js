@@ -94,10 +94,30 @@ angular.module('manageApp')
      */
     vm.setArg = function (item) {
       arg = item;
-      console.log(JSON.stringify(item));
+      console.log(arg);
+      localStorage['arg'] = angular.toJson(arg);//存储到本地
+      console.log(localStorage['arg']);
       return true;
     };
     vm.getArg = function () {
+      var localArg = localStorage['arg'],
+          arg = [];
+      if(localArg){//本地存在数据
+        arg = JSON.parse(localArg);
+      }else{//本地没有
+        var i;
+        for(i=0;i<8;i++){
+          arg.push({
+            bit:i+1,
+            on:false,
+            num: "xxxxxxxxxxxx",
+            addr:"xxxxxxxxxxxx",
+            type:"single_phase",
+            vol:220,
+            key_index:"04"
+          })
+        }
+      }
       return arg;
     };
     /**
@@ -411,12 +431,21 @@ angular.module('manageApp')
 
       var setMeterInfo = function () {
         for (var i = 0; i < arg.length; i++) {
-          var obj = angular.copy(arg[i]);
-          infoMsg.data.meter_info.push(obj);
-          infoMsg.data.meter_info[i]['costcontrol_type'] = info.costcontrol_type;
+            var temp = angular.copy(arg[i]);
+          if(temp['on']){
+            delete temp['on'];
+            delete temp["$$hashKey"];
+            temp['costcontrol_type'] = info.costcontrol_type;
+            infoMsg.data.meter_info.push(temp);
+          }
         }
       }();
 
+    };
+
+    vm.getInfoMsg = function () {
+      makeInfoMsg();
+      return infoMsg;
     };
 
       /**
@@ -628,6 +657,7 @@ angular.module('manageApp')
 
       arg = [{
         "bit": 1,
+        "on":true,
         "num": "xxxxxxxxxxxx",
         "addr": "xxxxxxxxxxxx",
         "type": "single_phase",
@@ -635,6 +665,7 @@ angular.module('manageApp')
         "key_index": "04"
       }, {
         "bit": 2,
+        "on":true,
         "num": "xxxxxxxxxxxx",
         "addr": "xxxxxxxxxxxx",
         "type": "single_phase",

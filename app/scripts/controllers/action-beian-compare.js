@@ -86,6 +86,9 @@ angular.module('manageApp')
       },{
         name:"清除时间线消息",
         action:"clearTimelineMsg"
+      },{
+        name:"查看infoMsg",
+        action:"getInfoMsg"
       }
     ];
 
@@ -205,6 +208,13 @@ angular.module('manageApp')
 
     vm.goReport = function () {
       $state.go('action-beian.report');
+    };
+
+    vm.getInfoMsg = function () {
+      vm.showInfoMsg = true;
+      vm.infoMsg = _beianManager.getInfoMsg();
+      console.log(vm.showInfoMsg);
+      console.log(vm.infoMsg);
     };
 
     $scope.$watch('service.getTimelineMsg()', function(newVal) {
