@@ -1,7 +1,11 @@
 <!-- form start -->
   <div class="box-body">
-    <div class="row">
+    <div class="row" ng-show="hexCtrl.canSee">
       <div class="col-xs-12">
+        <div ng-show="hexCtrl.mode==='debug'">
+          <button ng-click="hexCtrl.getRemoteHex()">Get</button>
+          <button ng-click="hexCtrl.getRemoteHexNum()">Get All</button>
+        </div>
         <table class="table table-striped">
           <tbody>
           <tr>
@@ -18,9 +22,13 @@
             </td>
             <td><h4>{{ hexCtrl.hash1?'md5:'+hexCtrl.hash1:'' }}</h4></td>
             <td>
-              <a ng-show="hexCtrl.hash1" class="btn btn-app bg-maroon margin" ng-click="hexCtrl.removeHex(0)">
-              <i class="glyphicon glyphicon-remove"></i> 删除</a>
-              <a ng-hide="hexCtrl.hash1" id="button0" type="button" class="btn btn-app bg-olive margin "><i class="glyphicon glyphicon-plus"></i> 新增</a>
+              <!--操作按钮-->
+              <div ng-if="hexCtrl.mode!=='gonghuo'">
+                <a ng-show="hexCtrl.hash1" class="btn btn-app bg-maroon margin" ng-click="hexCtrl.removeHex(0)">
+                <i class="glyphicon glyphicon-remove"></i> 删除</a>
+                <a ng-hide="hexCtrl.hash1" id="button0" type="button" class="btn btn-app bg-olive margin "><i class="glyphicon glyphicon-plus"></i> 新增</a>
+              </div>
+              <!--/操作按钮-->
             </td>
           </tr>
           <tr>
@@ -41,12 +49,15 @@
         <hr>
         <div class="row">
           <div class="col-xs-2 col-xs-offset-4">
-            <button type="button" class="btn btn-primary btn-block" ng-click="hexCtrl.setHex()">暂存</button>
+            <button ng-if="hexCtrl.mode!=='gonghuo'" type="button" class="btn btn-primary btn-block" ng-click="hexCtrl.setHex()">暂存</button>
+            <button ng-if="hexCtrl.mode==='gonghuo'" type="button" class="btn btn-primary btn-block" ui-sref="action-beian.compare">准备比对</button>
           </div>
         </div>
       </div>
     </div>
-
+    <div ng-hide="hexCtrl.canSee" class="tab-content">
+      <p style="margin-top: 20px;" class="text-center">请先 <a ui-sref="action-beian.setProduct">选择产品</a></p>
+    </div>
 
   </div>
 

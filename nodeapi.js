@@ -5,6 +5,7 @@ var express = require('express');
 var httpProxy = require('http-proxy');
 var bodyParser = require('body-parser');
 var pdfPrinter = require('pdfmake');
+var fs = require('fs');
 // Node express server setup.
 var server = express();
 server.set('port', 8088);
@@ -25,6 +26,16 @@ server.post("/node/pdf",jsonParser,function (req, res) {
   // console.log(req.body);
   printToResponse(req.body,res);
 
+});
+
+server.get('/node/file',function (req, res) {
+  var file = fs.createReadStream("PINGPANG.hex");
+  var filename = 'PINGPANG.hex';
+  res.setHeader('Content-disposition', 'attachment');
+  res.setHeader('x-filename', filename);
+  res.setHeader('Content-type', 'application/hex');
+  console.log('get file!');
+  file.pipe(res);
 });
 
 // Start Server.

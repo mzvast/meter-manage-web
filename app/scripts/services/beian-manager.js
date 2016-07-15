@@ -144,6 +144,7 @@ angular.module('manageApp')
         console.log("true");
         hex[index] = hexFile;
         md5[index] = SparkMD5.ArrayBuffer.hash(hex[index]);
+        $rootScope.$apply();
         return true;
       }
       console.log("false");
@@ -604,8 +605,8 @@ angular.module('manageApp')
         id: "23",
         name: "苹果电表",
         batch: "01",
-        supplier: "APPLE",
-        describe: "此人很懒"
+        vendor: "APPLE",
+        desciption: "此人很懒"
       };
 
       md5[0] = 'd9fc6d737aea3345f681f24c8a2bb07c';

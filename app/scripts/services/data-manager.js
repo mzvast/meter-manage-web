@@ -109,6 +109,49 @@ angular.module('manageApp')
         });
     };
 
+    self.getRemoteHexNum = function (id,cb) {
+      var httpPath = '/api/v2/hex/'+ id;//'/node/file';
+      $http.get(httpPath)
+        .success(function (data, status, headers) {
+        cb(data);
+      })
+    };
+
+    self.getRemoteHex = function (id,index,cb) {
+      var httpPath = '/api/v2/hex/'+ id+'/'+index;//'/node/file';
+      var blob;
+      $http.get(httpPath,{
+        responseType: 'arraybuffer'
+      }).success(function (data, status, headers) {
+        headers = headers();
+
+        var filename = headers['x-filename'];
+        var contentType = headers['content-type'];
+
+        try {
+          blob = new Blob([data], { type: contentType });
+
+          var reader = new FileReader();
+          reader.readAsArrayBuffer(blob);
+          // reader.readAsBinaryString(file);
+          //    reader.readAsText(file);
+          //文件读取完毕后该函数响应
+          reader.onload = function (evt) {
+            var buffer = evt.target.result;
+            // console.log(evt.target.result);
+            // Handle UTF-16 file dump
+            var u8 = new Uint8Array(buffer);
+            cb(buffer);
+          };
+        } catch (ex) {
+          console.log(ex);
+        }
+      }).error(function (data) {
+        console.log(data);
+      });
+    };
+
+
     //////////////
     // CRUD构造函数 //
     //////////////

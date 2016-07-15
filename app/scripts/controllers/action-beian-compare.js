@@ -109,7 +109,7 @@ angular.module('manageApp')
         product:{
           id:1,
           name:"产品选择",
-          prop:product? '['+product.supplier+']公司第['+ product.batch+ ']批次['+product.name+']产品':'未选择',
+          prop:product? '['+product.vendor+']公司第['+ product.batch+ ']批次['+product.name+']产品':'未选择',
           ok:product,
           sref:"action-beian.setProduct",
           data:product

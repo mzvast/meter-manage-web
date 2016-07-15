@@ -8,13 +8,50 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianHexCtrl', ['$state','dataManager','beianManager', function ($state,_dataManager,_beianManager){
+  .controller('ActionBeianHexCtrl', ['$scope','$state','$stateParams','dataManager','beianManager', function ($scope,$state,$stateParams,_dataManager,_beianManager){
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
+    $scope.service = _beianManager;
+
+    vm.mode = $stateParams.mode;
+    vm.canEdit = vm.mode==='beian';
+    vm.canSee = _beianManager.getProduct();
+      /**
+       * 获取单个远程Hex文件
+       * @param index
+       */
+    vm.getRemoteHex = function (index) {
+      var localIndex = index||1;
+      _dataManager.getRemoteHex(_beianManager.getProduct().id,localIndex,
+        function (arraybuffer) {
+        _beianManager.setHex(arraybuffer,index-1);
+      });
+    };
+    /**
+     * 获取所有远程Hex文件
+     */
+    vm.getRemoteHexNum = function () {
+      _dataManager.getRemoteHexNum(_beianManager.getProduct().id,
+        function (data) {
+        var num = data.total,
+            index;
+          for(index = 1;index<=num;index++){
+            vm.getRemoteHex(index)
+          }
+        }
+      )
+    };
+
+    if(vm.mode==='gonghuo'){//供货模式，自动获取
+      if(!_beianManager.getProduct()){
+        return;
+      }
+      vm.getRemoteHexNum();
+    }
 
     $('#button0').on('click',function () {
       $('#hexFile0').click()
@@ -87,6 +124,11 @@ angular.module('manageApp')
       vm.hash1 =  _beianManager.getMd5(0);
       vm.hash2 =  _beianManager.getMd5(1);
     };
+
+    $scope.$watch('service.getMd5(0)+service.getMd5(1)', function(newVal) {
+      // console.log(" New Data", newVal);
+      refreshHash();
+    });
 
     refreshHash();//首次加载读取_beianManager的hex状态
   }]);
