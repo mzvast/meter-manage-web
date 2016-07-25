@@ -52,13 +52,12 @@ angular.module('manageApp')
       }
       vm.getRemoteHexNum();
     }
-
-    $('#button0').on('click',function () {
-      $('#hexFile0').click()
-    });
-    $('#button1').on('click',function () {
-      $('#hexFile1').click()
-    });
+    vm.bt0 = function () {
+      $('#hexFile0').click();
+    };
+    vm.bt1 = function () {
+      $('#hexFile1').click();
+    };
 
     vm.removeHex = function (index) {
       _beianManager.removeHex(index);

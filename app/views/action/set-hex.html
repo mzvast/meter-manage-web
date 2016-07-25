@@ -26,13 +26,13 @@
               <div ng-if="hexCtrl.mode!=='gonghuo'">
                 <a ng-show="hexCtrl.hash1" class="btn btn-app bg-maroon margin" ng-click="hexCtrl.removeHex(0)">
                 <i class="glyphicon glyphicon-remove"></i> 删除</a>
-                <a ng-hide="hexCtrl.hash1" id="button0" type="button" class="btn btn-app bg-olive margin "><i class="glyphicon glyphicon-plus"></i> 新增</a>
+                <a ng-hide="hexCtrl.hash1" ng-click="hexCtrl.bt0()" id="button0" type="button" class="btn btn-app bg-olive margin "><i class="glyphicon glyphicon-plus"></i> 新增</a>
               </div>
               <!--/操作按钮-->
             </td>
           </tr>
           <tr>
-            <td>CPU1 <input id="hexFile1" type="file" file-model="hexCtrl.hexFile[1]" style="display: none"/></td>
+            <td>CPU2 <input id="hexFile1" type="file" file-model="hexCtrl.hexFile[1]" style="display: none"/></td>
             <td>
               <h4 ng-hide="hexCtrl.hash2">{{ hexCtrl.hexFile[1].name||'未选择HEX文件' }}</h4>
               <h4 ng-show="hexCtrl.hash2">已暂存</h4>
@@ -41,7 +41,7 @@
             <td>
               <a ng-show="hexCtrl.hash2" class="btn btn-app bg-maroon margin" ng-click="hexCtrl.removeHex(1)">
                 <i class="glyphicon glyphicon-remove"></i> 删除</a>
-              <a ng-hide="hexCtrl.hash2" id="button1" type="button" class="btn btn-app bg-olive margin "><i class="glyphicon glyphicon-plus"></i> 新增</a>
+              <a ng-hide="hexCtrl.hash2" ng-click="hexCtrl.bt1()" id="button1" type="button" class="btn btn-app bg-olive margin "><i class="glyphicon glyphicon-plus"></i> 新增</a>
             </td>
           </tr>
           </tbody>
