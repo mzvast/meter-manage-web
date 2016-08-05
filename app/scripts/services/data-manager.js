@@ -221,6 +221,7 @@ angular.module('manageApp')
           return {
             id: "ID",
             name: "名称",
+            model:"型号",
             batch: "批次",
             vendor: "供应商",
             description: "描述",
@@ -347,6 +348,7 @@ angular.module('manageApp')
         case 'products':
           return {
             name: "名称",
+            model:"型号",
             batch: "批次",
             supplier: "供应商",
             describe: "描述"

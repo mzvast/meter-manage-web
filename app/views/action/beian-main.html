@@ -19,7 +19,7 @@
               <li ui-sref-active="active" ng-repeat="item in beianCtrl.tabs">
                 <a  ui-state="item.state" aria-expanded="true"
 
-                >{{ $index }}.{{item.name}}</a>
+                >{{ $index + 1}}.{{item.name}}</a>
               </li>
             </ul>
             <div class="tab-content" ui-view>

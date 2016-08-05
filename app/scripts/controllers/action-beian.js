@@ -46,11 +46,7 @@ angular.module('manageApp')
     ////////////
     var setTabByMode = function () {
       tabs = [
-        {
-          name:"比对信息验核",
-          state:"action-beian.compare"
-        }
-        ,
+
         {
           name:"产品选择",
           state:"action-beian.setProduct"
@@ -66,6 +62,10 @@ angular.module('manageApp')
         {
           name:"暂存HEX文件",
           state:"action-beian.setHex"
+        },
+        {
+          name:"比对信息验核",
+          state:"action-beian.compare"
         }
       ];
 
