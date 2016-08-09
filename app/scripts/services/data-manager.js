@@ -41,6 +41,7 @@ angular.module('manageApp')
       'products',
       'users',
       'requirements',
+      'cases',
       'envs',
       'plans',
       'flaws',
@@ -244,6 +245,13 @@ angular.module('manageApp')
             describe: "描述",
             create_date: "创建时间"
           };
+        case 'cases':
+          return {
+            id: "ID",
+            title: "名称",
+            describe: "描述",
+            create_date: "创建时间"
+          };
         case 'plans':
           return {
             id: "ID",
@@ -294,6 +302,20 @@ angular.module('manageApp')
             name: "测试员"
           }];
         case 'requirements':
+          return [{
+            id: 0,
+            name: "单元测试"
+          }, {
+            id: 1,
+            name: "集成测试"
+          }, {
+            id: 2,
+            name: "功能测试"
+          }, {
+            id: 3,
+            name: "性能测试"
+          }];
+        case 'cases':
           return [{
             id: 0,
             name: "单元测试"
@@ -365,6 +387,11 @@ angular.module('manageApp')
             title: "名称",
             describe: "描述"
           };
+        case 'cases':
+          return {
+            title: "名称",
+            describe: "描述"
+          };
         case 'plans':
           return {
             title: "名称",
@@ -403,6 +430,8 @@ angular.module('manageApp')
           return "人员";
         case 'requirements':
           return "需求";
+        case 'cases':
+          return "用例";
         case 'envs':
           return "环境";
         case 'plans':

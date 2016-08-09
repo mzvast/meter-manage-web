@@ -217,6 +217,21 @@
                 </div>
               </div>
               <!--/requirements-->
+              <!--cases-->
+              <div class="form-group" ng-switch-when="cases">
+                <label for="select" class="col-sm-2 control-label">类型</label>
+                <div class="col-sm-10">
+                  <select class="form-control" id="select"  ng-model="manageCtrl.selectedOption" ng-options="option.name for option in manageCtrl.options track by option.id"> </select>
+                </div>
+              </div>
+              <div class="form-group" ng-switch-when="cases">
+                <label for="detail" class="col-sm-2 control-label">详情</label>
+                <div class="col-sm-10">
+                                <textarea style="height: 30vh" class="form-control" id="detail" placeholder="详情" ng-model="manageCtrl.form.detail">
+                                </textarea>
+                </div>
+              </div>
+              <!--/cases-->
               <!--envs-->
               <div class="form-group" ng-switch-when="envs">
                 <label for="select" class="col-sm-2 control-label">类型</label>
