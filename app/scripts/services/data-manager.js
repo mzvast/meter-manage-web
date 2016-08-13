@@ -45,7 +45,8 @@ angular.module('manageApp')
       'envs',
       'plans',
       'flaws',
-      'infos'
+      'infos',
+      'results'
     ].map(function (elem) {
       var url = '/api/v2/' + elem + '/:id';
       self[elem] = $resource(url, {
@@ -245,6 +246,14 @@ angular.module('manageApp')
             describe: "描述",
             create_date: "创建时间"
           };
+        case 'results':
+          return {
+            id: "ID",
+            title: "名称",
+            describe: "描述",
+            create_date: "测试时间",
+            result:"结果"
+          };
         case 'cases':
           return {
             id: "ID",
@@ -315,7 +324,35 @@ angular.module('manageApp')
             id: 3,
             name: "性能测试"
           }];
+        case 'results':
+          return [{
+            id: 0,
+            name: "单元测试"
+          }, {
+            id: 1,
+            name: "集成测试"
+          }, {
+            id: 2,
+            name: "功能测试"
+          }, {
+            id: 3,
+            name: "性能测试"
+          }];
         case 'cases':
+          return [{
+            id: 0,
+            name: "单元测试"
+          }, {
+            id: 1,
+            name: "集成测试"
+          }, {
+            id: 2,
+            name: "功能测试"
+          }, {
+            id: 3,
+            name: "性能测试"
+          }];
+        case 'results':
           return [{
             id: 0,
             name: "单元测试"
@@ -438,6 +475,8 @@ angular.module('manageApp')
           return "计划";
         case 'flaws':
           return "缺陷";
+        case 'results':
+          return "结果";
       }
     };
 
