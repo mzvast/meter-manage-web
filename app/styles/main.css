@@ -24,3 +24,6 @@ table > tbody > tr > th{
   background-color: white;
   position: fixed;
 }
+p{
+  word-wrap: break-word;
+}

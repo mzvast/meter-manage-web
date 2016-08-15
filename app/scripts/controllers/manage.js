@@ -8,13 +8,14 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ManageCtrl', ['$state','$stateParams','dataManager','beianManager',function ($state,$stateParams,_dataManager,_beianManager) {
+  .controller('ManageCtrl', ['$scope','$state','$stateParams','dataManager','beianManager',function ($scope,$state,$stateParams,_dataManager,_beianManager) {
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
+
     vm.category = $stateParams.category||'products';
     vm.canEdit = $stateParams.canEdit;
     vm.onCase = false||$stateParams.onCase;

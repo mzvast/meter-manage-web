@@ -168,6 +168,17 @@ angular.module('manageApp')
           });
       };
 
+    self.ReadOneById = function (resourceName,thisID,cb) {
+      // console.log(queryObj);
+      self[resourceName].get({id:thisID}).$promise
+        .then(function (response) {
+          // console.log("获取" + vm.pageResourceName + " SUCCESS!");
+          if(typeof cb === 'function'){
+            cb(response);
+          }
+        });
+    };
+
     self.CreateOne = function (resourceName, formObj,cb) {
         console.log("formObj=");
         console.log(formObj);

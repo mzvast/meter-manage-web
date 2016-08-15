@@ -147,6 +147,7 @@ angular
           templateUrl: "views/manage/result.html",
           authenticate: false
         })
+        /*功能测试执行*/
         .state("func",{
           url:"/func",
           templateUrl:"views/action/func-main.html",
