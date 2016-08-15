@@ -19,6 +19,7 @@ angular.module('manageApp')
     vm.canEdit = $stateParams.canEdit;
     vm.onCase = false||$stateParams.onCase;
     vm.onPlan = false||$stateParams.onPlan;
+    vm.onCompare = false||$stateParams.onCompare;
     vm.mode = $stateParams.mode;//识别比对
     // console.log("vm.onCase",vm.onCase);
     vm.pageResourceName = _dataManager.getResourceName(vm.category);
@@ -40,16 +41,6 @@ angular.module('manageApp')
     // form数据模型 //
     //////////////
     vm.formModel = _dataManager.getFormModelByName(vm.category);
-
-    /////////////
-    // 资源连接 //
-    /////////////
-    var _C = _dataManager.C(vm.category, vm),
-      _R = _dataManager.R(vm.category, vm),
-      _U = _dataManager.U(vm.category, vm),
-      _D = _dataManager.D(vm.category, vm);
-
-
 
     ///////////
     // 弹窗Modal //
@@ -87,11 +78,9 @@ angular.module('manageApp')
     if(vm.mode==='beian'){
       vm.hideTab = true;
       vm.type = 0;
-      vm.compare =true;
     }else if(vm.mode==='gonghuo'){
       vm.hideTab = true;
       vm.type = 1;
-      vm.compare =true;
     }
     /**
      * 设置比对产品
@@ -114,22 +103,36 @@ angular.module('manageApp')
         reverse: vm.reverse,
         type: vm.type
       };
-      _R(queryObj);
+      _dataManager.ReadListByQuery(vm.category,queryObj,function (response) {
+        vm.itemList = response.json;
+        vm.totalItems = response.total_items;
+      });
       console.log(queryObj.type);
     };
     vm.get(); //页面第一次加载
     vm.create = function () {
       vm.form.type = vm.selectedOption?vm.selectedOption.id:undefined;
-      _C(vm.form);
+
+      _dataManager.CreateOne(vm.category,vm.form,function (response) {
+        _dataManager.addNotification("success", "新" + vm.pageResourceName + "创建成功");
+        vm.get();
+      });
 
     };
 
     vm.update = function () {
       vm.form.type = vm.selectedOption?vm.selectedOption.id:undefined;
-      _U(vm.form);
+      _dataManager.UpdateOneByID(vm.category,vm.form,function (response) {
+        _dataManager.addNotification("success", vm.pageResourceName + vm.form.id + "修改成功");
+        vm.get();
+      });
+
     };
     vm.remove = function (id) {
-      _D(id);
+      _dataManager.DeleteOneByID(vm.category, id,function (response) {
+        _dataManager.addNotification("success", vm.pageResourceName + id + "删除成功");
+      });
+
     };
 
   }]);

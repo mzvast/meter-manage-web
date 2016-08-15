@@ -157,64 +157,58 @@ angular.module('manageApp')
     //////////////
     // CRUD构造函数 //
     //////////////
-    self.R = function (resourceName, vm) {
-      return function (queryObj) {
+    self.ReadListByQuery = function (resourceName,queryObj,cb) {
         // console.log(queryObj);
         self[resourceName].get(queryObj).$promise
           .then(function (response) {
-            console.log("获取" + vm.pageResourceName + " SUCCESS!");
-
-            // console.dir(response);
-            // console.dir(response.json);
-            vm.itemList = response.json;
-            vm.totalItems = response.total_items;
+            // console.log("获取" + vm.pageResourceName + " SUCCESS!");
+            if(typeof cb === 'function'){
+              cb(response);
+            }
           });
       };
-    };
-    self.C = function (resourceName, vm) {
-      return function (formObj) {
+
+    self.CreateOne = function (resourceName, formObj,cb) {
         console.log("formObj=");
         console.log(formObj);
         self[resourceName].save({"json": formObj}).$promise
-          .then(function () {
+          .then(function (response) {
             console.log("新增资源 SUCCESS!");
-
             // console.log(data);
-            self.addNotification("success", "新" + vm.pageResourceName + "创建成功");
-            vm.get();
+            // self.addNotification("success", "新" + vm.pageResourceName + "创建成功");
+            // vm.get();
+            if(typeof cb === 'function'){
+              cb(response);
+            }
           });
-      };
     };
-    self.U = function (resourceName, vm) {
-      return function (formObj) {
+    self.UpdateOneByID = function (resourceName, formObj,cb) {
         console.log("formObj=");
         console.log(formObj);
         self[resourceName].update({
           id: formObj.id
         }, {"json": formObj}).$promise
-          .then(function () {
+          .then(function (response) {
             console.log("修改资源 SUCCESS!");
-
             // console.log(data);
-            self.addNotification("success", vm.pageResourceName + formObj.id + "修改成功");
-            vm.get();
+            if(typeof cb === 'function'){
+              cb(response);
+            }
           });
-      };
     };
-    self.D = function (resourceName, vm) {
-      return function (id) {
+    self.DeleteOneByID = function (resourceName, id,cb) {
         console.log("id=" + id);
         self[resourceName].delete({
           id: id
         }).$promise
-          .then(function () {
+          .then(function (response) {
             console.log("删除资源 SUCCESS!");
-
             // console.log(data);
-            self.addNotification("success", vm.pageResourceName + id + "删除成功");
-            vm.get();
+            if(typeof cb === 'function'){
+              cb(response);
+            }
+            // vm.get();
           });
-      };
     };
 
     self.getModelByName = function (name) {

@@ -8,7 +8,7 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ManagePlanCtrl', ['$stateParams', 'dataManager',function ($stateParams, _dataManager) {
+  .controller('ManagePlanCtrl', ['$state','$stateParams', 'dataManager',function ($state,$stateParams, _dataManager) {
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
@@ -130,13 +130,6 @@ angular.module('manageApp')
     //////////////
     vm.formModel = _dataManager.getFormModelByName('plans');
 
-    /////////////
-    // 资源连接 //
-    /////////////
-    var _C = _dataManager.C('plans', vm),
-      _R = _dataManager.R('plans', vm),
-      _U = _dataManager.U('plans', vm),
-      _D = _dataManager.D('plans', vm);
     ///////////
     // 弹窗Modal //
     ///////////
@@ -182,7 +175,10 @@ angular.module('manageApp')
         reverse: vm.reverse,
         type: vm.type
       };
-      _R(queryObj);
+      _dataManager.ReadListByQuery(vm.category,queryObj,function (response) {
+        vm.itemList = response.json;
+        vm.totalItems = response.total_items;
+      });
     };
     vm.get(); //页面第一次加载
 
@@ -193,8 +189,11 @@ angular.module('manageApp')
       form.requirementsList = vm.requirementsList;
       form.envsList = vm.envsList;
       form.usersList = vm.usersList;
-
-      _C(form);
+      _dataManager.CreateOne(vm.category,form,function (response) {
+        _dataManager.addNotification("success", "新" + vm.pageResourceName + "创建成功");
+        // vm.get();
+        $state.go('manage-plan');
+      });
     };
 
     vm.reset = function () {
@@ -210,9 +209,14 @@ angular.module('manageApp')
       form.envsList = vm.envsList;
       form.usersList = vm.usersList;
 
-      _U(vm.form);
+      _dataManager.UpdateOneByID(vm.category,vm.form,function (response) {
+        _dataManager.addNotification("success", vm.pageResourceName + form.id + "修改成功");
+        $state.go('manage-plan');
+      });
     };
     vm.remove = function (id) {
-      _D(id);
+      _dataManager.DeleteOneByID(vm.category, id,function (response) {
+        _dataManager.addNotification("success", vm.pageResourceName + id + "删除成功");
+      });
     };
   }]);

@@ -1,0 +1,116 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box box-danger" ui-view>
+      <div class="box-header">
+        <div class="row">
+          <div class="col-xs-6">
+            <h3 class="text-center"><b>选择测试计划</b></h3>
+          </div>
+          <!-- 搜索功能 -->
+          <div class="col-xs-3">
+            <form class="sidebar-form" style="margin-top: 1.6em;">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control" ng-model="managePlan.q" placeholder="搜索">
+                <span class="input-group-btn">
+                                  <button ng-click="managePlan.search(managePlan.q)" type="submit" name="search"  class="btn btn-flat"><i class="fa fa-search"></i>
+                                  </button>
+                                </span>
+                <span class="input-group-btn">
+                                  <button ng-click="managePlan.search()" type="submit" name="search"  class="btn btn-flat"><i class="glyphicon glyphicon-remove"></i>
+                                  </button>
+                                </span>
+              </div>
+            </form>
+          </div>
+          <!-- /搜索功能  -->
+          <!-- 新增按钮 -->
+          <!-- <div class="col-xs-2 text-center">
+              <a class="btn btn-app bg-olive margin " data-toggle="modal" data-target="#Modal" ng-click="managePlan.setModal()">
+                  <i class="glyphicon glyphicon-plus"></i> 新增
+              </a>
+          </div> -->
+          <!--<div class="col-xs-2 text-center">-->
+            <!--<a class="btn btn-app bg-olive margin "  ui-sref="manage-plan.on.products" ng-click="managePlan.setModal()">-->
+              <!--<i class="glyphicon glyphicon-plus"></i> 新增-->
+            <!--</a>-->
+          <!--</div>-->
+          <!-- /新增按钮 -->
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">
+        <div class="col-md-12">
+          <!-- Custom Tabs -->
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="" ng-click="managePlan.setTab()" data-toggle="tab" aria-expanded="true">全部类型</a></li>
+              <li ng-repeat="item in managePlan.tabs"><a href="" ng-click="managePlan.setTab(item.id)" data-toggle="tab" aria-expanded="true">{{item.name}}</a></li>
+            </ul>
+            <div class="tab-content">
+              <table class="table table-hover text-center">
+                <!-- 列表头 -->
+                <tr>
+                  <!-- 模型列表头 -->
+                  <th ng-repeat="(key, value) in managePlan.model" ng-click="managePlan.order(key)">
+                    {{value}}
+                    <span class="sortorder" ng-show="managePlan.predicate === key" ng-class="{reverse:managePlan.reverse}"></span>
+                  </th>
+                  <!-- /模型列表头 -->
+                  <!--自定义表头-->
+                  <th ng-click="managePlan.order('type')">
+                    类型
+                    <span class="sortorder" ng-show="managePlan.predicate === 'type'" ng-class="{reverse:managePlan.reverse}"></span>
+                  </th>
+                  <!--/自定义表头-->
+                  <!-- 功能列表头 -->
+                  <th>操作</th>
+                  <!-- /功能列表头 -->
+                </tr>
+                <!-- /列表头 -->
+                <tr ng-repeat="item in managePlan.itemList| orderBy:managePlan.predicate:managePlan.reverse">
+                  <!-- 模型列表内容  -->
+                  <td ng-repeat="(key, value) in managePlan.model">{{item[key]}}</td>
+                  <!-- /模型列表内容  -->
+                  <!--状态彩色指示-->
+                  <td>
+                    <div class="btn-group">
+                      <a class="btn margin" ng-class="{'bg-navy':item.type===0,'bg-olive':item.type===1}">
+                        {{managePlan.options[item.type]['name']}}
+                      </a>
+                    </div>
+                  </td>
+                  <!--/状态彩色指示-->
+                  <!-- 操作按钮  -->
+                  <td>
+                    <div class="btn-group">
+                      <!--<a class="btn btn-app bg-orange margin" ui-sref="manage-plan.on.products" ng-click="managePlan.setModal(item)">-->
+                        <!--<i class="fa fa-edit"></i> 修改-->
+                      <!--</a>-->
+                      <a class="btn btn-app bg-orange margin" ng-click="funcCtrl.choosePlan(item)">
+                        <i class="fa fa-edit"></i> 执行测试
+                      </a>
+                      <!--<a class="btn btn-app bg-maroon margin" ng-click="managePlan.remove(item.id)">-->
+                        <!--<i class="glyphicon glyphicon-remove"></i> 删除-->
+                      <!--</a>-->
+                    </div>
+                  </td>
+                  <!-- /操作按钮  -->
+                </tr>
+              </table>
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- nav-tabs-custom -->
+        </div>
+        <!-- 分页器 -->
+        <div class="text-center">
+          <uib-pagination total-items="managePlan.totalItems" ng-model="managePlan.currentPage" max-size="managePlan.maxSize" items-per-page="managePlan.itemsPerPage" ng-change="managePlan.pageChanged()" class="pagination-md" boundary-link-numbers="true"></uib-pagination>
+        </div>
+        <!-- /分页器 -->
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
+

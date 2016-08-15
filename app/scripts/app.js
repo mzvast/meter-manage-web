@@ -147,9 +147,30 @@ angular
           templateUrl: "views/manage/result.html",
           authenticate: false
         })
-        /*测试执行*/
+        .state("func",{
+          url:"/func",
+          templateUrl:"views/action/func-main.html",
+          controller:'ActionFuncCtrl as funcCtrl',
+          authenticate:false
+        })
+        .state("func.onPlan",{
+          url:"/choosePlan",
+          templateUrl:"views/action/func-on-plan.html",
+          controller: 'ManagePlanCtrl as managePlan',
+          authenticate:false
+        })
+        .state("func.onTest",{
+          url:"/doTest",
+          templateUrl:"views/action/func-on-test.html",
+          // controller:'ActionFuncCtrl as funcCtrl',
+          authenticate:false
+        })
+        /*比对测试执行*/
         .state("action-beian", {
           url: "/:mode",
+          params:{
+            onCompare:true
+          },
           templateUrl: "views/action/beian-main.html",
           controller: 'ActionBeianCtrl as beianCtrl',
           authenticate: false

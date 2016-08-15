@@ -96,6 +96,13 @@
                       </a>
                     </div>
                     <!--/可以修改状态-->
+                    <div ng-if="manageCtrl.onCompare">
+                      <div class="btn-group">
+                        <a class="btn bg-olive margin" ng-click="manageCtrl.setProduct(item)">
+                          <i class="fa fa-fw fa-hand-pointer-o"></i>
+                        </a>
+                      </div>
+                    </div>
                     <!--不能修改状态 onPlan-->
                     <div ng-if="manageCtrl.onPlan" ng-switch="manageCtrl.category">
                       <div ng-switch-when="products" class="btn-group" >
@@ -106,12 +113,6 @@
                           <a ng-hide="managePlan.itemNotInProductsList(item)" class="btn bg-maroon margin" ng-click="managePlan.removeFromProductsList(item)">
                             <i class="fa fa-fw fa-minus"></i>
                           </a>
-                        </div>
-                        <div class="btn-group" ng-show="manageCtrl.compare">
-                          <a class="btn bg-olive margin" ng-click="manageCtrl.setProduct(item)">
-                            <i class="fa fa-fw fa-hand-pointer-o"></i>
-                          </a>
-
                         </div>
                       </div>
                       <div ng-switch-when="requirements" class="btn-group" >
@@ -162,7 +163,6 @@
                     </div>
                     <!--/不能修改状态-->
 
-                    </div>
                   </td>
                   <!-- /操作按钮  -->
                 </tr>

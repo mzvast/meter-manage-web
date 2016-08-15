@@ -1,23 +1,23 @@
 'use strict';
 
-describe('Controller: ActionBeianProductCtrl', function () {
+describe('Controller: ActionFuncCtrl', function () {
 
   // load the controller's module
   beforeEach(module('manageApp'));
 
-  var ActionBeianProductCtrl,
+  var ActionFuncCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    ActionBeianProductCtrl = $controller('ActionBeianProductCtrl', {
+    ActionFuncCtrl = $controller('ActionFuncCtrl', {
       $scope: scope
       // place here mocked dependencies
     });
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
-    expect(ActionBeianProductCtrl.awesomeThings.length).toBe(3);
+    expect(ActionFuncCtrl.awesomeThings.length).toBe(3);
   });
 });
