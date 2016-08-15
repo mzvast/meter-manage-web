@@ -17,8 +17,10 @@ angular.module('manageApp')
     ];
     vm.category = $stateParams.category||'products';
     vm.canEdit = $stateParams.canEdit;
+    vm.onCase = false||$stateParams.onCase;
+    vm.onPlan = false||$stateParams.onPlan;
     vm.mode = $stateParams.mode;//识别比对
-    console.log(vm.mode);
+    // console.log("vm.onCase",vm.onCase);
     vm.pageResourceName = _dataManager.getResourceName(vm.category);
     vm.pageType = '管理';
     vm.pageTitle = vm.pageResourceName + vm.pageType;

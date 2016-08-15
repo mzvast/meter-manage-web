@@ -258,8 +258,10 @@ angular.module('manageApp')
           return {
             id: "ID",
             title: "名称",
-            describe: "描述",
-            create_date: "创建时间"
+            describe: "描述"//,
+            // env:"适用环境",
+            // req:"适用需求"
+            // create_date: "创建时间"
           };
         case 'plans':
           return {
@@ -352,20 +354,6 @@ angular.module('manageApp')
             id: 3,
             name: "性能测试"
           }];
-        case 'results':
-          return [{
-            id: 0,
-            name: "单元测试"
-          }, {
-            id: 1,
-            name: "集成测试"
-          }, {
-            id: 2,
-            name: "功能测试"
-          }, {
-            id: 3,
-            name: "性能测试"
-          }];
         case 'plans':
           return [{
             id: 0,
@@ -436,10 +424,8 @@ angular.module('manageApp')
           };
         case 'envs':
           return {
-            name: "名称",
-            age:"年龄",
-            skill:"技能",
-            exp:"经验"
+            title: "名称",
+            describe: "描述"
           };
         case 'flaws':
           return {
@@ -457,6 +443,17 @@ angular.module('manageApp')
           };
         default:
           return;
+      }
+    };
+
+
+    self.getSpecialFormModelByName = function (name) {
+      switch (name){
+        case 'cases':
+          return{
+            env:"所属环境",
+            req:"所属需求"
+          }
       }
     };
     self.getResourceName = function (name) {

@@ -60,8 +60,44 @@ angular
           controller: 'ManageCtrl as manageCtrl',
           authenticate: false
         })
+        /*用例管理*/
+        .state("manage-case",{
+          url:"/manage-case",
+          params:{
+            onCase:true
+          },
+          templateUrl: "views/manage/case.html",
+          controller: 'ManageCaseCtrl as manageCase',
+          authenticate: false
+        })
+        .state("manage-case.on", {
+          url: "-on",
+          templateUrl: "views/manage/case-new.html"
+        })
+        .state("manage-case.on.requirements", {
+          url: "-requirements",
+          params:{
+            canEdit:false,
+            category:'requirements'
+          },
+          controller: 'ManageCtrl as manageCtrl',
+          templateUrl: "views/manage/main.html"
+        })
+        .state("manage-case.on.envs", {
+          url: "-envs",
+          params:{
+            canEdit:false,
+            category:'envs'
+          },
+          controller: 'ManageCtrl as manageCtrl',
+          templateUrl: "views/manage/main.html"
+        })
+        /*计划管理*/
         .state("manage-plan", {
           url: "/manage-plan",
+          params:{
+            onPlan:true
+          },
           templateUrl: "views/manage/plan.html",
           controller: 'ManagePlanCtrl as managePlan',
           authenticate: false
@@ -152,12 +188,12 @@ angular
           controller: 'ActionBeianCompareCtrl as compareCtrl',
           authenticate:false
         })
-        // .state("action-beian.report",{
-        //   url:"/report",
-        //   templateUrl:"views/action/beian-report.html",
-        //   controller: 'ActionBeianReportCtrl as reportCtrl',
-        //   authenticate:false
-        // })
+        .state("action-beian.report",{
+          url:"/report",
+          templateUrl:"views/action/beian-report.html",
+          controller: 'ActionBeianReportCtrl as reportCtrl',
+          authenticate:false
+        })
 
         /*系统配置*/
         .state("setting-role", {

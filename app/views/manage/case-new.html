@@ -1,0 +1,113 @@
+<div class="box-header">
+    <div class="row">
+        <div class="col-xs-2" style="margin-top: 1em;">
+          <a class="btn btn-app" ui-sref="manage-case">
+            <i class="fa fa-arrow-left"></i> 返回
+          </a>
+        </div>
+        <div class="col-xs-6">
+            <h3 ng-show="manageCase.modalTitle" class="text-center"><b>{{manageCase.modalTitle}}</b></h3>
+            <h3 ng-hide="manageCase.modalTitle" class="text-center"><b>请返回上级重试</b></h3>
+        </div>
+        <div>
+          <div class="col-xs-4" style="margin-top: 1em;">
+            <a class="btn btn-app" ng-click="manageCase.reset()">
+              <i class="fa fa-repeat"></i> 清空
+            </a>
+            <a class="btn btn-app bg-orange" ng-click="manageCase.create()">
+              <i class="fa fa-save"></i> 保存
+            </a>
+          </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="box" ng-class="{'box-danger':manageCase.onRequirements}">
+                <div class="box-header text-center" style="cursor:pointer;" ui-sref="manage-case.on.requirements" ng-click="manageCase.setTopTab('onRequirements')">
+                    <h3 class="box-title">需求</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <div ng-hide="manageCase.requirementsList.length!==0">
+                        <p class="text-center">
+                            请选择需求
+                        </p>
+                    </div>
+                    <table ng-show="manageCase.requirementsList.length!==0" class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>类型</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr ng-repeat="item in manageCase.requirementsList">
+                                <td>{{item.id}}</td>
+                                <td> {{item.title}}</td>
+                                <td>
+                                    {{item.type}}
+                                </td>
+                                <td><span>
+                                <a href="" ng-click="manageCase.removeFromRequirementsList(item)"><i class="fa fa-fw fa-remove"></i></a>
+                                </span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="box" ng-class="{'box-danger':manageCase.onEnvs}">
+                <div class="box-header text-center" style="cursor:pointer;" ui-sref="manage-case.on.envs" ng-click="manageCase.setTopTab('onEnvs')">
+                    <h3 class="box-title">环境</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <div ng-hide="manageCase.envsList.length!==0">
+                        <p class="text-center">
+                            请选择环境
+                        </p>
+                    </div>
+                    <table ng-show="manageCase.envsList.length!==0" class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr ng-repeat="item in manageCase.envsList">
+                                <td>{{item.id}}</td>
+                                <td> {{item.title}}</td>
+                                <td><span>
+                                <a href="" ng-click="manageCase.removeFromEnvsList(item)"><i class="fa fa-fw fa-remove"></i></a>
+                                </span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li ui-sref-active="active"><a ui-sref="manage-case.on.requirements" ng-click="manageCase.setTopTab('onRequirements')">需求</a></li>
+                    <li ui-sref-active="active"><a ui-sref="manage-case.on.envs" ng-click="manageCase.setTopTab('onEnvs')">环境</a></li>
+                </ul>
+                <div class="tab-content" ui-view>
+                    <div class="tab-pane active" id="tab_1">
+                        <b>请选择一项标签</b>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
+        </div>
+    </div>
+</div>
