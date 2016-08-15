@@ -24,12 +24,6 @@
   "appPath": "app",
   "moduleName": "manageApp",
   "overrides": {
-    "ng-ckeditor": {
-      "main": [
-        "libs/ckeditor/ckeditor.js",
-        "ng-ckeditor.min.js"
-      ]
-    },
     "bootstrap": {
       "main": [
         "less/bootstrap.less",
