@@ -1,14 +1,10 @@
 <div class="box">
-  <div class="box-header with-border">
-    <h3 class="box-title">Default Box Example</h3>
-    <div class="box-tools pull-right">
-      <!-- Buttons, labels, and many other things can be placed here! -->
-      <!-- Here is a label for example -->
-      <span class="label label-primary">Label</span>
-    </div><!-- /.box-tools -->
+  <div class="box-header with-border text-center">
+    <h3 >功能测试执行</h3>
+
   </div><!-- /.box-header -->
   <div class="box-body">
-    <div class="col-xs-3">
+    <div ng-class="{'col-xs-offset-3 col-xs-6':!funcCtrl.currentCase,'col-xs-3':funcCtrl.currentCase}">
       <div class="box">
         <!-- Add the bg color to the header using any of the bg-* classes -->
         <div class="text-center" >
@@ -18,18 +14,38 @@
         </div>
         <div class="box-footer no-padding">
           <ul class="nav nav-stacked">
-            <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
-            <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
-            <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
-            <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
+            <li ng-repeat="case in funcCtrl.cases"><a href="#" ng-click="funcCtrl.setCase($index)">{{ case.content.describe }} <span class="pull-right badge bg-blue">--</span></a></li>
           </ul>
         </div>
       </div>
     </div>
 
+    <div class="col-xs-4" ng-if="funcCtrl.currentCase">
+      <div class="box">
+        <p >
+          {{ funcCtrl.currentCase.content.detail }}
+        </p>
+      </div>
+    </div>
+    <div class=" col-xs-5" ng-if="funcCtrl.currentCase">
+      <div class="box">
+        <div class="form-group text-center">
+          <label class="control-label"><h3>用例通过<input type="checkbox" ng-model="funcCtrl.currentCase['pass']"></h3> </label>
+        </div>
+
+        <div class="form-group text-center" >
+          <label class="control-label"><h3>数据和备注</h3></label>
+          <textarea style="height: 100px;" class="form-control" ng-model="funcCtrl.currentCase['record']"></textarea>
+        </div>
+      </div>
+
+    </div>
+
 
   </div><!-- /.box-body -->
   <div class="box-footer">
-    The footer of the box
+    <div class="col-xs-offset-4 col-xs-4">
+      <button class="btn btn-block btn-success" ng-click="funcCtrl.fire()">全部提交</button>
+    </div>
   </div><!-- box-footer -->
 </div><!-- /.box -->
