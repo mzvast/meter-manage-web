@@ -15,6 +15,9 @@ angular.module('manageApp')
       'AngularJS',
       'Karma'
     ];
+
+    localStorage.clear();//每次切换模式后清除本地数据存储
+
     var urlMode = $stateParams.mode,
       mode,//0,1,2
       tabs,

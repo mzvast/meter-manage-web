@@ -157,7 +157,7 @@ angular.module('manageApp')
         type: vm.type
       };
       _dataManager.ReadListByQuery(vm.category,queryObj,function (response) {
-        vm.itemList = response.json;
+        vm.itemList = response.data;
         vm.totalItems = response.total_items;
       });
     };

@@ -106,13 +106,24 @@ angular.module('manageApp')
         arg = JSON.parse(localArg);
       }else{//本地没有
         var i;
-        for(i=0;i<8;i++){
+        for(i=0;i<4;i++){
           arg.push({
             bit:i+1,
             on:false,
             num: "xxxxxxxxxxxx",
             addr:"xxxxxxxxxxxx",
             type:"single_phase",
+            vol:220,
+            key_index:"04"
+          })
+        }
+        for(i=4;i<8;i++){
+          arg.push({
+            bit:i+1,
+            on:false,
+            num: "xxxxxxxxxxxx",
+            addr:"xxxxxxxxxxxx",
+            type:"three_phase",
             vol:220,
             key_index:"04"
           })
@@ -470,6 +481,8 @@ angular.module('manageApp')
      */
     vm.wsSendInfoMsg = function () {
       makeInfoMsg();
+      console.log("比对信息debug");
+      console.log(infoMsg);//debug info msg
       vm.addTimelineMsg({
         direction: "out",
         type: "success",

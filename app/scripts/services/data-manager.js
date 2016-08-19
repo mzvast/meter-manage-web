@@ -62,17 +62,25 @@ angular.module('manageApp')
      * @param id
      * @param cb
        */
+    // self.getRemoteInfo = function (id,cb) {
+    //   self['infos'].get({
+    //     id:id
+    //   }).$promise
+    //     .then(function (response) {
+    //       console.log("获取" + 'info' + " SUCCESS!");
+    //
+    //       // console.dir(response);
+    //       // console.dir(response.json);
+    //       cb(response)
+    //     });
+    // };
     self.getRemoteInfo = function (id,cb) {
-      self['infos'].get({
-        id:id
-      }).$promise
-        .then(function (response) {
+      var httpPath = '/api/v2/products/'+ id + "/details";//'/node/file';
+      $http.get(httpPath)
+        .success(function (data, status, headers) {
           console.log("获取" + 'info' + " SUCCESS!");
-
-          // console.dir(response);
-          // console.dir(response.json);
-          cb(response)
-        });
+          cb(data);
+        })
     };
     /**
      * 设置产品详细信息
@@ -93,7 +101,7 @@ angular.module('manageApp')
     };
 
     self.setRemoteHex = function (id,fileArray,cb) {
-      var uploadUrl = '/api/v2/hex/'+ id;
+      var uploadUrl = '/api/v2/products/'+ id + "/hexfiles";
       var fd = new FormData();
       var i;
       for(i=0;i<fileArray.length;i++)
@@ -112,7 +120,7 @@ angular.module('manageApp')
     };
 
     self.getRemoteHexNum = function (id,cb) {
-      var httpPath = '/api/v2/hex/'+ id;//'/node/file';
+      var httpPath = '/api/v2/products/'+ id + "/hexfiles";//'/node/file';
       $http.get(httpPath)
         .success(function (data, status, headers) {
         cb(data);
