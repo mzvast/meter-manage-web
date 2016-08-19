@@ -40,7 +40,7 @@
     },
     "PACE": {
       "main": [
-        "themes/green/pace-theme-barber-shop.css",
+        "themes/green/pace-theme-corner-indicator.css",
         "pace.js"
       ]
     }
