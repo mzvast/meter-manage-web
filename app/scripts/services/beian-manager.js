@@ -515,8 +515,8 @@ angular.module('manageApp')
         "bit": []
       };
       var setMsg = function () {
-        for (var i = 0; i < arg.length; i++) {
-          startMsg.bit.push(arg[i]['bit']);
+        for (var i = 0; i < infoMsg.data.meter_info.length; i++) {
+          startMsg.bit.push(infoMsg.data.meter_info[i]['bit']);
         }
       }();
       vm.addTimelineMsg({

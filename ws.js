@@ -19,6 +19,7 @@ wss.on('connection', function connection(ws) {
       } else {
         //通过这种方法可将字符串转换为对象
         // data = eval("(" + data + ")");
+        console.log('received: %s', message);
         type = JSON.parse(message).type;
         // ws.send(type);
         console.log('type: %s', type);
