@@ -103,11 +103,13 @@ describe('Service: beianManager', function () {
         "file_info": [
           {
             "cpu_id": 1,
-            "md5": "d9fc6d737aea3345f681f24c8a2bb07c"
+            "md5": "d9fc6d737aea3345f681f24c8a2bb07c",
+            "extname": "hex"
           },
           {
             "cpu_id": 2,
-            "md5": "d9fc6d737aea3345f681f24c8a2bb07d"
+            "md5": "d9fc6d737aea3345f681f24c8a2bb07d",
+            "extname": "hex"
           }
         ],
         "cpu_info": [

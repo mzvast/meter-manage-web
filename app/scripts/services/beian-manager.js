@@ -16,6 +16,7 @@ angular.module('manageApp')
       arg,
       hex = [],
       md5 = [],
+      filename = [],
       recordNum;
 
     var ws,
@@ -150,11 +151,12 @@ angular.module('manageApp')
      * @param index
      * @returns {boolean}
      */
-    vm.setHex = function (hexFile, index) {
+    vm.setHex = function (hexFile, index, name) {
       if (hexFile instanceof ArrayBuffer) {
         console.log("true");
         hex[index] = hexFile;
         md5[index] = SparkMD5.ArrayBuffer.hash(hex[index]);
+        filename[index] = name;
         $rootScope.$apply();
         return true;
       }
@@ -428,7 +430,8 @@ angular.module('manageApp')
         for (i = 0; i < md5.length; i++) {
           infoMsg.data.file_info.push({
             cpu_id: i + 1,
-            md5: md5[i]
+            md5: md5[i],
+            extname:filename[i].split(".")[1]
           });
         }
       }();
@@ -515,6 +518,7 @@ angular.module('manageApp')
         "bit": []
       };
       var setMsg = function () {
+        makeInfoMsg();
         for (var i = 0; i < infoMsg.data.meter_info.length; i++) {
           startMsg.bit.push(infoMsg.data.meter_info[i]['bit']);
         }
@@ -624,6 +628,8 @@ angular.module('manageApp')
 
       md5[0] = 'd9fc6d737aea3345f681f24c8a2bb07c';
       md5[1] = 'd9fc6d737aea3345f681f24c8a2bb07d';
+      filename[0] = '0.hex';
+      filename[1] = '1.hex';
 
       info = {
         "cpu_info": {

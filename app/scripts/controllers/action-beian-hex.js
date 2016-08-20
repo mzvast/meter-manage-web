@@ -95,7 +95,9 @@ angular.module('manageApp')
         return;
       }
       var file = model;
-      console.log(file.size);
+      var name = file.name;
+      var size = file.size;
+      console.log(name+"|"+size);
       var reader = new FileReader();
       reader.readAsArrayBuffer(file);
       // reader.readAsBinaryString(file);
@@ -106,12 +108,12 @@ angular.module('manageApp')
         // console.log(evt.target.result);
         // Handle UTF-16 file dump
         var u8 = new Uint8Array(buffer);
-        sendHexToManager(buffer,index);
+        sendHexToManager(buffer,index,name);
       };
 
     };
-    var sendHexToManager = function (buffer,index) {
-      var result = _beianManager.setHex(buffer,index);
+    var sendHexToManager = function (buffer,index,name) {
+      var result = _beianManager.setHex(buffer,index,name);
       if(result){
         refreshHash();
       }else{
