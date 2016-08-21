@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var pdfPrinter = require('pdfmake');
 var fs = require('fs');
 var modRewrite = require('connect-modrewrite');
-var javaApiForwardingUrl = 'http://localhost:8080';//'http://api.open-notify.org/astros.json?';
+var javaApiForwardingUrl = 'http://121.42.156.106:8080/dianbiao/';//'http://api.open-notify.org/astros.json?';
 var nodeApiForwardingUrl = 'http://localhost:8088';
 // Solution for forwarding from http to https taken from:
 // http://stackoverflow.com/questions/15801014/how-to-use-node-http-proxy-for-http-to-https-routing
@@ -28,6 +28,12 @@ console.log('Forwarding /node/* API requests to ' + nodeApiForwardingUrl);
 var server = express();
 server.set('port', 8000);
 
+server.all("/api/*", function(req, res) {
+  apiProxy.web(req, res, {
+    target: javaApiForwardingUrl
+  });
+});
+
 // server.use(express.static(__dirname + '/dist'));
 server
   .use(modRewrite(['!/pdf|!/api|\\.jpg|\\.gif|\\.png|\\.svg|\\.woff2|\\.eot|\\.html|\\.js|\\.css|\\.woff|\\.ttf|\\.swf$ /index.html [L]']))
@@ -35,11 +41,7 @@ server
 server.get('/index.html', function(req, res) {
   res.sendFile('dist/index.html');
 });
-server.all("/api/*", function(req, res) {
-  apiProxy.web(req, res, {
-    target: javaApiForwardingUrl
-  });
-});
+
 
 var jsonParser = bodyParser.json();
 server.post("/node/pdf",jsonParser,function (req, res) {

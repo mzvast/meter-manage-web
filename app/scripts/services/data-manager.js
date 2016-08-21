@@ -190,7 +190,7 @@ angular.module('manageApp')
     self.CreateOne = function (resourceName, formObj,cb) {
         console.log("formObj=");
         console.log(formObj);
-        self[resourceName].save({"json": formObj}).$promise
+        self[resourceName].save(formObj).$promise
           .then(function (response) {
             console.log("新增资源 SUCCESS!");
             // console.log(data);
@@ -206,7 +206,7 @@ angular.module('manageApp')
         console.log(formObj);
         self[resourceName].update({
           id: formObj.id
-        }, {"json": formObj}).$promise
+        }, formObj).$promise
           .then(function (response) {
             console.log("修改资源 SUCCESS!");
             // console.log(data);
@@ -295,7 +295,7 @@ angular.module('manageApp')
             id: "ID",
             title: "名称",
             productName: "产品名称",
-            supplier: "供应商",
+            vendor: "供应商",
             productID: "产品ID",
             planID: "测试计划ID",
             // type:"状态",
@@ -410,8 +410,8 @@ angular.module('manageApp')
             name: "名称",
             model:"型号",
             batch: "批次",
-            supplier: "供应商",
-            describe: "描述"
+            vendor: "供应商",
+            description: "描述"
           };
         case 'users':
           return {

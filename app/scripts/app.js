@@ -15,7 +15,7 @@ angular
       'angularCSS',
       'ngCookies',
       'ngResource',
-      'ngRap',
+      // 'ngRap',
       'formly',
       'formlyBootstrap',
       'ui.bootstrap'
@@ -231,17 +231,17 @@ angular
       ;
 
     }])
-  .config(['$httpProvider',
-    'ngRapProvider',
-    function (httpProvider,
-              ngRapProvider) {
-      ngRapProvider.script = 'http://rap.taobao.org/rap.plugin.js?projectId=3768'; // replce your host and project id
-      ngRapProvider.enable({
-        mode: 3
-      });
-      httpProvider.interceptors.push('rapMockInterceptor');
-    }]
-  )
+  // .config(['$httpProvider',
+  //   'ngRapProvider',
+  //   function (httpProvider,
+  //             ngRapProvider) {
+  //     ngRapProvider.script = 'http://rap.taobao.org/rap.plugin.js?projectId=3768'; // replce your host and project id
+  //     ngRapProvider.enable({
+  //       mode: 3
+  //     });
+  //     httpProvider.interceptors.push('rapMockInterceptor');
+  //   }]
+  // )
   .run(function ($rootScope, $state, authService) {
     $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
       if (toState.authenticate && !authService.isAuthenticated()) {

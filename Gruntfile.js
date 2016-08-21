@@ -19,7 +19,7 @@ module.exports = function (grunt) {
       livereloadPort = grunt.option('live');
 
   if (typeof apiHost !== 'string') {
-    apiHost = 'localhost';
+    apiHost = '121.42.156.106';//'localhost';
   }
 
   if (typeof apiPort !== 'number') {
@@ -111,10 +111,10 @@ module.exports = function (grunt) {
           headers: {
             'host': apiHost
           }
-        // ,
-        //   rewrite:{
-        //     '/api':''
-        //   }
+        ,
+          rewrite:{
+            '^/api/':'/dianbiao/api/'
+          }
         },{
         context: '/node',// the context of the data service
         host: apiHost,// wherever the data service is running

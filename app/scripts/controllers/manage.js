@@ -106,6 +106,12 @@ angular.module('manageApp')
       };
       _dataManager.ReadListByQuery(vm.category,queryObj,function (response) {
         vm.itemList = response.data;
+        vm.itemList.forEach(function (item) {
+          if(item['create_date']){
+           // console.log(item['create_date']) ;
+            item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
+          }
+        });
         vm.totalItems = response.total_items;
       });
       console.log(queryObj.type);
@@ -113,8 +119,11 @@ angular.module('manageApp')
     vm.get(); //页面第一次加载
     vm.create = function () {
       vm.form.type = vm.selectedOption?vm.selectedOption.id:undefined;
-
-      _dataManager.CreateOne(vm.category,vm.form,function (response) {
+      var local_form = vm.form;//复制和处理
+      if(vm.category === "products"){
+        delete local_form.type;
+      }
+      _dataManager.CreateOne(vm.category,local_form,function (response) {
         _dataManager.addNotification("success", "新" + vm.pageResourceName + "创建成功");
         vm.get();
       });
@@ -123,7 +132,13 @@ angular.module('manageApp')
 
     vm.update = function () {
       vm.form.type = vm.selectedOption?vm.selectedOption.id:undefined;
-      _dataManager.UpdateOneByID(vm.category,vm.form,function (response) {
+
+      var local_form = vm.form;//复制和处理
+      if(vm.category === "products"){
+        console.log(local_form);
+        delete local_form.type;
+      }
+      _dataManager.UpdateOneByID(vm.category,local_form,function (response) {
         _dataManager.addNotification("success", vm.pageResourceName + vm.form.id + "修改成功");
         vm.get();
       });
@@ -133,7 +148,7 @@ angular.module('manageApp')
       _dataManager.DeleteOneByID(vm.category, id,function (response) {
         _dataManager.addNotification("success", vm.pageResourceName + id + "删除成功");
       });
-
+      vm.get();
     };
 
   }]);
