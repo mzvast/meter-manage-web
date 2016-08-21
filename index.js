@@ -3,7 +3,9 @@
  */
 var express = require('express');
 var httpProxy = require('http-proxy');
-// var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
+var pdfPrinter = require('pdfmake');
+var fs = require('fs');
 var modRewrite = require('connect-modrewrite');
 var javaApiForwardingUrl = 'http://localhost:8080';//'http://api.open-notify.org/astros.json?';
 var nodeApiForwardingUrl = 'http://localhost:8088';
@@ -39,10 +41,15 @@ server.all("/api/*", function(req, res) {
   });
 });
 
-server.all("/node/*", function(req, res) {
-  apiProxy.web(req, res, {
-    target: nodeApiForwardingUrl
-  });
+var jsonParser = bodyParser.json();
+server.post("/node/pdf",jsonParser,function (req, res) {
+  if (!req.body) {
+    return res.sendStatus(400);
+  }
+  console.log('get pdf!');
+  // console.log(req.body);
+  printToResponse(req.body,res);
+
 });
 
 // Start Server.
@@ -50,3 +57,28 @@ server.listen(server.get('port'), function() {
   console.log('Express server listening on port ' + server.get('port'));
 });
 
+var printToResponse = function (dd,res) {
+
+  var docDefinition = dd;
+
+  var fonts = {
+    Roboto: {
+      normal: 'Roboto-Regular.ttf',
+      bold: 'Roboto-Medium.ttf',
+      italics: 'Roboto-Italic.ttf',
+      bolditalics: 'Roboto-Italic.ttf'
+    },
+    msyh: {
+      normal: './fonts/msyh.ttf',
+      bold: './fonts/msyh.ttf',
+      italics: './fonts/msyh.ttf',
+      bolditalics: './fonts/msyh.ttf'
+    }
+  };
+  var printer = new pdfPrinter(fonts);
+  var pdfDoc = printer.createPdfKitDocument(docDefinition);
+
+  pdfDoc.pipe(res);//流处理，不在服务器存储结果
+  pdfDoc.end();
+
+};

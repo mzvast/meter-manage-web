@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 var express = require('express');
-var httpProxy = require('http-proxy');
+
 var bodyParser = require('body-parser');
 var pdfPrinter = require('pdfmake');
 var fs = require('fs');
