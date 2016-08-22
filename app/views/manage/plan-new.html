@@ -133,18 +133,18 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
-                    <div ng-hide="managePlan.usersList.length!==0">
+                    <div ng-hide="managePlan.executor.length!==0">
                         <p class="text-center">
-                            请选择环境
+                            请选择执行人员
                         </p>
                     </div>
-                    <table ng-show="managePlan.usersList.length!==0" class="table table-condensed">
+                    <table ng-show="managePlan.executor.length!==0" class="table table-condensed">
                         <tbody>
                             <tr>
                                 <th>名称</th>
                                 <th>操作</th>
                             </tr>
-                            <tr ng-repeat="item in managePlan.usersList">
+                            <tr ng-repeat="item in managePlan.executor">
                                 <td> {{item.name}}</td>
                                 <td><span>
                                 <a href="" ng-click="managePlan.removeFromUsersList(item)"><i class="fa fa-fw fa-remove"></i></a>

@@ -29,7 +29,7 @@ angular.module('manageApp')
          casesList.forEach(function (caseID) {
            console.log('caseID===?===',caseID);
            _dataManager.ReadOneById('cases',caseID,function (response) {
-             var caseItem = response.json;
+             var caseItem = response.data;
              console.log(caseItem);
              vm.cases.push({
                id:caseID,
@@ -45,7 +45,15 @@ angular.module('manageApp')
       vm.currentCase = vm.cases[index];
     };
     vm.fire = function () {
-      console.log(vm.cases);
+      var results = [];
+      vm.cases.forEach(function (caseItem) {
+        results.push({id:caseItem.id,pass:caseItem.pass?1:0,record:caseItem.record});
+      });
+      console.log(results);
+      _dataManager.setRemoteResult(vm.currentPlan.id,results,function (response) {
+        _dataManager.addNotification("success", "结果上传成功！");
+        $state.go("func.onPlan");
+      })
     }
 
   }]);

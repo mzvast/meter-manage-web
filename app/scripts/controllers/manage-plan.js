@@ -52,10 +52,10 @@ angular.module('manageApp')
       }
 
     };
-    vm.usersList = [];
+    vm.executor = [];
     vm.addToUsersList = function (item) {
-      if (itemNotInList(item, vm.usersList)) {
-        vm.usersList.push(item);
+      if (itemNotInList(item, vm.executor)) {
+        vm.executor.push(item);
       }
     };
 
@@ -79,7 +79,7 @@ angular.module('manageApp')
       removeItemFromList(item, vm.envsList);
     };
     vm.removeFromUsersList = function (item) {
-      removeItemFromList(item, vm.usersList);
+      removeItemFromList(item, vm.executor);
     };
     // 操作按钮样式
     var itemNotInList = function (item, list) {
@@ -104,7 +104,7 @@ angular.module('manageApp')
       return itemNotInList(item, vm.envsList)
     };
     vm.itemNotInUsersList = function (item) {
-      return itemNotInList(item, vm.usersList)
+      return itemNotInList(item, vm.executor)
     };
     /////////////////////////
     // 页面基础设施初始化 //
@@ -136,7 +136,7 @@ angular.module('manageApp')
     vm.setModal = function (item) {
       if (item === undefined) {
         // vm.form = {};
-        ['productsList', 'requirementsList', 'envsList', 'usersList'].map(function (elem) {
+        ['productsList', 'requirementsList', 'envsList', 'executor'].map(function (elem) {
           vm[elem] = [];
         });
         vm.modalType = 0;
@@ -144,7 +144,7 @@ angular.module('manageApp')
 
       } else {
         // vm.form = item;
-        ['productsList', 'requirementsList', 'envsList', 'usersList'].map(function (elem) {
+        ['productsList', 'requirementsList', 'envsList', 'executor'].map(function (elem) {
           vm[elem] = item[elem];
         });
         vm.modalType = 1;
@@ -188,7 +188,7 @@ angular.module('manageApp')
       form.productsList = vm.productsList;
       form.requirementsList = vm.requirementsList;
       form.envsList = vm.envsList;
-      form.usersList = vm.usersList;
+      form.executor = vm.executor;
       _dataManager.CreateOne(vm.category,form,function (response) {
         _dataManager.addNotification("success", "新" + vm.pageResourceName + "创建成功");
         // vm.get();
@@ -197,7 +197,7 @@ angular.module('manageApp')
     };
 
     vm.reset = function () {
-      ['productsList', 'requirementsList', 'envsList', 'usersList'].map(function (elem) {
+      ['productsList', 'requirementsList', 'envsList', 'executor'].map(function (elem) {
         vm[elem] = [];
       })
     };
@@ -207,7 +207,7 @@ angular.module('manageApp')
       form.productsList = vm.productsList;
       form.requirementsList = vm.requirementsList;
       form.envsList = vm.envsList;
-      form.usersList = vm.usersList;
+      form.executor = vm.executor;
 
       _dataManager.UpdateOneByID(vm.category,vm.form,function (response) {
         _dataManager.addNotification("success", vm.pageResourceName + form.id + "修改成功");

@@ -77,9 +77,11 @@ angular.module('manageApp')
     self.getRemoteInfo = function (id,cb) {
       var httpPath = '/api/v2/products/'+ id + "/details";//'/node/file';
       $http.get(httpPath)
-        .success(function (data, status, headers) {
+        .success(function (response, status, headers) {
+          if(typeof cb === 'function'){
           console.log("获取" + 'info' + " SUCCESS!");
-          cb(data);
+            cb(response);
+          }
         })
     };
     /**
@@ -112,8 +114,10 @@ angular.module('manageApp')
         transformRequest: angular.identity,
         headers: {'Content-Type': undefined}
       })
-        .success(function(){
-          cb();
+        .success(function (response, status, headers) {
+          if(typeof cb === 'function'){
+            cb(response);
+          }
         })
         .error(function(){
         });
@@ -122,9 +126,11 @@ angular.module('manageApp')
     self.getRemoteHexNum = function (id,cb) {
       var httpPath = '/api/v2/products/'+ id + "/hexfiles";//'/node/file';
       $http.get(httpPath)
-        .success(function (data, status, headers) {
-        cb(data);
-      })
+        .success(function (response, status, headers) {
+          if(typeof cb === 'function'){
+            cb(response);
+          }
+        })
     };
 
     self.getRemoteHex = function (id,index,cb) {
@@ -161,6 +167,15 @@ angular.module('manageApp')
       });
     };
 
+    self.setRemoteResult = function (id,results,cb) {
+      var httpPath = '/api/v2/plans/'+ id + "/results";//'/node/file';
+      $http.post(httpPath,results)
+        .success(function (response, status, headers) {
+          if(typeof cb === 'function'){
+            cb(response);
+          }
+        })
+    };
 
     //////////////
     // CRUD构造函数 //
