@@ -23,7 +23,7 @@ angular.module('manageApp')
       console.log("plan id = ",item.id);
       $state.go('func.onTest');
       console.log("clicked item = ",item);
-         var casesList = item.cases;
+         var casesList = item.casesList;
          console.log(casesList);
         /*获取所选plan中case列表的详情*/
          casesList.forEach(function (caseID) {
@@ -47,7 +47,7 @@ angular.module('manageApp')
     vm.fire = function () {
       var results = [];
       vm.cases.forEach(function (caseItem) {
-        results.push({id:caseItem.id,pass:caseItem.pass?1:0,record:caseItem.record});
+        results.push({caseId:caseItem.id,pass:caseItem.pass?1:0,record:caseItem.record});
       });
       console.log(results);
       _dataManager.setRemoteResult(vm.currentPlan.id,results,function (response) {
