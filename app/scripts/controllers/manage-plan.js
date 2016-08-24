@@ -205,6 +205,10 @@ angular.module('manageApp')
           delete plan.executor;
           plan.executor = executor;
           itemList.push(plan);
+          if(plan['create_date']){
+            // console.log(plan['create_date']) ;
+            plan['create_date'] = moment.utc(plan['create_date']).local().format('YYYY-MM-DD');
+          }
         });
         vm.itemList = itemList;
         console.log(response.data);
