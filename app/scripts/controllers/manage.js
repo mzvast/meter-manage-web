@@ -102,7 +102,7 @@ angular.module('manageApp')
         order_by: vm.predicate,
         q: vm.q,
         reverse: vm.reverse,
-        type: vm.type
+        type: vm.type===-1?undefined:vm.type
       };
       _dataManager.ReadListByQuery(vm.category,queryObj,function (response) {
         vm.itemList = response.data;

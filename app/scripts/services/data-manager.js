@@ -216,11 +216,11 @@ angular.module('manageApp')
             }
           });
     };
-    self.UpdateOneByID = function (resourceName, formObj,cb) {
+    self.UpdateOneByID = function (resourceName, formObj,id,cb) {
         console.log("formObj=");
         console.log(formObj);
         self[resourceName].update({
-          id: formObj.id
+          id: id
         }, formObj).$promise
           .then(function (response) {
             console.log("修改资源 SUCCESS!");

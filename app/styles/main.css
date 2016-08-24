@@ -27,3 +27,6 @@ table > tbody > tr > th{
 p{
   word-wrap: break-word;
 }
+.angular-with-newlines {
+  white-space: pre-wrap;
+}

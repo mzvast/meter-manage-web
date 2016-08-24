@@ -111,9 +111,10 @@ angular.module('manageApp')
 
 
     ///////////
-    // 弹窗Modal //
+    // 新建或修改 //
     ///////////
     vm.setModal = function (item) {
+      console.log(item);
       if (item === undefined) {
         // vm.form = {};
         ['requirementsList', 'envsList'].map(function (elem) {
@@ -121,6 +122,12 @@ angular.module('manageApp')
         });
         vm.modalType = 0;
         vm.modalTitle = "新增" + vm.pageResourceName;
+        vm.title = "新用例-"+moment.utc().local().format('YYYY-MM-DD');
+
+        vm.detail = undefined;
+        vm.describe = undefined;
+        vm.pre_condition = undefined;
+        vm.expout = undefined;
 
       } else {
 
@@ -130,6 +137,14 @@ angular.module('manageApp')
         });
         vm.modalType = 1;
         vm.modalTitle = "修改" + vm.pageResourceName;
+        vm.title = item.title;
+        vm.id = item.id;
+        vm.detail = item.detail;
+        vm.describe = item.describe;
+        vm.pre_condition = item.pre_condition;
+        vm.expout = item.expout;
+        vm.selectedOption = vm.options[item.type];
+        console.log(vm.options[item.type]);
       }
     };
     ///////////////////
@@ -154,11 +169,13 @@ angular.module('manageApp')
         order_by: vm.predicate,
         q: vm.q,
         reverse: vm.reverse,
-        type: vm.type
+        type: vm.type===-1?undefined:vm.type
       };
+      console.log(vm.type);
       _dataManager.ReadListByQuery(vm.category,queryObj,function (response) {
         vm.itemList = response.data;
         vm.totalItems = response.total_items;
+        console.log(response.data);
       });
     };
     vm.get(); //页面第一次加载
@@ -166,12 +183,25 @@ angular.module('manageApp')
 
     vm.create = function () {
       var form = {};
-      form.requirementsList = vm.requirementsList;
-      form.envsList = vm.envsList;
+      form.creator = "Admin";
+      form.creator_id = 1;
+      form.requirementsList = vm.requirementsList.map(function (item) {
+        return item.id;
+      });
+      form.envsList = vm.envsList.map(function (item) {
+        return item.id;
+      });
+      form.title = vm.title;
+      form.describe = vm.describe;
+      form.detail = vm.detail;
+      form.pre_condition = vm.pre_condition;
+      form.expout = vm.expout;
+      form.type = vm.selectedOption.id;
       _dataManager.CreateOne(vm.category,form,function (response) {
         _dataManager.addNotification("success", "新" + vm.pageResourceName + "创建成功");
         // vm.get();
         $state.go('manage-case');
+        vm.get();
       });
     };
 
@@ -183,16 +213,28 @@ angular.module('manageApp')
 
     vm.update = function () {
       var form = {};
-      form.requirementsList = vm.requirementsList;
-      form.envsList = vm.envsList;
-      _dataManager.UpdateOneByID(vm.category,vm.form,function (response) {
-        _dataManager.addNotification("success", vm.pageResourceName + form.id + "修改成功");
+      form.requirementsList = vm.requirementsList.map(function (item) {
+        return item.id;
+      });
+      form.envsList = vm.envsList.map(function (item) {
+        return item.id;
+      });
+      form.title = vm.title;
+      form.describe = vm.describe;
+      form.detail = vm.detail;
+      form.pre_condition = vm.pre_condition;
+      form.expout = vm.expout;
+      form.type = vm.selectedOption.id;
+      _dataManager.UpdateOneByID(vm.category,form,vm.id,function (response) {
+        _dataManager.addNotification("success", vm.pageResourceName + vm.id + "修改成功");
         $state.go('manage-case');
+        vm.get();
       });
     };
     vm.remove = function (id) {
       _dataManager.DeleteOneByID(vm.category, id,function (response) {
         _dataManager.addNotification("success", vm.pageResourceName + id + "删除成功");
+        vm.get();
       });
     };
   }]);

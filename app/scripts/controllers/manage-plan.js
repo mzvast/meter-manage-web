@@ -166,12 +166,14 @@ angular.module('manageApp')
         vm.modalType = 1;
         vm.modalTitle = "修改" + vm.pageResourceName;
         vm.title = item.title;
+        vm.id = item.id;
       }
     };
     ///////////////////
     // 保存时候区分是新建还是修改 //
     ///////////////////
     vm.save = function () {
+      console.log(vm.modalType);
       switch (vm.modalType) {
         case 0:
           vm.create();
@@ -190,7 +192,7 @@ angular.module('manageApp')
         order_by: vm.predicate,
         q: vm.q,
         reverse: vm.reverse,
-        type: vm.type
+        type: vm.type===-1?undefined:vm.type
       };
       _dataManager.ReadListByQuery(vm.category,queryObj,function (response) {
         var itemList = [];
@@ -231,6 +233,7 @@ angular.module('manageApp')
         _dataManager.addNotification("success", "新" + vm.pageResourceName + "创建成功");
         // vm.get();
         $state.go('manage-plan');
+        vm.get();
       });
     };
 
@@ -250,14 +253,16 @@ angular.module('manageApp')
       form.casesList = vm.casesList;
 
 
-      _dataManager.UpdateOneByID(vm.category,vm.form,function (response) {
-        _dataManager.addNotification("success", vm.pageResourceName + form.id + "修改成功");
+      _dataManager.UpdateOneByID(vm.category,form,vm.id,function (response) {
+        _dataManager.addNotification("success", vm.pageResourceName + vm.id + "修改成功");
         $state.go('manage-plan');
+        vm.get();
       });
     };
     vm.remove = function (id) {
       _dataManager.DeleteOneByID(vm.category, id,function (response) {
         _dataManager.addNotification("success", vm.pageResourceName + id + "删除成功");
+        vm.get();
       });
     };
   }]);
