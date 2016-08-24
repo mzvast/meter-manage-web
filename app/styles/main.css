@@ -30,3 +30,6 @@ p{
 .angular-with-newlines {
   white-space: pre-wrap;
 }
+.bold-border{
+  border-left: solid greenyellow 4px;
+}

@@ -26,17 +26,18 @@ angular.module('manageApp')
          var casesList = item.casesList;
          console.log(casesList);
         /*获取所选plan中case列表的详情*/
-         casesList.forEach(function (caseID) {
-           console.log('caseID===?===',caseID);
-           _dataManager.ReadOneById('cases',caseID,function (response) {
+         casesList.forEach(function (caseEntity) {
+           console.log('caseEntity===?===',caseEntity);
+           _dataManager.ReadOneById('cases',caseEntity.id,function (response) {
              var caseItem = response.data;
              console.log(caseItem);
              vm.cases.push({
-               id:caseID,
+               id:caseEntity.id,
                content:caseItem,
                record:'',
                pass:false
              });
+             vm.setCase(0);
            });
          })
     };
