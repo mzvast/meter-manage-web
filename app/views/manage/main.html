@@ -139,6 +139,14 @@
                           <i class="fa fa-fw fa-minus"></i>
                         </a>
                       </div>
+                      <div ng-switch-when="cases" class="btn-group" >
+                        <a ng-show="managePlan.itemNotInCasesList(item)" class="btn bg-olive margin" ng-click="managePlan.addToCasesList(item)">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </a>
+                        <a ng-hide="managePlan.itemNotInCasesList(item)" class="btn bg-maroon margin" ng-click="managePlan.removeFromCasesList(item)">
+                          <i class="fa fa-fw fa-minus"></i>
+                        </a>
+                      </div>
                     </div>
                     <!--/不能修改状态-->
 

@@ -19,13 +19,13 @@ angular.module('manageApp')
     ////////////
     // 新增测试计划 //
     ////////////
-    ['onProducts', 'onRequirements', 'onEnvs', 'onUsers']
+    ['onProducts', 'onRequirements', 'onEnvs', 'onUsers','onCases']
       .map(function (elem) {
         return vm[elem] = false;
       });
 
     vm.setTopTab = function (value) {
-      ['onProducts', 'onRequirements', 'onEnvs', 'onUsers']
+      ['onProducts', 'onRequirements', 'onEnvs', 'onUsers','onCases']
         .map(function (elem) {
           return vm[elem] = (value === elem);
         })
@@ -59,7 +59,15 @@ angular.module('manageApp')
       }
     };
 
+    vm.casesList = [];
+    vm.addToCasesList = function (item) {
+      if (itemNotInList(item, vm.casesList)) {
+        vm.casesList.push(item);
+      }
+    };
+
     var removeItemFromList = function (item, list) {
+      console.log(item,list);
       var itemID = -1;
       list.map(function (elem, index) {
         if (elem.id === item.id) {
@@ -80,6 +88,9 @@ angular.module('manageApp')
     };
     vm.removeFromUsersList = function (item) {
       removeItemFromList(item, vm.executor);
+    };
+    vm.removeFromCasesList = function (item) {
+      removeItemFromList(item, vm.casesList);
     };
     // 操作按钮样式
     var itemNotInList = function (item, list) {
@@ -105,6 +116,9 @@ angular.module('manageApp')
     };
     vm.itemNotInUsersList = function (item) {
       return itemNotInList(item, vm.executor)
+    };
+    vm.itemNotInCasesList = function (item) {
+      return itemNotInList(item, vm.casesList)
     };
     /////////////////////////
     // 页面基础设施初始化 //
@@ -134,6 +148,7 @@ angular.module('manageApp')
     // 弹窗Modal //
     ///////////
     vm.setModal = function (item) {
+      console.log(item);
       if (item === undefined) {
         // vm.form = {};
         ['productsList', 'requirementsList', 'envsList', 'executor'].map(function (elem) {
@@ -141,6 +156,7 @@ angular.module('manageApp')
         });
         vm.modalType = 0;
         vm.modalTitle = "新增" + vm.pageResourceName;
+        vm.title = "新计划-"+moment.utc().local().format('YYYY-MM-DD');
 
       } else {
         // vm.form = item;
@@ -149,6 +165,7 @@ angular.module('manageApp')
         });
         vm.modalType = 1;
         vm.modalTitle = "修改" + vm.pageResourceName;
+        vm.title = item.title;
       }
     };
     ///////////////////
@@ -176,7 +193,21 @@ angular.module('manageApp')
         type: vm.type
       };
       _dataManager.ReadListByQuery(vm.category,queryObj,function (response) {
-        vm.itemList = response.data;
+        var itemList = [];
+        response.data.forEach(function (plan) {
+          // console.log(plan);
+          var name = plan.creator.name;
+          delete plan.creator;
+          plan.creator = name;
+          // console.log(plan.creator);
+          var executor = [];
+          executor.push(plan.executor);
+          delete plan.executor;
+          plan.executor = executor;
+          itemList.push(plan);
+        });
+        vm.itemList = itemList;
+        console.log(response.data);
         vm.totalItems = response.total_items;
       });
     };
@@ -188,7 +219,10 @@ angular.module('manageApp')
       form.productsList = vm.productsList;
       form.requirementsList = vm.requirementsList;
       form.envsList = vm.envsList;
-      form.executor = vm.executor;
+      form.executor = vm.executor[0];
+      form.title = vm.title;
+      form.creator = {id:1,name:"Admin"};
+      form.casesList = vm.casesList;
       _dataManager.CreateOne(vm.category,form,function (response) {
         _dataManager.addNotification("success", "新" + vm.pageResourceName + "创建成功");
         // vm.get();
@@ -207,7 +241,10 @@ angular.module('manageApp')
       form.productsList = vm.productsList;
       form.requirementsList = vm.requirementsList;
       form.envsList = vm.envsList;
-      form.executor = vm.executor;
+      form.executor = vm.executor[0];
+      form.creator = {id:1,name:"Admin"};
+      form.casesList = vm.casesList;
+
 
       _dataManager.UpdateOneByID(vm.category,vm.form,function (response) {
         _dataManager.addNotification("success", vm.pageResourceName + form.id + "修改成功");

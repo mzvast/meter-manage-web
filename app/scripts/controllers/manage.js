@@ -113,6 +113,7 @@ angular.module('manageApp')
           }
         });
         vm.totalItems = response.total_items;
+        console.log(response.data);
       });
       console.log(queryObj.type);
     };
