@@ -1,1 +1,29 @@
-<p>This is the manage-result view.</p>
+<div class="row" ui-view>
+  <div class="col-xs-12">
+    <div class="box no-border">
+      <div class="box-header">
+        <div class="row">
+          <div class="col-xs-6">
+            <h3 class="text-center">{{ resultCtrl.pageTitle }}</h3>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">
+        <div class="col-xs-12">
+
+        </div>
+        <!-- 分页器 -->
+        <div class="text-center">
+          <uib-pagination total-items="resultCtrl.totalItems" ng-model="resultCtrl.currentPage"
+                          max-size="resultCtrl.maxSize" items-per-page="resultCtrl.itemsPerPage"
+                          ng-change="resultCtrl.pageChanged()" class="pagination-md"
+                          boundary-link-numbers="true"></uib-pagination>
+        </div>
+        <!-- /分页器 -->
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>

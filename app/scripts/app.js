@@ -175,6 +175,13 @@ angular
           // controller:'ActionFuncCtrl as funcCtrl',
           authenticate:false
         })
+        /*功能测试结果*/
+        .state("results",{
+          url:"/results",
+          templateUrl:"views/manage/result.html",
+          controller:'ManageResultCtrl as resultCtrl',
+          authenticate:false
+        })
         /*比对测试执行*/
         .state("action-beian", {
           url: "/:mode",
