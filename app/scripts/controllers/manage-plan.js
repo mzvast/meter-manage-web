@@ -151,7 +151,7 @@ angular.module('manageApp')
       console.log(item);
       if (item === undefined) {
         // vm.form = {};
-        ['productsList', 'requirementsList', 'envsList', 'executor'].map(function (elem) {
+        ['productsList', 'requirementsList', 'envsList', 'executor','casesList'].map(function (elem) {
           vm[elem] = [];
         });
         vm.modalType = 0;
@@ -160,7 +160,7 @@ angular.module('manageApp')
 
       } else {
         // vm.form = item;
-        ['productsList', 'requirementsList', 'envsList', 'executor'].map(function (elem) {
+        ['productsList', 'requirementsList', 'envsList', 'executor','casesList'].map(function (elem) {
           vm[elem] = item[elem];
         });
         vm.modalType = 1;
@@ -249,6 +249,7 @@ angular.module('manageApp')
       form.requirementsList = vm.requirementsList;
       form.envsList = vm.envsList;
       form.executor = vm.executor[0];
+      form.title = vm.title;
       form.creator = {id:1,name:"Admin"};
       form.casesList = vm.casesList;
 
