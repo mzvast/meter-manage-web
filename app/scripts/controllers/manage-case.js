@@ -89,11 +89,54 @@ angular.module('manageApp')
     // 页面基础设施初始化 //
     ////////////////////////
     vm.category = 'cases';
-    vm.pageResourceName = _dataManager.getResourceName(vm.category);
-    vm.pageType = '管理';
-    vm.pageTitle = vm.pageResourceName + vm.pageType;
-
-    _dataManager.pageInit(vm.pageResourceName,vm.pageType,vm);
+    /**
+     * 标题配置
+     */
+    var pageResourceName = _dataManager.getResourceName(vm.category);
+    vm.pageTitle = pageResourceName + (vm.canEdit?"管理":"选择");
+    /**
+     * 页码配置
+     */
+    vm.currentPage = 1;
+    vm.itemsPerPage = 10;
+    vm.maxSize = 5; //显示的时候页码的最多个数，忽略该参数
+    vm.pageChanged = function() {
+      vm.get();
+    };
+    /**
+     * 排序
+     */
+    vm.predicate = 'id';
+    vm.reverse = true;
+    vm.order = function(predicate) {
+      vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
+      vm.predicate = predicate;
+      vm.get();
+    };
+    /**
+     * 搜索
+     */
+    vm.search = function(q) {
+      if (q === undefined) {
+        vm.q = "";
+        vm.get();
+        return;
+      }
+      vm.q = q;
+      vm.get();
+      vm.currentPage = 1;
+    };
+    /**
+     * Tab设置
+     */
+    vm.setTab = function (value) {
+      if (typeof value === "undefined") {
+        vm.type = -1;
+      }else{
+        vm.type = value;
+      }
+      vm.get();
+    };
 
     //////////////////
     // 列表数据模型 //

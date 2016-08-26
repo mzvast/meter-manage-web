@@ -42,8 +42,11 @@ angular.module('manageApp')
 
     mode=_beianManager.getMode();
 
-    /*配置页面基本元数据*/
-    _dataManager.pageMetaDateConstructor(title,"",vm);
+    /**
+     * 标题配置
+     */
+    vm.pageTitle = title;
+
     ////////////
     // 标签数据模型 //
     ////////////

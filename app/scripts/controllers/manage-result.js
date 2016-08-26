@@ -16,11 +16,9 @@ angular.module('manageApp')
       'Karma'
     ];
 
-    vm.pageResourceName = '结果';
-    vm.pageType = '管理';
-    vm.pageTitle = '结果' + vm.pageType;
-
-    _dataManager.pageInit(vm.pageResourceName,vm.pageType,vm);
+    var pageResourceName = '结果';
+    var pageType = '分析';
+    vm.pageTitle = pageResourceName + pageType;
 
 
   }]);
