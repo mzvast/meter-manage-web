@@ -53,7 +53,17 @@
                 <!-- /列表头 -->
                 <tr ng-repeat="item in resultCtrl.itemList| orderBy:resultCtrl.predicate:resultCtrl.reverse">
                   <!-- 模型列表内容  -->
-                  <td ng-repeat="(key, value) in resultCtrl.model">{{item[key]}}</td>
+                  <!--<td ng-repeat="(key, value) in resultCtrl.model">-->
+                    <!--<a ng-click="resultCtrl.doClick(item[key])" href="" style="color:black;"> {{item[key]}}</a>-->
+                  <!--</td>-->
+                  <td>{{ item.id }}</td>
+                  <td>
+                    <a ui-sref="results.plan.info({id:item.plan[0].id})" href="" style="color:black;"> {{ item.plan_name }}</a>
+                    </td>
+                  <td>{{ item.product_name }}</td>
+                  <td>{{ item.vendor_name }}</td>
+                  <td>{{ item.create_date }}</td>
+                  <td>{{ item.result_name }}</td>
                   <!-- /模型列表内容  -->
                   <!--状态彩色指示-->
                   <td>

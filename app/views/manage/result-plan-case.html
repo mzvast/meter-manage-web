@@ -1,0 +1,60 @@
+<div class="box">
+  <!-- /.box-header -->
+  <div class="box-body">
+    <div class="col-xs-3">
+      <div class="box">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="text-center" >
+          <!-- /.widget-user-image -->
+          <h3 style="line-height: 30px">测试用例</h3>
+          <!--<h5 class="widget-user-desc">Lead Developer</h5>-->
+        </div>
+        <div class="box-footer no-padding">
+          <ul class="nav nav-stacked text-center">
+            <li ng-class="{'bold-border':case===funcCtrl.currentCase}" ng-repeat="case in funcCtrl.cases"><a href="#" ng-click="funcCtrl.setCase($index)">{{ case.content.describe }} </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-5">
+      <div class="box">
+        <div class="text-center" >
+          <!-- /.widget-user-image -->
+          <h3 style="line-height: 30px">用例步骤</h3>
+          <!--<h5 class="widget-user-desc">Lead Developer</h5>-->
+        </div>
+        <div class="box-footer no-padding">
+          <div class="text-center" style="margin:2em auto;">
+            <p class="angular-with-newlines">{{ funcCtrl.currentCase.content.detail }}</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class=" col-xs-4">
+      <div class="box">
+        <div class="text-center" >
+          <!-- /.widget-user-image -->
+          <h3 style="line-height: 30px">结果记录</h3>
+          <!--<h5 class="widget-user-desc">Lead Developer</h5>-->
+        </div>
+        <div class="box-footer no-padding">
+          <div class="form-group text-center">
+            <label class="control-label"><h4>用例通过<input type="checkbox" ng-model="funcCtrl.currentCase['pass']"></h4> </label>
+          </div>
+
+          <div class="form-group text-center col-xs-10 col-xs-offset-1 " >
+            <label class="control-label"><h4>数据和备注</h4></label>
+            <textarea style="height: 100px;" class="form-control" ng-model="funcCtrl.currentCase['record']"></textarea>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div><!-- /.box-body -->
+
+</div><!-- /.box -->

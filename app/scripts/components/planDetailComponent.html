@@ -1,0 +1,88 @@
+<div class="box">
+  <!-- /.box-header -->
+  <div class="box-body">
+    <popup-component title="'查看用例'" body="$ctrl.currentCase.content.detail"></popup-component>
+    <div class="row">
+      <div class="col-xs-3">
+        <div class="row">
+          <div class="col-xs-12">
+            <table class="table table-striped">
+              <tr>
+                <th>产品名称</th>
+              </tr>
+              <tr>
+                <td>{{ $ctrl.product }}</td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <table class="table table-striped">
+              <tr>
+                <th>生产厂家</th>
+              </tr>
+              <tr>
+                <td>{{ $ctrl.vendor }}</td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-xs-4">
+        <div class="row">
+          <div class="col-xs-12">
+            <table class="table table-striped">
+              <tr>
+                <th>测试环境</th>
+              </tr>
+              <tr ng-repeat="env in $ctrl.envsList">
+                <td class="li" >{{ env.title }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-5">
+        <div class="row">
+          <div class="col-xs-12">
+            <table class="table table-striped">
+              <tr>
+                <th>测试需求</th>
+              </tr>
+              <tr ng-repeat="req in $ctrl.requirementsList">
+                <td>{{ req.title }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <table class="table table-striped">
+          <tr>
+            <th>测试用例</th>
+            <th>结果</th>
+            <th>数据</th>
+          </tr>
+          <tr ng-repeat="case in $ctrl.cases">
+            <td ng-click="$ctrl.setCase($index)">{{ case.content.describe }}</td>
+            <td>通过</td>
+            <td ng-click="$ctrl.openModal()">查看</td>
+          </tr>
+        </table>
+      </div>
+
+
+
+    </div>
+
+
+
+  </div><!-- /.box-body -->
+
+</div><!-- /.box -->

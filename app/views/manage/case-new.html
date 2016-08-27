@@ -1,6 +1,6 @@
 <div class="box-header">
-    <div class="row">
-        <div class="col-xs-2" style="margin-top: 1em;">
+    <div class="row" style="margin-top: 1em;">
+        <div class="col-xs-2">
           <a class="btn btn-app" ui-sref="manage-case">
             <i class="fa fa-arrow-left"></i> 返回
           </a>
@@ -9,8 +9,7 @@
             <h3 ng-show="manageCase.modalTitle" class="text-center"><b>{{manageCase.modalTitle}}</b></h3>
             <h3 ng-hide="manageCase.modalTitle" class="text-center"><b>请返回上级重试</b></h3>
         </div>
-        <div>
-          <div class="col-xs-4" style="margin-top: 1em;">
+          <div class="col-xs-4">
             <a class="btn btn-app" ng-click="manageCase.reset()">
               <i class="fa fa-repeat"></i> 清空
             </a>
@@ -18,7 +17,6 @@
               <i class="fa fa-save"></i> 保存
             </a>
           </div>
-        </div>
       <div class="row">
         <div class="col-xs-6 col-xs-offset-3">
           <div class="form-group">
