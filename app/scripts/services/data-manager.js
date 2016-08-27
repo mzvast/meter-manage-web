@@ -190,6 +190,16 @@ angular.module('manageApp')
         })
     };
 
+    self.getPlanResultbyId = function (id,cb) {
+      var httpPath = '/api/v2/plans/'+ id + "/results";//'/node/file';
+      $http.get(httpPath)
+        .success(function (response, status, headers) {
+          if(typeof cb === 'function'){
+            cb(response);
+          }
+        })
+    };
+
     //////////////
     // CRUD构造函数 //
     //////////////

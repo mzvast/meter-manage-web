@@ -7,10 +7,16 @@ angular.module('manageApp')
     templateUrl: 'scripts/components/popupComponent.html',
     bindings: {
       title:'<',
-      body:'<'
+      steps:'<',
+      record:'<',
+      close:'&'
     },
     controller: function(dataManager,$uibModal,$document) {
       var $ctrl = this;
+
+      $ctrl.closeModal = function () {
+        $ctrl.close();
+      }
 
     },
   });

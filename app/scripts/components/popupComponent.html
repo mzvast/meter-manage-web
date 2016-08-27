@@ -2,19 +2,19 @@
   <div class="box-header with-border text-center">
     <h3 class="box-title">{{ $ctrl.title }}</h3>
     <div class="box-tools pull-right">
-      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      <button ng-click="$ctrl.closeModal()" type="button" class="btn btn-box-tool"><i class="fa fa-times" ></i></button>
     </div>
   </div>
   <div class="box-body">
     <div class="row">
       <div class="col-md-8">
         <h4 class="text-center">步骤详情</h4>
-       <p style="height: 25em;margin: 2em; overflow-y: scroll;">{{ $ctrl.body }}</p>
+       <p style="height: 25em;margin: 2em; overflow-y: auto;">{{ $ctrl.steps }}</p>
       </div>
       <!-- /.col -->
       <div class="col-md-4">
         <h4 class="text-center">数据记录</h4>
-        <p>123</p>
+        <p style="height: 25em;margin: 2em; overflow-y: auto;">{{ $ctrl.record }}</p>
 
       </div>
       <!-- /.col -->

@@ -182,6 +182,30 @@ angular
           controller:'ManageResultCtrl as resultCtrl',
           authenticate:false
         })
+        .state('results.plan',{
+          url:"/plan/:id",
+          templateUrl:"views/manage/result-plan.html",
+          authenticate:false
+        })
+        .state('results.plan.detail',{
+          url:"/detail",
+          template:"<plan-detail-component id='$resolve.id'></plan-detail-component>",
+          resolve:{
+            id:function ($stateParams) {
+              return $stateParams.id;
+            }
+          },
+          authenticate:false
+        })
+        // .state('results.plan.case',{
+        //   url:"/case",
+        //   templateUrl:"views/manage/result-plan-case.html",
+        //   authenticate:false
+        // })
+        // .state('plan-detail',{
+        //   url:'/plan-detail',
+        //   component:'planDetailComponent'
+        // })
         /*比对测试执行*/
         .state("action-beian", {
           url: "/:mode",
