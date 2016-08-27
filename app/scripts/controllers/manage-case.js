@@ -92,8 +92,8 @@ angular.module('manageApp')
     /**
      * 标题配置
      */
-    var pageResourceName = _dataManager.getResourceName(vm.category);
-    vm.pageTitle = pageResourceName + (vm.canEdit?"管理":"选择");
+    vm.pageResourceName = _dataManager.getResourceName(vm.category);
+    vm.pageTitle = vm.pageResourceName + (vm.canEdit?"管理":"选择");
     /**
      * 页码配置
      */
