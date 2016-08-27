@@ -6,12 +6,70 @@
           <div class="col-xs-6">
             <h3 class="text-center"><b>{{ resultCtrl.pageTitle }}</b></h3>
           </div>
+        <!-- 搜索功能 -->
+        <div class="col-xs-3">
+          <form class="sidebar-form" style="margin-top: 1.6em;">
+            <div class="input-group">
+              <input type="text" name="q" class="form-control" ng-model="resultCtrl.q" placeholder="搜索">
+              <span class="input-group-btn">
+                    <button ng-click="resultCtrl.search(resultCtrl.q)" type="submit" name="search" class="btn btn-flat"><i
+                      class="fa fa-search"></i>
+                    </button>
+                  </span>
+              <span class="input-group-btn">
+                    <button ng-click="resultCtrl.search()" type="submit" name="search" class="btn btn-flat"><i
+                      class="glyphicon glyphicon-remove"></i>
+                    </button>
+                  </span>
+            </div>
+          </form>
+        </div>
+        <!-- /搜索功能  -->
         </div>
       </div>
       <!-- /.box-header -->
       <div class="box-body table-responsive no-padding">
         <div class="col-xs-12">
-
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs" >
+              <li class="active"><a href="" ng-click="resultCtrl.setTab()" data-toggle="tab"
+                                    aria-expanded="true">全部类型</a></li>
+              <li ng-repeat="item in resultCtrl.tabs"><a href="" ng-click="resultCtrl.setTab(item.id)" data-toggle="tab"
+                                                         aria-expanded="true">{{item.name}}</a></li>
+            </ul>
+            <div class="tab-content">
+              <table class="table table-hover text-center">
+                <!-- 列表头 -->
+                <tr>
+                  <!-- 模型列表头 -->
+                  <th ng-repeat="(key, value) in resultCtrl.model" ng-click="resultCtrl.order(key)">
+                    {{value}}
+                    <span class="sortorder" ng-show="resultCtrl.predicate === key"
+                          ng-class="{reverse:resultCtrl.reverse}"></span>
+                  </th>
+                  <th>结果</th>
+                  <!-- /模型列表头 -->
+                </tr>
+                <!-- /列表头 -->
+                <tr ng-repeat="item in resultCtrl.itemList| orderBy:resultCtrl.predicate:resultCtrl.reverse">
+                  <!-- 模型列表内容  -->
+                  <td ng-repeat="(key, value) in resultCtrl.model">{{item[key]}}</td>
+                  <!-- /模型列表内容  -->
+                  <!--状态彩色指示-->
+                  <td>
+                    <div class="btn-group">
+                      <a class="btn margin"
+                         ng-class="{'bg-red':item.result===0,'bg-green':item.result===1}">
+                        {{ item.result_name}}
+                      </a>
+                    </div>
+                  </td>
+                  <!--/状态彩色指示-->
+                </tr>
+              </table>
+            </div>
+            <!-- /.tab-content -->
+          </div>
         </div>
         <!-- 分页器 -->
         <div class="text-center">

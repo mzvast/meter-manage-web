@@ -45,8 +45,7 @@ angular.module('manageApp')
       'envs',
       'plans',
       'flaws',
-      'infos',
-      'results'
+      'infos'
     ].map(function (elem) {
       var url = '/api/v2/' + elem + '/:id';
       self[elem] = $resource(url, {
@@ -131,6 +130,20 @@ angular.module('manageApp')
             cb(response);
           }
         })
+    };
+
+    self.getResultListByQuery = function (queryObj,cb) {
+      var httpPath = '/api/v2/plans/results';
+      var config = {
+        params:queryObj
+      };
+      $http.get(httpPath,config)
+        .success(function (response, status, headers) {
+          console.log(response);
+        if(typeof cb === 'function'){
+          cb(response);
+        }
+      })
     };
 
     self.getRemoteHex = function (id,index,cb) {
@@ -277,10 +290,11 @@ angular.module('manageApp')
         case 'results':
           return {
             id: "ID",
-            title: "名称",
-            describe: "描述",
-            create_date: "测试时间",
-            result:"结果"
+            plan_name: "计划名称",
+            product_name:"产品名称",
+            vendor_name:"厂家",
+            create_date: "测试时间"
+            // result_name:"结果"
           };
         case 'cases':
           return {
@@ -357,16 +371,10 @@ angular.module('manageApp')
         case 'results':
           return [{
             id: 0,
-            name: "单元测试"
+            name: "失败"
           }, {
             id: 1,
-            name: "集成测试"
-          }, {
-            id: 2,
-            name: "功能测试"
-          }, {
-            id: 3,
-            name: "性能测试"
+            name: "成功"
           }];
         case 'cases':
           return [{
