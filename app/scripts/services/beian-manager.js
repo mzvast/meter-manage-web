@@ -431,7 +431,7 @@ angular.module('manageApp')
           infoMsg.data.file_info.push({
             cpu_id: i + 1,
             md5: md5[i],
-            extname:filename[i].split(".")[1]
+            extname:filename[i].match(/\.(\w+)$/)[1]
           });
         }
       }();
