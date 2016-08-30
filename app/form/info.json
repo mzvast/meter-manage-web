@@ -5,7 +5,7 @@
       "className": "row",
       "fieldGroup": [
         {
-          "className": "col-xs-12",
+          "className": "col-xs-6",
           "key": "company_name",
           "defaultValue":"XXXXXXXX有限公司",
           "type": "input",
@@ -13,26 +13,7 @@
             "label": "厂家名称",
             "placeholder": "XXXXXXXX有限公司"
           }
-        }
-      ]
-    },
-    {
-      "className": "row",
-      "fieldGroup": [
-        {
-          "className": "col-xs-12",
-          "key": "meter_name",
-          "defaultValue":"XXXX",
-          "type": "input",
-          "templateOptions": {
-            "label": "电能表名称",
-            "placeholder": "XXXX"
-          }
-        }
-    ]},
-    {
-      "className": "row",
-      "fieldGroup": [
+        },
         {
           "className": "col-xs-6",
           "key": "company_code",
@@ -41,6 +22,21 @@
           "templateOptions": {
             "label": "厂家代码",
             "placeholder": "XXXX（国网公司分配的厂家代码，例0020）"
+          }
+        }
+      ]
+    },
+    {
+      "className": "row",
+      "fieldGroup": [
+        {
+          "className": "col-xs-6",
+          "key": "meter_name",
+          "defaultValue":"XXXX",
+          "type": "input",
+          "templateOptions": {
+            "label": "电能表名称",
+            "placeholder": "XXXX"
           }
         },
         {
@@ -53,8 +49,7 @@
             "placeholder": "例:DDSF001-M"
           }
         }
-      ]
-    },
+    ]},
     {
       "className": "row",
       "fieldGroup": [

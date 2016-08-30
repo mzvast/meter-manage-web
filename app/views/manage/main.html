@@ -218,17 +218,7 @@
             <!-- /模型form内容  -->
             <!-- 特殊form内容 -->
             <div ng-switch="manageCtrl.category">
-              <!--products-->
-              <div ng-switch-when="products">
-                <div class="form-group" >
-                  <label for="select" class="col-sm-2 control-label">状态</label>
-                  <div class="col-sm-9">
-                    <select class="form-control" id="select" ng-model="manageCtrl.selectedOption"
-                            ng-options="option.name for option in manageCtrl.options track by option.id"> </select>
-                  </div>
-                </div>
-              </div>
-              <!--/products-->
+
               <!--user-->
               <div ng-switch-when="users">
                 <div class="form-group" >

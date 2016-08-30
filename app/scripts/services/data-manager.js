@@ -276,8 +276,9 @@ angular.module('manageApp')
             name: "名称",
             model:"型号",
             batch: "批次",
-            vendor: "供应商",
             description: "描述",
+            vendor: "厂家名称",
+            vendor_code: "厂家代码",
             create_date: "创建时间"
           };
         }
@@ -443,8 +444,9 @@ angular.module('manageApp')
             name: "名称",
             model:"型号",
             batch: "批次",
-            vendor: "供应商",
-            description: "描述"
+            description: "描述",
+            vendor: "厂家名称",
+            vendor_code: "厂家代码"
           };
         case 'users':
           return {

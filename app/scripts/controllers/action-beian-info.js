@@ -26,14 +26,21 @@ angular.module('manageApp')
     if (settedProduct) {
       vm.canEdit = true;
       if (!settedInfo) {//向服务器获取
+        console.log('获取infos');
         _dataManager.getRemoteInfo(
           settedProduct.id,
           function (response) {
             vm.model = response;
-          })
+            setVendorInfo();
+          });
+
       }
     }
 
+    function setVendorInfo() {
+        vm.model.company_name = settedProduct.vendor;
+        vm.model.company_code = settedProduct.vendor_code;
+    }
 
     vm.onSubmit = function () {
       // alert(JSON.stringify(vm.model), null, 2);
