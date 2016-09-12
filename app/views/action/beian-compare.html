@@ -56,21 +56,25 @@
               </button>
             </div>
           </div>
-          <hr />
+          <hr/>
           <div class="row">
             <div class="col-xs-2 ">
               当前进度
             </div>
             <div class="col-xs-8 ">
               <div class="progress">
-                <div ng-class="{progress: true, 'progress-striped': vm.striped}">
-                  <div ng-class="['progress-bar', vm.style]" ng-style="{width: vm.value + '%'}">
-                    <div ng-if="vm.showLabel">{{vm.value}}%</div>
+                <div ng-class="{progress: true, 'progress-striped': compareCtrl.striped}">
+                  <div ng-class="['progress-bar', compareCtrl.style]" ng-style="{width: compareCtrl.provalue + '%'}">
+                    <div ng-if="compareCtrl.showLabel">{{compareCtrl.provalue}}%</div>
                   </div>
                 </div>
               </div>
             </div>
-
+            <div class="col-xs-2">
+              <div>
+                <button class="btn btn-success" ng-click="count()">开始进度</button>
+              </div>
+            </div>
           </div>
         </div>
       </form>

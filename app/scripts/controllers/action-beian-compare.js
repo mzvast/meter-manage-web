@@ -8,7 +8,7 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('ActionBeianCompareCtrl', ['$scope','beianManager','$state',function ($scope,_beianManager,$state) {
+  .controller('ActionBeianCompareCtrl', ['$scope','beianManager','$state','$interval',function ($scope,_beianManager,$state,$interval) {
     var vm = this;
     vm.awesomeThings = [
       'HTML5 Boilerplate',
@@ -229,5 +229,23 @@ angular.module('manageApp')
       }
         vm.wsCreate();
     }
+
+    vm.provalue = 0;
+    vm.style = 'progress-bar-danger';
+    vm.showLabel = true;
+    vm.striped = true;
+    var index = 0;
+    var timeId = 100;
+    $scope.count = function(){
+      var start = $interval(function(){
+
+          vm.provalue = ++index;
+          console.log(vm.provalue);
+          if (index > 99) {
+            $interval.cancel(start);
+          }
+        //$scope.$apply();
+      }, timeId);
+    };
 
   }]);
