@@ -1,61 +1,80 @@
 <!--备案加密-->
 <div class="row">
   <div class="col-xs-12" ng-hide="compareCtrl.start">
-      <div class="box-header with-border text-center">
-        <h3 class="box-title">比对信息验核</h3>
-      </div>
-      <!-- /.box-header -->
-      <!-- form start -->
-      <div class="box-body">
-        <form role="form">
-          <table class="table table-striped">
-            <tbody>
-            <tr>
-              <th style="width: 2em">编号</th>
-              <th style="width: 2em">项目</th>
-              <th style="width: 4em">属性</th>
-              <th style="width: 2em">满足</th>
-              <th style="width: 2em">修改</th>
-            </tr>
-            <tr ng-repeat="item in compareCtrl.items">
-              <td>{{ item.id }}</td>
-              <td>{{item.name}}</td>
-              <td><div>{{item.prop}}</div></td>
-              <td>
-                <div class="btn-group">
-                  <a class="btn margin" ng-class="{'bg-maroon':!item.ok,'bg-olive':item.ok}">
-                    <span ng-show="item.ok">是</span>
-                    <span ng-show="!item.ok">否</span>
-                  </a>
-                </div>
-              </td>
-              <td>
-                <div class="btn-group">
-                  <a class="btn bg-olive margin" ui-sref="{{ item.sref }}">
-                    <i class="fa fa-fw fa-pencil"></i>
-                  </a>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+    <div class="box-header with-border text-center">
+      <h3 class="box-title">比对信息验核</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <div class="box-body">
+      <form role="form">
+        <table class="table table-striped">
+          <tbody>
+          <tr>
+            <th style="width: 2em">编号</th>
+            <th style="width: 2em">项目</th>
+            <th style="width: 4em">属性</th>
+            <th style="width: 2em">满足</th>
+            <th style="width: 2em">修改</th>
+          </tr>
+          <tr ng-repeat="item in compareCtrl.items">
+            <td>{{ item.id }}</td>
+            <td>{{item.name}}</td>
+            <td>
+              <div>{{item.prop}}</div>
+            </td>
+            <td>
+              <div class="btn-group">
+                <a class="btn margin" ng-class="{'bg-maroon':!item.ok,'bg-olive':item.ok}">
+                  <span ng-show="item.ok">是</span>
+                  <span ng-show="!item.ok">否</span>
+                </a>
+              </div>
+            </td>
+            <td>
+              <div class="btn-group">
+                <a class="btn bg-olive margin" ui-sref="{{ item.sref }}">
+                  <i class="fa fa-fw fa-pencil"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
 
-          <!-- /.box-body -->
-          <div class="box-footer">
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <div class="row">
             <div class="col-xs-3 col-xs-offset-2">
-              <button ng-click="compareCtrl.fake()" type="button" class="btn btn-warning btn-block" >产生模拟数据</button>
+              <button ng-click="compareCtrl.fake()" type="button" class="btn btn-warning btn-block">产生模拟数据</button>
             </div>
-            <div  class="col-xs-4">
-              <button ng-disabled="!compareCtrl.isAllSet" type="button" class="btn bg-aqua btn-block" ng-class="" ng-click="compareCtrl.startCompare()">
-                <span ng-show="compareCtrl.isAllSet" >开始比对</span>
+            <div class="col-xs-4">
+              <button ng-disabled="!compareCtrl.isAllSet" type="button" class="btn bg-aqua btn-block" ng-class=""
+                      ng-click="compareCtrl.startCompare()">
+                <span ng-show="compareCtrl.isAllSet">开始比对</span>
                 <span ng-hide="compareCtrl.isAllSet">验核失败，不能比对</span>
               </button>
             </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-xs-2 ">
+              当前进度
+            </div>
+            <div class="col-xs-8 ">
+              <div class="progress">
+                <div ng-class="{progress: true, 'progress-striped': vm.striped}">
+                  <div ng-class="['progress-bar', vm.style]" ng-style="{width: vm.value + '%'}">
+                    <div ng-if="vm.showLabel">{{vm.value}}%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           </div>
-
-        </form>
-      </div>
+        </div>
+      </form>
+    </div>
 
 
   </div>
@@ -68,7 +87,8 @@
           </div>
           <div class="box-body col-xs-8 col-xs-offset-2">
             <table class="table table-striped">
-              <tbody><tr>
+              <tbody>
+              <tr>
                 <th>名称</th>
                 <th>操作</th>
               </tr>
@@ -79,13 +99,16 @@
                     <i class="fa fa-fw fa-send"></i> </a>
                 </td>
               </tr>
-              </tbody></table>
+              </tbody>
+            </table>
           </div>
           <!-- /.box-body -->
           <div class="div box-footer">
             <!--{{ compareCtrl.timelineMsg }}-->
           </div>
-          <div ng-show="compareCtrl.showInfoMsg"><pre>{{ compareCtrl.infoMsg|json }}</pre></div>
+          <div ng-show="compareCtrl.showInfoMsg">
+            <pre>{{ compareCtrl.infoMsg|json }}</pre>
+          </div>
         </div>
       </div>
     </div>
@@ -105,15 +128,19 @@
 
           <!-- timeline item -->
           <li ng-repeat="item in compareCtrl.timelineMsg">
-            <i ng-if="item.direction==='out'" class="fa fa-fw fa-arrow-right" ng-class="{'bg-blue':item.type==='success'}"></i>
-            <i  ng-if="item.direction==='in'" class="fa fa-fw fa-arrow-left" ng-class="{'bg-aqua':item.type==='success','bg-red':item.type==='fail'}"></i>
-            <i ng-if="item.direction==='in-final'" class="fa fa-fw " ng-class="{'fa-check bg-green':item.type==='success','fa-close bg-red':item.type==='fail'}"></i>
+            <i ng-if="item.direction==='out'" class="fa fa-fw fa-arrow-right"
+               ng-class="{'bg-blue':item.type==='success'}"></i>
+            <i ng-if="item.direction==='in'" class="fa fa-fw fa-arrow-left"
+               ng-class="{'bg-aqua':item.type==='success','bg-red':item.type==='fail'}"></i>
+            <i ng-if="item.direction==='in-final'" class="fa fa-fw "
+               ng-class="{'fa-check bg-green':item.type==='success','fa-close bg-red':item.type==='fail'}"></i>
 
             <div class="timeline-item">
               <!--TODO disaplay timeago-->
               <!-- <span class="time"><i class="fa fa-clock-o"></i>{{ item.time }}</span>-->
 
-              <h3 class="timeline-header no-border" ng-class="{'text-red text-bold':item.type==='fail'}">{{ item.event }}</h3>
+              <h3 class="timeline-header no-border" ng-class="{'text-red text-bold':item.type==='fail'}">{{ item.event
+                }}</h3>
             </div>
           </li>
           <!-- END timeline item -->
