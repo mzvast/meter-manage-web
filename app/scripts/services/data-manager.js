@@ -41,6 +41,7 @@ angular.module('manageApp')
       'products',
       'users',
       'requirements',
+      'vendors',
       'cases',
       'envs',
       'plans',
@@ -298,6 +299,13 @@ angular.module('manageApp')
             describe: "描述",
             create_date: "创建时间"
           };
+        case 'vendors':
+              return{
+                id:"ID",
+                name:"厂家名称",
+                code: "厂家代码",
+                create_date: "创建时间"
+              };
         case 'results':
           return {
             id: "ID",
@@ -379,6 +387,14 @@ angular.module('manageApp')
             id: 3,
             name: "性能测试"
           }];
+        case 'vendors':
+          return [{
+            id: 0,
+            name: "未备案"
+          }, {
+            id: 1,
+            name: "已备案"
+          }];
         case 'results':
           return [{
             id: 0,
@@ -437,7 +453,7 @@ angular.module('manageApp')
       }
     };
 
-    self.getFormModelByName = function (name) {
+    self.getFormModelByName = function (name)  {
       switch (name) {
         case 'products':
           return {
@@ -459,6 +475,11 @@ angular.module('manageApp')
           return {
             title: "名称",
             describe: "描述"
+          };
+        case 'vendors':
+          return{
+            vendor: "厂家名称",
+            vendor_code: "厂家代码"
           };
         case 'cases':
           return {
@@ -512,6 +533,8 @@ angular.module('manageApp')
           return "人员";
         case 'requirements':
           return "需求";
+        case 'vendors':
+              return "厂家"
         case 'cases':
           return "用例";
         case 'envs':
