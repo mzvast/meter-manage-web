@@ -8,7 +8,7 @@
  * Service in the manageApp.
  */
 angular.module('manageApp')
-  .service('beianManager', ['$rootScope', 'dataManager', '$state',function ($rootScope, _dataManager,$state) {
+  .service('beianManager', ['$rootScope', 'dataManager', '$state', function ($rootScope, _dataManager, $state) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var vm = this;
     var product,
@@ -23,39 +23,39 @@ angular.module('manageApp')
       infoMsg,//比对信息对象
       message = [],//系统消息
       timelineMsg = [],//时间线
-      mode=0,//自动流转模式标志，1-备案比对，2-供货比对,0-测试模式（单步运行）
-      result=false;//比对结果
+      mode = 0,//自动流转模式标志，1-备案比对，2-供货比对,0-测试模式（单步运行）
+      result = false;//比对结果
     /**
      * 判断数据是否都设置正确
      * @returns {boolean}
-       */
-    vm.isAllSet = function(){
-      return (product&&info&&arg&&(md5[0]||md5[1]))?true:false;
+     */
+    vm.isAllSet = function () {
+      return (product && info && arg && (md5[0] || md5[1])) ? true : false;
     };
 
     /**
      * 比对结果设置
      * @param value
-       */
+     */
     vm.setResult = function (value) {
       result = value;
-      console.log("设置比对结果:"+(value?"成功":"失败"));
+      console.log("设置比对结果:" + (value ? "成功" : "失败"));
       return true;
     };
 
     vm.getResult = function () {
-      console.log("比对结果:"+(result?"成功":"失败"));
+      console.log("比对结果:" + (result ? "成功" : "失败"));
       return result;
     };
 
     vm.setMode = function (value) {
       mode = value;
-      if(mode===0){
-        console.log('测试模式 mode:'+mode);
-      }else if(mode===1){
-        console.log('备案比对模式 mode:'+mode);
-      }else if(mode===2){
-        console.log('供货比对 mode:'+mode);
+      if (mode === 0) {
+        console.log('测试模式 mode:' + mode);
+      } else if (mode === 1) {
+        console.log('备案比对模式 mode:' + mode);
+      } else if (mode === 2) {
+        console.log('供货比对 mode:' + mode);
       }
     };
 
@@ -102,31 +102,31 @@ angular.module('manageApp')
     };
     vm.getArg = function () {
       var localArg = localStorage['arg'],
-          arg = [];
-      if(localArg){//本地存在数据
+        arg = [];
+      if (localArg) {//本地存在数据
         arg = JSON.parse(localArg);
-      }else{//本地没有
+      } else {//本地没有
         var i;
-        for(i=0;i<4;i++){
+        for (i = 0; i < 4; i++) {
           arg.push({
-            bit:i+1,
-            on:false,
+            bit: i + 1,
+            on: false,
             num: "xxxxxxxxxxxx",
-            addr:"xxxxxxxxxxxx",
-            type:"single_phase",
-            vol:220,
-            key_index:"04"
+            addr: "xxxxxxxxxxxx",
+            type: "single_phase",
+            vol: 220,
+            key_index: "04"
           })
         }
-        for(i=4;i<8;i++){
+        for (i = 4; i < 8; i++) {
           arg.push({
-            bit:i+1,
-            on:false,
+            bit: i + 1,
+            on: false,
             num: "xxxxxxxxxxxx",
-            addr:"xxxxxxxxxxxx",
-            type:"three_phase",
-            vol:220,
-            key_index:"04"
+            addr: "xxxxxxxxxxxx",
+            type: "three_phase",
+            vol: 220,
+            key_index: "04"
           })
         }
       }
@@ -244,8 +244,8 @@ angular.module('manageApp')
         } else {
           cleanData = JSON.parse(event.data);//通过这种方法可将字符串转换为对象 data = eval("("+data+")");
         }
-          addMessage(cleanData);
-          console.log(cleanData);
+        addMessage(cleanData);
+        console.log(cleanData);
 
         if (cleanData.type === 'welcome') {
           vm.addTimelineMsg({
@@ -352,7 +352,24 @@ angular.module('manageApp')
               });
             }
           }
-        } else if (cleanData.type === 'compare_result') {
+        } else if (cleanData.type === 'progress') {
+          switch (cleanData.state) {
+            case 'success':
+            {
+              vm.addTimelineMsg({
+                direction: "in_progress",
+                type: "success",
+                time: Date.now(),
+                event: cleanData.percentage
+              });
+              break;
+            }
+            case 'fail':
+            {
+            }
+          }
+        }
+        else if (cleanData.type === 'compare_result') {
           switch (cleanData.state) {
             case 'success':
             {
@@ -377,7 +394,7 @@ angular.module('manageApp')
             }
           }
         }
-        flow(cleanData.type,cleanData.state);
+        flow(cleanData.type, cleanData.state);
         $rootScope.$apply();
 
       };
@@ -393,7 +410,7 @@ angular.module('manageApp')
     vm.wsClose = function () {
       if (ws && ws.readyState !== WebSocket.CLOSED) {
         ws.close();
-        timelineMsg=[];
+        timelineMsg = [];
         message = [];
       }
     };
@@ -431,7 +448,7 @@ angular.module('manageApp')
           infoMsg.data.file_info.push({
             cpu_id: i + 1,
             md5: md5[i],
-            extname:filename[i].match(/\.(\w+)$/)[1]
+            extname: filename[i].match(/\.(\w+)$/)[1]
           });
         }
       }();
@@ -446,8 +463,8 @@ angular.module('manageApp')
 
       var setMeterInfo = function () {
         for (var i = 0; i < arg.length; i++) {
-            var temp = angular.copy(arg[i]);
-          if(temp['on']){
+          var temp = angular.copy(arg[i]);
+          if (temp['on']) {
             delete temp['on'];
             delete temp["$$hashKey"];
             temp['costcontrol_type'] = info.costcontrol_type;
@@ -463,9 +480,9 @@ angular.module('manageApp')
       return infoMsg;
     };
 
-      /**
-       * 发送握手信息和模式信息
-       */
+    /**
+     * 发送握手信息和模式信息
+     */
     vm.wsSendHello = function () {
       vm.addTimelineMsg({
         direction: "out",
@@ -475,8 +492,8 @@ angular.module('manageApp')
       });
       console.log("欢迎信息已发送");
       vm.wsSend({
-        type:"hello",
-        mode:mode?mode:0
+        type: "hello",
+        mode: mode ? mode : 0
       });
     };
     /**
@@ -499,7 +516,7 @@ angular.module('manageApp')
      * @param index 文件索引，取值0或者1
      */
     vm.wsSendHex = function (index) {
-      if(hex[index]){
+      if (hex[index]) {
         vm.addTimelineMsg({
           direction: "out",
           type: "success",
@@ -555,6 +572,19 @@ angular.module('manageApp')
       timelineMsg.push(msg);
     };
     /**
+     * 时间线更新消息
+     * @param msg
+     */
+    vm.updateTimelineMsg = function (msg) {
+      var type = msg.direction;
+      timelineMsg.forEach(function (index) {
+        if(index.direction==='in_progress')
+        {
+          index.event=msg.event;
+        }
+      });
+    };
+    /**
      * 获取时间线
      * @returns {Array}
      */
@@ -570,6 +600,15 @@ angular.module('manageApp')
     vm.doCompare = function () {
 
     };
+    /**
+     * 获取进度数组内容并设置进度
+     * @returns {Array}
+     */
+    vm.progressHandle=function(arr){
+      for(var i=0;i<arr.length;i++){
+
+      }
+    }
 
     vm.getReport = function () {
 
@@ -606,17 +645,17 @@ angular.module('manageApp')
     vm.fakeDataDemo = function () {
       vm.fakeData();
       md5 = [];
-      hex=[];
+      hex = [];
     };
     /**
      * 生成模拟数据（含md5）
      */
     vm.fakeData = function () {
 
-      hex[0]=new ArrayBuffer();
-      hex[1]=new ArrayBuffer();
+      hex[0] = new ArrayBuffer();
+      hex[1] = new ArrayBuffer();
 
-      recordNum=1234567890123456;
+      recordNum = 1234567890123456;
 
       product = {
         id: "23",
@@ -677,7 +716,7 @@ angular.module('manageApp')
 
       arg = [{
         "bit": 1,
-        "on":true,
+        "on": true,
         "num": "xxxxxxxxxxxx",
         "addr": "xxxxxxxxxxxx",
         "type": "single_phase",
@@ -685,7 +724,7 @@ angular.module('manageApp')
         "key_index": "04"
       }, {
         "bit": 2,
-        "on":true,
+        "on": true,
         "num": "xxxxxxxxxxxx",
         "addr": "xxxxxxxxxxxx",
         "type": "single_phase",
@@ -696,12 +735,12 @@ angular.module('manageApp')
     };
 
     var flow = function (from, state) {
-      console.log("进入flow,mode:"+mode);
-      if(mode===0) return false;
-      console.log("from:"+from);
+      console.log("进入flow,mode:" + mode);
+      if (mode === 0) return false;
+      console.log("from:" + from);
 
       if (state === 'fail') {
-        if(from==='compare_result'){
+        if (from === 'compare_result') {
           vm.setResult(false);
           $state.go('action-beian.report');
         }
@@ -718,31 +757,33 @@ angular.module('manageApp')
             break;
           case 'file':
             if (state === 'next') {
-              if(hex[1]){
+              if (hex[1]) {
                 vm.wsSendHex(1);//浏览器判断发完了
-              }else{
-                if(mode===1){
+              } else {
+                if (mode === 1) {
                   vm.wsSendStartCompare();
-                }else if(mode===2){
+                } else if (mode === 2) {
                   vm.wsSendRecordNum();
                 }
               }
             } else if (state === 'success') {//客户端判断发完了
-              if(mode===1){
+              if (mode === 1) {
                 vm.wsSendStartCompare();
-              }else if(mode===2){
+              } else if (mode === 2) {
                 vm.wsSendRecordNum();
               }
             }
             break;
-          case 'record_num':{
-            if(state==='success'){
+          case 'record_num':
+          {
+            if (state === 'success') {
               vm.wsSendStartCompare();
             }
             break;
           }
-          case 'compare_result':{
-            if(state==='success'){
+          case 'compare_result':
+          {
+            if (state === 'success') {
               vm.setResult(true);
               $state.go('action-beian.report');
             }
