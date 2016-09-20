@@ -96,6 +96,7 @@ angular.module('manageApp')
         product,
         info,
         arg,
+      compareresults,
         md5;
 
     var refresh = function () {

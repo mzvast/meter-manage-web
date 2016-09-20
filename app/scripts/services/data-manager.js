@@ -62,18 +62,18 @@ angular.module('manageApp')
      * @param id
      * @param cb
      */
-    // self.getRemoteInfo = function (id,cb) {
-    //   self['infos'].get({
-    //     id:id
-    //   }).$promise
-    //     .then(function (response) {
-    //       console.log("获取" + 'info' + " SUCCESS!");
-    //
-    //       // console.dir(response);
-    //       // console.dir(response.json);
-    //       cb(response)
-    //     });
-    // };
+      // self.getRemoteInfo = function (id,cb) {
+      //   self['infos'].get({
+      //     id:id
+      //   }).$promise
+      //     .then(function (response) {
+      //       console.log("获取" + 'info' + " SUCCESS!");
+      //
+      //       // console.dir(response);
+      //       // console.dir(response.json);
+      //       cb(response)
+      //     });
+      // };
     self.getRemoteInfo = function (id, cb) {
       var httpPath = '/api/v2/products/' + id + "/details";//'/node/file';
       $http.get(httpPath)
@@ -548,9 +548,19 @@ angular.module('manageApp')
       }
     };
 
-    self.uploadCompareResults = function (id, compareresult) {
-      
-    }
+    self.uploadCompareResults = function (id, compareresult, comparetype, cb) {
+      var httpPath = '/api/v2/products/' + id + "/compareresults";//'/node/file';
+      $http.post(httpPath, {
+          compare_result: compareresult,
+          compare_type: comparetype
+        })
+        .success(function (response, status, headers) {
+          if (typeof cb === 'function') {
+            cb(response);
+          }
+        })
+    };
+
 
 
   }]);
