@@ -61,7 +61,7 @@ angular.module('manageApp')
      * 获取产品详细信息
      * @param id
      * @param cb
-       */
+     */
     // self.getRemoteInfo = function (id,cb) {
     //   self['infos'].get({
     //     id:id
@@ -74,12 +74,12 @@ angular.module('manageApp')
     //       cb(response)
     //     });
     // };
-    self.getRemoteInfo = function (id,cb) {
-      var httpPath = '/api/v2/products/'+ id + "/details";//'/node/file';
+    self.getRemoteInfo = function (id, cb) {
+      var httpPath = '/api/v2/products/' + id + "/details";//'/node/file';
       $http.get(httpPath)
         .success(function (response, status, headers) {
-          if(typeof cb === 'function'){
-          console.log("获取" + 'info' + " SUCCESS!");
+          if (typeof cb === 'function') {
+            console.log("获取" + 'info' + " SUCCESS!");
             cb(response);
           }
         })
@@ -89,8 +89,8 @@ angular.module('manageApp')
      * @param id
      * @param data
      * @param cb
-       */
-    self.setRemoteInfo = function (id,data,cb) {
+     */
+    self.setRemoteInfo = function (id, data, cb) {
       self['infos'].save({
         id: id
       }, {"json": data}).$promise
@@ -102,55 +102,54 @@ angular.module('manageApp')
         });
     };
 
-    self.setRemoteHex = function (id,fileArray,cb) {
-      var uploadUrl = '/api/v2/products/'+ id + "/hexfiles";
+    self.setRemoteHex = function (id, fileArray, cb) {
+      var uploadUrl = '/api/v2/products/' + id + "/hexfiles";
       var fd = new FormData();
       var i;
-      for(i=0;i<fileArray.length;i++)
-      {
-        fd.append(i+1, fileArray[i]);
+      for (i = 0; i < fileArray.length; i++) {
+        fd.append(i + 1, fileArray[i]);
       }
       $http.post(uploadUrl, fd, {
-        transformRequest: angular.identity,
-        headers: {'Content-Type': undefined}
-      })
+          transformRequest: angular.identity,
+          headers: {'Content-Type': undefined}
+        })
         .success(function (response, status, headers) {
-          if(typeof cb === 'function'){
+          if (typeof cb === 'function') {
             cb(response);
           }
         })
-        .error(function(){
+        .error(function () {
         });
     };
 
-    self.getRemoteHexNum = function (id,cb) {
-      var httpPath = '/api/v2/products/'+ id + "/hexfiles";//'/node/file';
+    self.getRemoteHexNum = function (id, cb) {
+      var httpPath = '/api/v2/products/' + id + "/hexfiles";//'/node/file';
       $http.get(httpPath)
         .success(function (response, status, headers) {
-          if(typeof cb === 'function'){
+          if (typeof cb === 'function') {
             cb(response);
           }
         })
     };
 
-    self.getResultListByQuery = function (queryObj,cb) {
+    self.getResultListByQuery = function (queryObj, cb) {
       var httpPath = '/api/v2/plans/results';
       var config = {
-        params:queryObj
+        params: queryObj
       };
-      $http.get(httpPath,config)
+      $http.get(httpPath, config)
         .success(function (response, status, headers) {
           console.log(response);
-        if(typeof cb === 'function'){
-          cb(response);
-        }
-      })
+          if (typeof cb === 'function') {
+            cb(response);
+          }
+        })
     };
 
-    self.getRemoteHex = function (id,index,cb) {
-      var httpPath = '/api/v2/hex/'+ id+'/'+index;//'/node/file';
+    self.getRemoteHex = function (id, index, cb) {
+      var httpPath = '/api/v2/hex/' + id + '/' + index;//'/node/file';
       var blob;
-      $http.get(httpPath,{
+      $http.get(httpPath, {
         responseType: 'arraybuffer'
       }).success(function (data, status, headers) {
         headers = headers();
@@ -159,7 +158,7 @@ angular.module('manageApp')
         var contentType = headers['content-type'];
 
         try {
-          blob = new Blob([data], { type: contentType });
+          blob = new Blob([data], {type: contentType});
 
           var reader = new FileReader();
           reader.readAsArrayBuffer(blob);
@@ -181,21 +180,21 @@ angular.module('manageApp')
       });
     };
 
-    self.setRemoteResult = function (id,results,cb) {
-      var httpPath = '/api/v2/plans/'+ id + "/results";//'/node/file';
-      $http.post(httpPath,results)
+    self.setRemoteResult = function (id, results, cb) {
+      var httpPath = '/api/v2/plans/' + id + "/results";//'/node/file';
+      $http.post(httpPath, results)
         .success(function (response, status, headers) {
-          if(typeof cb === 'function'){
+          if (typeof cb === 'function') {
             cb(response);
           }
         })
     };
 
-    self.getPlanResultbyId = function (id,cb) {
-      var httpPath = '/api/v2/plans/'+ id + "/results";//'/node/file';
+    self.getPlanResultbyId = function (id, cb) {
+      var httpPath = '/api/v2/plans/' + id + "/results";//'/node/file';
       $http.get(httpPath)
         .success(function (response, status, headers) {
-          if(typeof cb === 'function'){
+          if (typeof cb === 'function') {
             cb(response);
           }
         })
@@ -204,78 +203,79 @@ angular.module('manageApp')
     //////////////
     // CRUD构造函数 //
     //////////////
-    self.ReadListByQuery = function (resourceName,queryObj,cb) {
-        // console.log(queryObj);
-        self[resourceName].get(queryObj).$promise
-          .then(function (response) {
-            // console.log("获取" + vm.pageResourceName + " SUCCESS!");
-            if(typeof cb === 'function'){
-              cb(response);
-            }
-          });
-      };
-
-    self.ReadOneById = function (resourceName,thisID,cb) {
+    self.ReadListByQuery = function (resourceName, queryObj, cb) {
       // console.log(queryObj);
-      self[resourceName].get({id:thisID}).$promise
+      self[resourceName].get(queryObj).$promise
         .then(function (response) {
           // console.log("获取" + vm.pageResourceName + " SUCCESS!");
-          if(typeof cb === 'function'){
+          if (typeof cb === 'function') {
             cb(response);
           }
         });
     };
 
-    self.CreateOne = function (resourceName, formObj,cb) {
-        console.log("formObj=");
-        console.log(formObj);
-        self[resourceName].save(formObj).$promise
-          .then(function (response) {
-            console.log("新增资源 SUCCESS!");
-            // console.log(data);
-            // self.addNotification("success", "新" + vm.pageResourceName + "创建成功");
-            // vm.get();
-            if(typeof cb === 'function'){
-              cb(response);
-            }
-          });
+    self.ReadOneById = function (resourceName, thisID, cb) {
+      // console.log(queryObj);
+      self[resourceName].get({id: thisID}).$promise
+        .then(function (response) {
+          // console.log("获取" + vm.pageResourceName + " SUCCESS!");
+          if (typeof cb === 'function') {
+            cb(response);
+          }
+        });
     };
-    self.UpdateOneByID = function (resourceName, formObj,id,cb) {
-        console.log("formObj=");
-        console.log(formObj);
-        self[resourceName].update({
-          id: id
-        }, formObj).$promise
-          .then(function (response) {
-            console.log("修改资源 SUCCESS!");
-            // console.log(data);
-            if(typeof cb === 'function'){
-              cb(response);
-            }
-          });
+
+    self.CreateOne = function (resourceName, formObj, cb) {
+      console.log("formObj=");
+      console.log(formObj);
+      self[resourceName].save(formObj).$promise
+        .then(function (response) {
+          console.log("新增资源 SUCCESS!");
+          // console.log(data);
+          // self.addNotification("success", "新" + vm.pageResourceName + "创建成功");
+          // vm.get();
+          if (typeof cb === 'function') {
+            cb(response);
+          }
+        });
     };
-    self.DeleteOneByID = function (resourceName, id,cb) {
-        console.log("id=" + id);
-        self[resourceName].delete({
-          id: id
-        }).$promise
-          .then(function (response) {
-            console.log("删除资源 SUCCESS!");
-            // console.log(data);
-            if(typeof cb === 'function'){
-              cb(response);
-            }
-            // vm.get();
-          });
+    self.UpdateOneByID = function (resourceName, formObj, id, cb) {
+      console.log("formObj=");
+      console.log(formObj);
+      self[resourceName].update({
+        id: id
+      }, formObj).$promise
+        .then(function (response) {
+          console.log("修改资源 SUCCESS!");
+          // console.log(data);
+          if (typeof cb === 'function') {
+            cb(response);
+          }
+        });
+    };
+    self.DeleteOneByID = function (resourceName, id, cb) {
+      console.log("id=" + id);
+      self[resourceName].delete({
+        id: id
+      }).$promise
+        .then(function (response) {
+          console.log("删除资源 SUCCESS!");
+          // console.log(data);
+          if (typeof cb === 'function') {
+            cb(response);
+          }
+          // vm.get();
+        });
     };
 
     self.getModelByName = function (name) {
       switch (name) {
-        case 'products': {
+        case 'products':
+        {
           return {
             id: "ID",
             name: "名称",
-            model:"型号",
+            model: "型号",
             batch: "批次",
             description: "描述",
             vendor: "厂家名称",
@@ -300,18 +300,18 @@ angular.module('manageApp')
             create_date: "创建时间"
           };
         case 'vendors':
-              return{
-                id:"ID",
-                name:"厂家名称",
-                code: "厂家代码",
-                create_date: "创建时间"
-              };
+          return {
+            id: "ID",
+            name: "厂家名称",
+            code: "厂家代码",
+            create_date: "创建时间"
+          };
         case 'results':
           return {
             id: "ID",
             plan_name: "计划名称",
-            product_name:"产品名称",
-            vendor_name:"厂家",
+            product_name: "产品名称",
+            vendor_name: "厂家",
             create_date: "测试时间"
             // result_name:"结果"
           };
@@ -453,12 +453,12 @@ angular.module('manageApp')
       }
     };
 
-    self.getFormModelByName = function (name)  {
+    self.getFormModelByName = function (name) {
       switch (name) {
         case 'products':
           return {
             name: "名称",
-            model:"型号",
+            model: "型号",
             batch: "批次",
             description: "描述",
             vendor: "厂家名称",
@@ -467,9 +467,9 @@ angular.module('manageApp')
         case 'users':
           return {
             name: "名称",
-            age:"年龄",
-            skill:"技能",
-            exp:"经验"
+            age: "年龄",
+            skill: "技能",
+            exp: "经验"
           };
         case 'requirements':
           return {
@@ -477,7 +477,7 @@ angular.module('manageApp')
             describe: "描述"
           };
         case 'vendors':
-          return{
+          return {
             vendor: "厂家名称",
             vendor_code: "厂家代码"
           };
@@ -504,7 +504,7 @@ angular.module('manageApp')
 
     };
     self.getFrozenFormModelByName = function (name) {
-      switch (name){
+      switch (name) {
         case 'flaws':
           return {
             productID: "产品ID",
@@ -517,16 +517,16 @@ angular.module('manageApp')
 
 
     self.getSpecialFormModelByName = function (name) {
-      switch (name){
+      switch (name) {
         case 'cases':
-          return{
-            env:"所属环境",
-            req:"所属需求"
+          return {
+            env: "所属环境",
+            req: "所属需求"
           }
       }
     };
     self.getResourceName = function (name) {
-      switch (name){
+      switch (name) {
         case 'products':
           return "产品";
         case 'users':
@@ -534,7 +534,7 @@ angular.module('manageApp')
         case 'requirements':
           return "需求";
         case 'vendors':
-              return "厂家"
+          return "厂家"
         case 'cases':
           return "用例";
         case 'envs':
@@ -548,7 +548,9 @@ angular.module('manageApp')
       }
     };
 
-
+    self.uploadCompareResults = function (id, compareresult) {
+      
+    }
 
 
   }]);
