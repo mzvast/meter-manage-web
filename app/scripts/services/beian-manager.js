@@ -20,6 +20,7 @@ angular.module('manageApp')
       recordNum;
 
     var ws,
+      provalue,//比对进度值
       infoMsg,//比对信息对象
       message = [],//系统消息
       timelineMsg = [],//时间线
@@ -362,6 +363,7 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: cleanData.percentage
               });
+              
               break;
             }
             case 'fail':
@@ -602,12 +604,19 @@ angular.module('manageApp')
     };
     /**
      * 获取进度数组内容并设置进度
-     * @returns {Array}
+     * @returns 平均长度
      */
-    vm.progressHandle=function(arr){
-      for(var i=0;i<arr.length;i++){
-
+    vm.updateProgress=function(arr){
+      var length = arr.length;
+      var sum=0;
+      for(var i=0;i<length;i++){
+        sum+=arr[i];
       }
+      provalue = sum/length;
+    }
+    
+    vm.getProgress=function () {
+      return provalue;
     }
 
     vm.getReport = function () {

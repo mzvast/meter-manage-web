@@ -222,6 +222,11 @@ angular.module('manageApp')
       vm.timelineMsg =newVal;
     });
 
+    //provalue更新
+    $scope.$watch('service.getProgress()',function (newVal) {
+      vm.provalue = newVal;
+    })
+
     vm.startCompare = function () {
       vm.start = true;
       if(vm.mode===0){
@@ -230,7 +235,7 @@ angular.module('manageApp')
         vm.wsCreate();
     }
 
-    vm.provalue = 0;
+
     vm.style = 'progress-bar-danger';
     vm.showLabel = true;
     vm.striped = true;
