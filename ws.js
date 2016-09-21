@@ -2,6 +2,9 @@ var WebSocketServer = require('ws').Server,
   wss = new WebSocketServer({ port: 3456 });
 
 wss.on('connection', function connection(ws) {
+  var index = 0;
+  var timeId = 100;
+  var arr = new Array(0,0,0,0,0,0,0,0);
   ws.on('message', function incoming(message) {
     global.setTimeout(function () {
       //判断返回值不是 json 格式
@@ -54,20 +57,41 @@ wss.on('connection', function connection(ws) {
               "type": "start_compare",
               "state": "success"
             }));
-            ws.send(JSON.stringify({
-              "type": "compare_result",
-              "state": "success"
-            }));
+            setInterval(count,100);
+            //ws.send(JSON.stringify({
+            //  "type": "compare_result",
+            //  "state": "success"
+            //}));
             break;
           }
         }
       }
       // ws.send(message.type);
     }, 100)
+
     var type;
 
 
   });
+  var count = function(){
+      ++index;
+      for(var i=0;i<arr.length;i++){
+        arr[i]=index;
+      }
+      ws.send(JSON.stringify({
+        "type": "progress",
+        "state": "success",
+        "percentage":arr
+      }));
+      if (index > 99) {
+        clearInterval(count);
+        ws.send(JSON.stringify({
+          "type": "compare_result",
+          "state": "success"
+        }));
+      }
+
+  };
 
   // ws.send(JSON.stringify({ type: 'welcome' }));
 });

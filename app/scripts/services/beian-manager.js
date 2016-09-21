@@ -17,7 +17,8 @@ angular.module('manageApp')
       hex = [],
       md5 = [],
       filename = [],
-      recordNum;
+      recordNum,
+      isProgresStart = false;
 
     var ws,
       provalue,//比对进度值
@@ -357,13 +358,16 @@ angular.module('manageApp')
           switch (cleanData.state) {
             case 'success':
             {
-              vm.addTimelineMsg({
-                direction: "in_progress",
-                type: "success",
-                time: Date.now(),
-                event: cleanData.percentage
-              });
-
+              vm.updateProgress(cleanData.percentage);
+              if (!isProgresStart) {
+                vm.addTimelineMsg({
+                  direction: "in_progress",
+                  type: "success",
+                  time: Date.now(),
+                  event: cleanData.percentage
+                });
+                isProgresStart = true;
+              } else vm.updateTimelineMsg(cleanData.percentage);
               break;
             }
             case 'fail':
@@ -457,14 +461,12 @@ angular.module('manageApp')
 
       var setCpuInfo = function () {
         for (var i = 0; i < md5.length; i++) {
-          alert(angular.toJson(info.company_name));
-          alert(info['company_name']);
-          alert(info.cpu_info.cpu_id);
-          var obj=angular.copy(info.cpu_info);
-          console.log(obj);
-          obj['cpu_id']=i+1;
+          console.log(angular.toJson(info.company_name));
+          var obj = angular.copy(info.cpu_info);
+          //  console.log(obj);
+          //   obj['cpu_id']=i+1;
           infoMsg['data']['cpu_info'].push(obj);//两个CPU信息完全一样
-         // infoMsg['data']['cpu_info'][i]['cpu_id'] = i + 1;
+          // infoMsg['data']['cpu_info'][i]['cpu_id'] = i + 1;
         }
       }();
 
@@ -583,13 +585,15 @@ angular.module('manageApp')
      * @param msg
      */
     vm.updateTimelineMsg = function (msg) {
-      var type = msg.direction;
       timelineMsg.forEach(function (index) {
-        if(index.direction==='in_progress')
-        {
-          index.event=msg.event;
+        if (index.direction === 'in_progress') {
+          console.log(angular.toJson(index));
+          index.event = msg;
+          console.log(angular.toJson(index));
         }
       });
+      console.log(angular.toJson(timelineMsg));
+      $rootScope.$apply();
     };
     /**
      * 获取时间线
@@ -611,18 +615,18 @@ angular.module('manageApp')
      * 获取进度数组内容并设置进度
      * @returns 平均长度
      */
-    vm.updateProgress=function(arr){
+    vm.updateProgress = function (arr) {
       var length = arr.length;
-      var sum=0;
-      for(var i=0;i<length;i++){
-        sum+=arr[i];
+      var sum = 0;
+      for (var i = 0; i < length; i++) {
+        sum += arr[i];
       }
-      provalue = sum/length;
-    }
+      provalue = sum / length;
+    };
 
-    vm.getProgress=function () {
+    vm.getProgress = function () {
       return provalue;
-    }
+    };
 
     vm.getReport = function () {
 
@@ -800,7 +804,7 @@ angular.module('manageApp')
           {
             if (state === 'success') {
               vm.setResult(true);
-              $state.go('action-beian.report');
+              //  $state.go('action-beian.report');
             }
           }
         }
