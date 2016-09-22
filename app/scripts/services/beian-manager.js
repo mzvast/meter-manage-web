@@ -363,7 +363,7 @@ angular.module('manageApp')
                 time: Date.now(),
                 event: cleanData.percentage
               });
-              
+
               break;
             }
             case 'fail':
@@ -457,9 +457,14 @@ angular.module('manageApp')
 
       var setCpuInfo = function () {
         for (var i = 0; i < md5.length; i++) {
-          var obj = angular.copy(info.cpu_info);
+          alert(angular.toJson(info.company_name));
+          alert(info['company_name']);
+          alert(info.cpu_info.cpu_id);
+          var obj=angular.copy(info.cpu_info);
+          console.log(obj);
+          obj['cpu_id']=i+1;
           infoMsg['data']['cpu_info'].push(obj);//两个CPU信息完全一样
-          infoMsg['data']['cpu_info'][i]['cpu_id'] = i + 1;
+         // infoMsg['data']['cpu_info'][i]['cpu_id'] = i + 1;
         }
       }();
 
@@ -614,7 +619,7 @@ angular.module('manageApp')
       }
       provalue = sum/length;
     }
-    
+
     vm.getProgress=function () {
       return provalue;
     }
@@ -681,6 +686,7 @@ angular.module('manageApp')
 
       info = {
         "cpu_info": {
+          "cpu_id": 1,
           "protect_addr": [
             {
               "start": "12000",
