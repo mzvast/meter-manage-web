@@ -18,9 +18,9 @@ angular.module('manageApp')
 
     vm.category = $stateParams.category||'products';
     vm.canEdit = $stateParams.canEdit;
-    vm.onCase = false||$stateParams.onCase;
-    vm.onPlan = false||$stateParams.onPlan;
-    vm.onCompare = false||$stateParams.onCompare;
+    vm.onCase = $stateParams.onCase;
+    vm.onPlan = $stateParams.onPlan;
+    vm.onCompare = $stateParams.onCompare;
     vm.mode = $stateParams.mode;//识别比对
     // console.log("vm.onCase",vm.onCase);
 
@@ -155,6 +155,13 @@ angular.module('manageApp')
           if(item['create_date']){
            // console.log(item['create_date']) ;
             item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
+          }
+          //修复厂家名称和厂家代码的嵌套
+          if(item.vendor&&item.vendor.name&&item.vendor.code){
+            var name = item.vendor.name;
+            var code = item.vendor.code;
+            item.vendor = name;
+            item.vendor_code = code;
           }
         });
         vm.totalItems = response.total_items;
