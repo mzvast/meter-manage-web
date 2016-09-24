@@ -226,7 +226,7 @@ angular.module('manageApp')
     //provalue更新
     $scope.$watch('service.getProgress()',function (newVal) {
       vm.provalue = newVal;
-    })
+    });
 
     vm.startCompare = function () {
       vm.start = true;
@@ -234,7 +234,7 @@ angular.module('manageApp')
         return;
       }
         vm.wsCreate();
-    }
+    };
 
 
     vm.style = 'progress-bar-danger';
@@ -244,9 +244,9 @@ angular.module('manageApp')
     var timeId = 100;
     $scope.count = function(){
       var start = $interval(function(){
-
-          vm.provalue = ++index;
-          console.log(vm.provalue);
+          index = index + 20;
+          vm.provalue = index;
+          // console.log(vm.provalue);
           if (index > 99) {
             $interval.cancel(start);
           }

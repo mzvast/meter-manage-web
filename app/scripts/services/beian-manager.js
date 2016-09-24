@@ -592,7 +592,7 @@ angular.module('manageApp')
           console.log(angular.toJson(index));
         }
       });
-      console.log(angular.toJson(timelineMsg));
+      // console.log(angular.toJson(timelineMsg));
       $rootScope.$apply();
     };
     /**
@@ -616,12 +616,15 @@ angular.module('manageApp')
      * @returns 平均长度
      */
     vm.updateProgress = function (arr) {
-      var length = arr.length;
-      var sum = 0;
-      for (var i = 0; i < length; i++) {
-        sum += arr[i];
-      }
-      provalue = sum / length;
+
+      var sum_num = arr.reduce(function (pre,cur,curIndex,array) {
+        if(cur) {
+          pre[0]+=cur;
+          pre[1]++;
+        }
+        return pre;
+      },[0,0]);
+      provalue = parseInt(sum_num[0]/sum_num[1]);
     };
 
     vm.getProgress = function () {
@@ -804,7 +807,7 @@ angular.module('manageApp')
           {
             if (state === 'success') {
               vm.setResult(true);
-              //  $state.go('action-beian.report');
+               $state.go('action-beian.report');
             }
           }
         }
