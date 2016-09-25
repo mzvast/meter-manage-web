@@ -12,6 +12,9 @@
           "templateOptions": {
             "label": "厂家名称",
             "placeholder": "XXXXXXXX有限公司"
+          },
+          "expressionProperties": {
+            "templateOptions.disabled": "true"
           }
         },
         {
@@ -22,6 +25,9 @@
           "templateOptions": {
             "label": "厂家代码",
             "placeholder": "XXXX（国网公司分配的厂家代码，例0020）"
+          },
+          "expressionProperties": {
+            "templateOptions.disabled": "true"
           }
         }
       ]
