@@ -27,8 +27,8 @@ angular.module('manageApp')
     /**
      * 标题配置
      */
-    var pageResourceName = _dataManager.getResourceName(vm.category);
-    vm.pageTitle = pageResourceName + (vm.canEdit?"管理":"选择");
+    vm.pageResourceName = _dataManager.getResourceName(vm.category);
+    vm.pageTitle = vm.pageResourceName + (vm.canEdit?"管理":"选择");
     /**
      * 页码配置
      */
@@ -96,12 +96,12 @@ angular.module('manageApp')
         vm.form = {};
         vm.selectedOption = vm.options[0];
         vm.modalType = 0;
-        vm.modalTitle = "新增" + pageResourceName;
+        vm.modalTitle = "新增" + vm.pageResourceName;
       } else {
         vm.form = item;
         vm.selectedOption = vm.options[item.type];
         vm.modalType = 1;
-        vm.modalTitle = "修改" + pageResourceName;
+        vm.modalTitle = "修改" + vm.pageResourceName;
       }
     };
     ///////////////////
@@ -191,8 +191,8 @@ angular.module('manageApp')
         console.log(local_form);
         delete local_form.type;
       }
-      _dataManager.UpdateOneByID(vm.category,local_form,function (response) {
-        _dataManager.addNotification("success", vm.pageResourceName + vm.form.id + "修改成功");
+      _dataManager.UpdateOneByID(vm.category,local_form,local_form.id,function (response) {
+        _dataManager.addNotification("success", vm.pageResourceName + local_form.id + "修改成功");
         vm.get();
       });
 
