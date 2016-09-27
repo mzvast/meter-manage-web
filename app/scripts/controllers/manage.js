@@ -98,6 +98,18 @@ angular.module('manageApp')
         vm.modalType = 0;
         vm.modalTitle = "新增" + vm.pageResourceName;
       } else {
+        console.log(item);
+      switch (vm.category){
+        case 'products':{
+          vm.vendors.forEach(function (inner) {
+            if(item.id == inner.id){
+              console.log(inner);
+              vm.selectedVendor=inner;
+            }
+          });
+
+        }
+      }
         vm.form = item;
         vm.selectedOption = vm.options[item.type];
         vm.modalType = 1;
@@ -157,12 +169,23 @@ angular.module('manageApp')
             item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
           }
           //修复厂家名称和厂家代码的嵌套
-          if(item.vendor&&item.vendor.name&&item.vendor.code){
-            var name = item.vendor.name;
-            var code = item.vendor.code;
-            item.vendor = name;
-            item.vendor_code = code;
+          switch (vm.category){
+            case 'products':{
+              if(item.vendor&&item.vendor.name&&item.vendor.code){
+                var name = item.vendor.name;
+                var code = item.vendor.code;
+                var vendor_id = item.vendor.id;
+                item.vendor = name;
+                item.vendor_code = code;
+                item.vendor_id = vendor_id;
+              }
+              break;
+            }
+            default:{
+
+            }
           }
+
         });
         vm.totalItems = response.total_items;
         console.log(response.data);
@@ -172,10 +195,11 @@ angular.module('manageApp')
     vm.get(); //页面第一次加载
     vm.create = function () {
       vm.form.type = vm.selectedOption?vm.selectedOption.id:undefined;
-      var local_form = vm.form;//复制和处理
-      if(vm.category === "products"){
-        delete local_form.type;
-      }
+      var local_form = {};//复制和处理
+      makeForm(local_form);
+      // if(vm.category === "products"){
+      //   delete local_form.type;
+      // }
       _dataManager.CreateOne(vm.category,local_form,function (response) {
         _dataManager.addNotification("success", "新" + vm.pageResourceName + "创建成功");
         vm.get();
@@ -186,12 +210,13 @@ angular.module('manageApp')
     vm.update = function () {
       vm.form.type = vm.selectedOption?vm.selectedOption.id:undefined;
 
-      var local_form = vm.form;//复制和处理
-      if(vm.category === "products"){
-        console.log(local_form);
-        delete local_form.type;
-      }
-      _dataManager.UpdateOneByID(vm.category,local_form,local_form.id,function (response) {
+      var local_form = {};//待发送的对象
+      makeForm(local_form);
+      // if(vm.category === "products"){
+      //   console.log(local_form);
+      //   delete local_form.type;
+      // }
+      _dataManager.UpdateOneByID(vm.category,local_form,vm.form.id,function (response) {
         _dataManager.addNotification("success", vm.pageResourceName + local_form.id + "修改成功");
         vm.get();
       });
@@ -203,5 +228,45 @@ angular.module('manageApp')
       });
       vm.get();
     };
+
+    function makeForm(local_form){
+      switch (vm.category){
+        case 'products':{
+          console.log(JSON.stringify(vm.form));
+          local_form["batch"] = vm.form["batch"];
+          local_form["description"] = vm.form["description"];
+          local_form["model"] = vm.form["model"];
+          local_form["name"] = vm.form["name"];
+          local_form["vendor"] = {id:+vm.selectedVendor};
+          break;
+        }
+        default:{
+          local_form = vm.form;
+        }
+      }
+    }
+
+    function getVendors(){
+      var vendors;
+      var queryObj = {
+        current_page: vm.currentPage,
+        items_per_page: vm.itemsPerPage,
+        order_by: vm.predicate,
+        q: vm.q,
+        reverse: vm.reverse
+      };
+      _dataManager.ReadListByQuery('vendors',queryObj,function (response) {
+        vendors = response.data;
+        vm.vendors = vendors.map(function (cur) {
+          return {
+            id:cur.id,
+            name:cur.name
+          }
+        });
+        console.log(vendors);
+      });
+    }
+
+    getVendors();
 
   }]);

@@ -269,13 +269,23 @@ angular.module('manageApp')
 
     vm.create = function () {
       var form = {};
-      form.productsList = vm.productsList;
-      form.requirementsList = vm.requirementsList;
-      form.envsList = vm.envsList;
-      form.executor = vm.executor[0];
+      form.productsList = vm.productsList.map(function (cur) {
+        return {id:cur.id};
+      });
+      form.requirementsList = vm.requirementsList.map(function (cur) {
+        return {id:cur.id};
+      });
+      form.envsList = vm.envsList.map(function (cur) {
+        return {id:cur.id};
+      });
+      form.executor = vm.executor.map(function (cur) {
+        return {id:cur.id};
+      });
       form.title = vm.title;
-      form.creator = {id:1,name:"Admin"};
-      form.casesList = vm.casesList;
+      form.creator = {id:1};
+      form.casesList = vm.casesList.map(function (cur) {
+        return {id:cur.id};
+      });
       _dataManager.CreateOne(vm.category,form,function (response) {
         _dataManager.addNotification("success", "新" + vm.pageResourceName + "创建成功");
         // vm.get();
@@ -292,13 +302,23 @@ angular.module('manageApp')
 
     vm.update = function () {
       var form = {};
-      form.productsList = vm.productsList;
-      form.requirementsList = vm.requirementsList;
-      form.envsList = vm.envsList;
-      form.executor = vm.executor[0];
+      form.productsList = vm.productsList.map(function (cur) {
+        return {id:cur.id};
+      });
+      form.requirementsList = vm.requirementsList.map(function (cur) {
+        return {id:cur.id};
+      });
+      form.envsList = vm.envsList.map(function (cur) {
+        return {id:cur.id};
+      });
+      form.executor = vm.executor.map(function (cur) {
+        return {id:cur.id};
+      });
       form.title = vm.title;
-      form.creator = {id:1,name:"Admin"};
-      form.casesList = vm.casesList;
+      form.creator = {id:1};
+      form.casesList = vm.casesList.map(function (cur) {
+        return {id:cur.id};
+      });
 
 
       _dataManager.UpdateOneByID(vm.category,form,vm.id,function (response) {

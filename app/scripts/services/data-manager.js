@@ -460,9 +460,7 @@ angular.module('manageApp')
             name: "名称",
             model: "型号",
             batch: "批次",
-            description: "描述",
-            vendor: "厂家名称",
-            vendor_code: "厂家代码"
+            description: "描述"
           };
         case 'users':
           return {
