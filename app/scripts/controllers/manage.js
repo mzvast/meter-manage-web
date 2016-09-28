@@ -92,8 +92,8 @@ angular.module('manageApp')
     // 弹窗Modal //
     ///////////
     vm.setModal = function (item) {
+      vm.form = {};
       if (item === undefined) {
-        vm.form = {};
         vm.selectedOption = vm.options[0];
         vm.modalType = 0;
         vm.modalTitle = "新增" + vm.pageResourceName;
@@ -107,10 +107,20 @@ angular.module('manageApp')
               vm.selectedVendor=inner;
             }
           });
-
+          vm.form = item;
+          break;
+        }
+        case 'vendors':{
+          vm.form["vendor"] = item["name"];
+          vm.form["vendor_code"] =item["code"];
+          vm.form["id"] = item["id"];
+          break;
+        }
+        default:{
+          vm.form = item;
         }
       }
-        vm.form = item;
+
         vm.selectedOption = vm.options[item.type];
         vm.modalType = 1;
         vm.modalTitle = "修改" + vm.pageResourceName;
@@ -217,7 +227,7 @@ angular.module('manageApp')
       //   delete local_form.type;
       // }
       _dataManager.UpdateOneByID(vm.category,local_form,vm.form.id,function (response) {
-        _dataManager.addNotification("success", vm.pageResourceName + local_form.id + "修改成功");
+        _dataManager.addNotification("success", vm.pageResourceName + vm.form.id + "修改成功");
         vm.get();
       });
 
@@ -240,8 +250,14 @@ angular.module('manageApp')
           local_form["vendor"] = {id:+vm.selectedVendor};
           break;
         }
+        case 'vendors':{
+          local_form["code"] = vm.form["vendor_code"];
+          local_form["name"] = vm.form["vendor"];
+          break;
+        }
         default:{
           local_form = vm.form;
+          console.log(local_form)
         }
       }
     }

@@ -57,7 +57,7 @@
                           ng-class="{reverse:manageCtrl.reverse}"></span>
                   </th>
                   <!--自定义表头-->
-                  <th ng-click="manageCtrl.order('type')">
+                  <th ng-if="manageCtrl.category!=='vendors'" ng-click="manageCtrl.order('type')">
                     所属类型
                     <span class="sortorder" ng-show="manageCtrl.predicate === 'type'"
                           ng-class="{reverse:manageCtrl.reverse}"></span>
@@ -74,7 +74,7 @@
                   <td ng-repeat="(key, value) in manageCtrl.model">{{item[key]}}</td>
                   <!-- /模型列表内容  -->
                   <!--状态彩色指示-->
-                  <td>
+                  <td ng-if="manageCtrl.category!=='vendors'">
                     <div class="btn-group">
                       <a class="btn margin"
                          ng-class="{'bg-maroon':item.type===0||item.type===3,'bg-purple':item.type===1,'bg-olive':item.type===2,'bg-navy':item.type===4}">

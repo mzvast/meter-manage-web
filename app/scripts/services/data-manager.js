@@ -303,8 +303,7 @@ angular.module('manageApp')
           return {
             id: "ID",
             name: "厂家名称",
-            code: "厂家代码",
-            create_date: "创建时间"
+            code: "厂家代码"
           };
         case 'results':
           return {
@@ -388,13 +387,7 @@ angular.module('manageApp')
             name: "性能测试"
           }];
         case 'vendors':
-          return [{
-            id: 0,
-            name: "未备案"
-          }, {
-            id: 1,
-            name: "已备案"
-          }];
+          return [];
         case 'results':
           return [{
             id: 0,
