@@ -220,8 +220,7 @@ angular.module('manageApp')
     vm.update = function () {
       vm.form.type = vm.selectedOption?vm.selectedOption.id:undefined;
 
-      var local_form = {};//待发送的对象
-      makeForm(local_form);
+      var local_form = makeForm();
       // if(vm.category === "products"){
       //   console.log(local_form);
       //   delete local_form.type;
@@ -239,7 +238,9 @@ angular.module('manageApp')
       vm.get();
     };
 
-    function makeForm(local_form){
+    function makeForm(){
+      var local_form = {};
+      console.log(vm.category);
       switch (vm.category){
         case 'products':{
           console.log(JSON.stringify(vm.form));
@@ -255,11 +256,16 @@ angular.module('manageApp')
           local_form["name"] = vm.form["vendor"];
           break;
         }
+        // case 'requirements':{
+        //   local_form = vm.form;
+        //   break;
+        // }
         default:{
           local_form = vm.form;
           console.log(local_form)
         }
       }
+      return local_form;
     }
 
     function getVendors(){

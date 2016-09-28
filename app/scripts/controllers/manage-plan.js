@@ -54,6 +54,7 @@ angular.module('manageApp')
     };
     vm.executor = [];
     vm.addToUsersList = function (item) {
+      if(vm.executor.length>0)return;
       if (itemNotInList(item, vm.executor)) {
         vm.executor.push(item);
       }
@@ -268,24 +269,7 @@ angular.module('manageApp')
 
 
     vm.create = function () {
-      var form = {};
-      form.productsList = vm.productsList.map(function (cur) {
-        return {id:cur.id};
-      });
-      form.requirementsList = vm.requirementsList.map(function (cur) {
-        return {id:cur.id};
-      });
-      form.envsList = vm.envsList.map(function (cur) {
-        return {id:cur.id};
-      });
-      form.executor = vm.executor.map(function (cur) {
-        return {id:cur.id};
-      });
-      form.title = vm.title;
-      form.creator = {id:1};
-      form.casesList = vm.casesList.map(function (cur) {
-        return {id:cur.id};
-      });
+      var form = makeForm();
       _dataManager.CreateOne(vm.category,form,function (response) {
         _dataManager.addNotification("success", "新" + vm.pageResourceName + "创建成功");
         // vm.get();
@@ -301,24 +285,8 @@ angular.module('manageApp')
     };
 
     vm.update = function () {
-      var form = {};
-      form.productsList = vm.productsList.map(function (cur) {
-        return {id:cur.id};
-      });
-      form.requirementsList = vm.requirementsList.map(function (cur) {
-        return {id:cur.id};
-      });
-      form.envsList = vm.envsList.map(function (cur) {
-        return {id:cur.id};
-      });
-      form.executor = vm.executor.map(function (cur) {
-        return {id:cur.id};
-      });
-      form.title = vm.title;
-      form.creator = {id:1};
-      form.casesList = vm.casesList.map(function (cur) {
-        return {id:cur.id};
-      });
+      var form = makeForm();
+
 
 
       _dataManager.UpdateOneByID(vm.category,form,vm.id,function (response) {
@@ -333,4 +301,24 @@ angular.module('manageApp')
         vm.get();
       });
     };
+
+    function makeForm() {
+      var form = {};
+      form.productsList = vm.productsList.map(function (cur) {
+        return {id:cur.id};
+      });
+      form.requirementsList = vm.requirementsList.map(function (cur) {
+        return {id:cur.id};
+      });
+      form.envsList = vm.envsList.map(function (cur) {
+        return {id:cur.id};
+      });
+      form.executor = {id:vm.executor[0].id};
+      form.title = vm.title;
+      form.creator = {id:1};
+      form.casesList = vm.casesList.map(function (cur) {
+        return {id:cur.id};
+      });
+      return form;
+    }
   }]);

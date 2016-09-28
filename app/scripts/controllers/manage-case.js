@@ -225,21 +225,10 @@ angular.module('manageApp')
 
 
     vm.create = function () {
-      var form = {};
+      var form = makeForm();
       form.creator = "Admin";
       form.creator_id = 1;
-      form.requirementsList = vm.requirementsList.map(function (item) {
-        return item.id;
-      });
-      form.envsList = vm.envsList.map(function (item) {
-        return item.id;
-      });
-      form.title = vm.title;
-      form.describe = vm.describe;
-      form.detail = vm.detail;
-      form.pre_condition = vm.pre_condition;
-      form.expout = vm.expout;
-      form.type = vm.selectedOption.id;
+
       _dataManager.CreateOne(vm.category,form,function (response) {
         _dataManager.addNotification("success", "新" + vm.pageResourceName + "创建成功");
         // vm.get();
@@ -255,19 +244,8 @@ angular.module('manageApp')
     };
 
     vm.update = function () {
-      var form = {};
-      form.requirementsList = vm.requirementsList.map(function (item) {
-        return item.id;
-      });
-      form.envsList = vm.envsList.map(function (item) {
-        return item.id;
-      });
-      form.title = vm.title;
-      form.describe = vm.describe;
-      form.detail = vm.detail;
-      form.pre_condition = vm.pre_condition;
-      form.expout = vm.expout;
-      form.type = vm.selectedOption.id;
+      var form = makeForm();
+
       _dataManager.UpdateOneByID(vm.category,form,vm.id,function (response) {
         _dataManager.addNotification("success", vm.pageResourceName + vm.id + "修改成功");
         $state.go('manage-case');
@@ -280,4 +258,21 @@ angular.module('manageApp')
         vm.get();
       });
     };
+
+    function makeForm(){
+      var form = {};
+      form.requirementsList = vm.requirementsList.map(function (item) {
+        return {id:item.id};
+      });
+      form.envsList = vm.envsList.map(function (item) {
+        return {id:item.id};
+      });
+      form.title = vm.title;
+      form.describe = vm.describe;
+      form.detail = vm.detail;
+      form.pre_condition = vm.pre_condition;
+      form.expout = vm.expout;
+      form.type = vm.selectedOption.id;
+      return form;
+    }
   }]);
