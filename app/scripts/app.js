@@ -46,8 +46,7 @@ angular
         })
         .state("login", {
           url: "/login",
-          templateUrl: "views/login.html",
-          controller: "LoginCtrl as login",
+          template:"<login-component></login-component>",
           authenticate: false
         })
         /*测试管理*/

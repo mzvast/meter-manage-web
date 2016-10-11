@@ -1,0 +1,14 @@
+<!-- 内容容器Content Wrapper. Contains page content -->
+<div ng-class="$ctrl.style" >
+  <!-- 内容标题和面包屑导航Content Header (Page header) -->
+  <!-- <section class="content-header" ng-include="'views/content_header.html'" ></section> -->
+  <!-- 内容正文Main content -->
+  <section class="content">
+    <!-- Your Page Content Here -->
+    <alert-component></alert-component>
+    <!--<div ng-include="'views/notification.html'" ng-controller="NotificationCtrl as notification"></div>-->
+    <div ui-view></div>
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

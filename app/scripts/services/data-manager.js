@@ -8,7 +8,7 @@
  * Service in the manageApp.
  */
 angular.module('manageApp')
-  .service('dataManager', ['$http', '$resource', function ($http, $resource) {
+  .service('dataManager', ['$http', '$resource', 'notificationService',function ($http, $resource,notificationService) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var self = this;
 
@@ -17,18 +17,12 @@ angular.module('manageApp')
     };
 
     //////////////////
-    //notifications //
+    //notifications TODO removing//
     //////////////////
     self.notifications = [];
-    self.addNotification = function (type, message) {
-      self.notifications.push({"type": type, "message": message});
-    };
-    self.getNotifications = function () {
-      return self.notifications;
-    };
-    self.removeNotification = function (index) {
-      self.notifications.splice(index, 1);
-    };
+    self.addNotification = notificationService.addNotification;
+    self.getNotifications = notificationService.getNotifications;
+    self.removeNotification = notificationService.removeNotification;
 
     self.getResourceByName = function (name) {
       return self[name];

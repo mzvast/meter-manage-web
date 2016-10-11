@@ -1,0 +1,48 @@
+<aside class="main-sidebar" ng-if="$ctrl.authGuard.isLoggedIn">
+
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+
+    <!-- Sidebar Menu -->
+    <ul class="sidebar-menu">
+      <li class="header text-center">主菜单</li>
+
+      <li ui-sref-active="active" class="treeview">
+        <a href="#"><i class="fa fa-user-md"></i> <span>测试管理</span> <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" style="padding-left: 1.8em;">
+          <li ui-sref-active="active"><a ui-sref="manage({category:'products'})">产品管理</a></li>
+          <li ui-sref-active="active"><a ui-sref="manage({category:'users'})">人员管理</a></li>
+          <li ui-sref-active="active"><a ui-sref="manage({category:'vendors'})">厂家管理</a></li>
+          <li ui-sref-active="active"><a ui-sref="manage({category:'requirements'})">需求管理</a></li>
+          <li ui-sref-active="active"><a ui-sref="manage({category:'envs'})">环境管理</a></li>
+          <li ui-sref-active="active"><a ui-sref="manage-case">用例管理</a></li>
+          <li ui-sref-active="active"><a ui-sref="manage-plan">计划管理</a></li>
+          <!--<li ui-sref-active="active"><a ui-sref="manage({category:'flaws'})">缺陷管理</a></li>-->
+          <li ui-sref-active="active"><a ui-sref="results">结果分析</a></li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="#"><i class="glyphicon glyphicon-play"></i> <span>测试执行</span> <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" style="padding-left: 1.8em;">
+          <li ui-sref-active="active"><a ui-sref="func.onPlan">功能测试</a></li>
+          <li ui-sref-active="active"><a ui-sref="action-beian.compare({mode:'debug'})">开发者模式</a></li>
+          <li ui-sref-active="active"><a ui-sref="action-beian.compare({mode:'beian'})">备案比对</a></li>
+          <li ui-sref-active="active"><a ui-sref="action-beian.compare({mode:'gonghuo'})">供货比对</a></li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="#"><i class="glyphicon glyphicon-cog"></i> <span>系统配置</span> <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" style="padding-left: 1.8em;">
+          <li ui-sref-active="active"><a href="">缺陷流程配置</a></li>
+          <li ui-sref-active="active"><a ui-sref="setting-role">角色权限分配</a></li>
+          <li ui-sref-active="active"><a ui-sref="setting-encrypt">备案加密算法配置</a></li>
+        </ul>
+      </li>
+    </ul>
+    <!-- /.sidebar-menu -->
+  </section>
+  <!-- /.sidebar -->
+
+
+
+</aside>

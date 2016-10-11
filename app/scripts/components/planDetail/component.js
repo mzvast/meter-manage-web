@@ -4,7 +4,7 @@
   'use strict';
   angular.module('manageApp')
     .component('planDetailComponent', {
-      templateUrl: 'scripts/components/planDetailComponent.html',
+      templateUrl: 'scripts/components/planDetail/component.html',
       bindings: {
         id: '<'
       },
@@ -51,7 +51,7 @@
           dataManager.getPlanResultbyId($ctrl.id,function (response) {
             console.log($ctrl.id);
             console.log("-----getPlanResultbyId-------",response);
-            $ctrl.resultsList = response.data;            
+            $ctrl.resultsList = response.data;
           })
 
         };
@@ -65,7 +65,7 @@
             })
         };
 
-        
+
 
 
 
