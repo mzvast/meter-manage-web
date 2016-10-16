@@ -33,3 +33,6 @@ p{
 .bold-border{
   border-left: solid greenyellow 4px;
 }
+[ui-view]{
+  min-height:100vh;
+}
