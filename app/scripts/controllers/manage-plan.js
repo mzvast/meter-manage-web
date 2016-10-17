@@ -128,6 +128,7 @@ angular.module('manageApp')
     /**
      * 标题配置
      */
+    vm.canEdit = $stateParams.canEdit;
     vm.pageResourceName = _dataManager.getResourceName(vm.category);
     vm.pageTitle = vm.pageResourceName + (vm.canEdit?"管理":"选择");
     /**

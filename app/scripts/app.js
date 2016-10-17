@@ -63,7 +63,8 @@ angular
         .state("manage-case",{
           url:"/manage-case",
           params:{
-            onCase:true
+            onCase:true,
+            canEdit:true
           },
           templateUrl: "views/manage/case.html",
           controller: 'ManageCaseCtrl as manageCase',
@@ -95,7 +96,8 @@ angular
         .state("manage-plan", {
           url: "/manage-plan",
           params:{
-            onPlan:true
+            onPlan:true,
+            canEdit:true
           },
           templateUrl: "views/manage/plan.html",
           controller: 'ManagePlanCtrl as managePlan',
