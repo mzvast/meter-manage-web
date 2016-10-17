@@ -50,6 +50,11 @@ angular
           authenticate: false
         })
         /*测试管理*/
+        .state("manage-product", {
+          url: "/manage-product",
+          template:"<manage-product-component></manage-product-component>",
+          authenticate: false
+        })
         .state("manage",{
           url:"/manage/:category",
           params:{

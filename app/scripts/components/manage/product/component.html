@@ -1,0 +1,179 @@
+<div class="row" ui-view>
+  <div class="col-xs-10 col-xs-offset-1">
+    <div class="box no-border">
+      <div class="box-header">
+        <div class="row">
+          <div class="col-xs-6">
+            <h3 class="text-center"><b>产品管理</b></h3>
+          </div>
+          <!-- 搜索功能 -->
+          <div class="col-xs-3">
+            <search-box-component on-search="$ctrl.search(q)"></search-box-component>
+          </div>
+          <!-- /搜索功能  -->
+          <!-- 新增按钮 -->
+          <div class="col-xs-2 text-center">
+           <modal-button-component name="新增" on-click="$ctrl.openModal()"></modal-button-component>
+          </div>
+          <!-- /新增按钮 -->
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">
+        <div class="col-md-12">
+          <!-- Custom Tabs -->
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs" ng-hide="$ctrl.hideTab">
+              <li class="active"><a href="" ng-click="$ctrl.setTab()" data-toggle="tab"
+                                    aria-expanded="true">全部类型</a></li>
+              <li ng-repeat="item in $ctrl.tabs"><a href="" ng-click="$ctrl.setTab(item.id)" data-toggle="tab"
+                                                         aria-expanded="true">{{item.name}}</a></li>
+            </ul>
+            <div class="tab-content">
+              <table class="table table-hover text-center">
+                <!-- 列表头 -->
+                <tr>
+                  <!-- 模型列表头 -->
+                  <th ng-repeat="(key, value) in $ctrl.model" ng-click="$ctrl.order(key)">
+                    {{value}}
+                    <span class="sortorder" ng-show="$ctrl.predicate === key"
+                          ng-class="{reverse:$ctrl.reverse}"></span>
+                  </th>
+                  <!--自定义表头-->
+                  <th ng-if="$ctrl.category!=='vendors'" ng-click="$ctrl.order('type')">
+                    所属类型
+                    <span class="sortorder" ng-show="$ctrl.predicate === 'type'"
+                          ng-class="{reverse:$ctrl.reverse}"></span>
+                  </th>
+                  <!--/自定义表头-->
+                  <!-- /模型列表头 -->
+                  <!-- 功能列表头 -->
+                  <th>操作</th>
+                  <!-- /功能列表头 -->
+                </tr>
+                <!-- /列表头 -->
+                <tr ng-repeat="item in $ctrl.itemList| orderBy:$ctrl.predicate:$ctrl.reverse">
+                  <!-- 模型列表内容  -->
+                  <td ng-repeat="(key, value) in $ctrl.model">{{item[key]}}</td>
+                  <!-- /模型列表内容  -->
+                  <!--状态彩色指示-->
+                  <td ng-if="$ctrl.category!=='vendors'">
+                    <div class="btn-group">
+                      <a class="btn margin"
+                         ng-class="{'bg-maroon':item.type===0||item.type===3,'bg-purple':item.type===1,'bg-olive':item.type===2,'bg-navy':item.type===4}">
+                        {{$ctrl.options[item.type]['name']}}
+                      </a>
+                    </div>
+                  </td>
+                  <!--/状态彩色指示-->
+                  <!-- 操作按钮  -->
+                  <td>
+                    <!--可以修改状态-->
+                    <div ng-if="$ctrl.canEdit" class="btn-group">
+                      <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#Modal"
+                         ng-click="$ctrl.setModal(item)">
+                        <i class="fa fa-edit"></i> 修改
+                      </a>
+                      <a class="btn btn-app bg-maroon margin" ng-click="$ctrl.remove(item.id)">
+                        <i class="glyphicon glyphicon-remove"></i> 删除
+                      </a>
+                    </div>
+                    <!--/可以修改状态-->
+                    <div ng-if="$ctrl.onCompare">
+                      <div class="btn-group">
+                        <a class="btn bg-olive margin" ng-click="$ctrl.setProduct(item)">
+                          <i class="fa fa-fw fa-hand-pointer-o"></i>
+                        </a>
+                      </div>
+                    </div>
+                    <!--不能修改状态 onPlan-->
+                    <div ng-if="$ctrl.onPlan" ng-switch="$ctrl.category">
+                      <div ng-switch-when="products" class="btn-group" >
+                        <div ng-hide="$ctrl.compare">
+                          <a ng-show="managePlan.itemNotInProductsList(item)" class="btn bg-olive margin" ng-click="managePlan.addToProductsList(item)">
+                            <i class="glyphicon glyphicon-plus"></i>
+                          </a>
+                          <a ng-hide="managePlan.itemNotInProductsList(item)" class="btn bg-maroon margin" ng-click="managePlan.removeFromProductsList(item)">
+                            <i class="fa fa-fw fa-minus"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div ng-switch-when="requirements" class="btn-group" >
+                        <a ng-show="managePlan.itemNotInRequirementsList(item)" class="btn bg-olive margin" ng-click="managePlan.addToRequirementsList(item)">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </a>
+                        <a ng-hide="managePlan.itemNotInRequirementsList(item)" class="btn bg-maroon margin" ng-click="managePlan.removeFromRequirementsList(item)">
+                          <i class="fa fa-fw fa-minus"></i>
+                        </a>
+                      </div>
+                      <div ng-switch-when="envs" class="btn-group" >
+                        <a ng-show="managePlan.itemNotInEnvsList(item)" class="btn bg-olive margin" ng-click="managePlan.addToEnvsList(item)">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </a>
+                        <a ng-hide="managePlan.itemNotInEnvsList(item)" class="btn bg-maroon margin" ng-click="managePlan.removeFromEnvsList(item)">
+                          <i class="fa fa-fw fa-minus"></i>
+                        </a>
+                      </div>
+                      <div ng-switch-when="users" class="btn-group" >
+                        <a ng-show="managePlan.itemNotInUsersList(item)" class="btn bg-olive margin" ng-click="managePlan.addToUsersList(item)">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </a>
+                        <a ng-hide="managePlan.itemNotInUsersList(item)" class="btn bg-maroon margin" ng-click="managePlan.removeFromUsersList(item)">
+                          <i class="fa fa-fw fa-minus"></i>
+                        </a>
+                      </div>
+                      <div ng-switch-when="cases" class="btn-group" >
+                        <a ng-show="managePlan.itemNotInCasesList(item)" class="btn bg-olive margin" ng-click="managePlan.addToCasesList(item)">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </a>
+                        <a ng-hide="managePlan.itemNotInCasesList(item)" class="btn bg-maroon margin" ng-click="managePlan.removeFromCasesList(item)">
+                          <i class="fa fa-fw fa-minus"></i>
+                        </a>
+                      </div>
+                    </div>
+                    <!--/不能修改状态-->
+
+                    <!--不能修改状态 onCase-->
+                    <div ng-if="$ctrl.onCase" ng-switch="$ctrl.category">
+                      <div ng-switch-when="requirements" class="btn-group" >
+                        <a ng-show="manageCase.itemNotInRequirementsList(item)" class="btn bg-olive margin" ng-click="manageCase.addToRequirementsList(item)">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </a>
+                        <a ng-hide="manageCase.itemNotInRequirementsList(item)" class="btn bg-maroon margin" ng-click="manageCase.removeFromRequirementsList(item)">
+                          <i class="fa fa-fw fa-minus"></i>
+                        </a>
+                      </div>
+                      <div ng-switch-when="envs" class="btn-group" >
+                        <a ng-show="manageCase.itemNotInEnvsList(item)" class="btn bg-olive margin" ng-click="manageCase.addToEnvsList(item)">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </a>
+                        <a ng-hide="manageCase.itemNotInEnvsList(item)" class="btn bg-maroon margin" ng-click="manageCase.removeFromEnvsList(item)">
+                          <i class="fa fa-fw fa-minus"></i>
+                        </a>
+                      </div>
+                    </div>
+                    <!--/不能修改状态-->
+
+                  </td>
+                  <!-- /操作按钮  -->
+                </tr>
+              </table>
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- nav-tabs-custom -->
+        </div>
+        <!-- 分页器 -->
+        <div class="text-center">
+          <uib-pagination total-items="$ctrl.totalItems" ng-model="$ctrl.currentPage"
+                          max-size="$ctrl.maxSize" items-per-page="$ctrl.itemsPerPage"
+                          ng-change="$ctrl.pageChanged()" class="pagination-md"
+                          boundary-link-numbers="true"></uib-pagination>
+        </div>
+        <!-- /分页器 -->
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
