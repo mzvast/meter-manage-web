@@ -4,7 +4,7 @@
   'use strict';
   angular.module('manageApp')
     .component('planDetailComponent', {
-      templateUrl: 'scripts/components/planDetail/component.html',
+      templateUrl: 'scripts/components/manage/planDetail/component.html',
       bindings: {
         id: '<'
       },

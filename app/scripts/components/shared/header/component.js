@@ -4,7 +4,7 @@
 'use strict';
 angular.module('manageApp')
   .component('headerComponent', {
-    templateUrl: 'scripts/components/header/component.html',
+    templateUrl: 'scripts/components/shared/header/component.html',
     bindings: {
 
     },

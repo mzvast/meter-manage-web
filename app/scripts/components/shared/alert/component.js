@@ -4,7 +4,7 @@
 'use strict';
 angular.module('manageApp')
   .component('alertComponent', {
-    templateUrl: 'scripts/components/alert/component.html',
+    templateUrl: 'scripts/components/shared/alert/component.html',
     bindings: {
 
     },

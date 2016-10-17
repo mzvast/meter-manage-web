@@ -4,7 +4,7 @@
 'use strict';
 angular.module('manageApp')
   .component('popupComponent', {
-    templateUrl: 'scripts/components/popup/component.html',
+    templateUrl: 'scripts/components/shared/popup/component.html',
     bindings: {
       title:'<',
       steps:'<',

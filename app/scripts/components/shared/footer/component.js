@@ -4,7 +4,7 @@
 'use strict';
 angular.module('manageApp')
   .component('footerComponent', {
-    templateUrl: 'scripts/components/footer/component.html',
+    templateUrl: 'scripts/components/shared/footer/component.html',
     bindings: {
 
     },
