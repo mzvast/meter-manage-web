@@ -12,7 +12,9 @@ angular.module('manageApp')
       tabModel: '<',
       onOrder: '&',
       reverse: '<',
-      predicate:'<'
+      predicate:'<',
+      onRemove: '&',
+      onEdit: '&'
     },
     controller: function($document,modelService) {
       var $ctrl = this;
@@ -21,8 +23,16 @@ angular.module('manageApp')
         // $ctrl.reverse = false;
       };
 
-      $ctrl.order = function (key) {//TODO bug
+      $ctrl.order = function (key) {
         $ctrl.onOrder({key:key});
+      };
+
+      $ctrl.remove = function (id) {
+        $ctrl.onRemove({id:id});
+      };
+
+      $ctrl.edit = function (item) {
+        $ctrl.onEdit({item:item});
       };
 
       // $ctrl.$onChanges = function (changesObj) {

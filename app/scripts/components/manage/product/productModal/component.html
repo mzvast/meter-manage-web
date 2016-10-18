@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">{{ $ctrl.title }}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <form class="form-horizontal">
+    <div class="box-body">
+      <!-- 模型form内容  -->
+      <div ng-repeat="(key, value) in $ctrl.editableItems" class="form-group">
+        <label for="{{key}}" class="col-sm-2 control-label">{{value}}</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="{{key}}" placeholder="{{value}}"
+                 ng-model="$ctrl.form[key]">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="select" class="col-sm-2 control-label">厂家</label>
+        <div class="col-sm-9">
+          <select class="form-control" id="select" ng-model="$ctrl.form['vendor']"
+                  ng-options="option.name for option in $ctrl.vendors track by option.id"> </select>
+        </div>
+      </div>
+      <!-- /模型form内容  -->
+    </div>
+  </form>
+  <!--{{ $ctrl.form|json }}-->
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">保存</button>
+  <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">取消</button>
+</div>

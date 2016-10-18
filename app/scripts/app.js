@@ -55,7 +55,7 @@ angular
           template:"<manage-product-component></manage-product-component>",
           authenticate: false
         })
-        .state("manage",{
+        .state("manage",{//TODO继续重构
           url:"/manage/:category",
           params:{
             canEdit:true
@@ -285,7 +285,7 @@ angular
       ngRapProvider.enable({
         mode: 3
       });
-      httpProvider.interceptors.push('rapMockInterceptor');
+      // httpProvider.interceptors.push('rapMockInterceptor');
     }]
   )
   .run(function ($rootScope, $state, authService) {

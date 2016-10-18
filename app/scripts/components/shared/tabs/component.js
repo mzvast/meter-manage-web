@@ -17,8 +17,8 @@ angular.module('manageApp')
         $ctrl.tabs = tabService.get($ctrl.name);
       };
 
-      $ctrl.selectTab = function (tabID) {
-        console.log(tabID);
+      $ctrl.selectTab = function (id) {
+        $ctrl.onSelect({id:id});
       }
     },
   });

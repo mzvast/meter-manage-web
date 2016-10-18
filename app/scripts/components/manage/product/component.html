@@ -13,7 +13,7 @@
           <!-- /搜索功能  -->
           <!-- 新增按钮 -->
           <div class="col-xs-2 text-center">
-           <modal-button-component name="新增" on-click="$ctrl.openModal()"></modal-button-component>
+           <modal-button-component name="新增" on-click="$ctrl.create()"></modal-button-component>
           </div>
           <!-- /新增按钮 -->
         </div>
@@ -22,8 +22,8 @@
       <div class="box-body table-responsive no-padding">
         <div class="col-md-12">
           <!-- Custom Tabs -->
-            <tabs-component name="products">
-              <table-component name="products" list="$ctrl.itemList" model="$ctrl.tableModel" tab-model="$ctrl.tabModel" on-order="$ctrl.order(key)" reverse="$ctrl.reverse" predicate="$ctrl.predicate"></table-component>
+            <tabs-component name="products" on-select="$ctrl.selectTab(id)">
+              <table-component name="products" list="$ctrl.itemList" model="$ctrl.tableModel" tab-model="$ctrl.tabModel" on-order="$ctrl.order(key)" reverse="$ctrl.reverse" predicate="$ctrl.predicate" on-remove="$ctrl.remove(id)" on-edit="$ctrl.edit(item)"></table-component>
             </tabs-component>
         <!-- 分页器 -->
         <div class="text-center">

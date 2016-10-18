@@ -21,4 +21,9 @@ angular.module('manageApp')
     self.removeNotification = function (index) {
       self.notifications.splice(index, 1);
     };
+
+    //short alias
+    self.add = self.addNotification;
+    self.get = self.getNotification;
+    self.remove = self.removeNotification;
   });

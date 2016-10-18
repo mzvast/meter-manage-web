@@ -10,7 +10,6 @@ angular.module('manageApp')
     },
     controller: function($document,notificationService) {
       var $ctrl = this;
-      $ctrl.q = 'abc';
       /**
        * 搜索
        */
