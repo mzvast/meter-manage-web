@@ -8,16 +8,20 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('NotificationCtrl', ['dataManager',function (dataManager) {
-    	var vm = this;
-      vm.notifications = dataManager.getNotifications();
-      vm.awesomeThings = [
-        'HTML5 Boilerplate',
-        'AngularJS',
-        'Karma'
-      ];
+  .controller('NotificationCtrl', NotificationCtrl);
 
-      vm.closeAlert = function(index) {
-        dataManager.removeNotification(index);
-      };
-    }]);
+NotificationCtrl.$inject = ['dataManager'];
+
+function NotificationCtrl(dataManager) {
+  var vm = this;
+  vm.notifications = dataManager.getNotifications();
+  vm.awesomeThings = [
+    'HTML5 Boilerplate',
+    'AngularJS',
+    'Karma'
+  ];
+
+  vm.closeAlert = function(index) {
+    dataManager.removeNotification(index);
+  };
+}

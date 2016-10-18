@@ -8,8 +8,12 @@
  * Service in the manageApp.
  */
 angular.module('manageApp')
-  .service('authService', ['$cookies','$http',function ($cookies, $http) {
-    // AngularJS will instantiate a singleton by calling "new" on this function
+  .service('authService', authService);
+
+authService.$inject = ['$cookies','$http'];
+
+function authService($cookies, $http) {
+  // AngularJS will instantiate a singleton by calling "new" on this function
   var self = this;
   self.authStatus = false;
   self.token = $cookies.get('token')||'';
@@ -30,9 +34,9 @@ angular.module('manageApp')
   self.doLoginByPass = function(username,password) {
     $http
       .post('/api/login',{
-          username:username,
-          password:password
-        })
+        username:username,
+        password:password
+      })
       .success(function(data, status, headers, config) {
         switch(data.status){
           case 'success':
@@ -54,7 +58,7 @@ angular.module('manageApp')
         console.log('网络异常');
         console.log(data);
         return false;
-      });    
+      });
   };
 
 
@@ -64,8 +68,8 @@ angular.module('manageApp')
   self.doLoginByToken = function() {
     $http
       .post('/api/verifytoken',{
-          token:self.token
-        })
+        token:self.token
+      })
       .success(function(data, status, headers, config) {
         switch(data.status){
           case 'success':
@@ -76,23 +80,23 @@ angular.module('manageApp')
           }
           default:
           {
-            self.authStatus = false;  //ensure not authurized          
+            self.authStatus = false;  //ensure not authurized
             $cookies.remove('token');//remove invalid token of cookies
             return false;
           }
         }
-       
+
       })
       .error(function(data, status, headers, config) {
         console.log('网络异常');
         console.log(data);
         return false;
-      });    
+      });
   };
- 
+
 
   self.isAuthenticated = function() {
-  	return self.authStatus;
+    return self.authStatus;
   };
   self.doLogout =function() {
     self.authStatus = false;
@@ -101,9 +105,9 @@ angular.module('manageApp')
 
   // Setting a cookie
   $cookies.put('myFavorite', 'oatmeal');
-    // Retrieving a cookie
+  // Retrieving a cookie
   var favoriteCookie = $cookies.get('myFavorite');
   // console.log("msg",favoriteCookie);
   self.setCookies = function() {
   };
-  }]);
+}

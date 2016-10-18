@@ -16,33 +16,37 @@ angular.module('manageApp')
       onRemove: '&',
       onEdit: '&'
     },
-    controller: function($document,modelService) {
-      var $ctrl = this;
-      $ctrl.$onInit = function () {
-        // $ctrl.predicate = Object.keys($ctrl.model)[0];
-        // $ctrl.reverse = false;
-      };
-
-      $ctrl.order = function (key) {
-        $ctrl.onOrder({key:key});
-      };
-
-      $ctrl.remove = function (id) {
-        $ctrl.onRemove({id:id});
-      };
-
-      $ctrl.edit = function (item) {
-        $ctrl.onEdit({item:item});
-      };
-
-      // $ctrl.$onChanges = function (changesObj) {
-      //   if(changesObj.list){
-      //     $ctrl.itemList = changesObj.list.currentValue;
-      //   }
-      //   // if(changesObj.predicate){
-      //   //   $ctrl.predicate = changesObj.predicate.currentValue;
-      //   // }
-      // }
-
-    },
+    controller: tableController
   });
+
+tableController.$inject = [ '$document','modelService'];
+
+function tableController($document,modelService) {
+  var $ctrl = this;
+  $ctrl.$onInit = function () {
+    // $ctrl.predicate = Object.keys($ctrl.model)[0];
+    // $ctrl.reverse = false;
+  };
+
+  $ctrl.order = function (key) {
+    $ctrl.onOrder({key:key});
+  };
+
+  $ctrl.remove = function (id) {
+    $ctrl.onRemove({id:id});
+  };
+
+  $ctrl.edit = function (item) {
+    $ctrl.onEdit({item:item});
+  };
+
+  // $ctrl.$onChanges = function (changesObj) {
+  //   if(changesObj.list){
+  //     $ctrl.itemList = changesObj.list.currentValue;
+  //   }
+  //   // if(changesObj.predicate){
+  //   //   $ctrl.predicate = changesObj.predicate.currentValue;
+  //   // }
+  // }
+
+}

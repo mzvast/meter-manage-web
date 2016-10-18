@@ -288,7 +288,7 @@ angular
       // httpProvider.interceptors.push('rapMockInterceptor');
     }]
   )
-  .run(function ($rootScope, $state, authService) {
+  .run(['$rootScope', '$state', 'authService',function ($rootScope, $state, authService) {
     $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
       if (toState.authenticate && !authService.isAuthenticated()) {
         // User isn’t authenticated
@@ -296,8 +296,8 @@ angular
         event.preventDefault();
       }
     });
-  })
-  .run(function (formlyConfig) {
+  }])
+  .run(['formlyConfig',function (formlyConfig) {
     /*datepicker config*/
     var attributes = [
       'date-disabled',
@@ -432,5 +432,5 @@ angular
         }
       }]
     });
-  })
+  }])
 ;

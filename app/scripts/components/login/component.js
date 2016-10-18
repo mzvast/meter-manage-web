@@ -8,12 +8,16 @@ angular.module('manageApp')
     bindings: {
 
     },
-    controller: function(authGuard,$state) {
-      var $ctrl = this;
-      $ctrl.onSubmit = function () {
-        authGuard.login();
-        $state.go('manage',{category:'products'})
-      }
-
-    },
+    controller: loginController
   });
+
+loginController.$inject = ['authGuard','$state'];
+
+function loginController(authGuard,$state) {
+  var $ctrl = this;
+  $ctrl.onSubmit = function () {
+    authGuard.login();
+    $state.go('manage',{category:'products'})
+  }
+
+}

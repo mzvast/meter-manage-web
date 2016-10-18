@@ -8,20 +8,24 @@
  * Service in the manageApp.
  */
 angular.module('manageApp')
-  .service('fileUpload', ['$http', function ($http) {
-    var self = this;
-    self.uploadFileToUrl = function (file, uploadUrl) {
-      var fd = new FormData();
-      fd.append('file', file);
-      $http.post(uploadUrl, fd, {
-        transformRequest: angular.identity,
-        headers: {'Content-Type': undefined}
+  .service('fileUpload', fileUpload);
+
+fileUpload.$inject = ['$http' ];
+
+function fileUpload($http) {
+  var self = this;
+  self.uploadFileToUrl = function (file, uploadUrl) {
+    var fd = new FormData();
+    fd.append('file', file);
+    $http.post(uploadUrl, fd, {
+      transformRequest: angular.identity,
+      headers: {'Content-Type': undefined}
+    })
+      .success(function () {
+        console.log("success");
       })
-        .success(function () {
-          console.log("success");
-        })
-        .error(function () {
-          console.log("error");
-        });
-    }
-  }]);
+      .error(function () {
+        console.log("error");
+      });
+  }
+}

@@ -9,10 +9,14 @@ angular.module('manageApp')
       onClick:'&',
       name:'@'
     },
-    controller: function($document) {
-      var $ctrl = this;
-      $ctrl.click = function () {
-        $ctrl.onClick();
-      }
-    },
+    controller: modalButtonController
   });
+
+modalButtonController.$inject = ['$document'];
+
+function modalButtonController($document) {
+  var $ctrl = this;
+  $ctrl.click = function () {
+    $ctrl.onClick();
+  }
+}

@@ -8,22 +8,26 @@ angular.module('manageApp')
     bindings: {
       onSearch: '&'
     },
-    controller: function($document,notificationService) {
-      var $ctrl = this;
-      /**
-       * 搜索
-       */
-      $ctrl.search = function() {
-        if($ctrl.q){
-          $ctrl.onSearch({q:$ctrl.q})
-        }else{
-          console.log('empty search');
-        }
-      };
-
-      $ctrl.clear = function() {
-        $ctrl.q = ''
-      };
-
-    },
+    controller: searchBoxController
   });
+
+searchBoxController.$inject = ['$document','notificationService'];
+
+function searchBoxController($document,notificationService) {
+  var $ctrl = this;
+  /**
+   * 搜索
+   */
+  $ctrl.search = function() {
+    if($ctrl.q){
+      $ctrl.onSearch({q:$ctrl.q})
+    }else{
+      console.log('empty search');
+    }
+  };
+
+  $ctrl.clear = function() {
+    $ctrl.q = ''
+  };
+
+}

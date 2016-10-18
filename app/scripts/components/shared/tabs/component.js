@@ -11,14 +11,18 @@ angular.module('manageApp')
       onSelect: '&',
       name: '@'
     },
-    controller: function($document,tabService) {
-      var $ctrl = this;
-      $ctrl.$onInit = function () {
-        $ctrl.tabs = tabService.get($ctrl.name);
-      };
-
-      $ctrl.selectTab = function (id) {
-        $ctrl.onSelect({id:id});
-      }
-    },
+    controller: tabsController
   });
+
+tabsController.$inject = ['$document','tabService'];
+
+function tabsController($document,tabService) {
+  var $ctrl = this;
+  $ctrl.$onInit = function () {
+    $ctrl.tabs = tabService.get($ctrl.name);
+  };
+
+  $ctrl.selectTab = function (id) {
+    $ctrl.onSelect({id:id});
+  }
+}

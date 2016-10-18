@@ -8,10 +8,14 @@
  * Controller of the manageApp
  */
 angular.module('manageApp')
-  .controller('LoginCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('LoginCtrl', LoginCtrl);
+
+LoginCtrl.$inject = [];
+
+function LoginCtrl() {
+  this.awesomeThings = [
+    'HTML5 Boilerplate',
+    'AngularJS',
+    'Karma'
+  ];
+}

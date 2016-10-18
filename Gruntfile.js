@@ -117,7 +117,7 @@ module.exports = function (grunt) {
           }
         },{
         context: '/node',// the context of the data service
-        host: apiHost,// wherever the data service is running
+        host: 'localhost',//apiHost,// wherever the data service is running
         port: 8088,// the port that the data service is running on
         changeOrgin: true,
         headers: {
@@ -432,6 +432,7 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.app %>',
           dest: '<%= yeoman.dist %>',
           src: [
+            'scripts/components/{,*/}{,*/}{,*/}{,*/}*.html',//component的html文件
             '*.{ico,png,txt}',
             '*.html',
             'images/{,*/}*.{webp}',

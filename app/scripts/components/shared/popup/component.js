@@ -11,12 +11,16 @@ angular.module('manageApp')
       record:'<',
       close:'&'
     },
-    controller: function(dataManager,$uibModal,$document) {
-      var $ctrl = this;
-
-      $ctrl.closeModal = function () {
-        $ctrl.close();
-      }
-
-    },
+    controller: popupController
   });
+
+popupController.$inject = ['dataManager','$uibModal','$document'];
+
+function popupController(dataManager,$uibModal,$document) {
+  var $ctrl = this;
+
+  $ctrl.closeModal = function () {
+    $ctrl.close();
+  }
+
+}

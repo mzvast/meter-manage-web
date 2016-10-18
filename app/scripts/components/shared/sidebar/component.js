@@ -8,12 +8,16 @@ angular.module('manageApp')
     bindings: {
 
     },
-    controller: function(authGuard) {
-      var $ctrl = this;
-      $ctrl.authGuard = authGuard;
-      $ctrl.$onInit = function () {
-        console.log(authGuard.isLoggedIn)
-      }
-
-    },
+    controller: sidebarController
   });
+
+sidebarController.$inject = ['authGuard'];
+
+function sidebarController(authGuard) {
+  var $ctrl = this;
+  $ctrl.authGuard = authGuard;
+  $ctrl.$onInit = function () {
+    console.log(authGuard.isLoggedIn)
+  }
+
+}

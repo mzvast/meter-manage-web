@@ -8,12 +8,16 @@ angular.module('manageApp')
     bindings: {
 
     },
-    controller: function($document,notificationService) {
-      var $ctrl = this;
-
-      $ctrl.notifications = notificationService.notifications;
-      $ctrl.closeAlert = function (index) {
-        notificationService.removeNotification(index);
-      }
-    },
+    controller: alertController
   });
+
+alertController.$inject = ['notificationService'];
+
+function alertController(notificationService) {
+  var $ctrl = this;
+
+  $ctrl.notifications = notificationService.notifications;
+  $ctrl.closeAlert = function (index) {
+    notificationService.removeNotification(index);
+  }
+}

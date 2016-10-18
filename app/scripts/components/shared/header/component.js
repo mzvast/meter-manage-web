@@ -8,21 +8,25 @@ angular.module('manageApp')
     bindings: {
 
     },
-    controller: function(authGuard,$state) {
-      var $ctrl = this;
-      $ctrl.authGuard = authGuard;
-
-      $ctrl.login = function () {
-        $state.go('login');
-      };
-
-      $ctrl.logout = function () {
-        authGuard.logout();
-        $state.transitionTo("login");
-      }
-
-
-
-
-    },
+    controller: headerController
   });
+
+headerController.$inject = ['authGuard','$state'];
+
+function headerController(authGuard,$state) {
+  var $ctrl = this;
+  $ctrl.authGuard = authGuard;
+
+  $ctrl.login = function () {
+    $state.go('login');
+  };
+
+  $ctrl.logout = function () {
+    authGuard.logout();
+    $state.transitionTo("login");
+  }
+
+
+
+
+}
