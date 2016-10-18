@@ -182,10 +182,10 @@
         </div>
         <!-- 分页器 -->
         <div class="text-center">
-          <uib-pagination total-items="manageCtrl.totalItems" ng-model="manageCtrl.currentPage"
+          <ul uib-pagination total-items="manageCtrl.totalItems" ng-model="manageCtrl.currentPage"
                           max-size="manageCtrl.maxSize" items-per-page="manageCtrl.itemsPerPage"
                           ng-change="manageCtrl.pageChanged()" class="pagination-md"
-                          boundary-link-numbers="true"></uib-pagination>
+                          boundary-link-numbers="true"></ul>
         </div>
         <!-- /分页器 -->
       </div>

@@ -1,0 +1,54 @@
+<table class="table table-hover text-center">
+  <!-- 列表头 -->
+  <tr>
+    <!-- 模型列表头 -->
+    <th ng-repeat="(key, value) in $ctrl.model" ng-click="$ctrl.order(key)">
+      {{value}}
+      <span class="sortorder" ng-show="$ctrl.predicate === key"
+            ng-class="{reverse:$ctrl.reverse}"></span>
+    </th>
+    <!--自定义表头-->
+    <th ng-click="$ctrl.order('type')">
+      所属类型
+      <span class="sortorder" ng-show="$ctrl.predicate === 'type'"
+            ng-class="{reverse:$ctrl.reverse}"></span>
+    </th>
+    <!--/自定义表头-->
+    <!-- /模型列表头 -->
+    <!-- 功能列表头 -->
+    <th>操作</th>
+    <!-- /功能列表头 -->
+  </tr>
+  <!-- /列表头 -->
+
+  <tr ng-repeat="item in $ctrl.list">
+    <!-- 模型列表内容  -->
+    <td ng-repeat="(key, value) in $ctrl.model">{{item[key]}}</td>
+    <!-- /模型列表内容  -->
+    <!--状态彩色指示-->
+    <td>
+      <div class="btn-group">
+        <a class="btn margin"
+           ng-class="{'bg-maroon':item.type===0||item.type===3,'bg-purple':item.type===1,'bg-olive':item.type===2,'bg-navy':item.type===4}">
+          {{$ctrl.tabModel[item.type]['name']}}
+        </a>
+      </div>
+    </td>
+    <!--/状态彩色指示-->
+    <!-- 操作按钮  -->
+    <td>
+      <!--可以修改状态-->
+      <div class="btn-group">
+        <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#Modal"
+           ng-click="$ctrl.setModal(item)">
+          <i class="fa fa-edit"></i> 修改
+        </a>
+        <a class="btn btn-app bg-maroon margin" ng-click="$ctrl.remove(item.id)">
+          <i class="glyphicon glyphicon-remove"></i> 删除
+        </a>
+      </div>
+      <!--/可以修改状态-->
+    </td>
+    <!-- /操作按钮  -->
+  </tr>
+</table>
