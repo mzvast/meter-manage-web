@@ -90,6 +90,11 @@ function manageProductController(authGuard, $state, $uibModal, productService, m
       refresh();
     };
 
+    $ctrl.clear = function () {
+      $ctrl.q = '';
+      refresh();
+    };
+
     $ctrl.remove = function (id) {
       productService.remove(id, function () {
         console.log('removed ', id);

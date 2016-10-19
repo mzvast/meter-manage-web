@@ -6,28 +6,26 @@ angular.module('manageApp')
   .component('searchBoxComponent', {
     templateUrl: 'scripts/components/shared/searchBox/component.html',
     bindings: {
-      onSearch: '&'
+      onSearch: '&',
+      onClear: '&'
     },
     controller: searchBoxController
   });
 
-searchBoxController.$inject = ['$document','notificationService'];
+searchBoxController.$inject = [];
 
-function searchBoxController($document,notificationService) {
+function searchBoxController() {
   var $ctrl = this;
   /**
    * 搜索
    */
   $ctrl.search = function() {
-    if($ctrl.q){
-      $ctrl.onSearch({q:$ctrl.q})
-    }else{
-      console.log('empty search');
-    }
+      $ctrl.onSearch({q:$ctrl.q});
   };
 
   $ctrl.clear = function() {
-    $ctrl.q = ''
+    $ctrl.q = '';
+    $ctrl.onClear();
   };
 
 }
