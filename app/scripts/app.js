@@ -65,6 +65,11 @@ angular
           template:"<manage-user-component></manage-user-component>",
           authenticate: false
         })
+        .state("manage-requirement", {
+          url: "/manage-requirement",
+          template:"<manage-requirement-component></manage-requirement-component>",
+          authenticate: false
+        })
         .state("manage",{//TODO继续重构
           url:"/manage/:category",
           params:{
