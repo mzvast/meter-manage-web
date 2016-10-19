@@ -8,6 +8,7 @@ angular.module('manageApp')
     templateUrl: 'scripts/components/shared/tabs/component.html',
     bindings: {
       model: '<',
+      defaultActiveTabId:'<',
       onSelect: '&',
       name: '@'
     },
@@ -19,10 +20,11 @@ tabsController.$inject = [];
 function tabsController() {
   var $ctrl = this;
   $ctrl.$onInit = function () {
-
+    $ctrl.activeTabId = $ctrl.defaultActiveTabId!==undefined?$ctrl.defaultActiveTabId:-1;
   };
 
   $ctrl.selectTab = function (id) {
+    $ctrl.activeTabId = id;
     $ctrl.onSelect({id:id});
   }
 }

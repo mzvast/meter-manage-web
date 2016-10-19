@@ -11,7 +11,7 @@ angular.module('manageApp')
   .service('formModelService', formModelService);
 
 
-formModelService.$inject = []
+formModelService.$inject = [];
 
 function formModelService() {
   // AngularJS will instantiate a singleton by calling "new" on this function
@@ -45,7 +45,9 @@ function formModelService() {
       case 'cases':
         return {
           title: "名称",
-          describe: "描述"
+          describe: "描述",
+          pre_condition: "前置条件",
+          expout: "期望结果"
         };
       case 'plans':
         return {

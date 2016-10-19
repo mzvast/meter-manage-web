@@ -75,6 +75,11 @@ angular
           template:"<manage-env-component></manage-env-component>",
           authenticate: false
         })
+        .state("search", {
+          url: "/search",
+          template:"<quick-select-env-component></quick-select-env-component>",
+          authenticate: false
+        })
         .state("manage",{//TODO继续重构
           url:"/manage/:category",
           params:{
@@ -85,37 +90,10 @@ angular
           authenticate: false
         })
         /*用例管理*/
-        .state("manage-case",{
-          url:"/manage-case",
-          params:{
-            onCase:true,
-            canEdit:true
-          },
-          templateUrl: "views/manage/case.html",
-          controller: 'ManageCaseCtrl as manageCase',
+        .state("manage-case", {
+          url: "/manage-case",
+          template:"<manage-case-component></manage-case-component>",
           authenticate: false
-        })
-        .state("manage-case.on", {
-          url: "-on",
-          templateUrl: "views/manage/case-new.html"
-        })
-        .state("manage-case.on.requirements", {
-          url: "-requirements",
-          params:{
-            canEdit:false,
-            category:'requirements'
-          },
-          controller: 'ManageCtrl as manageCtrl',
-          templateUrl: "views/manage/main.html"
-        })
-        .state("manage-case.on.envs", {
-          url: "-envs",
-          params:{
-            canEdit:false,
-            category:'envs'
-          },
-          controller: 'ManageCtrl as manageCtrl',
-          templateUrl: "views/manage/main.html"
         })
         /*计划管理*/
         .state("manage-plan", {

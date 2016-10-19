@@ -19,6 +19,9 @@ function tabService() {
     switch (name) {
       case 'products':
         return [{
+          id: -1,
+          name:"全部"
+        },{
           id: 0,
           name: "未备案"
         }, {
@@ -27,6 +30,9 @@ function tabService() {
         }];
       case 'users':
         return [{
+          id: -1,
+          name:"全部"
+        },{
           id: 0,
           name: "超级管理员"
         }, {
@@ -38,6 +44,9 @@ function tabService() {
         }];
       case 'requirements':
         return [{
+          id: -1,
+          name:"全部"
+        },{
           id: 0,
           name: "单元测试"
         }, {
@@ -51,9 +60,15 @@ function tabService() {
           name: "性能测试"
         }];
       case 'vendors':
-        return [];
+        return [{
+          id:-1,
+          name:"全部"
+        }];
       case 'results':
         return [{
+          id: -1,
+          name:"全部"
+        },{
           id: 0,
           name: "失败"
         }, {
@@ -62,6 +77,9 @@ function tabService() {
         }];
       case 'cases':
         return [{
+          id: -1,
+          name:"全部"
+        },{
           id: 0,
           name: "单元测试"
         }, {
@@ -76,6 +94,9 @@ function tabService() {
         }];
       case 'plans':
         return [{
+          id: -1,
+          name:"全部"
+        },{
           id: 0,
           name: "未完成"
         }, {
@@ -84,6 +105,9 @@ function tabService() {
         }];
       case 'envs':
         return [{
+          id: -1,
+          name:"全部"
+        },{
           id: 0,
           name: "软件环境"
         }, {
@@ -92,6 +116,9 @@ function tabService() {
         }];
       case 'flaws':
         return [{
+          id: -1,
+          name:"全部"
+        },{
           id: 0,
           name: "提交"
         }, {

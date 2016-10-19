@@ -37,18 +37,11 @@
     <!--/状态彩色指示-->
     <!-- 操作按钮  -->
     <td>
-      <!--可以修改状态-->
       <div class="btn-group">
-        <a class="btn btn-app bg-orange margin" data-toggle="modal" data-target="#Modal"
-           ng-click="$ctrl.edit(item)">
-          <i class="fa fa-edit"></i> 修改
-        </a>
-        <a class="btn btn-app bg-maroon margin" ng-click="$ctrl.remove(item.id)">
-          <i class="glyphicon glyphicon-remove"></i> 删除
-        </a>
+        <a class="btn margin bg-olive" ng-click="$ctrl.add(item)">添加</a>
       </div>
-      <!--/可以修改状态-->
     </td>
     <!-- /操作按钮  -->
   </tr>
 </table>
+<div ng-transclude></div>

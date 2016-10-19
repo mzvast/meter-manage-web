@@ -1,0 +1,17 @@
+<table class="table table-condensed">
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <th>名称</th>
+    <th>操作</th>
+  </tr>
+  <tr ng-repeat="item in $ctrl.list">
+    <td>{{item.id}}</td>
+    <td> {{item.title}}</td>
+    <td>
+      <span><a href=""  ng-click="$ctrl.remove($index)"><i class="fa fa-fw fa-remove"></i></a>
+      </span>
+    </td>
+  </tr>
+  </tbody>
+</table>

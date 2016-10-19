@@ -1,0 +1,55 @@
+<form class="sidebar-form" style="margin-top: 1.6em;">
+  <div class="input-group">
+    <input type="text" name="q" class="form-control" ng-model="$ctrl.q" placeholder="搜索">
+    <span class="input-group-btn">
+      <button ng-click="$ctrl.search()" type="submit" name="search" class="btn btn-flat"><i class="fa fa-search"></i>
+      </button>
+    </span>
+    <span class="input-group-btn">
+      <button ng-click="$ctrl.clear()" type="submit" name="search" class="btn btn-flat">
+        <i class="glyphicon glyphicon-remove"></i>
+      </button>
+    </span>
+  </div>
+
+  <div id="tab-container">
+    <div class="tab-box" ng-class="{'active':$ctrl.activeTabId===item.id}" ng-repeat="item in $ctrl.tabModel" ng-click="$ctrl.selectTab(item.id)">{{ item.name }}</div>
+  </div>
+
+  <div id="result-box">
+    <div id="content-container" ng-transclude>
+
+    </div>
+  </div>
+</form>
+
+<style>
+  #result-box{
+    overflow: auto;
+    height:300px;
+    border-top: 1px #ecf0f5 solid;
+    /*border:1px red solid;*/
+    background-color: #fff;
+  }
+  #tab-container{
+    display: flex;
+    flex-wrap: wrap;
+
+    border-top: 1px #ecf0f5 solid;
+    border-bottom:1px #ecf0f5 solid;
+    /*border:1px red solid;*/
+    background-color: #fff;
+  }
+  .tab-box{
+    margin:10px;
+    cursor: pointer;
+    text-align: center;
+    width:100px;
+    border:solid #ecf0f5 1px;
+    /*border-radius: 20%;*/
+  }
+  .tab-box.active{
+    background-color: #dd4b39;
+    color: white;
+  }
+</style>
