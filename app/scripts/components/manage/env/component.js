@@ -1,21 +1,21 @@
 'use strict';
 angular.module('manageApp')
-  .component('manageUserComponent', {
-    templateUrl: 'scripts/components/manage/user/component.html',
+  .component('manageEnvComponent', {
+    templateUrl: 'scripts/components/manage/env/component.html',
     bindings: {},
     controller: manageProductController
   });
 
-manageProductController.$inject = ['authGuard', '$state', '$uibModal', 'userService', 'modelService', 'tabService', 'formModelService', 'notificationService'];
+manageProductController.$inject = ['authGuard', '$state', '$uibModal', 'envService', 'modelService', 'tabService', 'formModelService', 'notificationService'];
 
-function manageProductController(authGuard, $state, $uibModal, userService, modelService, tabService, formModelService, notificationService)
+function manageProductController(authGuard, $state, $uibModal, envService, modelService, tabService, formModelService, notificationService)
    {
     var $ctrl = this;
 
     $ctrl.$onInit = function () {
-      $ctrl.title = '人员管理';
-      $ctrl.tableModel = modelService.get('users');
-      $ctrl.tabModel = tabService.get('users');
+      $ctrl.title = '环境管理';
+      $ctrl.tableModel = modelService.get('envs');
+      $ctrl.tabModel = tabService.get('envs');
       $ctrl.itemList = [];
 
       $ctrl.totalItems = 1;
@@ -44,21 +44,21 @@ function manageProductController(authGuard, $state, $uibModal, userService, mode
     }
 
     function refresh() {
-      userService.getList(getQueryObj(), function (json) {
+      envService.getList(getQueryObj(), function (json) {
         console.log(json.data);
 
         $ctrl.itemList = json.data.map(function (item) {
           if (item['create_date']) {
             item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
           }
-          // //修复厂家名称和厂家代码的嵌套
-          // if (item.vendor && item.vendor.name && item.vendor.code) {
-          //   var name = item.vendor.name;
-          //   var code = item.vendor.code;
-          //   var vendor_id = item.vendor.id;
-          //   item.vendor = name;
-          //   item.vendor_code = code;
-          //   item.vendor_id = vendor_id;
+          // //修复环境名称和环境代码的嵌套
+          // if (item.env && item.env.name && item.env.code) {
+          //   var name = item.env.name;
+          //   var code = item.env.code;
+          //   var env_id = item.env.id;
+          //   item.env = name;
+          //   item.env_code = code;
+          //   item.env_id = env_id;
           // }
           return item;
         });
@@ -97,9 +97,9 @@ function manageProductController(authGuard, $state, $uibModal, userService, mode
     };
 
     $ctrl.remove = function (id) {
-      userService.remove(id, function () {
+      envService.remove(id, function () {
         console.log('removed ', id);
-        notificationService.add('success','删除人员'+id+'成功');
+        notificationService.add('success','删除环境'+id+'成功');
         refresh();
       })
     };
@@ -109,13 +109,13 @@ function manageProductController(authGuard, $state, $uibModal, userService, mode
       (function () {
         var modalInstance = $uibModal.open({
           animation: $ctrl.animationsEnabled,
-          component: 'userModalComponent',
+          component: 'envModalComponent',
           resolve: {
             editableItems: function () {
-              return formModelService.get('users');
+              return formModelService.get('envs');
             },
             title: function () {
-              return '修改人员';
+              return '修改环境';
             },
             types: function () {
               return $ctrl.tabModel;
@@ -123,11 +123,10 @@ function manageProductController(authGuard, $state, $uibModal, userService, mode
             form: function () {
               return {
                 id:item.id,
-                name:item.name,
-                age:item.age,
-                skill:item.skill,
-                exp:item.exp,
-                type:{id:item.type}// TODO 等待上游修复,注意编码后保存时候要解码
+                title:item.title,
+                detail:item.detail,
+                describe:item.describe,
+                type:{id:item.type} //编码
               };
             }
           }
@@ -136,9 +135,9 @@ function manageProductController(authGuard, $state, $uibModal, userService, mode
         modalInstance.result.then(function (formObj) {
           formObj.type = formObj.type.id;//解码
           console.log(formObj);
-          userService.update(formObj,formObj.id, function (response) {
+          envService.update(formObj,formObj.id, function (response) {
             console.log(response);
-            notificationService.add('success','修改人员成功');
+            notificationService.add('success','修改环境成功');
             refresh();
           })
         }, function () {
@@ -157,16 +156,16 @@ function manageProductController(authGuard, $state, $uibModal, userService, mode
       (function () {
         var modalInstance = $uibModal.open({
           animation: $ctrl.animationsEnabled,
-          component: 'userModalComponent',
+          component: 'envModalComponent',
           resolve: {
             editableItems: function () {
-              return formModelService.get('users');
+              return formModelService.get('envs');
             },
             types: function () {
               return $ctrl.tabModel;
             },
             title: function () {
-              return '新建人员';
+              return '新建环境';
             }
           }
         });
@@ -174,9 +173,9 @@ function manageProductController(authGuard, $state, $uibModal, userService, mode
         modalInstance.result.then(function (formObj) {
           formObj.type = formObj.type.id;//解码
           console.log(formObj);
-          userService.add(formObj, function (response) {
+          envService.add(formObj, function (response) {
             console.log(response);
-            notificationService.add('success','新增人员成功');
+            notificationService.add('success','新增环境成功');
             refresh();
           })
         }, function () {

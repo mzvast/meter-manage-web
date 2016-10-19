@@ -70,6 +70,11 @@ angular
           template:"<manage-requirement-component></manage-requirement-component>",
           authenticate: false
         })
+        .state("manage-env", {
+          url: "/manage-env",
+          template:"<manage-env-component></manage-env-component>",
+          authenticate: false
+        })
         .state("manage",{//TODO继续重构
           url:"/manage/:category",
           params:{

@@ -3,8 +3,8 @@
  */
 'use strict';
 angular.module('manageApp')
-  .component('requirementModalComponent', {
-    templateUrl: 'scripts/components/manage/requirement/requirementModal/component.html',
+  .component('envModalComponent', {
+    templateUrl: 'scripts/components/manage/env/envModal/component.html',
     bindings: {
       resolve: '<',
       close: '&',
@@ -16,7 +16,7 @@ angular.module('manageApp')
 
 productModalController.$inject = [];
 
-function productModalController() {
+function productModalController(tabService) {
   var $ctrl = this;
 
   $ctrl.$onInit = function () {

@@ -117,6 +117,9 @@ function manageProductController(authGuard, $state, $uibModal, requirementServic
             title: function () {
               return '修改需求';
             },
+            types: function () {
+              return $ctrl.tabModel;
+            },
             form: function () {
               return {
                 id:item.id,
@@ -157,6 +160,9 @@ function manageProductController(authGuard, $state, $uibModal, requirementServic
           resolve: {
             editableItems: function () {
               return formModelService.get('requirements');
+            },
+            types: function () {
+              return $ctrl.tabModel;
             },
             title: function () {
               return '新建需求';

@@ -14,17 +14,16 @@ angular.module('manageApp')
 
   });
 
-productModalController.$inject = ['tabService'];
+productModalController.$inject = [];
 
-function productModalController(tabService) {
+function productModalController() {
   var $ctrl = this;
 
   $ctrl.$onInit = function () {
     $ctrl.editableItems = $ctrl.resolve.editableItems;
     $ctrl.title = $ctrl.resolve.title;
     $ctrl.form = $ctrl.resolve.form;
-
-    $ctrl.types = tabService.get('users');
+    $ctrl.types = $ctrl.resolve.types;
   };
 
   $ctrl.ok = function () {
