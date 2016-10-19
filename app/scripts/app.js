@@ -55,6 +55,16 @@ angular
           template:"<manage-product-component></manage-product-component>",
           authenticate: false
         })
+        .state("manage-vendor", {
+          url: "/manage-vendor",
+          template:"<manage-vendor-component></manage-vendor-component>",
+          authenticate: false
+        })
+        .state("manage-user", {
+          url: "/manage-user",
+          template:"<manage-user-component></manage-user-component>",
+          authenticate: false
+        })
         .state("manage",{//TODO继续重构
           url:"/manage/:category",
           params:{

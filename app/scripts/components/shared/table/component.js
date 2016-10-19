@@ -6,7 +6,6 @@ angular.module('manageApp')
   .component('tableComponent', {
     templateUrl: 'scripts/components/shared/table/component.html',
     bindings: {
-      name: '@',
       list: '<',
       model: '<',
       tabModel: '<',
@@ -14,14 +13,15 @@ angular.module('manageApp')
       reverse: '<',
       predicate:'<',
       onRemove: '&',
-      onEdit: '&'
+      onEdit: '&',
+      hideType:'<'
     },
     controller: tableController
   });
 
-tableController.$inject = [ '$document','modelService'];
+tableController.$inject = [];
 
-function tableController($document,modelService) {
+function tableController() {
   var $ctrl = this;
   $ctrl.$onInit = function () {
     // $ctrl.predicate = Object.keys($ctrl.model)[0];

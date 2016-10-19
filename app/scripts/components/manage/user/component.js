@@ -1,21 +1,21 @@
 'use strict';
 angular.module('manageApp')
-  .component('manageProductComponent', {
-    templateUrl: 'scripts/components/manage/product/component.html',
+  .component('manageUserComponent', {
+    templateUrl: 'scripts/components/manage/user/component.html',
     bindings: {},
     controller: manageProductController
   });
 
-manageProductController.$inject = ['authGuard', '$state', '$uibModal', 'productService', 'modelService', 'tabService', 'formModelService', 'notificationService'];
+manageProductController.$inject = ['authGuard', '$state', '$uibModal', 'userService', 'modelService', 'tabService', 'formModelService', 'notificationService'];
 
-function manageProductController(authGuard, $state, $uibModal, productService, modelService, tabService, formModelService, notificationService)
+function manageProductController(authGuard, $state, $uibModal, userService, modelService, tabService, formModelService, notificationService)
    {
     var $ctrl = this;
 
     $ctrl.$onInit = function () {
-      $ctrl.title = '产品管理';
-      $ctrl.tableModel = modelService.get('products');
-      $ctrl.tabModel = tabService.get('products');
+      $ctrl.title = '人员管理';
+      $ctrl.tableModel = modelService.get('users');
+      $ctrl.tabModel = tabService.get('users');
       $ctrl.itemList = [];
 
       $ctrl.totalItems = 1;
@@ -44,22 +44,22 @@ function manageProductController(authGuard, $state, $uibModal, productService, m
     }
 
     function refresh() {
-      productService.getList(getQueryObj(), function (json) {
+      userService.getList(getQueryObj(), function (json) {
         console.log(json.data);
 
         $ctrl.itemList = json.data.map(function (item) {
           if (item['create_date']) {
             item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
           }
-          //修复厂家名称和厂家代码的嵌套
-          if (item.vendor && item.vendor.name && item.vendor.code) {
-            var name = item.vendor.name;
-            var code = item.vendor.code;
-            var vendor_id = item.vendor.id;
-            item.vendor = name;
-            item.vendor_code = code;
-            item.vendor_id = vendor_id;
-          }
+          // //修复厂家名称和厂家代码的嵌套
+          // if (item.vendor && item.vendor.name && item.vendor.code) {
+          //   var name = item.vendor.name;
+          //   var code = item.vendor.code;
+          //   var vendor_id = item.vendor.id;
+          //   item.vendor = name;
+          //   item.vendor_code = code;
+          //   item.vendor_id = vendor_id;
+          // }
           return item;
         });
         $ctrl.totalItems = json.total_items;
@@ -97,9 +97,9 @@ function manageProductController(authGuard, $state, $uibModal, productService, m
     };
 
     $ctrl.remove = function (id) {
-      productService.remove(id, function () {
+      userService.remove(id, function () {
         console.log('removed ', id);
-        notificationService.add('success','删除产品'+id+'成功');
+        notificationService.add('success','删除人员'+id+'成功');
         refresh();
       })
     };
@@ -109,21 +109,22 @@ function manageProductController(authGuard, $state, $uibModal, productService, m
       (function () {
         var modalInstance = $uibModal.open({
           animation: $ctrl.animationsEnabled,
-          component: 'productModalComponent',
+          component: 'userModalComponent',
           resolve: {
             editableItems: function () {
-              return formModelService.get('products');
+              return formModelService.get('users');
             },
             title: function () {
-              return '修改产品';
+              return '修改人员';
             },
             form: function () {
               return {
                 id:item.id,
                 name:item.name,
-                batch:item.batch,
-                description:item.description,
-                vendor:{id:item.vendor_id,name:item.name}
+                age:item.age,
+                skill:item.skill,
+                exp:item.exp,
+                type:item.type// TODO 等待修复
               };
             }
           }
@@ -131,9 +132,9 @@ function manageProductController(authGuard, $state, $uibModal, productService, m
 
         modalInstance.result.then(function (formObj) {
           console.log(formObj);
-          productService.update(formObj,formObj.id, function (response) {
+          userService.update(formObj,formObj.id, function (response) {
             console.log(response);
-            notificationService.add('success','修改产品成功');
+            notificationService.add('success','修改人员成功');
             refresh();
           })
         }, function () {
@@ -152,22 +153,22 @@ function manageProductController(authGuard, $state, $uibModal, productService, m
       (function () {
         var modalInstance = $uibModal.open({
           animation: $ctrl.animationsEnabled,
-          component: 'productModalComponent',
+          component: 'userModalComponent',
           resolve: {
             editableItems: function () {
-              return formModelService.get('products');
+              return formModelService.get('users');
             },
             title: function () {
-              return '新建产品';
+              return '新建人员';
             }
           }
         });
 
         modalInstance.result.then(function (formObj) {
           console.log(formObj);
-          productService.add(formObj, function (response) {
+          userService.add(formObj, function (response) {
             console.log(response);
-            notificationService.add('success','新增产品成功');
+            notificationService.add('success','新增人员成功');
             refresh();
           })
         }, function () {

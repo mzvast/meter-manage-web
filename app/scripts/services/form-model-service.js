@@ -39,8 +39,8 @@ function formModelService() {
         };
       case 'vendors':
         return {
-          vendor: "厂家名称",
-          vendor_code: "厂家代码"
+          name: "厂家名称",
+          code: "厂家代码"
         };
       case 'cases':
         return {

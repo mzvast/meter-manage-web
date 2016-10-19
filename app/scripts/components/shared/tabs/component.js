@@ -7,19 +7,19 @@ angular.module('manageApp')
     transclude: true,
     templateUrl: 'scripts/components/shared/tabs/component.html',
     bindings: {
-      tabs: '<',
+      model: '<',
       onSelect: '&',
       name: '@'
     },
     controller: tabsController
   });
 
-tabsController.$inject = ['$document','tabService'];
+tabsController.$inject = [];
 
-function tabsController($document,tabService) {
+function tabsController() {
   var $ctrl = this;
   $ctrl.$onInit = function () {
-    $ctrl.tabs = tabService.get($ctrl.name);
+
   };
 
   $ctrl.selectTab = function (id) {

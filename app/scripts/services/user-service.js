@@ -2,20 +2,19 @@
 
 /**
  * @ngdoc service
- * @name manageApp.vendorService
+ * @name manageApp.userService
  * @description
- * # vendorService
+ * # userService
  * Service in the manageApp.
  */
 angular.module('manageApp')
-  .service('vendorService', vendorService);
+  .service('userService', userService);
 
-vendorService.$inject = ['$resource'];
+userService.$inject = ['$resource'];
 
-function vendorService($resource) {
-  // AngularJS will instantiate a singleton by calling "new" on this function
+function userService($resource) {
   var self = this;
-  var url = '/api/v2/' + 'vendors' + '/:id';
+  var url = '/api/v2/' + 'users' + '/:id';
   var resource = $resource(url, {
     id: '@id'
   }, {
@@ -46,6 +45,21 @@ function vendorService($resource) {
         if (typeof cb === 'function') {
           cb(response);
         }
+      });
+  };
+
+  self.remove = function (id, cb) {
+    console.log("id=" + id);
+    resource.delete({
+      id: id
+    }).$promise
+      .then(function (response) {
+        console.log("删除资源 SUCCESS!");
+        // console.log(data);
+        if (typeof cb === 'function') {
+          cb(response);
+        }
+        // vm.get();
       });
   };
 

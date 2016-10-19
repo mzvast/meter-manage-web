@@ -23,7 +23,7 @@
         <div class="col-md-12">
           <!-- Custom Tabs -->
             <tabs-component model="$ctrl.tabModel" on-select="$ctrl.selectTab(id)">
-              <table-component list="$ctrl.itemList" model="$ctrl.tableModel" tab-model="$ctrl.tabModel" on-order="$ctrl.order(key)" reverse="$ctrl.reverse" predicate="$ctrl.predicate" on-remove="$ctrl.remove(id)" on-edit="$ctrl.edit(item)"></table-component>
+              <table-component list="$ctrl.itemList" model="$ctrl.tableModel" tab-model="$ctrl.tabModel" on-order="$ctrl.order(key)" reverse="$ctrl.reverse" predicate="$ctrl.predicate" on-remove="$ctrl.remove(id)" on-edit="$ctrl.edit(item)" hide-type="true"></table-component>
             </tabs-component>
         <!-- 分页器 -->
         <div class="text-center">
