@@ -4,7 +4,7 @@
 'use strict';
 angular.module('manageApp')
   .component('quickSelectEnvComponent', {
-    templateUrl: 'scripts/components/manage/case/quickSelectEnv/component.html',
+    templateUrl: 'scripts/components/shared/quickSelectEnv/component.html',
     bindings: {
       onAdd: '&',
       basket: '<'

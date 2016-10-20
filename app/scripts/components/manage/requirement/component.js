@@ -118,7 +118,7 @@ function manageProductController(authGuard, $state, $uibModal, requirementServic
               return '修改需求';
             },
             types: function () {
-              return $ctrl.tabModel;
+              return $ctrl.tabModel.slice(1);
             },
             form: function () {
               return {
@@ -162,7 +162,7 @@ function manageProductController(authGuard, $state, $uibModal, requirementServic
               return formModelService.get('requirements');
             },
             types: function () {
-              return $ctrl.tabModel;
+              return $ctrl.tabModel.slice(1);
             },
             title: function () {
               return '新建需求';

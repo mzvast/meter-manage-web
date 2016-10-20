@@ -22,8 +22,9 @@ function productModalController() {
   $ctrl.$onInit = function () {
     $ctrl.editableItems = $ctrl.resolve.editableItems;
     $ctrl.title = $ctrl.resolve.title;
-    $ctrl.form = $ctrl.resolve.form;
+    $ctrl.form = $ctrl.resolve.form||{};
     $ctrl.types = $ctrl.resolve.types;
+    $ctrl.form['type'] = $ctrl.form['type']?$ctrl.form['type']:$ctrl.types[2];//form.type默认值
   };
 
   $ctrl.ok = function () {

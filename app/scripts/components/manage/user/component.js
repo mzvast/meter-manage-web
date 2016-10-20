@@ -118,7 +118,7 @@ function manageProductController(authGuard, $state, $uibModal, userService, mode
               return '修改人员';
             },
             types: function () {
-              return $ctrl.tabModel;
+              return $ctrl.tabModel.slice(1);
             },
             form: function () {
               return {
@@ -163,7 +163,7 @@ function manageProductController(authGuard, $state, $uibModal, userService, mode
               return formModelService.get('users');
             },
             types: function () {
-              return $ctrl.tabModel;
+              return $ctrl.tabModel.slice(1);
             },
             title: function () {
               return '新建人员';

@@ -3,23 +3,23 @@
  */
 'use strict';
 angular.module('manageApp')
-  .component('quickSelectReqComponent', {
-    templateUrl: 'scripts/components/manage/case/quickSelectReq/component.html',
+  .component('quickSelectCaseComponent', {
+    templateUrl: 'scripts/components/shared/quickSelectCase/component.html',
     bindings: {
       onAdd: '&',
       basket: '<'
     },
-    controller: quickSelectReq
+    controller: quickSelectCase
   });
 
-quickSelectReq.$inject = ['requirementService','modelService','tabService'];
+quickSelectCase.$inject = ['caseService','modelService','tabService'];
 
-function quickSelectReq(requirementService,modelService,tabService) {
+function quickSelectCase(caseService,modelService,tabService) {
   var $ctrl = this;
 
   $ctrl.$onInit = function () {
-    $ctrl.tableModel = modelService.get('requirements');
-    $ctrl.tabModel = tabService.get('requirements');
+    $ctrl.tableModel = modelService.get('cases');
+    $ctrl.tabModel = tabService.get('cases');
     $ctrl.itemList = [];
 
     $ctrl.totalItems = 1;
@@ -46,22 +46,22 @@ function quickSelectReq(requirementService,modelService,tabService) {
   }
 
   function refresh() {
-    requirementService.getList(getQueryObj(), function (json) {
+    caseService.getList(getQueryObj(), function (json) {
       console.log(json.data);
 
       $ctrl.itemList = json.data.map(function (item) {
         if (item['create_date']) {
           item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
         }
-        // //修复环境名称和环境代码的嵌套
-        // if (item.env && item.env.name && item.env.code) {
-        //   var name = item.env.name;
-        //   var code = item.env.code;
-        //   var env_id = item.env.id;
-        //   item.env = name;
-        //   item.env_code = code;
-        //   item.env_id = env_id;
-        // }
+        //修复厂家名称和厂家代码的嵌套
+        if (item.vendor && item.vendor.name && item.vendor.code) {
+          var name = item.vendor.name;
+          var code = item.vendor.code;
+          var vendor_id = item.vendor.id;
+          item.vendor = name;
+          item.vendor_code = code;
+          item.vendor_id = vendor_id;
+        }
         return item;
       });
       $ctrl.totalItems = json.total_items;
