@@ -7,7 +7,7 @@
   </tr>
   <tr ng-if="$ctrl.list.length!==0" ng-repeat="item in $ctrl.list">
     <td>{{item.id}}</td>
-    <td> {{item.title}}</td>
+    <td> {{item.title||item.name}}</td>
     <td>
       <span><a href=""  ng-click="$ctrl.remove($index)"><i class="fa fa-fw fa-remove"></i></a>
       </span>

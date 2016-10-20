@@ -22,7 +22,7 @@ function productModalController() {
   $ctrl.$onInit = function () {
     $ctrl.editableItems = $ctrl.resolve.editableItems;
     $ctrl.title = $ctrl.resolve.title;
-    $ctrl.form = $ctrl.resolve.form;
+    $ctrl.form = $ctrl.resolve.form||{};
   };
 
   $ctrl.ok = function () {

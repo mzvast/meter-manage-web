@@ -1,21 +1,21 @@
 'use strict';
 angular.module('manageApp')
-  .component('manageCaseComponent', {
-    templateUrl: 'scripts/components/manage/case/component.html',
+  .component('managePlanComponent', {
+    templateUrl: 'scripts/components/manage/plan/component.html',
     bindings: {},
-    controller: manageProductController
+    controller: managePlanController
   });
 
-manageProductController.$inject = ['authGuard', '$state', '$uibModal', 'caseService', 'modelService', 'tabService', 'formModelService', 'notificationService'];
+managePlanController.$inject = ['authGuard', '$state', '$uibModal', 'planService', 'modelService', 'tabService', 'formModelService', 'notificationService'];
 
-function manageProductController(authGuard, $state, $uibModal, caseService, modelService, tabService, formModelService, notificationService)
+function managePlanController(authGuard, $state, $uibModal, planService, modelService, tabService, formModelService, notificationService)
    {
     var $ctrl = this;
 
     $ctrl.$onInit = function () {
-      $ctrl.title = '用例管理';
-      $ctrl.tableModel = modelService.get('cases');
-      $ctrl.tabModel = tabService.get('cases');
+      $ctrl.title = '计划管理';
+      $ctrl.tableModel = modelService.get('plans');
+      $ctrl.tabModel = tabService.get('plans');
       $ctrl.itemList = [];
 
       $ctrl.totalItems = 1;
@@ -44,22 +44,16 @@ function manageProductController(authGuard, $state, $uibModal, caseService, mode
     }
 
     function refresh() {
-      caseService.getList(getQueryObj(), function (json) {
+      planService.getList(getQueryObj(), function (json) {
         console.log(json.data);
 
         $ctrl.itemList = json.data.map(function (item) {
           if (item['create_date']) {
             item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
           }
-          // //修复用例名称和用例代码的嵌套
-          // if (item.case && item.case.name && item.case.code) {
-          //   var name = item.case.name;
-          //   var code = item.case.code;
-          //   var case_id = item.case.id;
-          //   item.case = name;
-          //   item.case_code = code;
-          //   item.case_id = case_id;
-          // }
+          //fix nest creator name/id
+          item.creator_id = item.creator.id;
+          item.creator = item.creator.name;
           return item;
         });
         $ctrl.totalItems = json.total_items;
@@ -97,9 +91,9 @@ function manageProductController(authGuard, $state, $uibModal, caseService, mode
     };
 
     $ctrl.remove = function (id) {
-      caseService.remove(id, function () {
+      planService.remove(id, function () {
         console.log('removed ', id);
-        notificationService.add('success','删除用例'+id+'成功');
+        notificationService.add('success','删除计划'+id+'成功');
         refresh();
       })
     };
@@ -109,13 +103,13 @@ function manageProductController(authGuard, $state, $uibModal, caseService, mode
       (function () {
         var modalInstance = $uibModal.open({
           animation: $ctrl.animationsEnabled,
-          component: 'caseModalComponent',
+          component: 'planModalComponent',
           resolve: {
             editableItems: function () {
-              return formModelService.get('cases');
+              return formModelService.get('plans');
             },
             title: function () {
-              return '修改用例';
+              return '修改计划';
             },
             types: function () {
               return $ctrl.tabModel.slice(1);
@@ -124,15 +118,21 @@ function manageProductController(authGuard, $state, $uibModal, caseService, mode
               return {
                 id:item.id,
                 title:item.title,
-                describe:item.describe,
-                detail:item.detail,
-                pre_condition: item.pre_condition,
-                expout: item.expout,
+                // creator:{id:item.creator_id},
                 type:{id:item.type} //编码
               };
             },
+            casesList: function () {
+              return item.casesList.slice(0);
+            },
             envsList: function () {
               return item.envsList.slice(0);
+            },
+            executor: function () {
+              return item.executor.slice(0);
+            },
+            productsList: function () {
+              return item.productsList.slice(0);
             },
             requirementsList: function () {
               return item.requirementsList.slice(0);
@@ -145,9 +145,9 @@ function manageProductController(authGuard, $state, $uibModal, caseService, mode
           console.log(formObj);
           var formId = formObj.id;
           delete formObj.id;
-          caseService.update(formObj,formId, function (response) {
+          planService.update(formObj,formId, function (response) {
             console.log(response);
-            notificationService.add('success','修改用例成功');
+            notificationService.add('success','修改计划成功');
             refresh();
           })
         }, function () {
@@ -166,18 +166,33 @@ function manageProductController(authGuard, $state, $uibModal, caseService, mode
       (function () {
         var modalInstance = $uibModal.open({
           animation: $ctrl.animationsEnabled,
-          component: 'caseModalComponent',
+          component: 'planModalComponent',
           resolve: {
             editableItems: function () {
-              return formModelService.get('cases');
+              return formModelService.get('plans');
             },
             types: function () {
               return $ctrl.tabModel.slice(1);
             },
             title: function () {
-              return '新建用例';
+              return '新建计划';
+            },
+            form: function () {
+              return {
+                title:"计划 "+ moment.utc().local().format('YYYY-MM-DD h:mm:ss a')
+                // creator:{id:123}
+              };
+            },
+            casesList: function () {
+              return [];
             },
             envsList: function () {
+              return [];
+            },
+            executor: function () {
+              return [];
+            },
+            productsList: function () {
               return [];
             },
             requirementsList: function () {
@@ -189,9 +204,9 @@ function manageProductController(authGuard, $state, $uibModal, caseService, mode
         modalInstance.result.then(function (formObj) {//保存新增
           formObj.type = formObj.type.id;//解码
           console.log(formObj);
-          caseService.add(formObj, function (response) {
+          planService.add(formObj, function (response) {
             console.log(response);
-            notificationService.add('success','新增用例成功');
+            notificationService.add('success','新增计划成功');
             refresh();
           })
         }, function () {

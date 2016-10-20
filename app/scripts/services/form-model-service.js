@@ -51,8 +51,8 @@ function formModelService() {
         };
       case 'plans':
         return {
-          title: "名称",
-          describe: "描述"
+          title: "名称"//,
+          // describe: "描述"
         };
       case 'envs':
         return {

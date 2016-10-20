@@ -98,62 +98,8 @@ angular
         /*计划管理*/
         .state("manage-plan", {
           url: "/manage-plan",
-          params:{
-            onPlan:true,
-            canEdit:true
-          },
-          templateUrl: "views/manage/plan.html",
-          controller: 'ManagePlanCtrl as managePlan',
+          template:"<manage-plan-component></manage-plan-component>",
           authenticate: false
-        })
-        .state("manage-plan.on", {
-          url: "-on",
-          templateUrl: "views/manage/plan-new.html"
-        })
-        .state("manage-plan.on.products", {
-          url: "-products",
-          params:{
-            canEdit:false,
-            category:'products'
-          },
-          controller: 'ManageCtrl as manageCtrl',
-          templateUrl: "views/manage/main.html"
-        })
-        .state("manage-plan.on.requirements", {
-          url: "-requirements",
-          params:{
-            canEdit:false,
-            category:'requirements'
-          },
-          controller: 'ManageCtrl as manageCtrl',
-          templateUrl: "views/manage/main.html"
-        })
-        .state("manage-plan.on.cases", {
-          url: "-cases",
-          params:{
-            canEdit:false,
-            category:'cases'
-          },
-          controller: 'ManageCtrl as manageCtrl',
-          templateUrl: "views/manage/main.html"
-        })
-        .state("manage-plan.on.envs", {
-          url: "-envs",
-          params:{
-            canEdit:false,
-            category:'envs'
-          },
-          controller: 'ManageCtrl as manageCtrl',
-          templateUrl: "views/manage/main.html"
-        })
-        .state("manage-plan.on.users", {
-          url: "-users",
-          params:{
-            canEdit:false,
-            category:'users'
-          },
-          controller: 'ManageCtrl as manageCtrl',
-          templateUrl: "views/manage/main.html"
         })
         .state("manage-result", {
           url: "/manage-result",

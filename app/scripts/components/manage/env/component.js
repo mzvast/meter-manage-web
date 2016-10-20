@@ -118,7 +118,7 @@ function manageProductController(authGuard, $state, $uibModal, envService, model
               return '修改环境';
             },
             types: function () {
-              return $ctrl.tabModel;
+              return $ctrl.tabModel.slice(1);
             },
             form: function () {
               return {
@@ -162,7 +162,7 @@ function manageProductController(authGuard, $state, $uibModal, envService, model
               return formModelService.get('envs');
             },
             types: function () {
-              return $ctrl.tabModel;
+              return $ctrl.tabModel.slice(1);
             },
             title: function () {
               return '新建环境';

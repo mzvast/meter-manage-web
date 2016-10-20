@@ -1,0 +1,24 @@
+<dynamic-search-component
+  list="$ctrl.itemList"
+  tab-model="$ctrl.tabModel"
+  on-search="$ctrl.search(q)"
+  on-clear="$ctrl.clear()"
+  on-select-tab="$ctrl.selectTab(type)">
+  <table-selector-component
+    list="$ctrl.itemList"
+    model="$ctrl.tableModel"
+    tab-model="$ctrl.tabModel"
+    on-order="$ctrl.order(key)"
+    reverse="$ctrl.reverse"
+    predicate="$ctrl.predicate"
+    on-remove="$ctrl.remove(id)"
+    on-edit="$ctrl.edit(item)"
+    on-check-in-basket="$ctrl.checkInBasket(id)"
+    on-add="$ctrl.add(item)">
+
+    <div class="text-center">
+      <ul uib-pagination total-items="$ctrl.totalItems" ng-model="$ctrl.currentPage" max-size="$ctrl.maxSize" class="pagination-sm" boundary-link-numbers="true" ng-change="$ctrl.pageChanged()"></ul>
+    </div>
+    <!-- /分页器 -->
+  </table-selector-component>
+</dynamic-search-component>
