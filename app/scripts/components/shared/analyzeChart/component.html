@@ -1,0 +1,72 @@
+<div class="nav-tabs-custom">
+  <!-- Tabs within a box -->
+  <ul class="nav nav-tabs pull-right">
+    <li ng-repeat="item in $ctrl.tabModel" ng-class="{'active':$ctrl.activeTabId===item.id}"><a href="" ng-click="$ctrl.selectTab(item.id)">{{ item.name }}</a></li>
+    <li class="pull-left header"><i class="fa fa-fw fa-area-chart"></i> {{ $ctrl.title }}</li>
+  </ul>
+  <div class="tab-content no-padding">
+
+    <div class="row" >
+      <!--饼图-->
+      <div class="col-xs-12" ng-if="$ctrl.activeTabId===0">
+        <canvas id="pie" class="chart chart-pie" chart-data="$ctrl.pieData" chart-labels="$ctrl.labels" chart-options="$ctrl.options">
+        </canvas>
+      </div>
+    </div>
+    <!-- 图例 -->
+    <div class="row" ng-if="$ctrl.activeTabId===0">
+      <div class="col-xs-12">
+        <ol class="chart-legend">
+          <li><span style="background-color: rgba(151,187,205,1)"></span>{{ $ctrl.labels[0] }}</li>
+          <li><span style="background-color: rgba(220,220,220,1)"></span>{{ $ctrl.labels[1] }}</li>
+          <li><span style="background-color: rgba(247,70,74,1)"></span>{{ $ctrl.labels[2] }}</li>
+          <li><span style="background-color: rgba(70,191,189,1)"></span>{{ $ctrl.labels[3] }}</li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <!--柱状图-->
+      <div class="col-xs-12" ng-if="$ctrl.activeTabId===1">
+        <canvas id="bar" class="chart chart-bar" chart-data="$ctrl.barData" chart-labels="$ctrl.labels" chart-series="$ctrl.series">
+        </canvas>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+
+<style>
+  .chart-legend {
+    list-style-type: none;
+    margin-top: 5px;
+    text-align: center;
+    /* NOTE: Browsers automatically add 40px of padding-left to all lists, so we should offset that, otherwise the legend is off-center */
+    -webkit-padding-start: 0;
+    /* Webkit */
+    -moz-padding-start: 0;
+    /* Mozilla */
+    padding-left: 0;
+    /* IE (handles all cases, really, but we should also include the vendor-specific properties just to be safe) */
+  }
+  .chart-legend li {
+    display: inline-block;
+    white-space: nowrap;
+    position: relative;
+    margin-bottom: 4px;
+    border-radius: 5px;
+    padding: 2px 8px 2px 28px;
+    font-size: smaller;
+    cursor: default;
+  }
+  .chart-legend li span {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+  }
+</style>

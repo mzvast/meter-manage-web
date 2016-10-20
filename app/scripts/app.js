@@ -18,7 +18,8 @@ angular
       'ngRap',
       'formly',
       'formlyBootstrap',
-      'ui.bootstrap'
+      'ui.bootstrap',
+      'chart.js'
     ])
   .config(["$locationProvider", function ($locationProvider) {
     $locationProvider.html5Mode(true);
@@ -96,14 +97,14 @@ angular
           authenticate: false
         })
         /*计划管理*/
-        .state("manage-plan-new", {
-          url: "/manage-plan-new",
-          template:"<manage-plan-component></manage-plan-component>",
-          authenticate: false
-        })
         .state("manage-plan", {
           url: "/manage-plan",
           template:"<manage-plan-component></manage-plan-component>",
+          authenticate: false
+        })
+        .state("analyze", {
+          url: "/analyze",
+          template:"<analyze-component></analyze-component>",
           authenticate: false
         })
         .state("manage-result", {
@@ -234,7 +235,7 @@ angular
       ngRapProvider.enable({
         mode: 3
       });
-      // httpProvider.interceptors.push('rapMockInterceptor');
+      httpProvider.interceptors.push('rapMockInterceptor');
     }]
   )
   .run(['$rootScope', '$state', 'authService',function ($rootScope, $state, authService) {
