@@ -96,6 +96,11 @@ angular
           authenticate: false
         })
         /*计划管理*/
+        .state("manage-plan-new", {
+          url: "/manage-plan-new",
+          template:"<manage-plan-component></manage-plan-component>",
+          authenticate: false
+        })
         .state("manage-plan", {
           url: "/manage-plan",
           template:"<manage-plan-component></manage-plan-component>",
