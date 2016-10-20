@@ -6,7 +6,8 @@ angular.module('manageApp')
   .component('quickSelectReqComponent', {
     templateUrl: 'scripts/components/manage/case/quickSelectReq/component.html',
     bindings: {
-      onAdd: '&'
+      onAdd: '&',
+      basket: '<'
     },
     controller: quickSelectReq
   });
@@ -106,6 +107,14 @@ function quickSelectReq(requirementService,modelService,tabService) {
   $ctrl.add = function (item) {
     $ctrl.onAdd({item:item});
   };
+
+  $ctrl.checkInBasket = function (id) {
+    var len = $ctrl.basket.length,i;
+    for(i=0;i<len;i++){
+      if ($ctrl.basket[i].id === id) return true;
+    }
+    return false;
+  }
 
 
 

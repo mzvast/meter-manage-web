@@ -16,7 +16,8 @@ angular.module('manageApp')
       onRemove: '&',
       onEdit: '&',
       onAdd: '&',
-      hideType:'<'
+      hideType:'<',
+      onCheckInBasket: '&'
     },
     controller: tableSelectorController
   });
@@ -46,7 +47,11 @@ function tableSelectorController() {
     $ctrl.onAdd({item:item})
   };
 
-  //TODO 判断与basket中有重复
+  // 判断与basket中有重复
+  $ctrl.checkInBasket = function (id) {
+    // console.log('===>',id,$ctrl.onCheckInBasket({id:id}));
+    return $ctrl.onCheckInBasket({id:id});
+  };
 
   // $ctrl.$onChanges = function (changesObj) {
   //   if(changesObj.list){

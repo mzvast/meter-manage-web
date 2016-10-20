@@ -37,8 +37,11 @@
     <!--/状态彩色指示-->
     <!-- 操作按钮  -->
     <td>
-      <div class="btn-group">
+      <div class="btn-group" ng-show="!$ctrl.checkInBasket(item.id)">
         <a class="btn margin bg-olive" ng-click="$ctrl.add(item)">添加</a>
+      </div>
+      <div class="btn-group" ng-show="$ctrl.checkInBasket(item.id)">
+        <a class="btn margin bg-maroon" >已选中</a>
       </div>
     </td>
     <!-- /操作按钮  -->

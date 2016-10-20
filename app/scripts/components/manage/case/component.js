@@ -140,7 +140,7 @@ function manageProductController(authGuard, $state, $uibModal, caseService, mode
           }
         });
 
-        modalInstance.result.then(function (formObj) {//TODO 如何保存
+        modalInstance.result.then(function (formObj) {//保存修改
           formObj.type = formObj.type.id;//解码
           console.log(formObj);
           var formId = formObj.id;
@@ -176,11 +176,17 @@ function manageProductController(authGuard, $state, $uibModal, caseService, mode
             },
             title: function () {
               return '新建用例';
+            },
+            envsList: function () {
+              return [];
+            },
+            requirementsList: function () {
+              return [];
             }
           }
         });
 
-        modalInstance.result.then(function (formObj) {
+        modalInstance.result.then(function (formObj) {//保存新增
           formObj.type = formObj.type.id;//解码
           console.log(formObj);
           caseService.add(formObj, function (response) {

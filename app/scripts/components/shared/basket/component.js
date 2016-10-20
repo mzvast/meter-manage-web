@@ -17,18 +17,11 @@ basketController.$inject = [];
 
 function basketController() {
   var $ctrl = this;
-  // /**
-  //  * 搜索
-  //  */
-  // $ctrl.search = function() {
-  //     $ctrl.onSearch({q:$ctrl.q});
-  // };
-  //
-  // $ctrl.clear = function() {
-  //   $ctrl.q = '';
-  //   $ctrl.onClear();
-  // };
-  // $ctrl.list = $ctrl.list.slice();
+
+  $ctrl.$onInit =function () {
+    console.log($ctrl.list)
+  };
+
   $ctrl.remove = function ($index) {
     $ctrl.list.splice($index,1);
   };

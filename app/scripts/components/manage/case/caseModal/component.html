@@ -31,11 +31,11 @@
         </div>
         <div ng-show="$ctrl.activeTabId===1">
           <basket-component list="$ctrl.requirementsList"></basket-component>
-          <quick-select-req-component ng-if="$ctrl.activeTabId===1" ng-show="$ctrl.activeTabId===1" on-add="$ctrl.addToReq(item)"></quick-select-req-component>
+          <quick-select-req-component ng-if="$ctrl.activeTabId===1" on-add="$ctrl.addToReq(item)" basket="$ctrl.requirementsList"></quick-select-req-component>
         </div>
         <div ng-show="$ctrl.activeTabId===2">
           <basket-component list="$ctrl.envsList"></basket-component>
-          <quick-select-env-component ng-if="$ctrl.activeTabId===2" on-add="$ctrl.addToEnv(item)"></quick-select-env-component>
+          <quick-select-env-component ng-if="$ctrl.activeTabId===2" on-add="$ctrl.addToEnv(item)" basket="$ctrl.envsList"></quick-select-env-component>
         </div>
       </tabs-component>
       <!-- 模型form内容  -->
