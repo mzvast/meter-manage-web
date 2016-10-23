@@ -17,10 +17,10 @@
     <div class="row" ng-if="$ctrl.activeTabId===0">
       <div class="col-xs-12">
         <ol class="chart-legend">
-          <li><span style="background-color: rgba(151,187,205,1)"></span>{{ $ctrl.labels[0] }}</li>
-          <li><span style="background-color: rgba(220,220,220,1)"></span>{{ $ctrl.labels[1] }}</li>
-          <li><span style="background-color: rgba(247,70,74,1)"></span>{{ $ctrl.labels[2] }}</li>
-          <li><span style="background-color: rgba(70,191,189,1)"></span>{{ $ctrl.labels[3] }}</li>
+          <li ng-if="$ctrl.labels[0]"><span style="background-color: rgba(151,187,205,1)"></span>{{ $ctrl.labels[0] }}</li>
+          <li ng-if="$ctrl.labels[1]"><span style="background-color: rgba(220,220,220,1)"></span>{{ $ctrl.labels[1] }}</li>
+          <li ng-if="$ctrl.labels[2]"><span style="background-color: rgba(247,70,74,1)"></span>{{ $ctrl.labels[2] }}</li>
+          <li ng-if="$ctrl.labels[3]"><span style="background-color: rgba(70,191,189,1)"></span>{{ $ctrl.labels[3] }}</li>
         </ol>
       </div>
     </div>

@@ -1,11 +1,40 @@
 <div class="row">
   <div class="col-xs-6">
     <analyze-chart-component
-      pie-data="$ctrl.pieData"
-      bar-data="$ctrl.barData"
-      labels="$ctrl.labels"
-      title="$ctrl.title"
+      tab-model="$ctrl.productTabModel"
+      pie-data="$ctrl.allProductsPieData"
+      bar-data="$ctrl.allProductsBarData"
+      labels="$ctrl.productLabels"
+      title="$ctrl.allProductsTitle"
     ></analyze-chart-component>
   </div>
-  <div class="col-xs-6"></div>
+  <div class="col-xs-6">
+    <analyze-chart-component
+      tab-model="$ctrl.productTabModel"
+      pie-data="$ctrl.oneProductPieData"
+      bar-data="$ctrl.oneProductBarData"
+      labels="$ctrl.productLabels"
+      title="$ctrl.oneProductTitle"
+    ></analyze-chart-component>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-6">
+    <analyze-chart-component
+      tab-model="$ctrl.vendorTabModel"
+      pie-data="$ctrl.allVendorsPieData"
+      bar-data="$ctrl.allVendorsBarData"
+      labels="$ctrl.vendorLabels"
+      title="$ctrl.allVendorsTitle"
+    ></analyze-chart-component>
+  </div>
+  <div class="col-xs-6">
+    <analyze-chart-component
+      tab-model="$ctrl.vendorTabModel"
+      pie-data="$ctrl.oneVendorPieData"
+      bar-data="$ctrl.oneVendorBarData"
+      labels="$ctrl.vendorLabels"
+      title="$ctrl.oneVendorTitle"
+    ></analyze-chart-component>
+  </div>
 </div>
