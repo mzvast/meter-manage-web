@@ -113,6 +113,16 @@ angular
           authenticate: false
         })
         /*功能测试执行*/
+        .state("reliabilityTesting", {
+          url: "/reliability-testing",
+          template:"<reliability-testing-component></reliability-testing-component>",
+          authenticate: false
+        })
+        .state("reliabilityTesting.do", {
+          url: "/do",
+          template:"<reliability-testing-do-component></reliability-testing-do-component>",
+          authenticate: false
+        })
         .state("func",{
           url:"/func",
           templateUrl:"views/action/func-main.html",
