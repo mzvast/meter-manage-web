@@ -112,7 +112,7 @@ angular
           templateUrl: "views/manage/result.html",
           authenticate: false
         })
-        /*功能测试执行*/
+        /*可靠性测试执行*/
         .state("reliabilityTesting", {
           url: "/reliability-testing",
           template:"<reliability-testing-component></reliability-testing-component>",
@@ -123,25 +123,8 @@ angular
           template:"<reliability-testing-do-component></reliability-testing-do-component>",
           authenticate: false
         })
-        .state("func",{
-          url:"/func",
-          templateUrl:"views/action/func-main.html",
-          controller:'ActionFuncCtrl as funcCtrl',
-          authenticate:false
-        })
-        .state("func.onPlan",{
-          url:"/choosePlan",
-          templateUrl:"views/action/func-on-plan.html",
-          controller: 'ManagePlanCtrl as managePlan',
-          authenticate:false
-        })
-        .state("func.onTest",{
-          url:"/doTest",
-          templateUrl:"views/action/func-on-test.html",
-          // controller:'ActionFuncCtrl as funcCtrl',
-          authenticate:false
-        })
-        /*功能测试结果*/
+
+        /*可靠性测试结果*/
         .state("results",{
           url:"/results",
           templateUrl:"views/manage/result.html",
@@ -163,15 +146,6 @@ angular
           },
           authenticate:false
         })
-        // .state('results.plan.case',{
-        //   url:"/case",
-        //   templateUrl:"views/manage/result-plan-case.html",
-        //   authenticate:false
-        // })
-        // .state('plan-detail',{
-        //   url:'/plan-detail',
-        //   component:'planDetailComponent'
-        // })
         /*比对测试执行*/
         .state("action-beian", {
           url: "/:mode",

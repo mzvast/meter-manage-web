@@ -91,6 +91,7 @@ function reliabilityTestingController(reliabilityTestingService,authGuard, $stat
   };
 
   $ctrl.action = function (item) {
+    console.log(item);
     reliabilityTestingService.setPlan(item);
     $state.go("reliabilityTesting.do");
   };

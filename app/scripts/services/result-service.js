@@ -2,20 +2,19 @@
 
 /**
  * @ngdoc service
- * @name manageApp.caseService
+ * @name manageApp.resultService
  * @description
- * # caseService
+ * # resultService
  * Service in the manageApp.
  */
 angular.module('manageApp')
-  .service('caseService', caseService);
+  .service('resultService', resultService);
 
-caseService.$inject = ['$resource'];
+resultService.$inject = ['$resource'];
 
-function caseService($resource) {
-  // AngularJS will instantiate a singleton by calling "new" on this function
+function resultService($resource) {
   var self = this;
-  var url = '/api/v2/' + 'cases' + '/:id';
+  var url = '/api/v2/plans/:id/results';
   var resource = $resource(url, {
     id: '@id'
   }, {
@@ -44,10 +43,10 @@ function caseService($resource) {
       });
   };
 
-  self.add = function (formObj, cb) {
+  self.add = function (formObj, id,cb) {
     console.log("formObj=");
     console.log(formObj);
-    resource.save(formObj).$promise
+    resource.save({id:id}).$promise
       .then(function (response) {
         console.log("新增资源 SUCCESS!");
         // console.log(data);

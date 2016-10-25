@@ -4,11 +4,11 @@
       <div class="box-header">
         <div class="row">
           <div class="col-xs-9">
-            <h3 class="text-center"><b>{{ $ctrl.title }}</b></h3>
+            <h3 class="text-center"><b>计划：</b>{{ $ctrl.title }}</h3>
           </div>
 
           <div class="col-xs-2 text-center">
-            <a class="btn btn-app bg-olive margin " ng-click="$ctrl.complete()">
+            <a class="btn btn-app bg-olive margin " ng-click="$ctrl.finish()">
               <i class="glyphicon glyphicon-floppy-saved"></i> 测试完成
             </a>
           </div>
@@ -20,18 +20,69 @@
           <!-- Custom Tabs -->
           <tabs-component model="$ctrl.tabModel" on-select="$ctrl.selectTab(id)" default-active-tab-id="0">
             <div ng-show="$ctrl.activeTabId===0">
-              <h3>{{ $ctrl.product.name }}</h3>
+              <div class="table-responsive">
+                <table class="table text-center">
+                  <thead>
+                  <tr>
+                    <th>厂家</th>
+                    <th>产品</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr >
+                    <td>{{ $ctrl.product.vendor }}</td>
+                    <td>{{ $ctrl.product.name }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
 
             </div>
             <div ng-show="$ctrl.activeTabId===1">
-              <ul>
-                <li ng-repeat="item in $ctrl.envs">{{ item.title }}</li>
-              </ul>
+              <div class="table-responsive">
+                <table class="table text-center">
+                  <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>环境</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="item in $ctrl.envs" >
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.title }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div ng-show="$ctrl.activeTabId===2">
-              <ul>
-                <li ng-repeat="item in $ctrl.cases">{{ item.title }}</li>
-              </ul>
+              <div class="table-responsive">
+                <table class="table text-center">
+                  <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>用例</th>
+                    <th>执行</th>
+                    <th>完成</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="item in $ctrl.cases" >
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.title }}</td>
+                    <td >
+                      <button ng-click="$ctrl.doTest(item)" type="button" class="btn btn-info">执行</button>
+                    </td>
+                    <td>
+                      <i ng-if="$ctrl.result[$index]['pass']===1" class="fa fa-fw fa-check" style="color: green;"></i>
+                      <i ng-if="$ctrl.result[$index]['pass']===0" class="fa fa-fw fa-close" style="color: red;"></i>
+                      <i ng-if="$ctrl.result[$index]['pass']===-1" class="fa fa-fw fa-circle-thin" style="color: yellow;"></i>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </tabs-component>
 

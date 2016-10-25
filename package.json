@@ -52,7 +52,8 @@
     "build": "grunt build",
     "main": "node index.js",
     "nodeApi": "node nodeapi.js",
-    "ws": "node ws.js"
+    "ws": "node ws.js",
+    "postinstall": "bower install"
   },
   "dependencies": {
     "body-parser": "^1.15.1",
