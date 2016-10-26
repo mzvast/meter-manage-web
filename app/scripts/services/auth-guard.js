@@ -10,18 +10,102 @@
 angular.module('manageApp')
   .service('authGuard', authGuard);
 
-authGuard.$inject = [];
+authGuard.$inject = ['authService','$state'];
 
-function authGuard() {
-  // AngularJS will instantiate a singleton by calling "new" on this function
-  var vm = this;
-  vm.isLoggedIn = true;//false;TODO 开发方便，自动登录
-  vm.login = function () {
-    console.log("logged in");
-    vm.isLoggedIn = true;
+function authGuard(authService,$state) {
+  // console.log("authGuard init");
+  var self = this;
+  // self.isLoggedIn = true;//false;TODO 开发方便，自动登录
+  self.isLoggedIn = false;
+  self.isAdmin = false;
+  self.isManage = false;
+  self.isTester = false;
+
+  function setRoleFlag() {
+    var role = +self.user.role;
+    console.log('setting role',role);
+    if(role&4) self.isAdmin = true;
+    if(role&2) self.isManage = true;
+    if(role&1) self.isTester = true;
+  }
+
+  function clearRoleFlag() {
+    self.isAdmin = false;
+    self.isManage = false;
+    self.isTester = false;
+  }
+
+  self.isAuthenticated =function (toState) {
+    if(toState===undefined) return;
+    var res = self.isLoggedIn&&authService.hasPermission(toState.name);
+    console.log('check permission to ',toState.name,res?':yes':':no');
+    return res;
   };
-  vm.logout = function () {
+
+  self.hasToken = function () {
+    console.log(authService.token);
+    return !!authService.token;
+  };
+
+  function User(id,name,role) {
+    var self = this;
+    this.id = id;
+    this.name = name;
+    this.role = role;
+    this.roleName = (function () {
+      var roleNum = +self.role;
+      console.log(roleNum);
+      if(roleNum&4) {
+        return '超级管理员';
+      }
+      else if(roleNum&2){
+        return '管理员';
+      }else if(roleNum&1){
+        return '测试执行员';
+      }
+    }());
+  }
+
+  self.getUser  = function () {
+    return self.user
+  };
+
+  self.login = function (username,password,nextState) {
+    if(arguments.length===1){
+      nextState = username;
+      authService.doLoginByToken(cb);
+    }else{
+      authService.doLoginByPass(username,password,cb);
+    }
+    function cb(response,userinfo) {
+      if(response){
+        console.log("logged in");
+        self.isLoggedIn = response;
+        self.user = new User(userinfo.id,userinfo.name,userinfo.type);
+        setRoleFlag();
+        // console.log(nextState);
+        $state.go(nextState);
+      }
+    }
+
+  };
+
+  self.logout = function () {
     console.log("logged out");
-    vm.isLoggedIn = false;
+    authService.doLogout();
+    self.isLoggedIn = false;
+    clearRoleFlag();
+  };
+
+  self.nextState = 'home';
+
+  self.setNextState = function (toState) {
+    if(toState==='login') return;
+    console.log('>>nextState:',toState);
+      self.nextState = toState;
+  };
+
+  self.getNextState = function () {
+    return self.nextState;
   }
 }

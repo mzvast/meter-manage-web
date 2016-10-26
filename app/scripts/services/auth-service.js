@@ -10,47 +10,42 @@
 angular.module('manageApp')
   .service('authService', authService);
 
-authService.$inject = ['$cookies','$http'];
+authService.$inject = ['$http'];
 
-function authService($cookies, $http) {
-  // AngularJS will instantiate a singleton by calling "new" on this function
+function authService($http) {
+  // console.log("authService init");
   var self = this;
-  self.authStatus = false;
-  self.token = $cookies.get('token')||'default token';
+  // self.authStatus = false;
+  self.role = 0;
+  refreshToken();//get token 1st time;
 
-  self.doLogin = function(username,password) {
-    if (self.token.length>0) {
-      // console.log("invoke doLoginByToken");
-      return self.doLoginByToken();
-    } else {
-      // console.log("invoke doLoginByPass");
-      return self.doLoginByPass(username,password);
-    }
-  };
+  function refreshToken() {
+    self.token = localStorage.getItem('token');
+  }
 
   /////////////////////////////////
   //login with username|password //
   /////////////////////////////////
-  self.doLoginByPass = function(username,password) {
+  self.doLoginByPass = function(username,password,cb) {
     $http
-      .post('/api/login',{
+      .post('/api/v2/auth',{
         username:username,
         password:password
       })
       .success(function(data, status, headers, config) {
+        console.log(data);
         switch(data.status){
           case 'success':
           {
-            self.token=data.token;
-            self.authStatus = true;
-            $cookies.put('token', self.token);//set token to cookies
-            return true;
-            // break;
+            self.token=data.data.token;
+            localStorage.setItem('token', self.token);
+            self.role = data.data.type;//设置role
+            cb(true,data.data);
+            break;
           }
           default:
           {
-            self.authStatus = false;
-            return false;
+            cb(false);
           }
         }
       })
@@ -65,24 +60,24 @@ function authService($cookies, $http) {
   //////////////////////
   //login with token  //
   //////////////////////
-  self.doLoginByToken = function() {
+  self.doLoginByToken = function(cb) {
     $http
-      .post('/api/verifytoken',{
+      .post('/api/v2/auth',{
         token:self.token
       })
       .success(function(data, status, headers, config) {
+        console.log(data);
         switch(data.status){
           case 'success':
           {
-            self.authStatus = true;
-            return true;
-            // break;
+            self.role = data.data.type;//设置role
+            cb(true,data.data);
+            break;
           }
           default:
           {
-            self.authStatus = false;  //ensure not authurized
-            $cookies.remove('token');//remove invalid token of cookies
-            return false;
+            localStorage.removeItem('token');//remove invalid token of localStorage
+            cb(false);
           }
         }
 
@@ -95,19 +90,36 @@ function authService($cookies, $http) {
   };
 
 
-  self.isAuthenticated = function() {
-    return self.authStatus;
-  };
   self.doLogout =function() {
-    self.authStatus = false;
+    localStorage.removeItem('token');
+    self.role = 0;
+    refreshToken();
+    // self.authStatus = false;
     return true;
   };
 
-  // Setting a cookie
-  $cookies.put('myFavorite', 'oatmeal');
-  // Retrieving a cookie
-  var favoriteCookie = $cookies.get('myFavorite');
-  // console.log("msg",favoriteCookie);
-  self.setCookies = function() {
+  self.hasPermission = function (name) {
+
+    return checkPermission(getRequireByStateName(name),self.role);
   };
+
+  function getRequireByStateName(name) {//菜单权限表
+    if(name&&name.toLowerCase().startsWith('manage')){
+      return '110';
+    }else {
+      switch (name){
+        case 'admin':{
+          return '100';
+        }
+      }
+      return '111';
+    }
+  }
+
+  function checkPermission (require,role) {
+    console.log('require:',require,',role:',role.toString(2));
+    return parseInt(require,2)&role;
+  }
+
+
 }

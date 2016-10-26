@@ -14,7 +14,6 @@ resourceCenter.$inject = ['$resource','authService'];
 
 function resourceCenter($resource,authService) {
   var self = this;
-  console.log('hey',authService.token);
   function methodWithToken() {
     return {
       get:{

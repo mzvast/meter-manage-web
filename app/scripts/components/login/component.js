@@ -15,9 +15,21 @@ loginController.$inject = ['authGuard','$state'];
 
 function loginController(authGuard,$state) {
   var $ctrl = this;
+  var nextState;
+
+  $ctrl.$onInit = function () {
+    nextState = authGuard.getNextState()||'home';
+    // console.log('nextState:',nextState);
+
+    if(authGuard.hasToken()){
+      authGuard.login(nextState);
+    }
+
+  };
+
   $ctrl.onSubmit = function () {
-    authGuard.login();
-    $state.go('manage',{category:'products'})
+    console.log($ctrl.username,$ctrl.password);
+    authGuard.login($ctrl.username,$ctrl.password,nextState);
   }
 
 }

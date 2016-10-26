@@ -17,7 +17,7 @@ function sidebarController(authGuard) {
   var $ctrl = this;
   $ctrl.authGuard = authGuard;
   $ctrl.$onInit = function () {
-    console.log(authGuard.isLoggedIn)
+
   }
 
 }

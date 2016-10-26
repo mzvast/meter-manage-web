@@ -23,7 +23,7 @@ function headerController(authGuard,$state) {
 
   $ctrl.logout = function () {
     authGuard.logout();
-    $state.transitionTo("login");
+    $state.transitionTo("home");
   }
 
 

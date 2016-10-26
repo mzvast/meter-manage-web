@@ -7,7 +7,7 @@
     <ul class="sidebar-menu">
       <li class="header text-center">主菜单</li>
 
-      <li ui-sref-active="active" class="treeview">
+      <li ng-if="$ctrl.authGuard.isManage" ui-sref-active="active" class="treeview">
         <a href="#"><i class="fa fa-user-md"></i> <span>测试管理</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu" style="padding-left: 1.8em;">
           <li ui-sref-active="active"><a ui-sref="manage-product">产品管理</a></li>
@@ -37,7 +37,7 @@
           <li ui-sref-active="active"><a ui-sref="action-beian.compare({mode:'gonghuo'})">供货比对</a></li>
         </ul>
       </li>
-      <li class="treeview">
+      <li ng-if="$ctrl.authGuard.isAdmin" class="treeview">
         <a href="#"><i class="glyphicon glyphicon-cog"></i> <span>系统配置</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu" style="padding-left: 1.8em;">
           <li ui-sref-active="active"><a href="">缺陷流程配置</a></li>

@@ -16,10 +16,15 @@
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
+        <li ng-if="$ctrl.authGuard.isLoggedIn" class="user">
+          <a href="" >
+            <span class="hidden-xs">{{ $ctrl.authGuard.user.name }}({{ $ctrl.authGuard.user.roleName }})</span>
+          </a>
+        </li>
 
         <!-- User Account Menu -->
         <li class="dropdown user user-menu">
-          <!-- Menu Toggle Button -->
+
           <a ng-if="!$ctrl.authGuard.isLoggedIn" href="" ng-click="$ctrl.login()">
             <span class="hidden-xs">登录</span>
           </a>

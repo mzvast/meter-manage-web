@@ -13,7 +13,6 @@ angular
     [
       'ui.router',
       'angularCSS',
-      'ngCookies',
       'ngResource',
       'ngRap',
       'formly',
@@ -21,17 +20,30 @@ angular
       'ui.bootstrap',
       'chart.js'
     ])
+  .run(['authGuard','$transitions',function (authGuard,$transitions) {
+    $transitions.onBefore(
+      {
+        to: function(toState) {
+          authGuard.setNextState(toState.name);
+          return toState.authenticate&&!authGuard.isLoggedIn;
+        }
+      }, function(trans) {
+        return trans.router.stateService.target("login");
+      });
+    $transitions.onBefore(
+    {
+      to: function(toState) {
+        // authGuard.setNextState(toState.name);
+        return toState.authenticate&&authGuard.isLoggedIn&&!authGuard.isAuthenticated(toState);
+      }
+    }, function(trans) {
+      return trans.router.stateService.target("forbidden");
+    });
+  }])
   .config(["$locationProvider", function ($locationProvider) {
     $locationProvider.html5Mode(true);
   }])
 
-  //////////////////////////////
-  //configure $cookiesProvider //
-  //////////////////////////////
-  .config(['$cookiesProvider', function ($cookiesProvider) {
-    $cookiesProvider.defaults.expires = '600';
-
-  }])
   /////////////////////////////
   //configure $stateProvider //
   /////////////////////////////
@@ -39,6 +51,16 @@ angular
     function ($stateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/home');
       $stateProvider
+        // .state('404',{
+        //   url:"/404",
+        //   templateUrl: "404.html",
+        //   authenticate: false
+        // })
+        .state('forbidden',{
+          url:"/forbidden",
+          templateUrl: "forbidden.html",
+          authenticate: false
+        })
         .state('home', {
           url: '/',
           templateUrl: 'views/main.html',
@@ -54,27 +76,27 @@ angular
         .state("manage-product", {
           url: "/manage-product",
           template:"<manage-product-component></manage-product-component>",
-          authenticate: false
+          authenticate: true
         })
         .state("manage-vendor", {
           url: "/manage-vendor",
           template:"<manage-vendor-component></manage-vendor-component>",
-          authenticate: false
+          authenticate: true
         })
         .state("manage-user", {
           url: "/manage-user",
           template:"<manage-user-component></manage-user-component>",
-          authenticate: false
+          authenticate: true
         })
         .state("manage-requirement", {
           url: "/manage-requirement",
           template:"<manage-requirement-component></manage-requirement-component>",
-          authenticate: false
+          authenticate: true
         })
         .state("manage-env", {
           url: "/manage-env",
           template:"<manage-env-component></manage-env-component>",
-          authenticate: false
+          authenticate: true
         })
         .state("search", {
           url: "/search",
@@ -94,13 +116,13 @@ angular
         .state("manage-case", {
           url: "/manage-case",
           template:"<manage-case-component></manage-case-component>",
-          authenticate: false
+          authenticate: true
         })
         /*计划管理*/
         .state("manage-plan", {
           url: "/manage-plan",
           template:"<manage-plan-component></manage-plan-component>",
-          authenticate: false
+          authenticate: true
         })
         .state("analyze", {
           url: "/analyze",
@@ -116,12 +138,12 @@ angular
         .state("reliabilityTesting", {
           url: "/reliability-testing",
           template:"<reliability-testing-component></reliability-testing-component>",
-          authenticate: false
+          authenticate: true
         })
         .state("reliabilityTesting.do", {
           url: "/do",
           template:"<reliability-testing-do-component></reliability-testing-do-component>",
-          authenticate: false
+          authenticate: true
         })
 
         /*可靠性测试结果*/
@@ -219,18 +241,9 @@ angular
       ngRapProvider.enable({
         mode: 3
       });
-      // httpProvider.interceptors.push('rapMockInterceptor');
+      httpProvider.interceptors.push('rapMockInterceptor');
     }]
   )
-  .run(['$rootScope', '$state', 'authService',function ($rootScope, $state, authService) {
-    $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
-      if (toState.authenticate && !authService.isAuthenticated()) {
-        // User isn’t authenticated
-        $state.transitionTo("login");
-        event.preventDefault();
-      }
-    });
-  }])
   .run(['formlyConfig',function (formlyConfig) {
     /*datepicker config*/
     var attributes = [
