@@ -219,7 +219,7 @@ angular
       ngRapProvider.enable({
         mode: 3
       });
-      httpProvider.interceptors.push('rapMockInterceptor');
+      // httpProvider.interceptors.push('rapMockInterceptor');
     }]
   )
   .run(['$rootScope', '$state', 'authService',function ($rootScope, $state, authService) {

@@ -16,7 +16,7 @@ function authService($cookies, $http) {
   // AngularJS will instantiate a singleton by calling "new" on this function
   var self = this;
   self.authStatus = false;
-  self.token = $cookies.get('token')||'';
+  self.token = $cookies.get('token')||'default token';
 
   self.doLogin = function(username,password) {
     if (self.token.length>0) {

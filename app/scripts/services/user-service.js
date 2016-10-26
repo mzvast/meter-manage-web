@@ -10,18 +10,11 @@
 angular.module('manageApp')
   .service('userService', userService);
 
-userService.$inject = ['$resource'];
+userService.$inject = ['resourceCenter'];
 
-function userService($resource) {
+function userService(resourceCenter) {
   var self = this;
-  var url = '/api/v2/' + 'users' + '/:id';
-  var resource = $resource(url, {
-    id: '@id'
-  }, {
-    update: {
-      method: 'PUT'
-    }
-  });
+  var resource = resourceCenter.get('users');
   self.getList = function (queryObj, cb) {
     console.log(queryObj);
     resource.get(queryObj).$promise

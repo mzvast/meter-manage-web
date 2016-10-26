@@ -11,19 +11,12 @@ angular.module('manageApp')
   .service('productService', productService);
 
 
-productService.$inject = ['$resource'];
+productService.$inject = ['resourceCenter'];
 
-function productService($resource) {
+function productService(resourceCenter) {
   // AngularJS will instantiate a singleton by calling "new" on this function
   var self = this;
-  var url = '/api/v2/' + 'products' + '/:id';
-  var resource = $resource(url, {
-    id: '@id'
-  }, {
-    update: {
-      method: 'PUT'
-    }
-  });
+  var resource = resourceCenter.get('products');
   self.getList = function (queryObj, cb) {
     console.log(queryObj);
     resource.get(queryObj).$promise

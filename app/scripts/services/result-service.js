@@ -10,18 +10,11 @@
 angular.module('manageApp')
   .service('resultService', resultService);
 
-resultService.$inject = ['$resource'];
+resultService.$inject = ['resourceCenter'];
 
-function resultService($resource) {
+function resultService(resourceCenter) {
   var self = this;
-  var url = '/api/v2/plans/:id/results';
-  var resource = $resource(url, {
-    id: '@id'
-  }, {
-    update: {
-      method: 'PUT'
-    }
-  });
+  var resource = resourceCenter.get('results');
   self.get = function (id, cb) {
     resource.get({id:id}).$promise
       .then(function (response) {

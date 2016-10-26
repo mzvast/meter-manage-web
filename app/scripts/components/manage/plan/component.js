@@ -129,7 +129,7 @@ function managePlanController(authGuard, $state, $uibModal, planService, modelSe
               return item.envsList.slice(0);
             },
             executor: function () {
-              return item.executor.slice(0);
+              return [angular.copy(item.executor)];
             },
             productsList: function () {
               return item.productsList.slice(0);
@@ -202,8 +202,9 @@ function managePlanController(authGuard, $state, $uibModal, planService, modelSe
         });
 
         modalInstance.result.then(function (formObj) {//保存新增
-          formObj.type = formObj.type.id;//解码
-          console.log(formObj);
+          // formObj.type = formObj.type.id;//解码
+
+          // console.log(formObj);
           planService.add(formObj, function (response) {
             console.log(response);
             notificationService.add('success','新增计划成功');

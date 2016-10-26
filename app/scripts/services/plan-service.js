@@ -10,19 +10,13 @@
 angular.module('manageApp')
   .service('planService', planService);
 
-planService.$inject = ['$resource'];
+planService.$inject = ['resourceCenter'];
 
-function planService($resource) {
+function planService(resourceCenter) {
   // AngularJS will instantiate a singleton by calling "new" on this function
   var self = this;
-  var url = '/api/v2/' + 'plans' + '/:id';
-  var resource = $resource(url, {
-    id: '@id'
-  }, {
-    update: {
-      method: 'PUT'
-    }
-  });
+  var resource = resourceCenter.get('plans');
+
   self.getList = function (queryObj, cb) {
     console.log(queryObj);
     resource.get(queryObj).$promise
@@ -35,6 +29,9 @@ function planService($resource) {
   };
 
   self.add = function (formObj, cb) {
+    // formObj.creator = {id:1};
+    formObj.executor = formObj.executor[0];
+    delete formObj.type;
     console.log("formObj=");
     console.log(formObj);
     resource.save(formObj).$promise

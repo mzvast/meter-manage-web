@@ -10,8 +10,8 @@
 angular.module('manageApp')
   .service('reliabilityTestingService', reliabilityTestingService);
 
-reliabilityTestingService.$inject = ['resultService','$state'];
-function reliabilityTestingService(resultService,$state) {
+reliabilityTestingService.$inject = ['resultService'];
+function reliabilityTestingService(resultService) {
   var self = this;
   self.setPlan = function (plan) {
     self.plan = plan;
