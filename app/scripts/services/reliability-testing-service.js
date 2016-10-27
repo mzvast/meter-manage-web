@@ -38,6 +38,8 @@ function reliabilityTestingService(resultService) {
     return self.result;
   };
   self.finish = function (cb) {
+    // console.log(self.result);
+    // console.log(self.plan.id);
     resultService.add(self.result,self.plan.id,cb)
   };
 

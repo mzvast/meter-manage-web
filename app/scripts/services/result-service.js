@@ -39,7 +39,7 @@ function resultService(resourceCenter) {
   self.add = function (formObj, id,cb) {
     console.log("formObj=");
     console.log(formObj);
-    resource.save({id:id}).$promise
+    resource.save({id:id},formObj).$promise
       .then(function (response) {
         console.log("新增资源 SUCCESS!");
         // console.log(data);

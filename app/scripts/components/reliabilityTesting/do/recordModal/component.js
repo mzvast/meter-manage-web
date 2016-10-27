@@ -21,6 +21,7 @@ function recordModalController(caseService,formModelService) {
 
   $ctrl.$onInit = function () {
     $ctrl.form = {};
+    $ctrl.record = '数据正常';
     $ctrl.title = $ctrl.resolve.title;
     $ctrl.caseId = $ctrl.resolve.caseId;
     caseService.get($ctrl.caseId,function (res) {
@@ -35,6 +36,7 @@ function recordModalController(caseService,formModelService) {
   $ctrl.ok = function () {
     $ctrl.form.caseId = $ctrl.caseId;
     $ctrl.form.pass = $ctrl.pass;
+    $ctrl.form.record = $ctrl.record;
     $ctrl.close({$value: $ctrl.form});
   };
 
