@@ -28,14 +28,14 @@ function authService($http) {
   /////////////////////////////////
   self.doLoginByPass = function(username,password,cb) {
     $http
-      .post('/api/v2/auth',{
-        username:username,
+      .post('/api/v2/users/login',{
+        name:username,
         password:password
       })
       .success(function(data, status, headers, config) {
         console.log('获取token:'+headers('token'));
         console.log(data);
-        switch(data.status){
+        switch(data.state){
           case 'success':
           {
             self.token=headers('token')||data.data.token;//正式服务器header中有token，rap中只能在response中
@@ -63,12 +63,12 @@ function authService($http) {
   //////////////////////
   self.doLoginByToken = function(cb) {
     $http
-      .post('/api/v2/auth',{
+      .post('/api/v2/users/login',{
         token:self.token
       })
       .success(function(data, status, headers, config) {
         console.log(data);
-        switch(data.status){
+        switch(data.state){
           case 'success':
           {
             self.role = data.data.type;//设置role
