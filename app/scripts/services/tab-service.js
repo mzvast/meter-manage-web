@@ -134,6 +134,30 @@ function tabService() {
           id: 4,
           name: "关闭"
         }];
+      case 'compare':{
+        return  [
+          {
+            id:0,
+            name: "产品选择",
+          },
+          {
+            id:1,
+            name: "信息录入",
+          },
+          {
+            id:2,
+            name: "参数配置",
+          },
+          {
+            id:3,
+            name: "暂存HEX文件",
+          },
+          {
+            id:4,
+            name: "比对信息验核",
+          }
+        ];
+      }
     }
   };
 }

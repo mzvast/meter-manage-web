@@ -18,15 +18,15 @@
         <div class="col-md-12">
           <!-- Custom Tabs -->
           <table-component list="$ctrl.itemList" model="$ctrl.tableModel" tab-model="$ctrl.tabModel" on-order="$ctrl.order(key)" reverse="$ctrl.reverse" predicate="$ctrl.predicate" action-only="true" on-action="$ctrl.action(item)"></table-component>
-        <!-- 分页器 -->
-        <div class="text-center">
-          <ul uib-pagination total-items="$ctrl.totalItems" ng-model="$ctrl.currentPage" max-size="$ctrl.maxSize" class="pagination-sm" boundary-link-numbers="true" ng-change="$ctrl.pageChanged()"></ul>
+          <!-- 分页器 -->
+          <div class="text-center">
+            <ul uib-pagination total-items="$ctrl.totalItems" ng-model="$ctrl.currentPage" max-size="$ctrl.maxSize" class="pagination-sm" boundary-link-numbers="true" ng-change="$ctrl.pageChanged()"></ul>
+          </div>
+          <!-- /分页器 -->
         </div>
-        <!-- /分页器 -->
+        <!-- /.box-body -->
       </div>
-      <!-- /.box-body -->
+      <!-- /.box -->
     </div>
-    <!-- /.box -->
-  </div>
   </div>
 </div>

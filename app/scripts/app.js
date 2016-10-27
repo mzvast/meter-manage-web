@@ -103,6 +103,11 @@ angular
           template:"<quick-select-env-component></quick-select-env-component>",
           authenticate: false
         })
+        .state("mcu", {
+          url: "/mcu",
+          template:"<mcu-form-component></mcu-form-component>",
+          authenticate: false
+        })
         .state("manage",{//TODO继续重构
           url:"/manage/:category",
           params:{
@@ -167,6 +172,17 @@ angular
             }
           },
           authenticate:false
+        })
+        /*new!比对测试执行*/
+        .state("compare", {
+          url: "/compare",
+          template:"<compare-testing-component></compare-testing-component>",
+          authenticate: false
+        })
+        .state("compare.do", {
+          url: "/do",
+          template:"<compare-testing-do-component></compare-testing-do-component>",
+          authenticate: false
         })
         /*比对测试执行*/
         .state("action-beian", {
@@ -241,7 +257,7 @@ angular
       ngRapProvider.enable({
         mode: 3
       });
-      // httpProvider.interceptors.push('rapMockInterceptor');
+      httpProvider.interceptors.push('rapMockInterceptor');
     }]
   )
   .run(['formlyConfig',function (formlyConfig) {

@@ -69,6 +69,14 @@ function resourceCenter($resource,authService) {
     }, methodWithToken());
   }());
 
+  self['productInfo'] = (function () {
+    var url = '/api/v2/products/:id/details';
+    return $resource(url, {
+      id: '@id',
+      category: '@category'
+    }, methodWithToken());
+  }());
+
   self.get = function (name) {
     return self[name];
   }

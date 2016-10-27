@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form ng-if="$ctrl.ready" ng-submit="$ctrl.onSubmit()" novalidate>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label >费控类型</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.costcontrol_type">
+        </div>
+        <div class="col-xs-6">
+          <label >电流规格</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.i_spec">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label >软件适用表型</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.program_for_meter">
+        </div>
+        <div class="col-xs-6">
+          <label >软件适用类型</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.program_type">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label >软件版本号</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.program_version">
+        </div>
+        <div class="col-xs-6">
+          <label >电流规格</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.v_spec">
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12" ng-if="$ctrl.mcu_infos">
+  <label>MCU核心参数设置</label>
+    <a ng-repeat="mcu in $ctrl.mcu_infos" class="btn bg-olive margin " ng-click="$ctrl.click()">
+      <i class="glyphicon glyphicon-edit"></i> {{ mcu.mcu_id }}
+    </a>
+
+  </div>
+</div>
+    <pre>{{ $ctrl.form|json }}</pre>

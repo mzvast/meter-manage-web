@@ -5,5 +5,5 @@
     <li ng-class="{'active':$ctrl.activeTabId===item.id}" ng-repeat="item in $ctrl.model"><a href="" ng-click="$ctrl.selectTab(item.id)" data-toggle="tab"
                                           aria-expanded="true">{{item.name}}</a></li>
   </ul>
-</div>
 <div class="tab-content" ng-transclude></div>
+</div>

@@ -1,0 +1,74 @@
+<form role="form">
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label >MCU ID</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.mcu_id">
+        </div>
+        <div class="col-xs-6">
+          <label >MCU 型号</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.mcu_model">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label >存储器起始地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.memory_addr.start">
+        </div>
+        <div class="col-xs-6">
+          <label >存储器结束地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.memory_addr.end">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label >软件代码起始地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.software_addr.start">
+        </div>
+        <div class="col-xs-6">
+          <label >软件代码结束地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.software_addr.end">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label >保护区1起始地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.protect_addr[0].start">
+        </div>
+        <div class="col-xs-6">
+          <label >保护区1结束地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.protect_addr[0].end">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label >保护区2起始地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.protect_addr[1].start">
+        </div>
+        <div class="col-xs-6">
+          <label >保护区2结束地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.protect_addr[1].end">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label >保留区1起始地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.reserve_addr[0].start">
+        </div>
+        <div class="col-xs-6">
+          <label >保留区1结束地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.reserve_addr[0].end">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label >保留区2起始地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.reserve_addr[1].start">
+        </div>
+        <div class="col-xs-6">
+          <label >保留区2结束地址</label>
+          <input type="text" class="form-control" ng-model="$ctrl.form.reserve_addr[1].end">
+        </div>
+      </div>
+    </form>
+
+<!--<pre>{{ $ctrl.form|json }}</pre>-->

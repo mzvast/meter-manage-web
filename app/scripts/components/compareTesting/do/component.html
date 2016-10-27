@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1">
+    <div class="box no-border">
+      <div class="box-header">
+        <div class="row">
+          <div class="col-xs-9">
+            <h3 class="text-center"><b>测试产品：</b>{{ $ctrl.title }}</h3>
+          </div>
+
+          <div class="col-xs-2 text-center">
+            <a class="btn btn-app bg-olive margin " ng-click="$ctrl.finish()">
+              <i class="glyphicon glyphicon-floppy-saved"></i> 测试完成
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">
+        <div class="col-md-12">
+          <!-- Custom Tabs -->
+          <tabs-component model="$ctrl.tabModel" on-select="$ctrl.selectTab(id)" default-active-tab-id="0">
+            <div ng-show="$ctrl.activeTabId===0">
+              <product-info-component></product-info-component>
+
+            </div>
+            <div ng-show="$ctrl.activeTabId===1">
+              <div class="table-responsive">
+                <table class="table text-center">
+                  <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>环境</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="item in $ctrl.envs" >
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.title }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div ng-show="$ctrl.activeTabId===2">
+              <div class="table-responsive">
+                <table class="table text-center">
+                  <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>用例</th>
+                    <th>执行</th>
+                    <th>完成</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="item in $ctrl.cases" >
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.title }}</td>
+                    <td >
+                      <button ng-click="$ctrl.doTest(item)" type="button" class="btn btn-info">执行</button>
+                    </td>
+                    <td>
+                      <i ng-if="$ctrl.result[$index]['pass']===1" class="fa fa-fw fa-check" style="color: green;"></i>
+                      <i ng-if="$ctrl.result[$index]['pass']===0" class="fa fa-fw fa-close" style="color: red;"></i>
+                      <i ng-if="$ctrl.result[$index]['pass']===-1" class="fa fa-fw fa-circle-thin" style="color: yellow;"></i>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </tabs-component>
+
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
+</div>
