@@ -18,6 +18,8 @@ function loginController(authGuard,$state) {
   var nextState;
 
   $ctrl.$onInit = function () {
+    $ctrl.username = 'test_admin';
+    $ctrl.password = 'test_admin';
     nextState = authGuard.getNextState()||'home';
     // console.log('nextState:',nextState);
 

@@ -16,6 +16,12 @@
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
+        <li class="user">
+          <a href="" ng-click="$ctrl.toggleMode()" >
+            <span class="hidden-xs" ng-if="$ctrl.authGuard.debugMode">切换到正常模式</span>
+            <span class="hidden-xs" ng-if="!$ctrl.authGuard.debugMode">切换到调试模式</span>
+          </a>
+        </li>
         <li ng-if="$ctrl.authGuard.isLoggedIn" class="user">
           <a href="" >
             <span class="hidden-xs">{{ $ctrl.authGuard.user.name }}({{ $ctrl.authGuard.user.roleName }})</span>

@@ -241,7 +241,7 @@ angular
       ngRapProvider.enable({
         mode: 3
       });
-      httpProvider.interceptors.push('rapMockInterceptor');
+      // httpProvider.interceptors.push('rapMockInterceptor');
     }]
   )
   .run(['formlyConfig',function (formlyConfig) {

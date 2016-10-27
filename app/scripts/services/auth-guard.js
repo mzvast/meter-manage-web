@@ -15,11 +15,22 @@ authGuard.$inject = ['authService','$state'];
 function authGuard(authService,$state) {
   // console.log("authGuard init");
   var self = this;
-  // self.isLoggedIn = true;//false;TODO 开发方便，自动登录
-  self.isLoggedIn = false;
-  self.isAdmin = false;
-  self.isManage = false;
-  self.isTester = false;
+  self.toggleMode = function (state) {
+    self.isLoggedIn = state;
+    self.isAdmin = state;
+    self.isManage = state;
+    self.isTester = state;
+    self.debugMode = state;
+  };
+
+  function isDebug() {
+    return self.debugMode;
+  }
+
+  /**
+   * debug toggle!!!!!!!!!
+   */
+  self.toggleMode(true);
 
   function setRoleFlag() {
     var role = +self.user.role;
@@ -30,12 +41,15 @@ function authGuard(authService,$state) {
   }
 
   function clearRoleFlag() {
-    self.isAdmin = false;
-    self.isManage = false;
-    self.isTester = false;
+    console.log('clear role flag');
+    self.toggleMode(false);
+    // self.isAdmin = false;
+    // self.isManage = false;
+    // self.isTester = false;
   }
 
   self.isAuthenticated =function (toState) {
+    if(isDebug()) return true;
     if(toState===undefined) return;
     var res = self.isLoggedIn&&authService.hasPermission(toState.name);
     console.log('check permission to ',toState.name,res?':yes':':no');
@@ -93,7 +107,7 @@ function authGuard(authService,$state) {
   self.logout = function () {
     console.log("logged out");
     authService.doLogout();
-    self.isLoggedIn = false;
+    // self.isLoggedIn = false;
     clearRoleFlag();
   };
 

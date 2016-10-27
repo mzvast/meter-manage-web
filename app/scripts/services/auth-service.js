@@ -33,11 +33,12 @@ function authService($http) {
         password:password
       })
       .success(function(data, status, headers, config) {
+        console.log('获取token:'+headers('token'));
         console.log(data);
         switch(data.status){
           case 'success':
           {
-            self.token=data.data.token;
+            self.token=headers('token')||data.data.token;//正式服务器header中有token，rap中只能在response中
             localStorage.setItem('token', self.token);
             self.role = data.data.type;//设置role
             cb(true,data.data);

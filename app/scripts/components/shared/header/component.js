@@ -15,6 +15,10 @@ headerController.$inject = ['authGuard','$state'];
 
 function headerController(authGuard,$state) {
   var $ctrl = this;
+
+  $ctrl.toggleMode = function () {
+    authGuard.toggleMode(!authGuard.debugMode)
+  };
   $ctrl.authGuard = authGuard;
 
   $ctrl.login = function () {

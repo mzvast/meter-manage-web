@@ -142,6 +142,7 @@ function managePlanController(authGuard, $state, $uibModal, planService, modelSe
 
         modalInstance.result.then(function (formObj) {//保存修改
           formObj.type = formObj.type.id;//解码
+          formObj.executor = formObj.executor[0];
           console.log(formObj);
           var formId = formObj.id;
           delete formObj.id;
