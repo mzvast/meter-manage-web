@@ -23,7 +23,25 @@ function productService(resourceCenter) {
       .then(function (response) {
         // console.log("获取" + vm.pageResourceName + " SUCCESS!");
         if (typeof cb === 'function') {
-          cb(response);
+          var res = {};
+          res.itemList = response.data.map(function (item) {
+            if (item['create_date']) {
+              item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
+            }
+            //修复厂家名称和厂家代码的嵌套
+            if (item.vendor && item.vendor.name && item.vendor.code) {
+              var name = item.vendor.name;
+              var code = item.vendor.code;
+              var vendor_id = item.vendor.id;
+              item.vendor = name;
+              item.vendor_code = code;
+              item.vendor_id = vendor_id;
+            }
+            return item;
+          });
+          res.totalItems = response.total_items;
+          res.currentPage = response.current_page;
+          cb(res);
         }
       });
   };

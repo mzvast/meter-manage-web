@@ -44,26 +44,11 @@ function manageProductController(authGuard, $state, $uibModal, requirementServic
     }
 
     function refresh() {
-      requirementService.getList(getQueryObj(), function (json) {
-        console.log(json.data);
-
-        $ctrl.itemList = json.data.map(function (item) {
-          if (item['create_date']) {
-            item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
-          }
-          // //修复需求名称和需求代码的嵌套
-          // if (item.requirement && item.requirement.name && item.requirement.code) {
-          //   var name = item.requirement.name;
-          //   var code = item.requirement.code;
-          //   var requirement_id = item.requirement.id;
-          //   item.requirement = name;
-          //   item.requirement_code = code;
-          //   item.requirement_id = requirement_id;
-          // }
-          return item;
-        });
-        $ctrl.totalItems = json.total_items;
-        $ctrl.currentPage = json.current_page;
+      requirementService.getList(getQueryObj(), function (res) {
+        console.log(res);
+        $ctrl.itemList = res.itemList;
+        $ctrl.totalItems = res.total_items;
+        $ctrl.currentPage = res.current_page;
       });
     }
 

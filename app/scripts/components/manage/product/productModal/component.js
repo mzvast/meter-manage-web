@@ -32,8 +32,8 @@ function productModalController(vendorService) {
       reverse: false
     };
 
-    vendorService.getList(queryObj,function (response) {
-      var vendors = response.data.map(function (cur) {
+    vendorService.getList(queryObj,function (res) {
+      var vendors = res.itemList.map(function (cur) {
         return {
           id:cur.id,
           name:cur.name

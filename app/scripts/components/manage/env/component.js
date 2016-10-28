@@ -44,26 +44,12 @@ function manageProductController(authGuard, $state, $uibModal, envService, model
     }
 
     function refresh() {
-      envService.getList(getQueryObj(), function (json) {
-        console.log(json.data);
+      envService.getList(getQueryObj(), function (res) {
+        console.log(res);
 
-        $ctrl.itemList = json.data.map(function (item) {
-          if (item['create_date']) {
-            item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
-          }
-          // //修复环境名称和环境代码的嵌套
-          // if (item.env && item.env.name && item.env.code) {
-          //   var name = item.env.name;
-          //   var code = item.env.code;
-          //   var env_id = item.env.id;
-          //   item.env = name;
-          //   item.env_code = code;
-          //   item.env_id = env_id;
-          // }
-          return item;
-        });
-        $ctrl.totalItems = json.total_items;
-        $ctrl.currentPage = json.current_page;
+        $ctrl.itemList = res.itemList;
+        $ctrl.totalItems = res.total_items;
+        $ctrl.currentPage = res.current_page;
       });
     }
 

@@ -6,21 +6,24 @@ angular.module('manageApp')
   .component('hexFormComponent', {
     templateUrl: 'scripts/components/compareTesting/hexForm/component.html',
     bindings: {
-
+      hexObj:'<'
     },
     controller: hexFormController
   });
 
-hexFormController.$inject = ['compareTestingService'];
+hexFormController.$inject = [];
 
-function hexFormController(compareTestingService) {
+function hexFormController() {
   var $ctrl = this;
 
 
   $ctrl.$onInit = function () {
-    $ctrl.hexObj = compareTestingService.getAllHex();
+
   };
 
-  //TODO 逻辑放到外面
+  $ctrl.submit = function () {
+    console.log($ctrl.hexObj);//TODO 上传到service
+  }
+
 
 }

@@ -46,26 +46,12 @@ function quickSelectCase(caseService,modelService,tabService) {
   }
 
   function refresh() {
-    caseService.getList(getQueryObj(), function (json) {
-      console.log(json.data);
+    caseService.getList(getQueryObj(), function (res) {
+      console.log(res);
 
-      $ctrl.itemList = json.data.map(function (item) {
-        if (item['create_date']) {
-          item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
-        }
-        //修复厂家名称和厂家代码的嵌套
-        if (item.vendor && item.vendor.name && item.vendor.code) {
-          var name = item.vendor.name;
-          var code = item.vendor.code;
-          var vendor_id = item.vendor.id;
-          item.vendor = name;
-          item.vendor_code = code;
-          item.vendor_id = vendor_id;
-        }
-        return item;
-      });
-      $ctrl.totalItems = json.total_items;
-      $ctrl.currentPage = json.current_page;
+      $ctrl.itemList = res.itemList;
+      $ctrl.totalItems = res.total_items;
+      $ctrl.currentPage = res.current_page;
     });
   }
 

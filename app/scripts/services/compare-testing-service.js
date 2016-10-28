@@ -14,10 +14,8 @@ compareTestingService.$inject = [];
 
 function compareTestingService() {
   var self = this;
-
-  var mcu_info = [];
-  var product,recordNum;
-  self.args =[
+  //默认值
+  var defaultArgs = [
     {
       "bit": 1,
       "on": false,
@@ -91,10 +89,6 @@ function compareTestingService() {
       "key_index": "04"
     }
   ];
-
-  var hexObj = [];//id,md5,filename
-
-  var core_num = 0;
   var formModel = [
     'costcontrol_type',
     'i_spec',
@@ -104,11 +98,21 @@ function compareTestingService() {
     'report_num',
     'v_spec'
   ];
+  //Product部分
+  var mcu_info = [];
+  var product,recordNum;
   var form = {};
+  var core_num = 0;
+  //Args部分
+  var args = defaultArgs;
+  //HEX部分
+  var hexObj = [];//id,md5,filename
+
+
+
 
   /**
    * Product
-   * @param productObj
    */
 
   self.setProduct = function (productObj) {
@@ -122,10 +126,25 @@ function compareTestingService() {
   self.getProduct = function () {
     return product;
   };
+  /**
+   * Form
+   */
+  self.setForm = function (formObj) {
+    form = formObj;
+  };
+
+  self.getForm = function () {
+    return form;
+  };
+
+  self.initForm = function (responseData) {
+    formModel.map(function (item) {
+      form[item] = responseData[item]||'未定义';
+    });
+  };
 
   /**
    * MCU info
-   * @param info
    */
 
   self.addMcuInfo = function (info) {
@@ -139,15 +158,24 @@ function compareTestingService() {
   };
 
   self.setMcuInfo = function (mcu_id,info) {
-    console.log('got info in service',info);
+    console.log('setting mcu info',info);
     mcu_info=mcu_info.map(function (item) {
       if(item.mcu_id === info.mcu_id) return info;
       return item;
     })
   };
 
+  self.initMcuInfo = function (responseData) {
+    responseData.mcu_info.map(function (item) {
+      self.addMcuInfo(item);
+    })
+  };
+
   self.getMcuInfo = function (mcu_id) {
-    return mcu_info[mcu_id-1];//angular.toJson();去除$$hashKey
+    for(var i=0;i<core_num;i++){
+      if(mcu_info[i]['mcu_id'] === mcu_id) return mcu_info[i];
+    }
+    return null;
   };
 
   self.getAllMcuInfo = function () {
@@ -161,7 +189,6 @@ function compareTestingService() {
 
   /**
    * core numbers
-   * @returns {number}
    */
 
   self.getCoreNum = function () {
@@ -173,36 +200,39 @@ function compareTestingService() {
     self.addMcuInfo({mcu_id:new_id});
   };
 
-  self.removeCore = function (index) {
+  self.removeCore = function () {
     if(core_num<=1) return;
-    self.removeMcuInfo(index);
+    self.removeMcuInfo(core_num-1);
   };
 
   /**
-   * init data
-   * @param formObj
+   * Args 相关
+   */
+  self.setArgs = function (new_args) {
+    args = new_args;
+  };
+  self.getArgs = function () {
+    return args;
+  };
+
+
+
+
+
+  /**
+   * 数据初始化
    */
 
-  self.setForm = function (formObj) {
-    form = formObj;
-  };
-
-  self.getForm = function () {
-    return form;
-  };
-
   self.initData = function (responseData) {
-    self.fakeData();return;//debug purpose
+    // self.fakeData();return;//debug purpose
 
     self.clearMcuInfo();
     if(responseData.mcu_info){
-      responseData.mcu_info.map(function (item) {
-        self.addMcuInfo(item);
-      })
+      self.initMcuInfo(responseData);
     }
-    formModel.map(function (item) {
-      form[item] = responseData[item]||'未定义';
-    })
+    self.initForm(responseData);
+
+    self.initHex();//TODO 带数据初始化
   };
 
   /**
@@ -256,7 +286,7 @@ function compareTestingService() {
 
     recordNum = 1234567890123456;
 
-    form = {
+    self.setForm({
       'costcontrol_type':'em_esam',
       'i_spec':'5(60)A',
       'v_spec':'220V',
@@ -264,12 +294,7 @@ function compareTestingService() {
       'program_type':'normal',
       'program_version':'V 2.0',
       'report_num':'模拟数据'
-    };
-
-    // md5[0] = 'd9fc6d737aea3345f681f24c8a2bb07c';
-    // md5[1] = 'd9fc6d737aea3345f681f24c8a2bb07d';
-    // filename[0] = '0.hex';
-    // filename[1] = '1.hex';
+    });
 
     mcu_info = [
       {
@@ -350,7 +375,7 @@ function compareTestingService() {
       "program_for_meter": "0.2s级三相智能电能表"
     };
 
-    self.args = [
+    self.setArgs([
       {
       "bit": 1,
       "on": true,
@@ -367,7 +392,7 @@ function compareTestingService() {
       "type": "single_phase",
       "vol": 220,
       "key_index": "04"
-    }];
+    }]);
 
   };
 }

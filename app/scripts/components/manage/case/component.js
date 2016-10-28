@@ -44,26 +44,12 @@ function manageProductController(authGuard, $state, $uibModal, caseService, mode
     }
 
     function refresh() {
-      caseService.getList(getQueryObj(), function (json) {
-        console.log(json.data);
+      caseService.getList(getQueryObj(), function (res) {
+        console.log(res);
 
-        $ctrl.itemList = json.data.map(function (item) {
-          if (item['create_date']) {
-            item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
-          }
-          // //修复用例名称和用例代码的嵌套
-          // if (item.case && item.case.name && item.case.code) {
-          //   var name = item.case.name;
-          //   var code = item.case.code;
-          //   var case_id = item.case.id;
-          //   item.case = name;
-          //   item.case_code = code;
-          //   item.case_id = case_id;
-          // }
-          return item;
-        });
-        $ctrl.totalItems = json.total_items;
-        $ctrl.currentPage = json.current_page;
+        $ctrl.itemList = res.itemList;
+        $ctrl.totalItems = res.total_items;
+        $ctrl.currentPage = res.current_page;
       });
     }
 

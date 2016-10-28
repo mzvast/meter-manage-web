@@ -6,18 +6,21 @@ angular.module('manageApp')
   .component('productInfoComponent', {
     templateUrl: 'scripts/components/compareTesting/productInfo/component.html',
     bindings: {
-
+      form:'<',
+      mcuInfos:'<',
+      coreNum:'<',
+      onOpenModal:'&',
+      onSave:'&',
+      onAddCore:'&',
+      onRemoveCore:'&'
     },
     controller: productInfoController
   });
-//TODO 需要把逻辑放到外面
-productInfoController.$inject = ['$uibModal','productInfoService','compareTestingService'];
+productInfoController.$inject = [];
 
-function productInfoController($uibModal,productInfoService,compareTestingService){
+function productInfoController(){
   var $ctrl = this;
 
-  $ctrl.form = {};
-  $ctrl.ready =false;
   $ctrl.program_for_meter_options = [
     {
       "name": "0.2s级三相智能电能表",
@@ -134,61 +137,26 @@ function productInfoController($uibModal,productInfoService,compareTestingServic
       "value": "abnormal"
     }
   ];
-  var product;
-//数据主要存在compareTestingService!
+
   $ctrl.$onInit = function () {
     $ctrl.animationsEnabled = true;
-    product = compareTestingService.getProduct();
-
-    productInfoService.get(product.id,function (res) {
-      console.log(res);
-      compareTestingService.initData(res);
-      $ctrl.form = compareTestingService.getForm();
-      $ctrl.mcu_infos = compareTestingService.getAllMcuInfo();
-      $ctrl.coreNum =compareTestingService.getCoreNum();
-      $ctrl.ready = true;
-    });
-
   };
 
   $ctrl.addCore = function () {
-    compareTestingService.addCore();
-    $ctrl.mcu_infos = compareTestingService.getAllMcuInfo();
-    $ctrl.coreNum =compareTestingService.getCoreNum();
+    $ctrl.onAddCore();
   };
 
   $ctrl.removeCore = function () {
-    compareTestingService.removeCore($ctrl.coreNum-1);
-    $ctrl.mcu_infos = compareTestingService.getAllMcuInfo();
-    $ctrl.coreNum =compareTestingService.getCoreNum();
+    $ctrl.onRemoveCore();
   };
 
   $ctrl.openModal = function (item) {
-    console.log(item);
-    (function () {
-      var modalInstance = $uibModal.open({
-        animation: $ctrl.animationsEnabled,
-        component: 'mcuModalComponent',
-        resolve: {
-          title: function () {
-            return 'MCU信息';
-          },
-          mcu_info: function () {
-            return item;
-          }
-        }
-      });
-
-      modalInstance.result.then(function (formObj) {//保存新增
-        // formObj.type = formObj.type.id;//解码
-        console.log('ok:',formObj);
-        compareTestingService.setMcuInfo(formObj['mcu_id'],formObj);
-        console.log('ok2:',compareTestingService.getMcuInfo(formObj['mcu_id']));
-      }, function () {
-        // console.info('dismissed at: ' + new Date());
-      });
-    })();
+    $ctrl.onOpenModal({item:item});
   };
+
+  $ctrl.submit = function () {
+    $ctrl.onSave({form:$ctrl.form});
+  }
 
 
 

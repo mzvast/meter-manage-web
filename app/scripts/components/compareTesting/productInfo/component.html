@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12">
-    <form ng-if="$ctrl.ready" ng-submit="$ctrl.onSubmit()" novalidate>
+    <form ng-submit="$ctrl.onSubmit()" novalidate>
       <div class="form-group">
         <div class="col-xs-6">
           <label >费控类型</label>
@@ -49,8 +49,15 @@
   </div>
   <div class="col-xs-12">
       <label>MCU核心设置</label>
-    <a ng-repeat="mcu in $ctrl.mcu_infos" class="btn bg-olive margin " ng-click="$ctrl.openModal(mcu)">
+    <a ng-repeat="mcu in $ctrl.mcuInfos" class="btn bg-olive margin " ng-click="$ctrl.openModal(mcu)">
       <i class="glyphicon glyphicon-edit"></i> {{ mcu.mcu_id }}
+    </a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-4 col-xs-offset-4 text-center">
+    <a class="bg-maroon btn btn-app btn-block btn-flat" ng-click="$ctrl.submit()">
+      <i class="fa fa-save"></i> 保存
     </a>
   </div>
 </div>

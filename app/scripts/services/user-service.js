@@ -21,7 +21,16 @@ function userService(resourceCenter) {
       .then(function (response) {
         // console.log("获取" + vm.pageResourceName + " SUCCESS!");
         if (typeof cb === 'function') {
-          cb(response);
+          var res ={};
+          res.itemList = response.data.map(function (item) {
+            if (item['create_date']) {
+              item['create_date'] = moment.utc(item['create_date']).local().format('YYYY-MM-DD');
+            }
+            return item;
+          });
+          res.totalItems = response.total_items;
+          res.currentPage = response.current_page;
+          cb(res);
         }
       });
   };

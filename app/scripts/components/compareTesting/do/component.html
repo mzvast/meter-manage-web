@@ -18,16 +18,29 @@
       <div class="box-body table-responsive no-padding">
         <div class="col-md-12">
           <!-- Custom Tabs -->
-          <tabs-component model="$ctrl.tabModel" on-select="$ctrl.selectTab(id)" default-active-tab-id="0">
+          <tabs-component model="$ctrl.tabModel" ng-if="$ctrl.productReady" on-select="$ctrl.selectTab(id)" default-active-tab-id="0">
             <div ng-show="$ctrl.activeTabId===0">
-              <product-info-component></product-info-component>
+              <product-info-component
+                form="$ctrl.form"
+                mcu-infos="$ctrl.mcuInfos"
+                core-num="$ctrl.coreNum"
+                on-open-modal="$ctrl.openMcuModal(item)"
+                on-save="$ctrl.saveProductForm(form)"
+                on-add-core="$ctrl.addCore()"
+                on-remove-core="$ctrl.removeCore()"
+              ></product-info-component>
             </div>
             <div ng-show="$ctrl.activeTabId===1">
-              <arg-form-component args="$ctrl.compareTestingService.args"></arg-form-component>
+              <arg-form-component
+                args="$ctrl.args"
+                on-save="$ctrl.saveArgs(args)"
+              ></arg-form-component>
             </div>
             <div ng-show="$ctrl.activeTabId===2">
               <div class="table-responsive">
-                <hex-form-component></hex-form-component>
+                <hex-form-component
+                  hex-obj="$ctrl.hexObj"
+                ></hex-form-component>
               </div>
             </div>
           </tabs-component>
