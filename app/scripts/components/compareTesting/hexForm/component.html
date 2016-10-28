@@ -1,0 +1,22 @@
+<form role="form">
+  <div class="form-group">
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <th style="width: 1em;">核心</th>
+          <th style="width: 1em;">文件名</th>
+          <th style="width: 1em;">md5</th>
+          <th style="width: 5em;">操作</th>
+        </tr>
+        <tr ng-repeat="item in $ctrl.hexObj">
+          <th>{{ item.id }}</th>
+          <th>{{ item.filename }}</th>
+          <th>{{ item.md5 }}</th>
+          <th>2333</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>
+
+<!--<pre>{{ $ctrl.args|json }}</pre>-->

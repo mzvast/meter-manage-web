@@ -127,7 +127,7 @@ function manageProductController(authGuard, $state, $uibModal, userService, mode
                 age:item.age,
                 skill:item.skill,
                 exp:item.exp,
-                type:{id:item.type}// TODO 等待上游修复,注意编码后保存时候要解码
+                type:{id:item.type}
               };
             }
           }

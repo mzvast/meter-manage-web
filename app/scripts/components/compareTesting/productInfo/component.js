@@ -5,10 +5,12 @@
 angular.module('manageApp')
   .component('productInfoComponent', {
     templateUrl: 'scripts/components/compareTesting/productInfo/component.html',
-    bindings: {},
+    bindings: {
+
+    },
     controller: productInfoController
   });
-
+//TODO 需要把逻辑放到外面
 productInfoController.$inject = ['$uibModal','productInfoService','compareTestingService'];
 
 function productInfoController($uibModal,productInfoService,compareTestingService){

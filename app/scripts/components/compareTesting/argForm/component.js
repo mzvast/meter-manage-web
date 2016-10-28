@@ -6,7 +6,7 @@ angular.module('manageApp')
   .component('argFormComponent', {
     templateUrl: 'scripts/components/compareTesting/argForm/component.html',
     bindings: {
-      args:'='
+      args:'<'
     },
     controller: argFormController
   });
@@ -23,6 +23,10 @@ function argFormController() {
 
   $ctrl.$onInit = function () {
 
+  };
+
+  $ctrl.submit =function () {
+    //TODO
   }
 
 

@@ -8,7 +8,7 @@ angular.module('manageApp')
     bindings: {
       onSearch: '&',
       onClear: '&',
-      list:'<'//TODO
+      list:'<'
     },
     controller: basketController
   });
