@@ -11,6 +11,7 @@ compareTestingDoController.$inject = ['$state','caseService','compareTestingServ
 function compareTestingDoController($state,caseService,compareTestingService,$uibModal)
 {
   var $ctrl = this;
+  $ctrl.compareTestingService = compareTestingService;
 
   $ctrl.$onInit = function () {
     $ctrl.title = compareTestingService.getTitle();

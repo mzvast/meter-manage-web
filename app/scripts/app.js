@@ -108,6 +108,11 @@ angular
           template:"<mcu-form-component></mcu-form-component>",
           authenticate: false
         })
+        .state("arg", {
+          url: "/arg",
+          template:"<arg-form-component></arg-form-component>",
+          authenticate: false
+        })
         .state("manage",{//TODO继续重构
           url:"/manage/:category",
           params:{

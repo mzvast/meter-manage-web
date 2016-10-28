@@ -6,7 +6,7 @@ angular.module('manageApp')
   .component('mcuFormComponent', {
     templateUrl: 'scripts/components/compareTesting/productInfo/mcuForm/component.html',
     bindings: {
-      data:'<'
+      data:'='
     },
     controller: mcuFormController
   });
@@ -44,8 +44,8 @@ function mcuFormController() {
   };
   $ctrl.$onInit = function () {
     if($ctrl.data){
-      console.log("$ctrl.data received");
-      console.log($ctrl.data);
+      // console.log("$ctrl.data received",$ctrl.data);
+      $ctrl.form = $ctrl.data;
     }
   }
 

@@ -24,22 +24,7 @@
 
             </div>
             <div ng-show="$ctrl.activeTabId===1">
-              <div class="table-responsive">
-                <table class="table text-center">
-                  <thead>
-                  <tr>
-                    <th>序号</th>
-                    <th>环境</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr ng-repeat="item in $ctrl.envs" >
-                    <td>{{ $index+1 }}</td>
-                    <td>{{ item.title }}</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
+              <arg-form-component args="$ctrl.compareTestingService.args"></arg-form-component>
             </div>
             <div ng-show="$ctrl.activeTabId===2">
               <div class="table-responsive">

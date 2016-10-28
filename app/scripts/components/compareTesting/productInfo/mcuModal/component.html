@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">{{ $ctrl.title }}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <form class="form-horizontal">
+    <div class="box-body">
+      <mcu-form-component data="$ctrl.mcu_info"></mcu-form-component>
+    </div>
+  </form>
+  <!--{{ $ctrl.form|json }}-->
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">保存</button>
+  <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">取消</button>
+</div>
+
+<style>
+  .boom{
+    height:3em;
+    margin: 1em 0.5em;
+  }
+  .boom.active {
+    border: solid 5px yellow;
+    padding: -5px;
+  }
+</style>
