@@ -6,7 +6,8 @@ angular.module('manageApp')
   .component('hexFormComponent', {
     templateUrl: 'scripts/components/compareTesting/hexForm/component.html',
     bindings: {
-      hexObj:'<'
+      hexObj:'<',
+      onSave:'&'
     },
     controller: hexFormController
   });
@@ -18,11 +19,12 @@ function hexFormController() {
 
 
   $ctrl.$onInit = function () {
-
+    console.log($ctrl.hexObj);
   };
 
   $ctrl.submit = function () {
-    console.log($ctrl.hexObj);//TODO 上传到service
+    // console.log($ctrl.hexObj);// 上传到service
+    $ctrl.onSave({hexObj:$ctrl.hexObj});
   }
 
 

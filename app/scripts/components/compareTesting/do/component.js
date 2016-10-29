@@ -29,18 +29,17 @@ function compareTestingDoController($state,productInfoService,compareTestingServ
       name:'HEX文件'
     }];
 
-    productInfoService.get($ctrl.product.id,function (res) {
-      console.log('productInfoService->>>>',res);
-      compareTestingService.initData(res);
-      $ctrl.form = compareTestingService.getForm();
-      $ctrl.mcuInfos = compareTestingService.getAllMcuInfo();
-      $ctrl.coreNum =compareTestingService.getCoreNum();
+    if($ctrl.product){
+      productInfoService.get($ctrl.product.id,function (res) {
+        console.log(res);
+        compareTestingService.initData(res);
+        $ctrl.renderInitData();
+      });
+    }else{
+      $ctrl.mock();//自动mock数据
+    }
 
-      $ctrl.args = compareTestingService.getArgs();
 
-      $ctrl.hexObj = compareTestingService.getAllHex();
-      $ctrl.productReady = true;
-    });
 
   };
 
@@ -56,9 +55,53 @@ function compareTestingDoController($state,productInfoService,compareTestingServ
   };
 
   /**
+   * 初始化数据
+   */
+  $ctrl.renderInitData = function () {
+    $ctrl.refreshProductForm();
+    $ctrl.refreshMcuInfos();
+    $ctrl.refreshCoreNum();
+
+    $ctrl.refreshArgs();
+
+    $ctrl.refreshHexObj();
+    $ctrl.productReady = true;
+  };
+
+  /**
    * product info 相关
    *
    */
+
+  $ctrl.saveProductForm = function (form) {//保存除了mcu_info的产品信息
+    // console.log(form);
+    compareTestingService.setForm(form);
+  };
+
+  $ctrl.refreshProductForm = function () {
+    $ctrl.form = compareTestingService.getForm();
+  };
+
+  $ctrl.refreshCoreNum = function () {
+    $ctrl.coreNum =compareTestingService.getCoreNum();
+  };
+
+  $ctrl.addCore = function () {
+    compareTestingService.addCore();
+    $ctrl.refreshCoreNum();
+  };
+
+  $ctrl.removeCore = function () {
+    compareTestingService.removeCore();
+    $ctrl.refreshCoreNum();
+  };
+
+  $ctrl.setMcuInfo = function(mcu_id,obj){
+    compareTestingService.setMcuInfo(obj['mcu_id'],obj);
+  };
+  $ctrl.refreshMcuInfos = function () {
+    $ctrl.mcuInfos = compareTestingService.getAllMcuInfo();
+  };
 
   $ctrl.openMcuModal = function (item) {
     console.log(item);
@@ -75,28 +118,14 @@ function compareTestingDoController($state,productInfoService,compareTestingServ
           }
         }
       });
-
-      modalInstance.result.then(function (formObj) {//保存mcu_info的信息
-        compareTestingService.setMcuInfo(formObj['mcu_id'],formObj);
-        // console.log('feedback',compareTestingService.getMcuInfo(formObj['mcu_id']));
-        // console.log('feedback',compareTestingService.getAllMcuInfo());
+      modalInstance.result
+        .then(function (formObj) {//保存mcu_info的信息
+        $ctrl.setMcuInfo(formObj['mcu_id'],formObj);
       }, function () {
       });
     })();
   };
 
-  $ctrl.addCore = function () {
-    compareTestingService.addCore();
-  };
-
-  $ctrl.removeCore = function () {
-    compareTestingService.removeCore();
-  };
-
-  $ctrl.saveProductForm = function (form) {//保存除了mcu_info的产品信息
-    // console.log(form);
-    compareTestingService.setForm(form);
-  };
 
   /**
    * Args 相关
@@ -107,32 +136,217 @@ function compareTestingDoController($state,productInfoService,compareTestingServ
     compareTestingService.setArgs(args);
   };
 
+  $ctrl.refreshArgs = function () {
+    $ctrl.args = compareTestingService.getArgs();
+  };
+
+  /**
+   * Hex相关
+   */
+  $ctrl.saveHexObj = function (hexObj) {
+    compareTestingService.setHexObj(hexObj);
+  };
+
+  $ctrl.refreshHexObj = function () {
+    $ctrl.hexObj = compareTestingService.getAllHex();
+  };
+
+  /**
+   * Mock 数据
+   */
+
+  $ctrl.mock = function () {
+    $ctrl.saveProductForm({
+      'costcontrol_type': 'em_esam',
+      'i_spec': '5(60)A',
+      'v_spec': '220V',
+      'program_for_meter': '0.2s级三相智能电能表',
+      'program_type': 'normal',
+      'program_version': 'V 2.0',
+      'report_num': '0123456789'
+    });
+    compareTestingService.clearMcuInfo();
+    $ctrl.addCore();
+    $ctrl.addCore();
+    $ctrl.setMcuInfo(1, {
+      "mcu_id": 1,
+      "mcu_model": "Test_1",
+      "protect_addr": [
+        {
+          "start": "12000",
+          "end": "121ff"
+        },
+        {
+          "start": "13000",
+          "end": "133ff"
+        }
+      ],
+      "reserve_addr": [
+        {
+          "start": "12000",
+          "end": "121ff"
+        },
+        {
+          "start": "13000",
+          "end": "133ff"
+        }
+      ],
+      "memory_addr": {
+        "start": "4000",
+        "end": "13fff"
+      },
+      "software_addr": {
+        "start": "4000",
+        "end": "97ff"
+      }
+    });
+    $ctrl.setMcuInfo(2, {
+      "mcu_id": 2,
+      "mcu_model": "Test_2",
+      "protect_addr": [
+        {
+          "start": "12000",
+          "end": "121ff"
+        },
+        {
+          "start": "13000",
+          "end": "133ff"
+        }
+      ],
+      "reserve_addr": [
+        {
+          "start": "12000",
+          "end": "121ff"
+        },
+        {
+          "start": "13000",
+          "end": "133ff"
+        }
+      ],
+      "memory_addr": {
+        "start": "4000",
+        "end": "13fff"
+      },
+      "software_addr": {
+        "start": "4000",
+        "end": "97ff"
+      }
+    });
+    $ctrl.saveArgs([
+        {
+          "bit": 1,
+          "on": true,
+          "num": "xxxxxxxxxxxx",
+          "addr": "xxxxxxxxxxxx",
+          "type": "single_phase",
+          "vol": 220,
+          "key_index": "04"
+        },
+        {
+          "bit": 2,
+          "on": true,
+          "num": "xxxxxxxxxxxx",
+          "addr": "xxxxxxxxxxxx",
+          "type": "single_phase",
+          "vol": 220,
+          "key_index": "04"
+        },
+        {
+          "bit": 3,
+          "on": false,
+          "num": "xxxxxxxxxxxx",
+          "addr": "xxxxxxxxxxxx",
+          "type": "single_phase",
+          "vol": 220,
+          "key_index": "04"
+        },
+        {
+          "bit": 4,
+          "on": false,
+          "num": "xxxxxxxxxxxx",
+          "addr": "xxxxxxxxxxxx",
+          "type": "single_phase",
+          "vol": 220,
+          "key_index": "04"
+        },
+        {
+          "bit": 5,
+          "on": false,
+          "num": "xxxxxxxxxxxx",
+          "addr": "xxxxxxxxxxxx",
+          "type": "three_phase",
+          "vol": 220,
+          "key_index": "04"
+        },
+        {
+          "bit": 6,
+          "on": false,
+          "num": "xxxxxxxxxxxx",
+          "addr": "xxxxxxxxxxxx",
+          "type": "three_phase",
+          "vol": 220,
+          "key_index": "04"
+        },
+        {
+          "bit": 7,
+          "on": false,
+          "num": "xxxxxxxxxxxx",
+          "addr": "xxxxxxxxxxxx",
+          "type": "three_phase",
+          "vol": 220,
+          "key_index": "04"
+        },
+        {
+          "bit": 8,
+          "on": false,
+          "num": "xxxxxxxxxxxx",
+          "addr": "xxxxxxxxxxxx",
+          "type": "three_phase",
+          "vol": 220,
+          "key_index": "04"
+        }
+      ]);
+    compareTestingService.initHex();
+    $ctrl.saveHexObj([
+      {
+        id:1,
+        filename:'1.hex',
+        md5:'d9fc6d737aea3345f681f24c8a2bb07c',
+        hex:new ArrayBuffer()
+      },
+      {
+        id:2,
+        filename:'2.hex',
+        md5:'d9fc6d737aea3345f681f24c8a2bb07d',
+        hex:new ArrayBuffer()
+      }
+    ]);
+    $ctrl.renderInitData();
+  };
 
   /**
    * 比对相关
    */
 
-  $ctrl.doTest = function (item) {
+
+  $ctrl.doCheck = function (item) {
     console.log(item);
     (function () {
       var modalInstance = $uibModal.open({
         animation: $ctrl.animationsEnabled,
-        component: 'recordModalComponent',
+        component: 'checkModalComponent',
         resolve: {
           title: function () {
-            return '用例执行';
+            return '比对信息确认';
           },
-          caseId: function () {
-             return item.id;
+          data: function () {
+            return compareTestingService.getCompareInfo()
           }
         }
       });
 
       modalInstance.result.then(function (formObj) {//保存新增
-        // formObj.type = formObj.type.id;//解码
-        // console.log(formObj);
-        compareTestingService.addResult(formObj);
-        $ctrl.result = compareTestingService.getResult();
+
       }, function () {
         // console.info('dismissed at: ' + new Date());
       });

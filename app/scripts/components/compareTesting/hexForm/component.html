@@ -3,18 +3,18 @@
     <table class="table table-striped">
       <tbody>
         <tr>
-          <th style="width: 1em;">核心</th>
-          <th style="width: 1em;">文件名</th>
-          <th style="width: 1em;">md5</th>
-          <th style="width: 5em;">操作</th>
+          <th>核心</th>
+          <th>文件名</th>
+          <th>md5</th>
+          <th>操作</th>
         </tr>
         <tr ng-repeat="item in $ctrl.hexObj">
-          <th>{{ item.id }}</th>
-          <th>{{ item.filename }}</th>
-          <th>{{ item.md5 }}</th>
-          <th>
-            <input type="file" fileread="item.hex" >
-          </th>
+          <td>{{ item.id }}</td>
+          <td>{{ item.filename }}</td>
+          <td>{{ item.md5 }}</td>
+          <td>
+            <input type="file" filename="item.filename"  md5="item.md5" fileread="item.hex" >
+          </td>
         </tr>
       </tbody>
     </table>

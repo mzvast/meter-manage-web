@@ -120,7 +120,7 @@ function compareTestingService() {
   };
 
   self.getTitle = function () {
-    return product.name;
+    return product?product.name:'Test_product';
   };
 
   self.getProduct = function () {
@@ -131,6 +131,7 @@ function compareTestingService() {
    */
   self.setForm = function (formObj) {
     form = formObj;
+    console.log('service中的form(product)',form);
   };
 
   self.getForm = function () {
@@ -158,11 +159,12 @@ function compareTestingService() {
   };
 
   self.setMcuInfo = function (mcu_id,info) {
-    console.log('setting mcu info',info);
+    // console.log('setting mcu info',info);
     mcu_info=mcu_info.map(function (item) {
       if(item.mcu_id === info.mcu_id) return info;
       return item;
-    })
+    });
+    console.log('service中的mcu_info',mcu_info);
   };
 
   self.initMcuInfo = function (responseData) {
@@ -210,6 +212,7 @@ function compareTestingService() {
    */
   self.setArgs = function (new_args) {
     args = new_args;
+    console.log('service中的args',args);
   };
   self.getArgs = function () {
     return args;
@@ -230,7 +233,7 @@ function compareTestingService() {
     if(responseData.mcu_info){
       self.initMcuInfo(responseData);
     }
-    self.initForm(responseData);
+    responseData?self.initForm(responseData):undefined;
 
     self.initHex();//TODO 带数据初始化
   };
@@ -248,9 +251,21 @@ function compareTestingService() {
         hex:undefined
       })
     }
-    console.log('init hexObj',self.hexObj);
+    console.log('init hexObj',hexObj);
   };
-
+  //多个hex文件设置
+  self.setHexObj = function (obj) {
+    obj.forEach(function (hexItem) {
+      self.setHex(
+        hexItem.id,
+        hexItem.filename,
+        hexItem.md5,
+        hexItem.hex
+      )
+    });
+    console.log('service中的hexObj',hexObj)
+  };
+  //单个hex文件
   self.setHex = function (id,filename,md5,hex) {
     hexObj = hexObj.map(function (item) {
       if(item.id===id) {
@@ -293,7 +308,7 @@ function compareTestingService() {
       'program_for_meter':'0.2s级三相智能电能表',
       'program_type':'normal',
       'program_version':'V 2.0',
-      'report_num':'模拟数据'
+      'report_num':'0123456789'
     });
 
     mcu_info = [
@@ -395,4 +410,32 @@ function compareTestingService() {
     }]);
 
   };
+
+  /**
+   * TODO 比对信息make函数
+   */
+
+  self.getCompareInfo = function () {
+    var obj = {};
+    var argsObj = [];
+    angular.copy(args).forEach(function (item) {
+      if(item.on){
+        delete item.on;
+        argsObj.push(item);
+      }
+    });
+    obj['mcu_info'] = angular.copy(mcu_info);
+    obj['meter_info'] = argsObj;
+    obj['file_info'] = hexObj.map(function (item) {
+      return {
+        id:item.id,
+        extname:item.filename.match(/\w+$/)[0],
+        md5:item.md5
+      }
+    });
+    obj['costcontrol_type'] = form.costcontrol_type;
+
+    return obj;
+  }
 }
+
