@@ -10,9 +10,9 @@
 angular.module('manageApp')
   .service('compareTestingService', compareTestingService);
 
-compareTestingService.$inject = [];
+compareTestingService.$inject = ['$rootScope'];
 
-function compareTestingService() {
+function compareTestingService($rootScope) {
   var self = this;
   //默认值
   var defaultArgs = [
@@ -137,6 +137,8 @@ function compareTestingService() {
   self.getForm = function () {
     return form;
   };
+
+  self.getProductDetail = self.getForm;
 
   self.initForm = function (responseData) {
     formModel.map(function (item) {
@@ -412,7 +414,7 @@ function compareTestingService() {
   };
 
   /**
-   * TODO 比对信息make函数
+   *  比对信息make函数
    */
 
   self.getCompareInfo = function () {
@@ -424,11 +426,14 @@ function compareTestingService() {
         argsObj.push(item);
       }
     });
-    obj['mcu_info'] = angular.copy(mcu_info);
+    obj['mcu_info'] = angular.copy(mcu_info).map(function (item) {
+      delete item.mcu_model;
+      return item;
+    });
     obj['meter_info'] = argsObj;
     obj['file_info'] = hexObj.map(function (item) {
       return {
-        id:item.id,
+        mcu_id:item.id,
         extname:item.filename.match(/\w+$/)[0],
         md5:item.md5
       }
@@ -436,6 +441,7 @@ function compareTestingService() {
     obj['costcontrol_type'] = form.costcontrol_type;
 
     return obj;
-  }
+  };
+
 }
 

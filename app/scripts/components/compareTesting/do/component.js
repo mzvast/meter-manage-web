@@ -6,9 +6,9 @@ angular.module('manageApp')
     controller: compareTestingDoController
   });
 
-compareTestingDoController.$inject = ['$state','productInfoService','compareTestingService','$uibModal'];
+compareTestingDoController.$inject = ['wsService','$state','productInfoService','compareTestingService','$uibModal'];
 
-function compareTestingDoController($state,productInfoService,compareTestingService,$uibModal)
+function compareTestingDoController(wsService,$state,productInfoService,compareTestingService,$uibModal)
 {
   var $ctrl = this;
   $ctrl.productReady=false;
@@ -156,6 +156,19 @@ function compareTestingDoController($state,productInfoService,compareTestingServ
    */
 
   $ctrl.mock = function () {
+    compareTestingService.setProduct({
+      "id":1,
+      "name":"单相电能表",
+      "model":"d3",
+      "batch":"2016年第7批次",
+      "description":"单相智能电表",
+      "vendor":"浙江万胜电力仪表有限公司1",
+      "create_date":"2016-08-03",
+      "last_modified_date":1475041641000,
+      "type":0,
+      "vendor_code":"0050",
+      "vendor_id":1,
+      "$$hashKey":"object:175"});
     $ctrl.saveProductForm({
       'costcontrol_type': 'em_esam',
       'i_spec': '5(60)A',
@@ -329,8 +342,7 @@ function compareTestingDoController($state,productInfoService,compareTestingServ
    */
 
 
-  $ctrl.doCheck = function (item) {
-    console.log(item);
+  $ctrl.doCheck = function () {
     (function () {
       var modalInstance = $uibModal.open({
         animation: $ctrl.animationsEnabled,
@@ -345,8 +357,10 @@ function compareTestingDoController($state,productInfoService,compareTestingServ
         }
       });
 
-      modalInstance.result.then(function (formObj) {//保存新增
-
+      modalInstance.result.then(function (formObj) {
+        wsService.setHexObj(compareTestingService.getAllHex());
+        wsService.setInfoObj(compareTestingService.getCompareInfo());
+        $state.go('compare.run');
       }, function () {
         // console.info('dismissed at: ' + new Date());
       });

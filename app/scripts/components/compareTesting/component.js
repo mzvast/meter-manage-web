@@ -6,9 +6,9 @@ angular.module('manageApp')
     controller: compareTestingController
   });
 
-compareTestingController.$inject = ['compareTestingService','authGuard', '$state', '$uibModal', 'productService', 'modelService', 'tabService', 'formModelService', 'notificationService'];
+compareTestingController.$inject = ['wsService','compareTestingService','authGuard', '$state', '$uibModal', 'productService', 'modelService', 'tabService', 'formModelService', 'notificationService'];
 
-function compareTestingController(compareTestingService,authGuard, $state, $uibModal, productService, modelService, tabService, formModelService, notificationService)
+function compareTestingController(wsService,compareTestingService,authGuard, $state, $uibModal, productService, modelService, tabService, formModelService, notificationService)
 {
   var $ctrl = this;
 
@@ -84,6 +84,7 @@ function compareTestingController(compareTestingService,authGuard, $state, $uibM
   $ctrl.action = function (item) {
     console.log('setting product:',item);
     compareTestingService.setProduct(item);
+    wsService.setMode(item.type+1);
     $state.go("compare.do");
   };
 

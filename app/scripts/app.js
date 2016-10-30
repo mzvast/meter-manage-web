@@ -189,6 +189,11 @@ angular
           template:"<compare-testing-do-component></compare-testing-do-component>",
           authenticate: false
         })
+        .state("compare.run", {
+          url: "/run",
+          template:"<compare-testing-run-component></compare-testing-run-component>",
+          authenticate: false
+        })
         /*比对测试执行*/
         .state("action-beian", {
           url: "/:mode",

@@ -1,0 +1,134 @@
+<section class="invoice" >
+  <!-- title row -->
+  <div class="row">
+    <div class="col-xs-12">
+      <h2 class="page-header text-center text-bold">
+        {{ $ctrl.modeName }}比对测试报告
+        <small class="pull-right">报告编号: XXXXXXXXXXX（系统生成）</small>
+      </h2>
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- info row -->
+  <div class="row invoice-info">
+    <div class="col-xs-4 invoice-col">
+      <b>厂家名称:</b>
+      <address>
+        {{ $ctrl.productInfo.vendor }}
+      </address>
+      <b>软件备案号:</b><br>
+      <adressq>
+        <!--TODO{{ $ctrl.record_num }}-->
+      </adressq>
+    </div>
+    <!-- /.col -->
+    <div class="col-xs-4 invoice-col">
+      <b>电能表名称:</b><br>
+      <address>
+        {{ $ctrl.productInfo.name }}<br>
+      </address>
+      <b>电能表型号:</b><br>
+      <address>
+        {{ $ctrl.productInfo.model }}<br>
+      </address>
+    </div>
+    <!-- /.col -->
+    <!-- /.col -->
+    <div class="col-xs-4 invoice-col">
+      <b>软件版本号:</b><br>
+      <address>
+        {{ $ctrl.productDetail.program_version }}<br>
+      </address>
+      <b>软件适用类型:</b><br>
+      <address>
+        {{ $ctrl.productDetail.program_type==="normal"?"通用程序":"非通用程序" }}
+      </address>
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+  <hr>
+  <!-- Table row -->
+  <div class="row">
+    <div class="col-xs-6 table-responsive" ng-repeat="core in $ctrl.table" style="border: solid 1px #f4f4f4;border-radius: 1em;">
+      <div class="div text-center" style="margin-top: 1em;padding-bottom: 1em;border-bottom: 1px solid #f4f4f4;">
+        <b>核心:{{ core.coreId }}</b><br>
+      </div>
+      <table class="table ">
+        <thead>
+        <tr>
+          <th>名称</th>
+          <th>值</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in core.data">
+          <td >{{ row.name }}</td>
+          <td >{{ row.value }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--&lt;!&ndash; /.col &ndash;&gt;-->
+    <!--<div class="col-xs-6 table-responsive">-->
+      <!--<table class="table ">-->
+        <!--<thead>-->
+        <!--<tr>-->
+          <!--<th>名称</th>-->
+          <!--<th>值</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr ng-repeat="core in $ctrl.table">-->
+          <!--<td ng-if="$odd">{{ row.name }}</td>-->
+          <!--<td ng-if="$odd">{{ row.value }}</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+      <!--</table>-->
+    <!--</div>-->
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+
+  <div class="row">
+    <!-- accepted payments column -->
+    <div class="col-xs-8 text-center">
+      <p class="lead"><h3><br><br>{{ $ctrl.resultStr }}</h3></p>
+    </div>
+    <!-- /.col -->
+    <div class="col-xs-3">
+      <br><br><br><br><br>
+      <br><br><br><br><br>
+      <div class="row">
+        <p class="pull-right" >
+          盖章（签字）
+        </p>
+      </div>
+      <div class="row">
+        <p class="pull-right">日期: {{ $ctrl.date }}</p>
+      </div>
+
+
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+  <hr>
+  <div class="row text-center">
+    <div class="col-xs-6">
+      <p>检验人员：</p>
+    </div>
+    <div class="col-xs-6">
+      <p>审核人员：</p>
+    </div>
+  </div>
+  <!-- this row will not appear when printing -->
+  <div class="row no-print">
+    <div class="col-xs-12">
+      <!--<a ng-click="$ctrl.pdfmake('open')" target="_blank" class="btn btn-warning"><i class="fa fa-print pull-left"></i> 打开PDF</a>-->
+      <a ng-click="$ctrl.makePdf()" target="_blank" class="btn btn-success pull-right"><i class="fa fa-print"></i> 生成并打开PDF</a>
+      <!--<a id="download" ng-click="$ctrl.pdfmake('download')" target="_blank" class="btn btn-info pull-right"><i class="fa fa-download"></i> 下载PDF</a>-->
+    </div>
+  </div>
+</section>
+
