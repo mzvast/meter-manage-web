@@ -146,7 +146,7 @@ function wsService($rootScope) {
    * 新建WebSocket连接
    * @param url 格式'ws//host:port'
    */
-  self.wsCreate = function (url) {
+  self.wsCreate = function (url,cb) {
     // self.setResult(false);//重置测试结果TODO
     if (!url) return;
     ws = new WebSocket(url);
@@ -330,6 +330,7 @@ function wsService($rootScope) {
               event: "比对成功"
             });
             ws.close();
+            cb();
             break;
           }
           case 'fail':
@@ -340,6 +341,7 @@ function wsService($rootScope) {
               time: Date.now(),
               event: "[" + cleanData.result.fail + "]表位比对失败"
             });
+            cb();
             ws.close();
           }
         }
@@ -374,8 +376,10 @@ function wsService($rootScope) {
   };
 
   self.getResult = function () {
-    console.log("比对结果:" + (result ? "成功" : "失败"));
     return result;
+  };
+  self.printResult = function () {
+    console.log("比对结果:" + (result ? "成功" : "失败"));
   };
   /**
    * 比对mode设置

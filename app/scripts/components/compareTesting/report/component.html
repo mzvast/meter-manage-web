@@ -3,8 +3,8 @@
   <div class="row">
     <div class="col-xs-12">
       <h2 class="page-header text-center text-bold">
-        {{ $ctrl.modeName }}比对测试报告
-        <small class="pull-right">报告编号: XXXXXXXXXXX（系统生成）</small>
+        {{ ($ctrl.mode===1?'备案':$ctrl.mode===2?'供货':'debug') }}比对测试报告
+        <small class="pull-right">报告编号: {{ $ctrl.compareNum }}</small>
       </h2>
     </div>
     <!-- /.col -->
@@ -18,7 +18,7 @@
       </address>
       <b>软件备案号:</b><br>
       <adressq>
-        <!--TODO{{ $ctrl.record_num }}-->
+        {{ $ctrl.recordNum }}
       </adressq>
     </div>
     <!-- /.col -->
@@ -52,7 +52,7 @@
   <div class="row">
     <div class="col-xs-6 table-responsive" ng-repeat="core in $ctrl.table" style="border: solid 1px #f4f4f4;border-radius: 1em;">
       <div class="div text-center" style="margin-top: 1em;padding-bottom: 1em;border-bottom: 1px solid #f4f4f4;">
-        <b>核心:{{ core.coreId }}</b><br>
+        <b>核心:{{ core.coreId+1 }}</b><br>
       </div>
       <table class="table ">
         <thead>

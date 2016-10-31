@@ -72,8 +72,14 @@ function resourceCenter($resource,authService) {
   self['productInfo'] = (function () {
     var url = '/api/v2/products/:id/details';
     return $resource(url, {
-      id: '@id',
-      category: '@category'
+      id: '@id'
+    }, methodWithToken());
+  }());
+
+  self['compareresults'] = (function () {
+    var url = '/api/v2/products/:id/compareresults';
+    return $resource(url, {
+      id: '@id'
     }, methodWithToken());
   }());
 

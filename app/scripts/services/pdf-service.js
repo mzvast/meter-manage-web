@@ -10,9 +10,9 @@
 angular.module('manageApp')
   .service('pdfService', pdfService);
 
-pdfService.$inject = ['$http'];
+pdfService.$inject = ['$http','compareTestingService'];
 
-function pdfService($http) {
+function pdfService($http,compareTestingService) {
   var self = this;
   var file,fileURL;
 
@@ -35,7 +35,7 @@ function pdfService($http) {
       [{ text: '电能表名称', colSpan: 2},{},
         {text:data.productInfo.name,colSpan:2},{}],
       [{ text: '软件备案号', colSpan: 2},{},
-        {text:'//TODO'+'',colSpan:2},{}],
+        {text:compareTestingService.getRecordNum()+'',colSpan:2},{}],
       [{ text: '电能表型号', colSpan: 2},{},
         {text:data.productInfo.model,colSpan:2},{}],
       [{ text: '软件版本号', colSpan: 2},{},
@@ -89,8 +89,8 @@ function pdfService($http) {
     return {
       pageSize: 'A4',
       content: [
-        { text: data.modeName+'比对测试报告', style: 'header' },
-        { text: '报告编号:XXXXXXXXXXX', style: 'subheader' },
+        { text: (data.mode===1?'备案':data.mode===2?'供货':'debug')+'比对测试报告', style: 'header' },
+        { text: '报告编号:'+compareTestingService.getCompareNum(), style: 'subheader' },
         {
           style: 'tableExample',
           table: {

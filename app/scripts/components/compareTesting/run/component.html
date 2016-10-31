@@ -8,8 +8,8 @@
           </div>
 
           <div class="col-xs-2 text-center">
-            <a class="btn btn-app bg-olive margin " ng-click="$ctrl.doCheck()">
-              <i class="glyphicon glyphicon-floppy-saved"></i> 开始比对
+            <a class="btn btn-app bg-olive margin " ng-click="$ctrl.finish()">
+              <i class="glyphicon glyphicon-floppy-saved"></i> 结束比对
             </a>
           </div>
         </div>
@@ -75,7 +75,7 @@
                 </ul>
               </div>
             </div>
-            <div ng-show="$ctrl.activeTabId===1" class="row">
+            <div ng-if="$ctrl.activeTabId===1" class="row">
               <report-component
                 product-info="$ctrl.productInfo"
                 product-detail="$ctrl.productDetail"
@@ -83,6 +83,9 @@
                 on-make-pdf="$ctrl.makePdf()"
                 date="$ctrl.date"
                 result="$ctrl.getResult()"
+                record-num="$ctrl.getRecordNum()"
+                compare-num="$ctrl.getCompareNum()"
+                mode="$ctrl.getMode()"
               ></report-component>
             </div>
 

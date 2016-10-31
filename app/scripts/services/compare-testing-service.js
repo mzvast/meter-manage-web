@@ -10,9 +10,9 @@
 angular.module('manageApp')
   .service('compareTestingService', compareTestingService);
 
-compareTestingService.$inject = ['$rootScope'];
+compareTestingService.$inject = ['$rootScope','resourceCenter'];
 
-function compareTestingService($rootScope) {
+function compareTestingService($rootScope,resourceCenter) {
   var self = this;
   //默认值
   var defaultArgs = [
@@ -100,13 +100,49 @@ function compareTestingService($rootScope) {
   ];
   //Product部分
   var mcu_info = [];
-  var product,recordNum;
+  var product,recordNum,compareNum;
   var form = {};
   var core_num = 0;
   //Args部分
   var args = defaultArgs;
   //HEX部分
   var hexObj = [];//id,md5,filename
+
+  /**
+   * 备案号和比对报告编号号
+   */
+  self.setRecordNum = function (val) {
+    recordNum = val;
+  };
+  self.getRecordNum = function () {
+    return recordNum;
+  };
+  self.setCompareNum = function (val) {
+    compareNum = val;
+  };
+  self.getCompareNum = function () {
+    return compareNum;
+  };
+
+  /**
+   * 比对结果
+   */
+
+  var resource = resourceCenter.get('compareresults');
+  self.postResult = function (formObj, id,cb) {
+    console.log("formObj=");
+    console.log(formObj);
+    resource.save({id:id},formObj).$promise
+      .then(function (response) {
+        console.log("新增资源 SUCCESS!");
+        // console.log(data);
+        // self.addNotification("success", "新" + vm.pageResourceName + "创建成功");
+        // vm.get();
+        if (typeof cb === 'function') {
+          cb(response);
+        }
+      });
+  };
 
 
 
@@ -285,132 +321,6 @@ function compareTestingService($rootScope) {
 
   self.getAllHex = function () {
     return hexObj;
-  };
-
-  /**
-   * 生成模拟数据（含md5）
-   */
-  self.fakeData = function () {
-
-    core_num = 2;
-
-    self.initHex();
-    self.setHex(1,'1.hex','d9fc6d737aea3345f681f24c8a2bb07c',new ArrayBuffer());
-    self.setHex(2,'2.hex','d9fc6d737aea3345f681f24c8a2bb07d',new ArrayBuffer());
-
-    // hex[0] = new ArrayBuffer();
-    // hex[1] = new ArrayBuffer();
-
-    recordNum = 1234567890123456;
-
-    self.setForm({
-      'costcontrol_type':'em_esam',
-      'i_spec':'5(60)A',
-      'v_spec':'220V',
-      'program_for_meter':'0.2s级三相智能电能表',
-      'program_type':'normal',
-      'program_version':'V 2.0',
-      'report_num':'0123456789'
-    });
-
-    mcu_info = [
-      {
-      "mcu_id": 1,
-      "mcu_model": "Test_1",
-        "protect_addr": [
-        {
-          "start": "12000",
-          "end": "121ff"
-        },
-        {
-          "start": "13000",
-          "end": "133ff"
-        }
-      ],
-        "reserve_addr": [
-        {
-          "start": "12000",
-          "end": "121ff"
-        },
-        {
-          "start": "13000",
-          "end": "133ff"
-        }
-      ],
-        "memory_addr": {
-        "start": "4000",
-          "end": "13fff"
-      },
-      "software_addr": {
-        "start": "4000",
-          "end": "97ff"
-      }
-    },
-      {
-      "mcu_id": 2,
-      "mcu_model": "Test_2",
-      "protect_addr": [
-        {
-          "start": "12000",
-          "end": "121ff"
-        },
-        {
-          "start": "13000",
-          "end": "133ff"
-        }
-      ],
-      "reserve_addr": [
-        {
-          "start": "12000",
-          "end": "121ff"
-        },
-        {
-          "start": "13000",
-          "end": "133ff"
-        }
-      ],
-      "memory_addr": {
-        "start": "4000",
-        "end": "13fff"
-      },
-      "software_addr": {
-        "start": "4000",
-        "end": "97ff"
-      }
-    }];
-
-    product = {
-      "company_name": "XXXXXXXX有限公司",
-      "meter_name": "XXXX",
-      "company_code": "0020",
-      "meter_model": "DDSF001-M",
-      "v_spec": "220V",
-      "i_spec": "5(60)A",
-      "costcontrol_type": "em_esam",
-      "program_version": "V 1.0",
-      "program_type": "normal",
-      "program_for_meter": "0.2s级三相智能电能表"
-    };
-
-    self.setArgs([
-      {
-      "bit": 1,
-      "on": true,
-      "num": "xxxxxxxxxxxx",
-      "addr": "xxxxxxxxxxxx",
-      "type": "single_phase",
-      "vol": 220,
-      "key_index": "04"
-    },{
-      "bit": 2,
-      "on": true,
-      "num": "xxxxxxxxxxxx",
-      "addr": "xxxxxxxxxxxx",
-      "type": "single_phase",
-      "vol": 220,
-      "key_index": "04"
-    }]);
-
   };
 
   /**

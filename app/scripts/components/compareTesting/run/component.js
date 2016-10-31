@@ -21,15 +21,21 @@ function compareTestingRunController(pdfService,wsService,$scope,$rootScope,$sta
     $ctrl.getResult = function () {
       return wsService.getResult();
     };
+    $ctrl.getRecordNum = function () {
+      return compareTestingService.getRecordNum();
+    };
+    $ctrl.getCompareNum = function () {
+      return compareTestingService.getCompareNum();
+    };
+    $ctrl.getMode = function () {
+      return wsService.getMode();
+    };
     wsService.testMessage();
 
     $ctrl.activeTabId = 0;
     $ctrl.tabModel = [{
       id:0,
       name:'比对执行中'
-    },{
-      id:1,
-      name:'比对报告'
     }];
 
     $ctrl.date = function () {
@@ -38,6 +44,8 @@ function compareTestingRunController(pdfService,wsService,$scope,$rootScope,$sta
       // console.log(todayStr);
       return todayStr;
     }();
+
+    $ctrl.run();//进入即开始测试
   };
 
   $ctrl.options = [
@@ -95,11 +103,22 @@ function compareTestingRunController(pdfService,wsService,$scope,$rootScope,$sta
     }, {
       name: "查看infoMsg",
       action: "getInfoMsg"
+    },{
+      name: "post比对结果并获取编号",
+      action: "postResult"
     }
   ];
+  $ctrl.run = function () {
+    console.log('run!');
+    $ctrl.wsCreate();
+  };
 
   $ctrl.wsCreate = function () {
-    wsService.wsCreate('ws://localhost:3456');
+    wsService.wsCreate('ws://localhost:3456',function () {
+      $ctrl.postResult(function () {
+        $ctrl.goReport();
+      });
+    });
   };
 
   $ctrl.addTimelineMsg = function () {
@@ -163,6 +182,10 @@ function compareTestingRunController(pdfService,wsService,$scope,$rootScope,$sta
   };
 
   $ctrl.goReport = function () {
+    $ctrl.tabModel = [{
+      id:1,
+      name:'比对报告'
+    }];
     $ctrl.selectTab(1);
     // $state.go('action-beian.report');TODO
   };
@@ -187,10 +210,31 @@ function compareTestingRunController(pdfService,wsService,$scope,$rootScope,$sta
       productDetail:$ctrl.productDetail,
       mcuInfo:$ctrl.mcuInfo,
       date:$ctrl.date,
-      result:wsService.getResult()
+      result:wsService.getResult(),
+      mode:wsService.getMode()
     },function (fileURL) {
       window.open(fileURL);
     });
+  };
+
+  $ctrl.postResult = function (cb) {
+    console.log('post result');
+    compareTestingService
+      .postResult(
+        {
+          compare_result:$ctrl.getResult()?'sucess':'fail',
+          compare_type:wsService.getMode()?'record':'supply'
+        },$ctrl.productInfo.id,
+        function (res) {
+          console.log(res);
+          compareTestingService.setRecordNum(res.data.record_num);
+          compareTestingService.setCompareNum(res.data.compare_num);
+          cb();
+    });
+  };
+
+  $ctrl.finish = function () {
+    $state.go('compare',{},{reload:true});
   }
 
 

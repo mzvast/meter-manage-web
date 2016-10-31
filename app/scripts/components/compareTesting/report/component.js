@@ -11,7 +11,10 @@ angular.module('manageApp')
       mcuInfo:'<',
       onMakePdf:'&',
       date:'<',
-      result:'<'
+      result:'<',
+      recordNum:'<',
+      compareNum:'<',
+      mode:'<'
     },
     controller: reportController
   });
@@ -24,9 +27,9 @@ function reportController() {
 
   $ctrl.$onInit = function () {
     $ctrl.table = [];
-    console.log($ctrl.productInfo);
-    console.log($ctrl.productDetail);
-    console.log($ctrl.mcuInfo);
+    // console.log($ctrl.productInfo);
+    // console.log($ctrl.productDetail);
+    // console.log($ctrl.mcuInfo);
 
     var coreNum = $ctrl.mcuInfo.length;
     for(var i=0;i<coreNum;i++){
