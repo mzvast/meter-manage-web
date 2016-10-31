@@ -29,6 +29,63 @@ function pdfService($http) {
 
   self.makeDocDef = function (data) {
     console.log(data);
+    var pdfBody = [
+      [{ text: '厂家名称', colSpan: 2},{},
+        {text:data.productInfo.vendor,colSpan:2},{}],
+      [{ text: '电能表名称', colSpan: 2},{},
+        {text:data.productInfo.name,colSpan:2},{}],
+      [{ text: '软件备案号', colSpan: 2},{},
+        {text:'//TODO'+'',colSpan:2},{}],
+      [{ text: '电能表型号', colSpan: 2},{},
+        {text:data.productInfo.model,colSpan:2},{}],
+      [{ text: '软件版本号', colSpan: 2},{},
+        {text:data.productDetail.program_version,colSpan:2},{}],
+      [{ text: '软件适用类型', colSpan: 2},{},
+        {text:data.productDetail.program_type==="normal"?"通用程序":"非通用程序",colSpan:2},     {}]
+    ];
+
+    var mcuNum = data.mcuInfo.length;
+    for(var i=0;i<mcuNum;i++){
+      pdfBody.push([{ text: 'MCU-'+(i+1), colSpan: 4, alignment: 'center'},
+                    {},
+                    {},
+                    {}]);
+      pdfBody.push(['程序存储器起始地址',
+        data.mcuInfo[i].memory_addr.start,
+        '程序存储器结束地址',
+        data.mcuInfo[i].memory_addr.end
+      ]);
+      pdfBody.push(["软件代码起始地址",
+        data.mcuInfo[i].software_addr.start,
+        "软件代码结束地址",
+        data.mcuInfo[i].software_addr.end
+      ]);
+      pdfBody.push(["保护区数",
+        data.mcuInfo[i].protect_addr.length+'',
+        "保留区数",
+        data.mcuInfo[i].reserve_addr.length+''
+      ]);
+      pdfBody.push(["保护区1起始地址",
+        data.mcuInfo[i].protect_addr[0].start,
+        "保护区1结束地址",
+        data.mcuInfo[i].protect_addr[0].end
+      ]);
+      pdfBody.push(["保护区2起始地址",
+        data.mcuInfo[i].protect_addr[1].start,
+        "保护区2结束地址",
+        data.mcuInfo[i].protect_addr[1].end
+      ])
+    }
+    //结果部分
+    pdfBody.push([{ text:
+      [
+        {text:(data.result?'比对成功':'比对失败')+'\n\n\n\n',style:'bigMiddle'},
+        {text:'盖章（签字）\n',style:'smallRight'},
+        {text:data.date,style:'smallRight'}
+      ], colSpan: 4,style:'result'
+    },{},
+      {},{}]);
+
     return {
       pageSize: 'A4',
       content: [
@@ -38,49 +95,7 @@ function pdfService($http) {
           style: 'tableExample',
           table: {
             widths: [ 'auto', 60, 'auto' ,60],
-            body: [
-              [{ text: '厂家名称', colSpan: 2},{},
-                {text:data.productInfo.vendor,colSpan:2},{}],
-              [{ text: '电能表名称', colSpan: 2},{},
-                {text:data.productInfo.name,colSpan:2},{}],
-              [{ text: '软件备案号', colSpan: 2},{},
-                {text:'//TODO'+'',colSpan:2},{}],
-              [{ text: '电能表型号', colSpan: 2},{},
-                {text:data.productInfo.model,colSpan:2},{}],
-              [{ text: '软件版本号', colSpan: 2},{},
-                {text:data.productDetail.program_version,colSpan:2},{}],
-              [{ text: '软件适用类型', colSpan: 2},{},
-                {text:data.productDetail.program_type==="normal"?"通用程序":"非通用程序",colSpan:2},{}],
-              ['程序存储器起始地址',
-                data.mcuInfo[0].memory_addr.start,
-                '程序存储器结束地址',
-                data.mcuInfo[0].memory_addr.end],
-              ["软件代码起始地址",
-                data.mcuInfo[0].software_addr.start,
-                "软件代码结束地址",
-                data.mcuInfo[0].software_addr.end
-              ],["保护区数",
-                "countProtectNum()"+'',
-                "保留区数",
-                "countReserveNum()"+''
-              ],["保护区1起始地址",
-                data.mcuInfo[0].protect_addr[0].start,
-                "保护区1结束地址",
-                data.mcuInfo[0].protect_addr[0].end
-              ],["保护区2起始地址",
-                data.mcuInfo[0].protect_addr[1].start,
-                "保护区2结束地址",
-                data.mcuInfo[0].protect_addr[1].end
-              ],
-              [{ text:
-                [
-                  {text:"data.resultStr"+'\n\n\n\n',style:'bigMiddle'},
-                  {text:'盖章（签字）\n',style:'smallRight'},
-                  {text:data.date,style:'smallRight'}
-                ], colSpan: 4,style:'result'
-              },{},
-                {},{}]
-            ]
+            body: pdfBody
           }
         },
         {text: '检验人员:                                       ' +

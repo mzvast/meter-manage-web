@@ -10,7 +10,8 @@ angular.module('manageApp')
       productDetail:'<',
       mcuInfo:'<',
       onMakePdf:'&',
-      date:'<'
+      date:'<',
+      result:'<'
     },
     controller: reportController
   });

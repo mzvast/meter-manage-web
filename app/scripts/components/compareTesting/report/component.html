@@ -93,7 +93,7 @@
   <div class="row">
     <!-- accepted payments column -->
     <div class="col-xs-8 text-center">
-      <p class="lead"><h3><br><br>{{ $ctrl.resultStr }}</h3></p>
+      <p class="lead"><h3><br><br>{{ $ctrl.result?'比对成功':'比对失败' }}</h3></p>
     </div>
     <!-- /.col -->
     <div class="col-xs-3">

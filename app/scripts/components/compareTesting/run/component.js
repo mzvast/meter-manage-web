@@ -18,6 +18,9 @@ function compareTestingRunController(pdfService,wsService,$scope,$rootScope,$sta
     $ctrl.productInfo = compareTestingService.getProduct();
     $ctrl.productDetail = compareTestingService.getProductDetail();
     $ctrl.mcuInfo = compareTestingService.getAllMcuInfo();
+    $ctrl.getResult = function () {
+      return wsService.getResult();
+    };
     wsService.testMessage();
 
     $ctrl.activeTabId = 0;
@@ -160,6 +163,7 @@ function compareTestingRunController(pdfService,wsService,$scope,$rootScope,$sta
   };
 
   $ctrl.goReport = function () {
+    $ctrl.selectTab(1);
     // $state.go('action-beian.report');TODO
   };
 
@@ -182,7 +186,8 @@ function compareTestingRunController(pdfService,wsService,$scope,$rootScope,$sta
       productInfo:$ctrl.productInfo,
       productDetail:$ctrl.productDetail,
       mcuInfo:$ctrl.mcuInfo,
-      date:$ctrl.date
+      date:$ctrl.date,
+      result:wsService.getResult()
     },function (fileURL) {
       window.open(fileURL);
     });
