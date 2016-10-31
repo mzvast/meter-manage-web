@@ -222,7 +222,7 @@ function compareTestingRunController(pdfService,wsService,$scope,$rootScope,$sta
     compareTestingService
       .postResult(
         {
-          compare_result:$ctrl.getResult()?'sucess':'fail',
+          compare_result:$ctrl.getResult()?'success':'fail',
           compare_type:wsService.getMode()?'record':'supply'
         },$ctrl.productInfo.id,
         function (res) {
