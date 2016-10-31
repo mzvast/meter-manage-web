@@ -89,7 +89,7 @@ function wsService($rootScope) {
 
     if (state === 'fail') {
       if (from === 'compare_result') {
-        // self.setResult(false);//TODO
+        self.setResult(false);
         console.log('got result');
         // $state.go('action-beian.report');//TODO
       }

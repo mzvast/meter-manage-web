@@ -187,12 +187,10 @@ function compareTestingService($rootScope,resourceCenter) {
    */
 
   self.addMcuInfo = function (info) {
-    core_num++;
     mcu_info.push(info);
   };
 
   self.removeMcuInfo = function (index) {
-    core_num--;
     mcu_info.splice(index, 1);
   };
 
@@ -206,6 +204,7 @@ function compareTestingService($rootScope,resourceCenter) {
   };
 
   self.initMcuInfo = function (responseData) {
+    self.clearMcuInfo();
     responseData.mcu_info.map(function (item) {
       self.addMcuInfo(item);
     })
@@ -236,13 +235,18 @@ function compareTestingService($rootScope,resourceCenter) {
   };
 
   self.addCore = function () {
-    var new_id = core_num+1;
-    self.addMcuInfo({mcu_id:new_id});
+    core_num++;
+    self.addHex(core_num);
+    self.addMcuInfo({mcu_id:core_num});
+    $rootScope.$emit('hexObj-updated');
   };
 
   self.removeCore = function () {
-    if(core_num<=1) return;
-    self.removeMcuInfo(core_num-1);
+    if(core_num<=0) return;
+    core_num--;
+    self.removeMcuInfo(core_num);
+    self.removeHex(core_num);
+    $rootScope.$emit('hexObj-updated');
   };
 
   /**
@@ -250,10 +254,19 @@ function compareTestingService($rootScope,resourceCenter) {
    */
   self.setArgs = function (new_args) {
     args = new_args;
-    console.log('service中的args',args);
+    console.log('service中的args',self.getCleanArgs());
   };
   self.getArgs = function () {
     return args;
+  };
+  self.getCleanArgs = function () {
+    return angular.copy(args).reduce(function (pre, cur, index, array) {
+      if(cur.on){
+        delete cur.on;
+        pre.push(cur);
+      }
+      return pre;
+    },[])
   };
 
 
@@ -265,9 +278,7 @@ function compareTestingService($rootScope,resourceCenter) {
    */
 
   self.initData = function (responseData) {
-    // self.fakeData();return;//debug purpose
 
-    self.clearMcuInfo();
     if(responseData.mcu_info){
       self.initMcuInfo(responseData);
     }
@@ -281,15 +292,28 @@ function compareTestingService($rootScope,resourceCenter) {
    */
   self.initHex = function () {
     hexObj = [];
-    for(var i=1;i<=core_num;i++){
-      hexObj.push({
-        id:i,
-        filename:'未选择',
-        md5:'未选择',
-        hex:undefined
-      })
+    for(var i=0;i<core_num;i++){
+      self.addHex(i);
     }
     console.log('init hexObj',hexObj);
+  };
+
+  self.addHex = function (index) {
+    hexObj.push({
+      id:index,
+      filename:'未选择',
+      md5:'未选择',
+      hex:undefined
+    })
+  };
+
+  self.removeHex = function (index) {
+    hexObj.splice(index,1)
+  };
+
+  self.subscribe = function (scope, callback) {
+    var hander = $rootScope.$on('hexObj-updated',callback);
+    scope.$on('$destroy',hander);
   };
   //多个hex文件设置
   self.setHexObj = function (obj) {
@@ -329,18 +353,11 @@ function compareTestingService($rootScope,resourceCenter) {
 
   self.getCompareInfo = function () {
     var obj = {};
-    var argsObj = [];
-    angular.copy(args).forEach(function (item) {
-      if(item.on){
-        delete item.on;
-        argsObj.push(item);
-      }
-    });
     obj['mcu_info'] = angular.copy(mcu_info).map(function (item) {
       delete item.mcu_model;
       return item;
     });
-    obj['meter_info'] = argsObj;
+    obj['meter_info'] = self.getCleanArgs();
     obj['file_info'] = hexObj.map(function (item) {
       return {
         mcu_id:item.id,

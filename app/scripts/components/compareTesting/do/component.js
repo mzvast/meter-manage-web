@@ -6,9 +6,9 @@ angular.module('manageApp')
     controller: compareTestingDoController
   });
 
-compareTestingDoController.$inject = ['wsService','$state','productInfoService','compareTestingService','$uibModal'];
+compareTestingDoController.$inject = ['$scope','wsService','$state','productInfoService','compareTestingService','$uibModal'];
 
-function compareTestingDoController(wsService,$state,productInfoService,compareTestingService,$uibModal)
+function compareTestingDoController($scope,wsService,$state,productInfoService,compareTestingService,$uibModal)
 {
   var $ctrl = this;
   $ctrl.productReady=false;
@@ -38,6 +38,13 @@ function compareTestingDoController(wsService,$state,productInfoService,compareT
     }else{
       $ctrl.mock();//自动mock数据
     }
+
+    compareTestingService.subscribe($scope,function () {
+      $ctrl.refreshCoreNum();
+      $ctrl.refreshMcuInfos();
+
+      // $ctrl.refreshHexObj();
+    })
 
 
 
@@ -88,12 +95,12 @@ function compareTestingDoController(wsService,$state,productInfoService,compareT
 
   $ctrl.addCore = function () {
     compareTestingService.addCore();
-    $ctrl.refreshCoreNum();
+    // $ctrl.refreshCoreNum();
   };
 
   $ctrl.removeCore = function () {
     compareTestingService.removeCore();
-    $ctrl.refreshCoreNum();
+    // $ctrl.refreshCoreNum();
   };
 
   $ctrl.setMcuInfo = function(mcu_id,obj){
@@ -179,7 +186,7 @@ function compareTestingDoController(wsService,$state,productInfoService,compareT
       'report_num': '0123456789'
     });
     compareTestingService.clearMcuInfo();
-    $ctrl.addCore();
+    compareTestingService.initHex();
     $ctrl.addCore();
     $ctrl.setMcuInfo(1, {
       "mcu_id": 1,
@@ -213,6 +220,7 @@ function compareTestingDoController(wsService,$state,productInfoService,compareT
         "end": "97ff"
       }
     });
+    $ctrl.addCore();
     $ctrl.setMcuInfo(2, {
       "mcu_id": 2,
       "mcu_model": "Test_2",
@@ -319,7 +327,7 @@ function compareTestingDoController(wsService,$state,productInfoService,compareT
           "key_index": "04"
         }
       ]);
-    compareTestingService.initHex();
+
     $ctrl.saveHexObj([
       {
         id:1,
